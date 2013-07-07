@@ -1,0 +1,27 @@
+using System;
+using Gtk;
+using JGL.Heirarchy;
+
+namespace Dynamic.UI
+{
+	[Gtk.TreeNode]
+	class FileSystemNode : TreeNode
+	{
+		public string Path;
+
+		[Gtk.TreeNodeValue(Column=0)]
+		public string Name;
+
+		[Gtk.TreeNodeValue(Column=1)]
+		public long Size;
+
+		[Gtk.TreeNodeValue(Column=2)]
+		public DateTime ModifyTime;
+		
+		public FileSystemNode()
+		{
+
+		}
+	}
+}
+

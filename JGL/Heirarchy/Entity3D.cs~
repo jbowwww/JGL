@@ -1,0 +1,54 @@
+using System;
+using OpenTK;
+
+namespace JGL.Heirarchy
+{
+	/// <summary>
+	/// An <see cref="Entity"/> in 3D space, ie it implements <see cref="IPositionable"/> and <see cref="IRotatable"/>
+	/// </summary>
+	public class Entity3D : Entity, IPositionable, IRotatable
+	{
+		/// <summary>
+		/// Position in 3D space
+		/// </summary>
+		/// <remarks>IPositionable implementation</remarks>
+		public OpenTK.Vector3d Position { get; set; }
+		
+		/// <summary>
+		/// Rotation in 3D space (X,Y,Z each describe number of degrees rotation around the X/Y/Z unit vector)
+		/// </summary>
+		/// <remarks>IRotatable implementation</remarks>
+		public OpenTK.Vector3d Rotation { get; set; }
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="JGL.Heirarchy.Entity3D"/> class.
+		/// </summary>
+		public Entity3D(string name = null)
+			: base(name)
+		{
+		}
+		
+		/// <summary>Moves <see cref="Entity"/> forward</summary>
+		/// <param name='distance'>Distance to move, default 1.0</param>
+		public void MoveForward(double distance = 1.0)
+		{
+			Vector3d unitDirection = Vector3d.Transform(-Vector3d.UnitZ,
+				Matrix4d.CreateRotationX(MathHelper.DegreesToRadians((float)Rotation.X)));
+			unitDirection = Vector3d.Transform(unitDirection, Matrix4d.CreateRotationY(MathHelper.DegreesToRadians((float)Rotation.Y)));
+			unitDirection = Vector3d.Transform(unitDirection, Matrix4d.CreateRotationZ(MathHelper.DegreesToRadians((float)Rotation.Z)));
+			Position += unitDirection * distance;
+		}
+		
+		/// <summary>Moves <see cref="Entity"/> backward</summary>
+		/// <param name='distance'>Distance to move, default 1.0</param>
+		public void MoveBackward(double distance = 1.0)
+		{
+			Vector3d unitDirection = Vector3d.Transform(-Vector3d.UnitZ,
+				Matrix4d.CreateRotationX(MathHelper.DegreesToRadians((float)Rotation.X)));
+			unitDirection = Vector3d.Transform(unitDirection, Matrix4d.CreateRotationY(MathHelper.DegreesToRadians((float)Rotation.Y)));
+			unitDirection = Vector3d.Transform(unitDirection, Matrix4d.CreateRotationZ(MathHelper.DegreesToRadians((float)Rotation.Z)));
+			Position -= unitDirection * distance;
+		}		
+	}
+}
+

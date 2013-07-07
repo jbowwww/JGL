@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="New Project">
+  <ReferencePaths>
+    <string>System.dll</string>
+    <string>JGL.dll</string>
+    <string>/home/jk/Code/Resources/CS/OpenTK 1.0/Binaries/OpenTK/Release/OpenTK.dll</string>
+  </ReferencePaths>
+  <SourcePaths>
+    <string>/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/EmptyMain.cs</string>
+    <string>/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Origin.cs</string>
+    <string>/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Scene1.cs</string>
+    <string>/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Tree1.cs</string>
+    <string>/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/WhiteLight.cs</string>
+  </SourcePaths>
+  <CodeUsings>
+	using System;
+	using System.Collections;
+	using System.Collections.Generic;
+	using System.Collections.Concurrent;
+	using OpenTK;
+	using JGL;
+	using JGL.Heirarchy;
+	using Dynamic;
+  </CodeUsings>
+  <CodeHistory>
+    <string>(Scenes[0] as Object).Position</string>
+    <string>(Scenes[0]["Tree1 #001"] as Object).Position</string>
+    <string>Scenes[0].Add(new Tree1() { Position = new Vector3d(-2, 0.1, 1) });</string>
+    <string>Scenes[0].Objects</string>
+    <string>foreach (Object o in Scenes[0].Objects)
+	System.Console.WriteLine(o.Id + " : Position = " + o.Position);</string>
+    <string>(Scenes[0]["Tree1 #001"] as Object).Position</string>
+    <string>foreach (Object o in Scenes[0].Objects)
+	System.Console.WriteLine(o.Id + " : Position = " + o.Position);</string>
+    <string>foreach (Entity e in Scenes[0])
+	System.Console.WriteLine(e.Id);</string>
+    <string>foreach (Entity e in Scenes[0].Descendants)
+	Console.WriteLine(e.Id);</string>
+    <string>using System;
+foreach (Entity e in Scenes[0].Descendants)
+	Console.WriteLine(e.Id);</string>
+    <string>foreach (Entity e in Scenes[0].Descendants)
+	Console.WriteLine(e.Id);</string>
+    <string>foreach (Entity e in Scenes[0].Descendants)
+	System.Console.WriteLine(e.Id);</string>
+    <string>foreach (Entity e in Scenes[0].Descendants)
+	Console.WriteLine(e.Id);</string>
+  </CodeHistory>
+</Project>

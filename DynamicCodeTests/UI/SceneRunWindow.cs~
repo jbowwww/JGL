@@ -1,0 +1,89 @@
+using System;
+using System.Collections.Generic;
+using Gtk;
+using Mono.CSharp;
+
+namespace DynamicCodeTests
+{
+	public class SceneRunWindow
+	{
+		[Glade.Widget]
+		TextView tvCode;
+		
+		[Glade.Widget]
+		Arrow arCommand;
+		
+		[Glade.Widget]
+		Entry teCommand;
+		
+		private List<string> commandHistory = new List<string>();
+		private int commandHistoryIndex = -1;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="DynamicCodeTests.SceneRunWindow"/> class.
+		/// </summary>
+		public SceneRunWindow()
+		{
+			Glade.XML gxml = new Glade.XML(/*"/home/jk/Code/JGL/DynamicCodeTests/UI/*/ "UI/CodeWindow.glade", "SceneRunWindow", null);
+			gxml.Autoconnect(this);																			// load & autoconnect glade UI for a CodeWindow
+			
+			Evaluator.Init(new string[] { });
+			Evaluator.LoadAssembly("/home/jk/Code/JGL/DynamicCodeTests/bin/Debug/DynamicCodeTests.exe");
+			Evaluator.LoadAssembly("/home/jk/Code/JGL/bin/Debug/JGL.dll");
+			Evaluator.LoadAssembly("System.Data.Linq");
+//			Evaluator.LoadAssembly("System.Xml.Serialization");
+
+			arCommand.Focused += (o, args) => {teCommand.GrabFocus(); };
+			tvCode.Focused += (o, args) => { teCommand.GrabFocus(); };
+			
+			teCommand.FocusOutEvent += delegate(object o, FocusOutEventArgs args) {
+				teCommand.GrabFocus();
+				teCommand.SelectRegion(teCommand.Text.Length, teCommand.Text.Length);
+			};
+			teCommand.Activated += delegate(object sender, EventArgs e) {
+				string command = teCommand.Text;			//		System.Console.WriteLine("Hello!!");
+				teCommand.Text = string.Empty;
+				commandHistoryIndex = -1;
+				if (commandHistory.Count == 0 || commandHistory[commandHistory.Count - 1] != command)
+					commandHistory.Add(command);
+				if (!command.EndsWith(";"))
+					command += ";";
+				tvCode.Buffer.Text += "> " + command + "\n";
+				try
+				{
+					Evaluator.Run("using System;\nusing System.Data.Linq;\nusing System.Xml;\nusing System.Xml.Serialization;\n");
+					object result;
+					bool result_set;
+					string input = Evaluator.Evaluate("JGL.Heirarchy.Scene[] Scenes = DynamicCodeTests.JGLApp.Scenes.ToArray();\n" + command, out result, out result_set);
+					if (input != null)
+					{
+						new MessageDialog(null, DialogFlags.Modal, MessageType.Error, ButtonsType.Close, input).Run();
+					}
+					else if (result_set)
+						tvCode.Buffer.Text += (result == null ? "(null)" : result.ToString()) + "\n";
+				}
+				catch (Exception ex)
+				{
+					tvCode.Buffer.Text += ex.ToString() + "\nStacktrace:\n" + ex.StackTrace + "\n";
+				}
+
+			};
+			teCommand.KeyPressEvent += delegate(object o, KeyPressEventArgs args) {
+				if (args.Event.Key.Equals(Gdk.Key.Up) && commandHistory.Count > 0)
+				{
+					commandHistoryIndex = commandHistoryIndex <= 0 ? commandHistory.Count - 1 : commandHistoryIndex - 1;
+					teCommand.Text = commandHistory[commandHistoryIndex];
+					teCommand.SelectRegion(teCommand.Text.Length, teCommand.Text.Length);
+					args.RetVal = false;
+				}
+				else if (args.Event.State.HasFlag(Gdk.ModifierType.ControlMask) && args.Event.Key.Equals(Gdk.Key.space))
+				{
+					string prefix;
+					string[] completions = Evaluator.GetCompletions(teCommand.Text, out prefix);
+					int l = 0;
+				}
+			};
+		}
+	}
+}
+

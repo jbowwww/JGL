@@ -1,0 +1,6 @@
+MainClass Error: 1 : 28/03/2013 5:29 A: Cannot get resource file 'MainWindow.glade'
+Parameter name: resource_name
+MainClass Error: 2 : 28/03/2013 5:29 A:   at Glade.XML..ctor (System.Reflection.Assembly assembly, System.String resource_name, System.String root, System.String domain) [0x00000] in <filename unknown>:0 
+  at DynamicCodeTests.MainWindow..ctor () [0x00000] in <filename unknown>:0 
+  at DynamicCodeTests.MainClass.Main (System.String[] args) [0x00000] in <filename unknown>:0 
+MainClass Information: 3 : 28/03/2013 5:29 A: Quitting Main() method (and testing formatted log message 1 2 3

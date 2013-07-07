@@ -1,0 +1,93 @@
+using System;
+using Gtk;
+using JGL.Heirarchy;
+
+namespace Dynamic.UI
+{
+	public class HeirarchyDialog
+	{
+		/// <summary>
+		/// The <see cref="Gtk.ScrolledWindow"/> on the left (first) panel of the <see cref="Gtk.HPaned"/>, which after
+		/// construction will contain the <see cref="Gtk.NodeView"/> <see cref="DynamicCodeApplication.tvHeirarchy"/>
+		/// </summary>
+		[Glade.Widget]
+		protected ScrolledWindow swHeirarchy;
+
+		public readonly Dialog GtkDialog;
+
+		/// <summary>
+		/// A <see cref="Gtk.NodeView"/> displaying an <see cref="JGL.Heirarchy.Entity"/> heirarchy
+		/// </summary>
+		protected NodeView tvHeirarchy;
+
+		/// <summary>
+		/// The <see cref="Gtk.NodeStore"/> to back <see cref="DynamicCodeApplication.nvWindow"/>
+		/// </summary>
+		protected NodeStore storeHeirarchy;		// todo: model could store strongly typed values representing entities?
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="UI.HeirarchyDialog"/> class.
+		/// </summary>
+		public HeirarchyDialog()
+		{
+			Glade.XML gxml = new Glade.XML("/home/jk/Code/JGL/DynamicCodeTests/UI/Dynamic.glade", "HeirarchyDialog", null);
+			gxml.Autoconnect(this);																				// load & autoconnect glade UI for a CodeWindow
+
+			GtkDialog = swHeirarchy.Toplevel as Gtk.Dialog;
+//			GtkDialog.Settings.
+			storeHeirarchy = new NodeStore(typeof(EntityTreeNode));		// create a NodeStore using Entity wrapper class
+			tvHeirarchy = new NodeView(storeHeirarchy);									// create a NodeView and add to container ScrolledWindow
+			swHeirarchy.Add(tvHeirarchy);
+			tvHeirarchy.AppendColumn(new TreeViewColumn("Entity", new CellRendererText(), "text", 0) { Resizable = true });
+			tvHeirarchy.AppendColumn("Type", new CellRendererText(), "text", 1);
+			tvHeirarchy.Columns[0].Resizable = true;											// Add columns to NodeView and configure
+			tvHeirarchy.Selection.Changed +=
+			delegate(object o, EventArgs args)
+			{
+				TreePath[] paths = tvHeirarchy.Selection.GetSelectedRows();
+				if (paths.Length > 0)
+				{
+					Entity entity = (storeHeirarchy.GetNode(paths[0]) as EntityTreeNode).Entity;
+					if (entity.IsContext)
+						EntityContext.CurrentContext = entity as EntityContext;
+				}
+			};
+			PopulateHeirarchy();																					// Populate the NodeView with the Entity heirarchy
+		}
+
+		/// <summary>
+		/// Populates the <see cref="CodeWindow.tvHeirarchy"/> <see cref="Gtk.NodeView"/> with
+		/// the <see cref="JGL.Heirarchy.Entity"/> heirarchy
+		/// </summary>
+		public void PopulateHeirarchy()
+		{
+			storeHeirarchy.Clear();
+			if (EntityContext.RootContext != null)
+			{
+				foreach (Entity e in EntityContext.RootContext)
+					PopulateHeirarchy(e);
+			}
+			tvHeirarchy.ShowAll();
+		}
+
+		/// <summary>
+		/// Populates the heirarchy rooted at <paramref name="ec"/>, as a subtree of node <paramref name="ti"/>
+		/// </summary>
+		/// <param name='entity'><see cref="JGL.Heirarchy.Entity"> to add.</param>
+		/// <param name='tnParent'><see cref="Gtk.TreeNode"/> that is to hold the child tree nodes representing the subheirarchy of <paramref name="ec"/></param>
+		private void PopulateHeirarchy(Entity entity, TreeNode tnParent = null)
+		{
+			TreeNode tnNew = new EntityTreeNode(entity);
+			if (tnParent == null)
+				storeHeirarchy.AddNode(tnNew);
+			else
+				tnParent.AddChild(tnNew);
+			if (entity.IsContext)
+				foreach (Entity e in (entity as EntityContext).Entities)
+				{
+					PopulateHeirarchy(e, tnNew);
+				}
+		}
+	}
+}
+

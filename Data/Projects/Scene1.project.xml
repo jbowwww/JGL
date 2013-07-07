@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Scene1" xmlns="jgl.dynamic">
+  <ReferencePaths>
+    <string>System.dll</string>
+    <string>JGL.dll</string>
+    <string>/home/jk/Code/Resources/CS/OpenTK 1.0/Binaries/OpenTK/Release/OpenTK.dll</string>
+  </ReferencePaths>
+  <SourcePaths>
+    <string>/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/EmptyMain.cs</string>
+    <string>/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Origin.cs</string>
+    <string>/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Tree1.cs</string>
+    <string>/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/WhiteLight.cs</string>
+    <string>/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Scene1.cs</string>
+  </SourcePaths>
+  <CodeUsings>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
+using OpenTK;
+using JGL;
+using JGL.Heirarchy;
+using Dynamic;</CodeUsings>
+  <CodeHistory>
+    <string>Console.WriteLine("Hello")</string>
+    <string>WriteLine("Hello")</string>
+    <string>Console.WriteLine("Hello")</string>
+    <string>System.Console.WriteLine("Hello")</string>
+    <string>Console.WriteLine("Hello")</string>
+    <string>Scenes[0].Entities.Count</string>
+    <string>Scenes[0].Entities.Cou</string>
+    <string>Scenes[0].Entities.Count</string>
+    <string>Console.WriteLine("Hellooooo");</string>
+    <string>Scenes[0].Entities.Count</string>
+    <string>Scenes[0].Entities.Count;</string>
+    <string>Scenes[0].Entities.Count</string>
+    <string>Scenes[0].Entities.Count;</string>
+    <string>Scenes[0].Entities.Count</string>
+    <string>Scenes[0].Entities.Count;</string>
+    <string>Scenes[0].Entities.Count</string>
+    <string>Console.WriteLine("Hellooooo");</string>
+    <string>Scenes[0].Entities.Cou</string>
+    <string>Console.WriteLine("Hellooooo");</string>
+    <string>Scenes[0].Entities.Count</string>
+    <string>Scenes[0].Entities.Count;</string>
+    <string>Scenes[0].Entities.Count</string>
+    <string>Scenes[0].Entities.Count;</string>
+    <string>Scenes[0].Entities.Count</string>
+    <string>Scenes[0].Entities.Count;</string>
+    <string>Scenes[0].Entities.Count</string>
+    <string>Scenes[0].Entities.Count;</string>
+    <string>Scenes[0].Entities.Count</string>
+    <string>Scenes[0].Entities.Cou</string>
+    <string>Console.WriteLine("Hellooooo");</string>
+    <string>Scenes[0].Entities.Count</string>
+    <string>Scenes[0].Entities.Count;</string>
+    <string>Console.WriteLine("Hellooooo");</string>
+    <string>Console.Write("Hellooooo");</string>
+    <string>Console.WriteLine("Hellooooo");</string>
+    <string>Console.Write("Hellooooo");</string>
+    <string>Console.WriteLine("Hellooooo");</string>
+    <string>Console.Write("Hellooooo");</string>
+    <string>Console.WriteLine("Hellooooo");</string>
+    <string>new string[] { "hi", "cunt", 69 }</string>
+    <string>new object[] { "hi", "cunt", 69 }</string>
+    <string>new object[] { "hi", "cunt", 69 }.Length</string>
+    <string>new string[] { "hi", "cunt" }</string>
+    <string>new string[] { "hi", "cunt" }.Length</string>
+    <string>Scenes[0].Entities.Cou</string>
+    <string>Console.Write("Hellooooo");</string>
+    <string>Console.WriteLine("Hellooooo");</string>
+    <string>Scenes[0].Entities.Count</string>
+    <string>Scenes[0].Entities.Count;</string>
+    <string>Scenes[0].Entities.Count</string>
+    <string>throw new Exception("Random exception")</string>
+    <string>throw new Exception("Random exception");</string>
+    <string>throw new Exception("Random exception", new Exception("Innerandom exception"));</string>
+    <string>Scenes[0].Entities.Count;</string>
+    <string>Scenes[0].Entities.Count</string>
+    <string>Scenes[0].Entities.Count;</string>
+    <string>Scenes[0].Entities.Count</string>
+    <string>throw new Exception("Random exception", new Exception("Innerandom exception"));</string>
+    <string>Scenes[0].Entities.Count</string>
+    <string>Scenes[0].Entities.Count;</string>
+    <string>throw new Exception("Random exception", new Exception("Innerandom exception"));</string>
+    <string>throw new Exception("Random exception");</string>
+    <string>foreach (Object o in Scenes[0].Objects)
+	Console.WriteLine("Object: " + o.GetType().FullName + " Id=\"" + o.Id + "\"");</string>
+    <string>foreach (JGL.Heirarchy.Object o in Scenes[0].Objects)
+	Console.WriteLine("Object: " + o.GetType().FullName + " Id=\"" + o.Id + "\"");</string>
+    <string>foreach (Object o in Scenes[0].Objects)
+	Console.WriteLine("Object: " + o.GetType().FullName + " Id=\"" + o.Id + "\"");</string>
+    <string>Scenes[0]</string>
+    <string>Scenes[0].Descendants</string>
+    <string>Scenes[0].Descendants.Count</string>
+    <string>Scenes[0].Entities.Count</string>
+  </CodeHistory>
+</Project>

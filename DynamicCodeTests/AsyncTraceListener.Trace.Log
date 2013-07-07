@@ -1,0 +1,8 @@
+001 13-06-08 07:30:42.743117 P:11348 T: AsyncTraceListener Information c'tor(name="JGLApp")
+002 13-06-08 07:30:42.745105 P:11348 T: AsyncTraceListener Information RunThread() started
+003 13-06-08 07:30:42.747600 P:11348 T: AsyncTraceListener Verbose [Name="AsyncTraceListener"].DefaultOpenStream()=System.IO.FileStream
+005 13-06-08 07:30:42.773354 P:11348 T: AsyncTraceListener Verbose [Name="JGLApp"].DefaultOpenStream()=System.IO.FileStream
+007 13-06-08 07:30:46.284769 P:11348 T: AsyncTraceListener Information c'tor(name="Compiler")
+010 13-06-08 07:30:46.325112 P:11348 T: AsyncTraceListener Verbose [Name="Compiler"].DefaultOpenStream()=System.IO.FileStream
+017 13-06-08 07:30:57.504127 P:11348 T: AsyncTraceListener Information [Name="JGLApp"].Stop()
+018 13-06-08 07:30:57.504718 P:11348 T: AsyncTraceListener Information StopAll() (3 named listeners)

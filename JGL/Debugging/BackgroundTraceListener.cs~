@@ -1,0 +1,379 @@
+using System;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Text;
+using System.IO;
+using System.Threading;
+//using System.Diagnostics;
+
+namespace JGL.Debugging
+{
+	/// <summary>
+	/// A trace listener that queues data it receives into a static (shared among all <see cref="BackgroundTraceListener"/>s)
+	/// queue until the background thread (see <see cref="RunThread"/>) formats it for output and writes it to the <see cref="Stream"/>
+	/// associated with the <see cref="BackgroundTraceListener"/> the message belongs too
+	/// </summary>
+	public class BackgroundTraceListener : System.Diagnostics.TraceListener
+	{
+		/// <summary>
+		/// Log message class stores log message parameters
+		/// </summary>
+		public class LogMessage
+		{
+			/// <summary>Event cache</summary>
+			public readonly System.Diagnostics.TraceEventCache EventCache;
+
+			/// <summary>The <see cref="System.Diagnostics.TraceSource"/> that the message originated from</summary>
+			public readonly string Source;
+
+			/// <summary></summary>
+			public readonly System.Diagnostics.TraceEventType EventType;
+
+			/// <summary></summary>
+			public readonly int Id;
+
+			/// <summary></summary>
+			public readonly object Data;
+
+			/// <summary></summary>
+			public readonly BackgroundTraceListener Listener;
+
+			/// <summary></summary>
+			public readonly System.Diagnostics.TraceOptions OutputOptions;
+
+			/// <summary>
+			/// Gets the formatted message string
+			/// </summary>
+			public string Message {
+				get
+				{
+					StringBuilder sb = new StringBuilder(string.Concat(Id.ToString("d3"), " "), 256);
+					if (OutputOptions.HasFlag(System.Diagnostics.TraceOptions.DateTime))
+						sb.Append(EventCache.DateTime.ToString("yy-MM-dd HH:mm:ss.ffffff "));
+					if (OutputOptions.HasFlag(System.Diagnostics.TraceOptions.Timestamp))
+						sb.Append(string.Concat(EventCache.Timestamp.ToString(), " "));
+					if (OutputOptions.HasFlag(System.Diagnostics.TraceOptions.ProcessId))
+						sb.Append(string.Concat("P:", EventCache.ProcessId.ToString(), " "));
+					if (OutputOptions.HasFlag(System.Diagnostics.TraceOptions.ThreadId))
+						sb.Append(string.Concat("T:", EventCache.ThreadId, " "));
+					sb.Append(string.Concat(Source, " ", EventType.ToString(), " ", Data));
+					if (OutputOptions.HasFlag(System.Diagnostics.TraceOptions.Callstack))
+						sb.Append(string.Concat("\nCallstack:\n", EventCache.Callstack));
+					if (OutputOptions.HasFlag(System.Diagnostics.TraceOptions.LogicalOperationStack) && EventCache.LogicalOperationStack.Count > 0)
+					{
+						sb.Append("\nOperation stack:");
+						foreach (object stackEntry in EventCache.LogicalOperationStack)
+							sb.Append(string.Concat("\n", stackEntry));
+					}
+					sb.Append("\n");
+					return sb.ToString();
+				}
+			}
+
+			/// <summary>
+			/// Initializes a new instance of the <see cref="JGL.Debugging.BackgroundTraceListener.LogMessage"/> class.
+			/// </summary>
+			/// <param name="listener">The listener the message is for</param>
+			/// <param name="eventCache">Event cache</param>
+			/// <param name="source">Source</param>
+			/// <param name="eventType">Event type</param>
+			/// <param name="id">Identifier</param>
+			/// <param name="data">Data</param>
+			public LogMessage(BackgroundTraceListener listener, System.Diagnostics.TraceEventCache eventCache, string source, System.Diagnostics.TraceEventType eventType, int id, object data)
+			{
+				EventCache = eventCache;
+				Source = source;
+				EventType = eventType;
+				Id = id;
+				Data = data;
+				Listener = listener;
+				OutputOptions = listener.TraceOutputOptions;
+
+			}
+		}
+
+		#region Private fields
+		private static Thread _fileIoThread;
+		private static bool _stopAll = false;
+		private static ConcurrentQueue<LogMessage> _messageQueue = new ConcurrentQueue<LogMessage>();
+		private static ConcurrentQueue<BackgroundTraceListener> _closeQueue = new ConcurrentQueue<BackgroundTraceListener>();
+		private static ConcurrentDictionary<string, BackgroundTraceListener> _namedListeners = new ConcurrentDictionary<string, BackgroundTraceListener>();
+		private bool _stop = false;
+		#endregion
+
+		/// <summary>
+		/// Tracing
+		/// </summary>
+		public static readonly Tracer Trace = new Tracer(typeof(BackgroundTraceListener).Name,
+			new System.Diagnostics.ConsoleTraceListener(),
+			BackgroundTraceListener.GetOrCreate(typeof(BackgroundTraceListener).Name));
+
+		/// <summary>
+		/// The open stream method opens the output stream when required by the background thread. Override to customise behaviour.
+		/// </summary>
+		public virtual Stream OpenStream()
+		{
+			Stream stream = File.Open(string.Concat(Name, ".Trace.Log"), FileMode.Create, FileAccess.Write, FileShare.Read);
+			Trace.Log(System.Diagnostics.TraceEventType.Verbose, "[Name=\"{0}\"].DefaultOpenStream()={1}", Name, stream.ToString());
+			return stream;
+		}
+
+		/// <summary>
+		/// Format message delegate method. Formats a <see cref="LogMessage"/> instance into <see cref="byte[]"/> data to be
+		/// written to the output <see cref="Stream"/>. Override to customise behaviour.
+		/// </summary>
+		public virtual byte[] FormatMessage(LogMessage message)
+		{
+			return Encoding.ASCII.GetBytes(message.Message);
+		}
+
+		/// <summary>
+		/// The <see cref="System.IO.Stream"/> that this <see cref="BackgroundTraceListener"/> will write log messages to
+		/// </summary>
+		public Stream Stream { get; private set; }
+
+		/// <summary>
+		/// Stops all <see cref="BackgroundTraceListener"/>s by setting a flag that indicates that <see cref="RunThread"/> should return
+		/// </summary>
+		public static void StopAll()
+		{
+			_stopAll = true;
+			Trace.Log(System.Diagnostics.TraceEventType.Information, "StopAll() ({0} named listeners)", _namedListeners.Count);
+		}
+
+		/// <summary>
+		/// Thread entry point
+		/// </summary>
+		/// <remarks>
+		/// TODO: Try out a few different approaches to this e.g.
+		///		- 31/5 This current approach is the 1-thread running in the background, with a single queue,
+		///		handling stream writing for all listeners and their streams
+		///			+ just noticed _messageQueue.TryDequeue should be in a while() conditional expression, not an if
+		///				(with if thread Sleeps() inbetween writing every message - should loop until queue empty without delay?
+		///				maybe small delay? don't want this thread randomly hammering a more important thread (e.g. update/render scenes)
+		///				- Fixed 8/6
+		/// 		- Would 1 thread per listener/stream work better?
+		/// 		- Both above approaches with varying Thread.Sleep() times
+		/// 		- Use Async File operations? How to get an async-capable file handle?
+		/// 			+ Thread doesn't wait for each Stream.Write(), instead collects IAsyncResults from a BeginWrite for every
+		/// 				message found in the queue for this iteration. Also builds list of the listeners that were involved.
+		/// 				At end of thread, calls all the Stream.EndRead() methods and then flushes each listener once
+		/// 					- This approach may or may not work - depends on semantics of Stream's Async methods
+		/// 					  Definitely worth looking into, the Async approach is probably the best of these above alternatives to try first (?)
+		/// </remarks>
+		private static void RunThread()
+		{
+			// Lists of listeners that are open, that need flushing
+			List<BackgroundTraceListener> openListeners = new List<BackgroundTraceListener>();
+			List<BackgroundTraceListener> flushListeners = new List<BackgroundTraceListener>();
+
+			Trace.Log(System.Diagnostics.TraceEventType.Information, "RunThread() - started");
+
+			// Loop while not flagged to stop background logging or while there are still messages or streams to close queued
+			while (!_stopAll || _closeQueue.Count > 0 || _messageQueue.Count > 0)
+			{
+				LogMessage message;
+				BackgroundTraceListener listener;
+
+				// Dequeue messages until message queue empty
+				while (_messageQueue.TryDequeue(out message))
+				{
+					listener = message.Listener;
+					if (listener.Stream == null)																					// If listener does not have an open stream, open one and add to our list of listeners with open streams
+					{
+						listener.Stream = listener.OpenStream();			//	File.Open(listener.Path, FileMode.Create, FileAccess.Write, FileShare.Read);
+						openListeners.Add(listener);
+					}
+					if (!flushListeners.Contains(listener))															// If listener not already queued for flushing, queue for flushing
+						flushListeners.Add(listener);
+					byte[] buf = listener.FormatMessage(message);			//Encoding.ASCII.GetBytes(message.Message);					// Get and encode message
+					listener.Stream.Write(buf, 0, buf.Length);													// Write message buffer
+				}
+
+				// Flush any listeners queued to be flushed (had one or more messages written to them this iteration)
+				foreach (BackgroundTraceListener flushListener in flushListeners)
+					flushListener.Flush();
+				flushListeners.Clear();
+
+				// Close any listeners queued for closing
+				while (_closeQueue.TryDequeue(out listener))
+				{
+					Debug.Assert(listener.Stream != null);
+					listener.Stream.Close();
+					openListeners.Remove(listener);
+					listener.Stream = null;
+				}
+
+				// Yield thread
+				//Thread.Yield();
+
+				// Sleep thread
+				if (_messageQueue.Count == 0 && !_stopAll)
+					Thread.Sleep(88);
+				else
+					Thread.Yield();
+			}
+
+			// Thread exiting, close any open streams
+			foreach (BackgroundTraceListener listener in openListeners)
+			{
+				listener.Flush();
+				listener.Stream.Close();
+				listener.Stream = null;
+			}
+			_fileIoThread = null;
+		}
+
+		/// <summary>
+		/// Gets or create a <see cref="BackgroundTraceListener"/>
+		/// </summary>
+		/// <returns>
+		/// The retrieved or newly created <see cref="BackgroundTraceListener"/>
+		/// </returns>
+		/// <param name="name">Name</param>
+		public static BackgroundTraceListener GetOrCreate(string name)
+		{
+			return _namedListeners.ContainsKey(name) ? _namedListeners[name] : _namedListeners[name] = new BackgroundTraceListener(name);
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="JGL.Debugging.BackgroundTraceListener"/> class.
+		/// </summary>
+		/// <param name="name">Name</param>
+		private BackgroundTraceListener(string name) : base(name)
+		{
+			TraceOutputOptions = System.Diagnostics.TraceOptions.DateTime | System.Diagnostics.TraceOptions.ProcessId | System.Diagnostics.TraceOptions.ThreadId;
+			if (_fileIoThread == null)
+			{
+				_fileIoThread = new Thread(RunThread) { Priority = ThreadPriority.BelowNormal };
+				_fileIoThread.Start();
+			}
+			if (Trace != null)
+				Trace.Log(System.Diagnostics.TraceEventType.Information, "c'tor(name=\"{0}\")", name);
+		}
+
+		/// <summary>
+		/// Stop this <see cref="BackgroundTraceListener"/> instance by adding a reference to a queue that <see cref="RunThread"/> monitors
+		/// </summary>
+		public void Stop()
+		{
+			_closeQueue.Enqueue(this);
+			Trace.Log(System.Diagnostics.TraceEventType.Information, "[Name=\"{0}\"].Stop()", Name);
+		}
+
+		/// <summary>
+		/// Dispose of this <see cref="BackgroundTraceListener"/> (calls <see cref="Stop"/>)
+		/// </summary>
+		/// <param name="disposing">Disposing</param>
+		protected override void Dispose(bool disposing = true)
+		{
+			Stop();
+		}
+
+		/// <summary>
+		/// Called by <see cref="System.Diagnostics.TraceSource"/> methods to specify a message to log
+		/// </summary>
+		/// <param name="eventCache">Event cache</param>
+		/// <param name="source">Source</param>
+		/// <param name="eventType">Event type</param>
+		/// <param name="id">Identifier</param>
+		/// <param name="data">Data</param>
+		public override void TraceData(System.Diagnostics.TraceEventCache eventCache, string source, System.Diagnostics.TraceEventType eventType, int id, object data)
+		{
+			if (this.Filter == null || this.Filter.ShouldTrace(eventCache, source, eventType, id, null, null, data, null))
+				_messageQueue.Enqueue(new LogMessage(this, eventCache, source, eventType, id, data));
+		}
+
+		/// <summary>
+		/// Write the specified message.
+		/// </summary>
+		/// <param name='message'>
+		/// Message.
+		/// </param>
+		/// <exception cref='InvalidOperationException'>
+		/// Is thrown when an operation cannot be performed.
+		/// </exception>
+		/// <remarks>Only implemented because base class marks it as abstract - due to my <see cref="TraceData"/> override this should never execute</remarks>
+		public override void Write(string message)
+		{
+			throw new InvalidOperationException(string.Format("BackgroundTraceListener(\"{0}\").Write(message=\"{1}\"): Should not be inside this method, TraceData override should avoid that!?!", Name, message));
+		}
+
+		/// <summary>
+		/// Write the specified message.
+		/// </summary>
+		/// <param name='message'>
+		/// Message.
+		/// </param>
+		/// <exception cref='InvalidOperationException'>
+		/// Is thrown when an operation cannot be performed.
+		/// </exception>
+		/// <remarks>Only implemented because base class marks it as abstract - due to my <see cref="TraceData"/> override this should never execute</remarks>
+		public override void WriteLine(string message)
+		{
+			throw new InvalidOperationException(string.Format("BackgroundTraceListener(\"{0}\").Write(message=\"{1}\"): Should not be inside this method, TraceData override should avoid that!?!", Name, message));
+		}
+	}
+}
+
+//				this.WriteLine(string.Format("{0} {1}: {2} : {3}", new object[]
+//				{
+//					source,
+//					eventType,
+//					id,
+//					data
+//				}));
+//				if (eventCache == null)
+//				{
+//					return;
+//				}
+//				if ((this.TraceOutputOptions & TraceOptions.ProcessId) != TraceOptions.None)
+//				{
+//					this.WriteLine("    ProcessId=" + eventCache.ProcessId);
+//				}
+//				if ((this.TraceOutputOptions & TraceOptions.LogicalOperationStack) != TraceOptions.None)
+//				{
+//					this.WriteLine("    LogicalOperationStack=" + TraceListener.FormatArray(eventCache.LogicalOperationStack, ", "));
+//				}
+//				if ((this.TraceOutputOptions & TraceOptions.ThreadId) != TraceOptions.None)
+//				{
+//					this.WriteLine("    ThreadId=" + eventCache.ThreadId);
+//				}
+//				if ((this.TraceOutputOptions & TraceOptions.DateTime) != TraceOptions.None)
+//				{
+//					this.WriteLine("    DateTime=" + eventCache.DateTime.ToString("o"));
+//				}
+//				if ((this.TraceOutputOptions & TraceOptions.Timestamp) != TraceOptions.None)
+//				{
+//					this.WriteLine("    Timestamp=" + eventCache.Timestamp);
+//				}
+//				if ((this.TraceOutputOptions & TraceOptions.Callstack) != TraceOptions.None)
+//				{
+//					this.WriteLine("    Callstack=" + eventCache.Callstack);
+////				}
+//			}
+//		}
+
+//		public override void Write(string message)
+//		{
+//			_buf = Encoding.ASCII.GetBytes(message);
+//			Stream.BeginWrite(_buf, 0, _buf.Length, WriteCallback, null);
+//			Stream.Write(_buf, 0, _buf.Length);
+//			_messageQueue.Enqueue(new LogMessage() { Message = message, Listener = this });
+//		}
+
+//		public override void WriteLine(string message)
+//		{
+//			_buf = Encoding.ASCII.GetBytes(message + "\n");		//Convert.FromBase64String(message);
+//			Stream.BeginWrite(_buf, 0, _buf.Length, WriteCallback, null);
+//			Stream.Write(_buf, 0, _buf.Length);
+//			_messageQueue.Enqueue(new LogMessage() { Message = message + "\n", Listener = this });
+//		}
+
+//		private void WriteCallback(IAsyncResult ar)
+//		{
+//			Stream.EndWrite(ar);
+//			_buf = null;
+//		}
+
+

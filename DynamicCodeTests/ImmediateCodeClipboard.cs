@@ -1,0 +1,1 @@
+Scenes[0].Add(new DynamicCodeTests.Origin() { Name = "Origin #2", Position = new OpenTK.Vector3d(1,1,1) });

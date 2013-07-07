@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ReferencePaths />
+  <SourcePaths>
+    <string>/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/WhiteLight.cs</string>
+    <string>/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Tree1.cs</string>
+    <string>/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Scene1.cs</string>
+    <string>/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Origin.cs</string>
+  </SourcePaths>
+  <CodeHistory />
+</Project>

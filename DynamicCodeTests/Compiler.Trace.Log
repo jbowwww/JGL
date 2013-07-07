@@ -1,0 +1,19 @@
+008 13-06-08 07:30:46.287322 P:11348 T: Compiler Verbose CodeProvider: CSharpCodeProvider
+009 13-06-08 07:30:46.293473 P:11348 T: Compiler Verbose Compiler Parameters =
+{
+	Generate Executable: False
+	Generate In Memory: True
+	Output Assembly: 
+	Include Debug Info: False
+	Warnings As Errors: False
+	Warning Level: -1
+	Compiler Options: 
+	Main Class: 
+	User Token: 0
+	Win32 Resource: 
+	Embedded Resources: 
+	Linked Resources: 
+	Referenced Assemblies: System.dll /usr/lib/monodevelop/AddIns/MonoDevelop.GtkCore/MonoDevelop.GtkCore.dll /home/jk/Code/Resources/OpenTK 1.0/Binaries/OpenTK/Release/OpenTK.dll /home/jk/Code/JGL/JGL/bin/Debug/JGL.dll
+	Temp Files: 
+}
+011 13-06-08 07:30:47.008610 P:11348 T: Compiler Information Source built successfully.

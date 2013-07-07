@@ -1,0 +1,12 @@
+newmtl tree
+Ka 0.2 0.7 0.3
+Kd 0.2 0.7 0.3
+Ks 0.2 0.7 0.3
+Ns 1
+
+newmtl twig
+Ka 0.6 0.4 0.2
+Kd 0.6 0.4 0.2
+Ks 0.6 0.4 0.2
+Ns 2
+

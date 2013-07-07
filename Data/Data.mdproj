@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Default</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ItemType>GenericProject</ItemType>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5D17F246-0BB0-4570-BB40-D7A0A0B60071}</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Default|AnyCPU' ">
+    <OutputPath>.</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="Design\Diagram2.dia" />
+    <None Include="Design\JGL.xmi" />
+    <None Include="Design\JGL.zargo" />
+    <None Include="Models\sceneextruded.mtl" />
+    <None Include="Models\sceneextruded.obj" />
+    <None Include="Models\sceneextruded2.mtl" />
+    <None Include="Models\sceneextruded2.obj" />
+    <None Include="Models\simplescene.mtl" />
+    <None Include="Models\simplescene.obj" />
+    <None Include="Models\testscene.blend" />
+    <None Include="Models\tree %281%29.obj" />
+    <None Include="Models\tree.mtl" />
+    <None Include="Models\tree.obj" />
+    <None Include="Projects\Untitled Document" />
+    <None Include="XML\out_scene.xml" />
+    <None Include="Projects\New Project.project.xml" />
+    <None Include="Projects\Scene1.project.xml" />
+  </ItemGroup>
+</Project>

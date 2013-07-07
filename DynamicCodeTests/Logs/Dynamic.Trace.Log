@@ -1,0 +1,19 @@
+003 13-07-07 23:39:58.396413 P:18091 T: Compiler Verbose CodeProvider: CSharpCodeProvider
+004 13-07-07 23:39:58.404753 P:18091 T: Compiler Verbose Compiler Parameters =
+{
+	Generate Executable: True
+	Generate In Memory: False
+	Output Assembly: DynamicCodeTests-Scene.dll
+	Include Debug Info: False
+	Warnings As Errors: False
+	Warning Level: -1
+	Compiler Options: 
+	Main Class: 
+	User Token: 0
+	Win32 Resource: 
+	Embedded Resources: 
+	Linked Resources: 
+	Referenced Assemblies: System.dll JGL.dll /home/jk/Code/Resources/CS/OpenTK 1.0/Binaries/OpenTK/Release/OpenTK.dll
+	Temp Files: 
+}
+005 13-07-07 23:39:59.103129 P:18091 T: Compiler Information Source built into DynamicCodeTests-Scene.dll successfully.

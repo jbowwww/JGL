@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8F163935-50FF-4F0A-A9CF-C5B44774B240}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>DynamicCodeTests</RootNamespace>
+    <AssemblyName>DynamicCodeTests</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="BeforeExecute" command="cp -f ${SolutionDir}/DynamicCodeTests/UI/CodeWindow.glade ${TargetDir}/CodeWindow.glade" workingdir="" pauseExternalConsole="true" />
+      </CustomCommands>
+    </CustomCommands>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="BeforeExecute" command="cp -f ${SolutionDir}/DynamicCodeTests/UI/CodeWindow.glade ${TargetDir}/" externalConsole="true" pauseExternalConsole="true" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Mono.Posix" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Mono.CSharp" />
+    <Reference Include="atk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="gdk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="glade-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="glib-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="gtk-dotnet, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="gtk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OpenTK">
+      <HintPath>..\..\Resources\CS\OpenTK 1.0\Binaries\OpenTK\Release\OpenTK.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Compiler.cs" />
+    <Compile Include="JGLApp.cs" />
+    <Compile Include="UI\EntityTreeNode.cs" />
+    <Compile Include="UI\SceneWindow.cs" />
+    <Compile Include="UI\DynamicCodePage.cs" />
+    <Compile Include="UI\SceneInfoPanel.cs" />
+    <Compile Include="UI\CodeWindow.cs" />
+    <Compile Include="UI\StaticCodePage.cs" />
+    <Compile Include="UI\SceneTypeDialog.cs" />
+    <Compile Include="Project.cs" />
+    <Compile Include="UI\ProjectDialog.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <None Include="XML comment clipboard.txt.cs" />
+    <None Include="UI\CodeWindow.glade" />
+    <None Include="DynamicCode\code_clipboard.cs" />
+    <None Include="bin\Release\Compiler.Trace.Log" />
+    <None Include="bin\Release\MainClass.Trace.Log" />
+    <None Include="bin\Release\OpenTK.dll.config" />
+    <None Include="UI\CodeCompletionWindow.cs" />
+    <None Include="Features.txt" />
+    <None Include="bin\Debug\New Project.xml" />
+    <None Include="DynamicCode\Heirarchy\Origin.cs" />
+    <None Include="DynamicCode\Heirarchy\Scene1.cs" />
+    <None Include="DynamicCode\Heirarchy\Tree1.cs" />
+    <None Include="DynamicCode\Heirarchy\WhiteLight.cs" />
+    <None Include="DynamicCode\EmptyMain.cs" />
+    <None Include="Logs\Dynamic.Trace.Log" />
+    <None Include="Logs\Dynamic_JGLApp.Trace.Log" />
+    <None Include="Logs\JGL.Trace.Log" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DynamicCode\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JGL\JGL.csproj">
+      <Project>{1A4EC1C4-498A-42C7-ABC6-D4B9D889B8A9}</Project>
+      <Name>JGL</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

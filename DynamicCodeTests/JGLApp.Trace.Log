@@ -1,0 +1,7 @@
+004 13-06-08 07:30:42.765470 P:11348 T: JGLApp Information Starting Main()
+006 13-06-08 07:30:42.828618 P:11348 T: JGLApp Information Starting JGLApp:ctor
+012 13-06-08 07:30:47.673130 P:11348 T: JGLApp Information Starting SceneWindow with scene "Scene1 #001" .. 
+013 13-06-08 07:30:47.932286 P:11348 T: JGLApp Information started
+014 13-06-08 07:30:51.008039 P:11348 T: JGLApp Information Ending SceneWindow thread for scene "Scene1 #001"
+015 13-06-08 07:30:51.018286 P:11348 T: JGLApp Information ended
+016 13-06-08 07:30:57.502177 P:11348 T: JGLApp Information Quitting Main() method (and testing formatted log message 1 2 3
