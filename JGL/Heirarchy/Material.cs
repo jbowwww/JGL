@@ -3,11 +3,17 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using JGL.Resource;
+using JGL.Debugging;
 
 namespace JGL.Heirarchy
 {
 	public class Material
 	{
+		/// <summary>
+		/// Tracing
+		/// </summary>
+		public static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
+
 		#region Fields
 		
 		public readonly string Name;

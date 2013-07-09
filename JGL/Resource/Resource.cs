@@ -13,6 +13,11 @@ namespace JGL.Resource
 	public abstract class Resource : Entity
 	{
 		/// <summary>
+		/// Tracing
+		/// </summary>
+		public static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
+
+		/// <summary>
 		/// Constant load thread sleep time.
 		/// </summary>
 		public const int LoadThreadSleepTime = 144;

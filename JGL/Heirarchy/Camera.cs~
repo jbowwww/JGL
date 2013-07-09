@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using OpenTK.Graphics.OpenGL;
 using JGL.Geometry;
+using JGL.Debugging;
 
 namespace JGL.Heirarchy
 {
@@ -13,7 +14,9 @@ namespace JGL.Heirarchy
 //		public new OpenTK.Vector3d Position { get { return -base.Position; } set { base.Position = value; } }
 //		
 //		public new OpenTK.Vector3d Rotation { get { return - base.Rotation; } set { base.Rotation = value; } }
-	
+
+		public static AutoTraceSource Trace = AutoTraceSource.GetOrCreate("Camera", AsyncFileTraceListener.GetOrCreate("JGL"));
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="JGL.Heirarchy.Camera"/> class.
 		/// </summary>

@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Net.Sockets;
+using JGL.Debugging;
 
 namespace JGL.Extensions
 {
@@ -13,6 +14,11 @@ namespace JGL.Extensions
 	/// </remarks>
 	public static class Uri_Ext
 	{
+		/// <summary>
+		/// Tracing
+		/// </summary>
+		public static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
+
 		/// <summary>
 		/// Open the <paramref name="uri"/> and return a <see cref="System.Stream"/> representing it
 		/// </summary>

@@ -1,9 +1,14 @@
 using System;
+using JGL.Debugging;
 
 namespace JGL.Geometry
 {
 	public class TriangleFace
 	{
+		/// <summary>
+		/// Tracing
+		/// </summary>
+		public static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
 		public int[] V;
 		public int[] N;
 		public int[] T;

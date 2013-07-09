@@ -14,25 +14,71 @@ namespace JGL.Debugging
 	public class AutoTraceSource : TraceSource
 	{
 		/// <summary>
-		/// <see cref="AutoTraceSource"/> for trace messages
+		/// Tracing <see cref="AutoTraceSource"/>
 		/// </summary>
-		public static readonly AutoTraceSource Trace = new AutoTraceSource(typeof(AutoTraceSource).Name,
-			new ConsoleTraceListener(), AsyncFileTraceListener.GetOrCreate("JGL"));
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate("AutoTraceSource", AsyncFileTraceListener.GetOrCreate("JGL"));
+			//new AutoTraceSource(typeof(AutoTraceSource).Name,	new ConsoleTraceListener(), AsyncFileTraceListener.GetOrCreate("JGL"));
 
 		/// <summary>
-		/// Assert the specified condition, logging result to <see cref="AutoTraceSource.Trace"/>
+		/// <see cref="AutoTraceSource"/> instances, keyed by <see cref="AutoTraceSource.Name"/>
 		/// </summary>
-		/// <param name="condition">Condition</param>
-		public void Assert(bool condition)
+		private static ConcurrentDictionary<string, AutoTraceSource> _namedSources;
+
+		/// <summary>
+		/// Gets or creates an <see cref="AutoTraceSource"/> with the specified <paramref name="name"/>
+		/// </summary>
+		/// <returns>An <see cref="AutoTraceSource"/> reference</returns>
+		/// <param name="traceListeners"><see cref="TraceListener"/>s that should be in <see cref="AutoTraceSource.Listeners"/></param>
+		public static AutoTraceSource GetOrCreate(params TraceListener[] traceListeners)
 		{
-			//Debug.Assert(condition);
 			StackFrame sf = new StackFrame(1);
-			if (condition)
-				Trace.Log(TraceEventType.Verbose, "Assert OK at {0}+{1} (in file {2}:{3},{4}", sf.GetMethod().Name,
-					sf.GetILOffset(), sf.GetFileName(), sf.GetFileLineNumber(), sf.GetFileColumnNumber());
+			return GetOrCreate(sf.GetMethod().DeclaringType.FullName, true, traceListeners);
+		}
+
+		/// <summary>
+		/// Gets or creates an <see cref="AutoTraceSource"/> with the specified <paramref name="name"/>
+		/// </summary>
+		/// <returns>An <see cref="AutoTraceSource"/> reference</returns>
+		/// <param name="name">Name for the <see cref="AutoTraceSource"/> to get or create</param>
+		/// <param name="traceListeners"><see cref="TraceListener"/>s that should be in <see cref="AutoTraceSource.Listeners"/></param>
+		public static AutoTraceSource GetOrCreate(string name, params TraceListener[] traceListeners)
+		{
+			return GetOrCreate(name, true, traceListeners);
+		}
+
+		/// <summary>
+		/// Gets or creates an <see cref="AutoTraceSource"/> with the specified <paramref name="name"/>
+		/// </summary>
+		/// <returns>An <see cref="AutoTraceSource"/> reference</returns>
+		/// <param name="name">Name for the <see cref="AutoTraceSource"/> to get or create</param>
+		/// <param name="autoAddConsoleListener">Whether to add a new <see cref="ConsoleTraceListener"/> to the <see cref="AutoTraceSource"/> if creating a new instance</param>
+		/// <param name="traceListeners"><see cref="TraceListener"/>s that should be in <see cref="AutoTraceSource.Listeners"/></param>
+		public static AutoTraceSource GetOrCreate(string name, bool autoAddConsoleListener, params TraceListener[] traceListeners)
+		{
+			if (_namedSources == null)
+				_namedSources = new ConcurrentDictionary<string, AutoTraceSource>();
+			AutoTraceSource traceSource;
+			if (_namedSources.ContainsKey(name))
+			{
+				traceSource = _namedSources[name];
+				foreach (TraceListener traceListener in traceListeners)
+					if (!traceSource.Listeners.Contains(traceListener))
+						traceSource.Listeners.Add(traceListener);
+			}
 			else
-				Trace.Log(TraceEventType.Information, "Assert FAILED at {0}+{1} (in file {2}:{3},{4}", sf.GetMethod().Name,
-					sf.GetILOffset(), sf.GetFileName(), sf.GetFileLineNumber(), sf.GetFileColumnNumber());
+			{
+				TraceListener[] listeners;
+				if (autoAddConsoleListener)
+				{
+					listeners = new TraceListener[traceListeners.Length + 1];
+					listeners[0] = new ConsoleTraceListener();
+					Array.Copy(traceListeners, 0, listeners, 1, traceListeners.Length);
+				}
+				else
+					listeners = traceListeners;
+				traceSource = _namedSources[name] = new AutoTraceSource(name, listeners);
+			}
+			return traceSource;
 		}
 
 		/// <summary>
@@ -60,6 +106,14 @@ namespace JGL.Debugging
 		}
 
 		/// <summary>
+		/// The <see cref="TraceSource.Switch.Level"/>
+		/// </summary>
+		public SourceLevels SourceLevels {
+			get { return Switch.Level; }
+			set { Switch.Level = value; }
+		}
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="AutoTraceSource"/> class.
 		/// </summary>
 		/// <param name="traceListeners">Trace listeners to add to the <see cref="AutoTraceSource"/></param>
@@ -78,6 +132,19 @@ namespace JGL.Debugging
 		/// <param name="traceListeners">Trace listeners to add to the <see cref="AutoTraceSource"/></param>
 		public AutoTraceSource(string name, params TraceListener[] traceListeners)
 			: base(name, SourceLevels.All)
+		{
+			Switch.Level = SourceLevels.All;
+			Listeners.Clear();
+			Listeners.AddRange(traceListeners);
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="AutoTraceSource"/> class.
+		/// </summary>
+		/// <param name="type"><see cref="Type"/> that this <see cref="AutoTraceSource"/> is intended to trace for</param>
+		/// <param name="traceListeners">Trace listeners to add to the <see cref="AutoTraceSource"/></param>
+		public AutoTraceSource(Type type, params TraceListener[] traceListeners)
+			: base(type.Name, SourceLevels.All)
 		{
 			Switch.Level = SourceLevels.All;
 			Listeners.Clear();
@@ -131,6 +198,22 @@ namespace JGL.Debugging
 				foreach (TraceListener listener in this.Listeners)
 					listener.TraceEvent(new TraceEventCache(), Name, type, id, format, data);
 			}
+		}
+
+		/// <summary>
+		/// Assert the specified condition, logging result to <see cref="AutoTraceSource.Trace"/>
+		/// </summary>
+		/// <param name="condition">Condition</param>
+		public void Assert(bool condition)
+		{
+			//Debug.Assert(condition);
+			StackFrame sf = new StackFrame(1);
+			if (condition)
+				Trace.Log(TraceEventType.Verbose, "Assert OK at {0}+{1} (in file {2}:{3},{4}", sf.GetMethod().Name,
+					sf.GetILOffset(), sf.GetFileName(), sf.GetFileLineNumber(), sf.GetFileColumnNumber());
+			else
+				Trace.Log(TraceEventType.Information, "Assert FAILED at {0}+{1} (in file {2}:{3},{4}", sf.GetMethod().Name,
+					sf.GetILOffset(), sf.GetFileName(), sf.GetFileLineNumber(), sf.GetFileColumnNumber());
 		}
 	}
 }

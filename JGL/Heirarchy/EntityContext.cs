@@ -7,7 +7,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.Runtime;
 using System.Reflection;
-using System.Diagnostics;
+using JGL.Debugging;
 using OpenTK.Graphics.OpenGL;
 
 namespace JGL.Heirarchy
@@ -22,6 +22,11 @@ namespace JGL.Heirarchy
 	/// </remarks>
 	public class EntityContext : Entity, ICollection<Entity>
 	{
+		/// <summary>
+		/// Tracing
+		/// </summary>
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncFileTraceListener.GetOrCreate("JGL"));
+
 		#region Static members
 		/// <summary>
 		/// The root <see cref="JGL.Heirarchy.EntityContext"/>

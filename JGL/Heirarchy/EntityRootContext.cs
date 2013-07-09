@@ -1,4 +1,5 @@
 using System;
+using JGL.Debugging;
 
 namespace JGL.Heirarchy
 {
@@ -10,7 +11,11 @@ namespace JGL.Heirarchy
 	/// </summary>
 	public class EntityRootContext : EntityContext
 	{
-		
+		/// <summary>
+		/// Tracing
+		/// </summary>
+		public static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="JGL.Heirarchy.EntityRootContext"/> class.
 		/// </summary>

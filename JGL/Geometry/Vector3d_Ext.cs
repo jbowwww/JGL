@@ -6,6 +6,11 @@ namespace JGL.Geometry
 {
 	public static class Vector3d_Ext
 	{
+		/// <summary>
+		/// Tracing
+		/// </summary>
+		public static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
+
 		public static Vector3d Set(this Vector3d v, double x, double y, double z)
 		{
 			v.X = x;

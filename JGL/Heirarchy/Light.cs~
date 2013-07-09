@@ -2,11 +2,17 @@ using System;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using JGL.Debugging;
 
 namespace JGL.Heirarchy
 {
 	public class Light : Entity, IPositionable, IRotatable, IRenderable
 	{
+		/// <summary>
+		/// Tracing
+		/// </summary>
+		public static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
+
 		/// <summary>
 		/// Enable/disable the light
 		/// </summary>

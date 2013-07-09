@@ -4,6 +4,16 @@
         <name>/home/jk/Code/JGL/JGL/bin/Debug/JGL</name>
     </assembly>
     <members>
+        <member name="F:JGL.Extensions.MemberInfo_Ext.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="F:JGL.Extensions.Type_Ext.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
         <member name="M:JGL.Extensions.Type_Ext.IsSimple(System.Type)">
             <summary>
             Determines whether the given type is simple (i.e. a primitive, a string, datetime or timespan)
@@ -34,6 +44,11 @@
             Initializes a new <see cref="T:JGL.Heirarchy.Entity" /> instance
             <see cref="!:JGL.Heirarchy.Context.Entities" /></summary>
             <param name="name">Entity Name</param>
+        </member>
+        <member name="F:JGL.Heirarchy.Entity.Trace">
+            <summary>
+            Tracing
+            </summary>
         </member>
         <member name="P:JGL.Heirarchy.Entity.Owner">
             <summary>
@@ -86,6 +101,1370 @@
                 <see cref="!:JGL.Heirarchy.Context" /> that the returned relative ID should be in relation to</param>
             <exception cref="T:System.ArgumentOutOfRangeException">Thrown if <paramref name="reference" /> is not an ancestor of this <see cref="T:JGL.Heirarchy.Entity" /></exception>
         </member>
+        <member name="T:JGL.Heirarchy.Scene">
+            <summary>
+            Represents a scene graph, i.e. the top level <see cref="!:JGL.Heirarchy.Context" /> containing
+            a heirarchy of <see cref="T:JGL.Heirarchy.Entity" />s
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Scene.#ctor(JGL.Heirarchy.Entity[])">
+            <summary>
+            Construct a new <see cref="T:JGL.Heirarchy.Scene" /></summary>
+            <param name="name">
+                <see cref="P:JGL.Heirarchy.Entity.Name" /> of the new scene</param>
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Scene" /> class.
+            </summary>
+            <param name="children">Zero or more child entities to add to this <see cref="!:JGL.Heirarchy.Context" /></param>
+        </member>
+        <member name="M:JGL.Heirarchy.Scene.#ctor(System.String,JGL.Heirarchy.Entity[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Scene" /> class.
+            </summary>
+            <param name="children">Zero or more child entities to add to this <see cref="!:JGL.Heirarchy.Context" /></param>
+            <param name="name">Entity name</param>
+        </member>
+        <member name="F:JGL.Heirarchy.Scene.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Scene.Render(JGL.Heirarchy.RenderArgs)">
+            <summary>
+            Renders the scene by recursing through the heirarchy, inspecting each <see cref="T:JGL.Heirarchy.Entity" />
+            to see which interfaces it implements and performing the appropriate operations.
+            </summary>
+            <param name="renderArgs">Render context.</param>
+            <remarks>IRenderable implementation</remarks>
+        </member>
+        <member name="T:JGL.Heirarchy.Sector">
+            <summary>
+            Represents a subspace of a <see cref="T:JGL.Heirarchy.Scene" />, and contains child <see cref="T:JGL.Heirarchy.Entity" />s
+            (such as <see cref="!:JGL.Heirarchy.MeshObject" />s)
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Sector.#ctor(JGL.Heirarchy.Entity[])">
+            <summary>
+            Initializes a new <see cref="T:JGL.Heirarchy.Sector" /> instance, optionally containing supplied
+            child <see cref="T:JGL.Heirarchy.Entity" />s.
+            </summary>
+            <param name="children">Child entities to add to this <see cref="!:JGL.Heirarchy.Context" /></param>
+        </member>
+        <member name="F:JGL.Heirarchy.Sector.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="P:JGL.Heirarchy.Sector.Objects">
+            <summary>
+            Gets child objects
+            </summary>
+        </member>
+        <member name="P:JGL.Heirarchy.Sector.Position">
+            <summary>
+            Position in 3D space
+            </summary>
+            <remarks>IPositionable implementation</remarks>
+        </member>
+        <member name="P:JGL.Heirarchy.Sector.Rotation">
+            <summary>
+            Rotation in 3D space (X,Y,Z each describe number of degrees rotation around the X/Y/Z unit vector)
+            </summary>
+            <remarks>IRotatable implementation</remarks>
+        </member>
+        <member name="T:JGL.Heirarchy.IRenderable">
+            <summary>
+            Implemented by renderable instances in a <see cref="T:JGL.Heirarchy.Scene" /></summary>
+        </member>
+        <member name="M:JGL.Heirarchy.IRenderable.Render(JGL.Heirarchy.RenderArgs)">
+            <summary>
+            Render the specified currentlyUnused.
+            </summary>
+            <param name="currentlyUnused">Will probably need to pass some sort of state and/or context</param>
+        </member>
+        <member name="T:JGL.Heirarchy.Mesh">
+            <summary>
+            Represents a 3D mesh made up of a vertex array, and optionally normal and texture coordinate arrays
+            If using texture coordinates the <see cref="!:JGL.Heirarchy.Mesh.Texture" /> property should also be set
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Mesh.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Mesh" /> class.
+            </summary>
+            <param name="name">
+            Name.
+            </param>
+        </member>
+        <member name="M:JGL.Heirarchy.Mesh.#ctor(System.String,JGL.Geometry.VertexData,System.Collections.Generic.IList{JGL.Geometry.TriangleFace})">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Mesh" /> class.
+            </summary>
+            <param name="vertexData">
+            VertexData.
+            </param>
+        </member>
+        <member name="M:JGL.Heirarchy.Mesh.#ctor(System.String,JGL.Geometry.VertexData,System.Collections.Generic.IEnumerable{JGL.Geometry.TriangleFace})">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Mesh" /> class.
+            </summary>
+            <param name="name">
+            Name.
+            </param>
+            <param name="vertexData">
+            VertexData.
+            </param>
+            <param name="triangles">
+            Triangles.
+            </param>
+        </member>
+        <member name="M:JGL.Heirarchy.Mesh.#ctor(System.String,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Mesh" /> class from an .OBJ (lightwave) file
+            </summary>
+            <param name="filename">
+            Filename.
+            </param>
+            <param name="dummy">
+            Dummy.
+            </param>
+        </member>
+        <member name="F:JGL.Heirarchy.Mesh.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <!--FIXME: Invalid documentation markup was found for member F:JGL.Heirarchy.Mesh.VertexData-->
+        <member name="F:JGL.Heirarchy.Mesh.Material">
+            <summary>
+            The material.
+            </summary>
+        </member>
+        <member name="F:JGL.Heirarchy.Mesh.Triangles">
+            <summary>
+            The triangles.
+            </summary>
+        </member>
+        <member name="F:JGL.Heirarchy.Mesh.TwoSided">
+            <summary>
+            Gets the triangles as an array.
+            </summary>
+            <remarks>
+            	-	TODO: Look into (think about, test) if using this would speed up looping through triangles when rendering?
+            		-	Any benefit probably limited/negated/overshadowed by having to copy elements to a new array each time
+            </remarks>
+            <summary>
+            Indicate if mesh faces should be drawn one or two sided
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Mesh.Render(JGL.Heirarchy.RenderArgs)">
+            <summary>
+            Render <see cref="T:JGL.Heirarchy.Mesh" /></summary>
+            <param name="args">Render arguments</param>
+            <remarks>IRenderable implementation</remarks>
+        </member>
+        <member name="M:JGL.Heirarchy.Mesh.RenderFaces">
+            <summary>
+            Renders triangles, not using a texture
+            </summary>
+            <remarks>
+            	-	Assumes <see cref="F:JGL.Heirarchy.Mesh.Triangles" /> != <c>null</c></remarks>
+        </member>
+        <member name="M:JGL.Heirarchy.Mesh.RenderFacesTextured">
+            <summary>
+            Renders triangles, using <see cref="!:Mesh.Material.Texture" /></summary>
+            <remarks>
+            	-	Assumes <see cref="F:JGL.Heirarchy.Mesh.Triangles" /> != <c>null</c> and in each <see cref="!:Triangle" />, assumes
+            		<see cref="!:Triangle.V" /> != <c>null</c>, <see cref="!:Triangle.N" /> != <c>null</c> and <see cref="!:Triangle.T" /> != <c>null</c></remarks>
+        </member>
+        <member name="M:JGL.Heirarchy.Mesh.LoadObjFile(System.IO.Stream)">
+            <summary>
+            Loads the object file.
+            </summary>
+            <param name="fs">Stream containing lightwave .OBJ format data</param>
+        </member>
+        <member name="F:JGL.Geometry.TexCoord.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="T:JGL.Resource.Resource">
+            <summary>
+            Abstract resource base class
+            </summary>
+        </member>
+        <member name="M:JGL.Resource.Resource.#ctor(System.Uri)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Resource.Resource" /> class with an autogenerated <see cref="!:Heirarchy.Entity.Name" /></summary>
+            <param name="uri">
+                <see cref="T:System.Uri" /> of the stored resource</param>
+        </member>
+        <member name="M:JGL.Resource.Resource.#ctor(System.String,System.Uri)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Resource.Resource" /> class.
+            </summary>
+            <param name="name">Resource name (no requirement to be unique)</param>
+            <param name="uri">
+                <see cref="T:System.Uri" /> of the stored resource</param>
+        </member>
+        <member name="F:JGL.Resource.Resource.LoadThreadSleepTime">
+            <summary>
+            Constant load thread sleep time.
+            </summary>
+        </member>
+        <member name="F:JGL.Resource.Resource.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="F:JGL.Resource.Resource.LoadThread">
+            <summary>
+            Dedicated <see cref="T:JGL.Resource.Resource" /> loading thread
+            </summary>
+        </member>
+        <member name="P:JGL.Resource.Resource.IsLoaded">
+            <summary>
+            Gets a value indicating whether this resource is loaded.
+            </summary>
+        </member>
+        <member name="P:JGL.Resource.Resource.URI">
+            <summary>
+            The <see cref="T:System.Uri" /> of the stored resource
+            </summary>
+        </member>
+        <member name="M:JGL.Resource.Resource.LoadResources">
+            <summary>
+            Executed on the dedicated <see cref="T:JGL.Resource.Resource" /> loading thread, <see cref="F:JGL.Resource.Resource.LoadThread" /></summary>
+        </member>
+        <member name="M:JGL.Resource.Resource.Get(System.String)">
+            <summary>
+            Get the specified <see cref="T:JGL.Resource.Resource" /></summary>
+            <param name="name">The <see cref="P:JGL.Heirarchy.Entity.Name" /> of the <see cref="T:JGL.Resource.Resource" /> to get</param>
+            <returns>The <see cref="T:JGL.Resource.Resource" /> with name <paramref name="name" />, if it exists, contained in <see cref="F:JGL.Heirarchy.EntityContext.RootContext" /></returns>
+        </member>
+        <member name="M:JGL.Resource.Resource.Init(System.String,System.Uri)">
+            <summary>
+            Init the instance using given name and uri.
+            </summary>
+            <param name="name">
+                <see cref="!:Heirarchy.Entity.Name" />
+            </param>
+            <param name="uri">Resource URI</param>
+            <exception cref="T:System.IO.FileNotFoundException">Thrown if <paramref name="uri" /> is a file <see cref="T:System.Uri" /> and the file does not exist</exception>
+        </member>
+        <member name="M:JGL.Resource.Resource.GenerateBaseName">
+            <summary>
+            Generates the <see cref="P:JGL.Heirarchy.Entity.Name" /> base for auto naming
+            </summary>
+            <remarks>
+            Bases names on <see cref="P:JGL.Resource.Resource.URI" /> path, includes as a suffix, the URI scheme and, if not a file URI, the URI hostname
+            </remarks>
+        </member>
+        <member name="M:JGL.Resource.Resource.Load">
+            <summary>
+            Load the <see cref="T:JGL.Resource.Resource" /></summary>
+            <returns>
+                <c>true</c>, if loaded successfully, otherwise, <c>false</c></returns>
+        </member>
+        <member name="T:JGL.OpenGL.GLContextualData`2">
+            <summary>
+            GL contextual.
+            </summary>
+        </member>
+        <member name="M:JGL.OpenGL.GLContextualData`2.#ctor(GLContextualDataCreationHandler,`0)">
+            <summary>
+            Initializes a new instance of the <see cref="!:JGL.GL.GLContextualData" /> class.
+            </summary>
+        </member>
+        <member name="T:JGL.Heirarchy.Camera">
+            <summary>
+            Camera entity.
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Camera.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Camera" /> class.
+            </summary>
+            <param name="name">Camera's entity name</param>
+        </member>
+        <member name="M:JGL.Heirarchy.Camera.Render(JGL.Heirarchy.RenderArgs)">
+            <summary>
+            Render owner <see cref="T:JGL.Heirarchy.Scene" /> using the perspective of this <see cref="T:JGL.Heirarchy.Camera" />,
+            </summary>
+            <param name="renderArgs">Render arguments.</param>
+            <remarks>IRenderable implementation</remarks>
+        </member>
+        <member name="T:JGL.Heirarchy.IPositionable">
+            <summary>
+            I positionable.
+            </summary>
+        </member>
+        <member name="P:JGL.Heirarchy.IPositionable.Position">
+            <summary>
+            Position in 3D space
+            </summary>
+        </member>
+        <member name="T:JGL.Heirarchy.IRotatable">
+            <summary>
+            I rotatable.
+            </summary>
+        </member>
+        <member name="P:JGL.Heirarchy.IRotatable.Rotation">
+            <summary>
+            Rotation in 3D space (X,Y,Z each describe number of degrees rotation around the X/Y/Z unit vector)
+            </summary>
+        </member>
+        <member name="P:JGL.Heirarchy.IRotatable.Orientation">
+            <summary>
+            Gets or sets the object orientation (linked to <see cref="P:JGL.Heirarchy.Object.Rotation" /></summary>
+        </member>
+        <member name="M:JGL.Heirarchy.SimpleObject.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.SimpleObject" /> class.
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.SimpleObject.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.SimpleObject" /> class.
+            </summary>
+            <param name="name">Object name</param>
+        </member>
+        <member name="M:JGL.Heirarchy.SimpleObject.#ctor(System.String,JGL.Heirarchy.SimpleObject.RenderFunc)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.SimpleObject" /> class.
+            </summary>
+            <param name="name">Object name</param>
+        </member>
+        <member name="M:JGL.Heirarchy.SimpleObject.#ctor(JGL.Heirarchy.SimpleObject.RenderFunc)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.SimpleObject" /> class.
+            </summary>
+            <param name="name">Object name</param>
+        </member>
+        <member name="F:JGL.Heirarchy.SimpleObject.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="P:JGL.Heirarchy.SimpleObject.Position">
+            <summary>
+            Position in 3D space
+            </summary>
+            <remarks>IPositionable implementation</remarks>
+        </member>
+        <member name="P:JGL.Heirarchy.SimpleObject.Rotation">
+            <summary>
+            Rotation in 3D space (X,Y,Z each describe number of degrees rotation around the X/Y/Z unit vector)
+            </summary>
+            <remarks>IRotatable implementation</remarks>
+        </member>
+        <member name="M:JGL.Heirarchy.Light.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Light" /> class.
+            </summary>
+        </member>
+        <member name="F:JGL.Heirarchy.Light.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="F:JGL.Heirarchy.Light.Enabled">
+            <summary>
+            Enable/disable the light
+            </summary>
+        </member>
+        <member name="F:JGL.Heirarchy.Light.Ambient">
+            <summary>
+            Ambient light color.
+            </summary>
+        </member>
+        <member name="F:JGL.Heirarchy.Light.Diffuse">
+            <summary>
+            Ambient light color.
+            </summary>
+        </member>
+        <member name="F:JGL.Heirarchy.Light.Specular">
+            <summary>
+            Ambient light color.
+            </summary>
+        </member>
+        <member name="P:JGL.Heirarchy.Light.Position">
+            <summary>
+            Light's position
+            </summary>
+            <remarks>
+                <see cref="T:JGL.Heirarchy.IPositionable" /> implementation</remarks>
+        </member>
+        <member name="P:JGL.Heirarchy.Light.Rotation">
+            <summary>
+            Light's rotation
+            </summary>
+            <remarks>
+                <see cref="T:JGL.Heirarchy.IRotatable" /> implementation</remarks>
+        </member>
+        <member name="P:JGL.Heirarchy.Light.Orientation">
+            <summary>
+            Gets or sets the object orientation (linked to <see cref="P:JGL.Heirarchy.Object.Rotation" /></summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Light.Render(JGL.Heirarchy.RenderArgs)">
+            <summary>
+            Renders the light
+            </summary>
+            <param name="renderArgs">Render arguments.</param>
+            <remarks>
+                <see cref="T:JGL.Heirarchy.IRenderable" /> implementation</remarks>
+        </member>
+        <member name="T:JGL.Debugging.Debug">
+            <summary>
+            Wrapper class for <see cref="T:System.Diagnostics.Debug" />.
+            </summary>
+            <remarks>
+            	-	TODO: Check all references to this class and it's members, and see if those references
+            		can be changed to use <see cref="T:JGL.Debugging.AutoTraceSource" /> members, for example, <see cref="!:AutoTraceSource.Debug" />
+            		-	This class might then be obsolete
+            </remarks>
+        </member>
+        <member name="F:JGL.Debugging.Debug.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="M:JGL.Debugging.Debug.Assert(System.Boolean)">
+            <summary>
+            Assert the specified condition.
+            </summary>
+            <param name="condition">Condition</param>
+        </member>
+        <member name="T:JGL.Debugging.AsyncTraceListener">
+            <summary>
+            A trace listener that queues data it receives into a static (shared among all <see cref="T:JGL.Debugging.AsyncTraceListener" />s)
+            queue until the background thread (see <see cref="M:JGL.Debugging.AsyncTraceListener.RunThread" />) formats it for output and writes it to the <see cref="T:System.IO.Stream" />
+            associated with the <see cref="T:JGL.Debugging.AsyncTraceListener" /> the message belongs too
+            </summary>
+        </member>
+        <member name="M:JGL.Debugging.AsyncTraceListener.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Debugging.AsyncTraceListener" /> class.
+            </summary>
+            <param name="name">Name</param>
+        </member>
+        <member name="T:JGL.Debugging.AsyncTraceListener.LogMessage">
+            <summary>
+            Log message class stores log message parameters
+            </summary>
+        </member>
+        <member name="M:JGL.Debugging.AsyncTraceListener.LogMessage.#ctor(JGL.Debugging.AsyncTraceListener,System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Debugging.AsyncTraceListener.LogMessage" /> class.
+            </summary>
+            <param name="listener">The listener the message is for</param>
+            <param name="eventCache">Event cache</param>
+            <param name="source">Source</param>
+            <param name="eventType">Event type</param>
+            <param name="id">Identifier</param>
+            <param name="data">Data</param>
+        </member>
+        <member name="F:JGL.Debugging.AsyncTraceListener.LogMessage.EventCache">
+            <summary>Event cache</summary>
+        </member>
+        <member name="F:JGL.Debugging.AsyncTraceListener.LogMessage.Source">
+            <summary>The <see cref="T:System.Diagnostics.TraceSource" /> that the message originated from</summary>
+        </member>
+        <member name="F:JGL.Debugging.AsyncTraceListener.LogMessage.EventType">
+            <summary>
+                <see cref="T:System.Diagnostics.TraceEventType" /> event type</summary>
+        </member>
+        <member name="F:JGL.Debugging.AsyncTraceListener.LogMessage.Id">
+            <summary>Trace message ID</summary>
+        </member>
+        <member name="F:JGL.Debugging.AsyncTraceListener.LogMessage.Data">
+            <summary>Data to go with the </summary>
+        </member>
+        <member name="F:JGL.Debugging.AsyncTraceListener.LogMessage.Listener">
+            <summary>Listener the <see cref="T:JGL.Debugging.AsyncTraceListener.LogMessage" /> is intended for</summary>
+        </member>
+        <member name="F:JGL.Debugging.AsyncTraceListener.LogMessage.OutputOptions">
+            <summary>
+                <see cref="T:System.Diagnostics.TraceOptions" /> for output</summary>
+        </member>
+        <member name="P:JGL.Debugging.AsyncTraceListener.LogMessage.Message">
+            <summary>Gets the formatted message string</summary>
+        </member>
+        <member name="F:JGL.Debugging.AsyncTraceListener.ThreadWaitTime">
+            <summary>
+            Time (in milliseconds) for <see cref="M:JGL.Debugging.AsyncTraceListener.RunThread" /> to sleep for,
+            after writing all <see cref="T:JGL.Debugging.AsyncTraceListener.LogMessage" />s in queue
+            </summary>
+        </member>
+        <member name="F:JGL.Debugging.AsyncTraceListener.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="F:JGL.Debugging.AsyncTraceListener._stop">
+            <summary>
+            Indicates that this <see cref="T:JGL.Debugging.AsyncTraceListener" /> should be stopped
+            </summary>
+        </member>
+        <member name="F:JGL.Debugging.AsyncTraceListener.Stream">
+            <summary>
+            The stream that this <see cref="T:JGL.Debugging.AsyncTraceListener" /> writes to
+            </summary>
+        </member>
+        <member name="M:JGL.Debugging.AsyncTraceListener.GetOrCreate(System.String,System.Type)">
+            <summary>
+            Gets or create a <see cref="T:JGL.Debugging.AsyncTraceListener" /></summary>
+            <returns>
+            The retrieved or newly created <see cref="T:JGL.Debugging.AsyncTraceListener" /></returns>
+            <param name="name">Name of listener to get/create</param>
+            <param name="type">Type of listener to create</param>
+        </member>
+        <member name="M:JGL.Debugging.AsyncTraceListener.RunThread">
+            <summary>
+            Thread entry point
+            </summary>
+            <remarks>
+            TODO: Try out a few different approaches to this e.g.
+            		- 31/5 This current approach is the 1-thread running in the background, with a single queue,
+            		handling stream writing for all listeners and their streams
+            			+ just noticed _messageQueue.TryDequeue should be in a while() conditional expression, not an if
+            				(with if thread Sleeps() inbetween writing every message - should loop until queue empty without delay?
+            				maybe small delay? don't want this thread randomly hammering a more important thread (e.g. update/render scenes)
+            				- Fixed 8/6
+            		- Would 1 thread per listener/stream work better?
+            		- Both above approaches with varying Thread.Sleep() times
+            		- Use Async File operations? How to get an async-capable file handle?
+            			+ Thread doesn't wait for each Stream.Write(), instead collects IAsyncResults from a BeginWrite for every
+            				message found in the queue for this iteration. Also builds list of the listeners that were involved.
+            				At end of thread, calls all the Stream.EndRead() methods and then flushes each listener once
+            					- This approach may or may not work - depends on semantics of Stream's Async methods
+            					  Definitely worth looking into, the Async approach is probably the best of these above alternatives to try first (?)
+            </remarks>
+        </member>
+        <member name="M:JGL.Debugging.AsyncTraceListener.StopAll">
+            <summary>
+            Stops all <see cref="T:JGL.Debugging.AsyncTraceListener" />s by setting a flag that indicates that <see cref="M:JGL.Debugging.AsyncTraceListener.RunThread" /> should return
+            </summary>
+        </member>
+        <member name="M:JGL.Debugging.AsyncTraceListener.FormatMessage(JGL.Debugging.AsyncTraceListener.LogMessage)">
+            <summary>
+            Format message delegate method. Formats a <see cref="T:JGL.Debugging.AsyncTraceListener.LogMessage" /> instance into <see cref="T:System.Byte[]" /> data to be
+            written to the output <see cref="T:System.IO.Stream" />. Override to customise behaviour.
+            </summary>
+        </member>
+        <member name="M:JGL.Debugging.AsyncTraceListener.Dispose(System.Boolean)">
+            <summary>
+            Dispose of this <see cref="T:JGL.Debugging.AsyncTraceListener" /> (calls <see cref="!:Stop" />)
+            </summary>
+            <param name="disposing">Disposing</param>
+        </member>
+        <member name="M:JGL.Debugging.AsyncTraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)">
+            <summary>
+            Called by <see cref="T:System.Diagnostics.TraceSource" /> methods to specify a message to log
+            </summary>
+            <param name="eventCache">Event cache</param>
+            <param name="source">Source</param>
+            <param name="eventType">Event type</param>
+            <param name="id">Identifier</param>
+            <param name="data">Data</param>
+        </member>
+        <member name="M:JGL.Debugging.AsyncTraceListener.Write(System.String)">
+            <summary>
+            Write the specified message.
+            </summary>
+            <param name="message">
+            Message.
+            </param>
+            <exception cref="T:System.InvalidOperationException">
+            Is thrown when an operation cannot be performed.
+            </exception>
+            <remarks>Only implemented because base class marks it as abstract - due to my <see cref="M:JGL.Debugging.AsyncTraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)" /> override this should never execute</remarks>
+        </member>
+        <member name="M:JGL.Debugging.AsyncTraceListener.WriteLine(System.String)">
+            <summary>
+            Write the specified message.
+            </summary>
+            <param name="message">
+            Message.
+            </param>
+            <exception cref="T:System.InvalidOperationException">
+            Is thrown when an operation cannot be performed.
+            </exception>
+            <remarks>Only implemented because base class marks it as abstract - due to my <see cref="M:JGL.Debugging.AsyncTraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)" /> override this should never execute</remarks>
+        </member>
+        <member name="M:JGL.Debugging.AsyncTraceListener.OpenStream">
+            <summary>
+            The open stream method opens the output stream when required by the background thread. Override to customise behaviour.
+            </summary>
+        </member>
+        <member name="T:JGL.Debugging.AutoTraceSource">
+            <summary>
+            Designed to simplify use of <see cref="T:System.Diagnostics.TraceSource" /></summary>
+        </member>
+        <member name="M:JGL.Debugging.AutoTraceSource.#ctor(System.Diagnostics.TraceListener[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Debugging.AutoTraceSource" /> class.
+            </summary>
+            <param name="traceListeners">Trace listeners to add to the <see cref="T:JGL.Debugging.AutoTraceSource" /></param>
+        </member>
+        <member name="M:JGL.Debugging.AutoTraceSource.#ctor(System.String,System.Diagnostics.TraceListener[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Debugging.AutoTraceSource" /> class.
+            </summary>
+            <param name="name">Name for the new <see cref="T:JGL.Debugging.AutoTraceSource" /></param>
+            <param name="traceListeners">Trace listeners to add to the <see cref="T:JGL.Debugging.AutoTraceSource" /></param>
+        </member>
+        <member name="M:JGL.Debugging.AutoTraceSource.#ctor(System.Type,System.Diagnostics.TraceListener[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Debugging.AutoTraceSource" /> class.
+            </summary>
+            <param name="type">
+                <see cref="T:System.Type" /> that this <see cref="T:JGL.Debugging.AutoTraceSource" /> is intended to trace for</param>
+            <param name="traceListeners">Trace listeners to add to the <see cref="T:JGL.Debugging.AutoTraceSource" /></param>
+        </member>
+        <member name="F:JGL.Debugging.AutoTraceSource.Trace">
+            <summary>
+            Tracing <see cref="T:JGL.Debugging.AutoTraceSource" /></summary>
+        </member>
+        <member name="F:JGL.Debugging.AutoTraceSource._namedSources">
+            <summary>
+                <see cref="T:JGL.Debugging.AutoTraceSource" /> instances, keyed by <see cref="P:System.Diagnostics.TraceSource.Name" /></summary>
+        </member>
+        <member name="F:JGL.Debugging.AutoTraceSource._traceId">
+            <summary>
+            Current trace id
+            </summary>
+        </member>
+        <member name="P:JGL.Debugging.AutoTraceSource.TraceId">
+            <summary>
+            Gets the current trace identifier (incremented for each message logged)
+            </summary>
+        </member>
+        <member name="P:JGL.Debugging.AutoTraceSource.Timestamp">
+            <summary>
+            Formats a timestamp for use with trace messages
+            </summary>
+        </member>
+        <member name="P:JGL.Debugging.AutoTraceSource.SourceLevels">
+            <summary>
+            The <see cref="!:TraceSource.Switch.Level" /></summary>
+        </member>
+        <member name="M:JGL.Debugging.AutoTraceSource.GetOrCreate(System.Diagnostics.TraceListener[])">
+            <summary>
+            Gets or creates an <see cref="T:JGL.Debugging.AutoTraceSource" /> with the specified <paramref name="name" /></summary>
+            <returns>An <see cref="T:JGL.Debugging.AutoTraceSource" /> reference</returns>
+            <param name="traceListeners">
+                <see cref="T:System.Diagnostics.TraceListener" />s that should be in <see cref="P:System.Diagnostics.TraceSource.Listeners" /></param>
+        </member>
+        <member name="M:JGL.Debugging.AutoTraceSource.GetOrCreate(System.String,System.Diagnostics.TraceListener[])">
+            <summary>
+            Gets or creates an <see cref="T:JGL.Debugging.AutoTraceSource" /> with the specified <paramref name="name" /></summary>
+            <returns>An <see cref="T:JGL.Debugging.AutoTraceSource" /> reference</returns>
+            <param name="name">Name for the <see cref="T:JGL.Debugging.AutoTraceSource" /> to get or create</param>
+            <param name="traceListeners">
+                <see cref="T:System.Diagnostics.TraceListener" />s that should be in <see cref="P:System.Diagnostics.TraceSource.Listeners" /></param>
+        </member>
+        <member name="M:JGL.Debugging.AutoTraceSource.GetOrCreate(System.String,System.Boolean,System.Diagnostics.TraceListener[])">
+            <summary>
+            Gets or creates an <see cref="T:JGL.Debugging.AutoTraceSource" /> with the specified <paramref name="name" /></summary>
+            <returns>An <see cref="T:JGL.Debugging.AutoTraceSource" /> reference</returns>
+            <param name="name">Name for the <see cref="T:JGL.Debugging.AutoTraceSource" /> to get or create</param>
+            <param name="autoAddConsoleListener">Whether to add a new <see cref="T:System.Diagnostics.ConsoleTraceListener" /> to the <see cref="T:JGL.Debugging.AutoTraceSource" /> if creating a new instance</param>
+            <param name="traceListeners">
+                <see cref="T:System.Diagnostics.TraceListener" />s that should be in <see cref="P:System.Diagnostics.TraceSource.Listeners" /></param>
+        </member>
+        <member name="M:JGL.Debugging.AutoTraceSource.Log(System.Diagnostics.TraceEventType,System.Object[])">
+            <summary>
+            Log specified <paramref name="data" /> in a <see cref="!:LogMessage" /> using the specified <see cref="T:System.Diagnostics.TraceEventType" /></summary>
+            <param name="type">The <see cref="T:System.Diagnostics.TraceEventType" /> for this <see cref="!:LogMessage" /></param>
+            <param name="data">Data to log in <see cref="!:LogMessage" /></param>
+        </member>
+        <member name="M:JGL.Debugging.AutoTraceSource.Log(System.Diagnostics.TraceEventType,System.String)">
+            <summary>
+            Log specified <paramref name="data" /> in a <see cref="!:LogMessage" /> using the specified <see cref="T:System.Diagnostics.TraceEventType" /></summary>
+            <param name="type">The <see cref="T:System.Diagnostics.TraceEventType" /> for this <see cref="!:LogMessage" /></param>
+            <param name="message">Message to log in <see cref="!:LogMessage" /></param>
+        </member>
+        <member name="M:JGL.Debugging.AutoTraceSource.Log(System.Diagnostics.TraceEventType,System.String,System.Object[])">
+            <summary>
+            Log specified <paramref name="data" /> in a <see cref="!:LogMessage" /> using the specified <see cref="T:System.Diagnostics.TraceEventType" /></summary>
+            <param name="type">The <see cref="T:System.Diagnostics.TraceEventType" /> for this <see cref="!:LogMessage" /></param>
+            <param name="format">Message/Format string to log in <see cref="!:LogMessage" /></param>
+            <param name="data">Data to log in <see cref="!:LogMessage" /></param>
+        </member>
+        <member name="M:JGL.Debugging.AutoTraceSource.Assert(System.Boolean)">
+            <summary>
+            Assert the specified condition, logging result to <see cref="F:JGL.Debugging.AutoTraceSource.Trace" /></summary>
+            <param name="condition">Condition</param>
+        </member>
+        <member name="T:JGL.Debugging.AsyncFileTraceListener">
+            <summary>
+            Asynchronous trace listener that writes to a file
+            </summary>
+        </member>
+        <member name="M:JGL.Debugging.AsyncFileTraceListener.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Debugging.AsyncFileTraceListener" /> class.
+            </summary>
+            <param name="name">Name of the new trace listener</param>
+        </member>
+        <member name="F:JGL.Debugging.AsyncFileTraceListener.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="F:JGL.Debugging.AsyncFileTraceListener.PathPrefix">
+            <summary>
+            The path prefix.
+            </summary>
+        </member>
+        <member name="F:JGL.Debugging.AsyncFileTraceListener.PathSuffix">
+            <summary>
+            The path suffix.
+            </summary>
+        </member>
+        <member name="F:JGL.Debugging.AsyncFileTraceListener.TruncateFile">
+            <summary>
+            Whether to truncate the file before opening it for writing
+            </summary>
+        </member>
+        <member name="P:JGL.Debugging.AsyncFileTraceListener.Path">
+            <summary>
+            Path of the file that this trace listener will open
+            </summary>
+        </member>
+        <member name="M:JGL.Debugging.AsyncFileTraceListener.GetOrCreate(System.String)">
+            <summary>
+            Gets (if exists) or creates a <see cref="T:JGL.Debugging.AsyncFileTraceListener" /> with the specified <paramref name="name" /></summary>
+            <returns>An <see cref="T:JGL.Debugging.AsyncFileTraceListener" /> reference</returns>
+            <param name="name">Name of the <see cref="T:JGL.Debugging.AsyncFileTraceListener" /> to get or create</param>
+        </member>
+        <member name="M:JGL.Debugging.AsyncFileTraceListener.OpenStream">
+            <summary>
+            Opens the <see cref="T:System.IO.Stream" /> the trace listener will write to
+            </summary>
+            <returns>The newly opened <see cref="T:System.IO.Stream" /></returns>
+            <remarks>
+            Implementation of abstract member of JGL.Debugging.AsyncTraceListener
+            </remarks>
+        </member>
+        <member name="T:JGL.Heirarchy.Object">
+            <summary>
+            An <see cref="T:JGL.Heirarchy.Entity" /> in 3D space, ie it implements <see cref="T:JGL.Heirarchy.IPositionable" /> and <see cref="T:JGL.Heirarchy.IRotatable" /></summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Object.#ctor(JGL.Heirarchy.Entity[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Object" /> class.
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Object.#ctor(System.String,JGL.Heirarchy.Entity[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Object" /> class.
+            </summary>
+        </member>
+        <member name="F:JGL.Heirarchy.Object.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="P:JGL.Heirarchy.Object.Position">
+            <summary>
+            Position in 3D space
+            </summary>
+            <remarks>IPositionable implementation</remarks>
+        </member>
+        <member name="P:JGL.Heirarchy.Object.Rotation">
+            <summary>
+            Rotation in 3D space (X,Y,Z each describe number of degrees rotation around the X/Y/Z unit vector)
+            </summary>
+            <remarks>IRotatable implementation</remarks>
+        </member>
+        <member name="P:JGL.Heirarchy.Object.Orientation">
+            <summary>
+            Gets or sets the object orientation (linked to <see cref="P:JGL.Heirarchy.Object.Rotation" /></summary>
+        </member>
+        <member name="P:JGL.Heirarchy.Object.SubObjects">
+            <summary>
+            Gets child objects
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Object.Move(OpenTK.Vector3d,System.Double)">
+            <summary>
+            Move Position vector a distance in the given direction
+            </summary>
+            <param name="direction">
+            Orientation.
+            </param>
+            <param name="distance">
+            Distance.
+            </param>
+            <remarks>
+            TODO:
+            Implement/find your own Vector3d class, use that, move this method into that class. Could leave it here as well and
+            call the Vector3d member. V3d class will need explicit (and implicit if possible?) conversion operator to OpenTK.Vector3d
+            </remarks>
+        </member>
+        <member name="M:JGL.Heirarchy.Object.MoveForward(System.Double)">
+            <summary>Moves <see cref="T:JGL.Heirarchy.Entity" /> forward</summary>
+            <param name="distance">Distance to move, default 1.0</param>
+        </member>
+        <member name="M:JGL.Heirarchy.Object.MoveBackward(System.Double)">
+            <summary>Moves <see cref="T:JGL.Heirarchy.Entity" /> backward</summary>
+            <param name="distance">Distance to move, default 1.0</param>
+        </member>
+        <member name="F:JGL.Geometry.Vector3d_Ext.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="F:JGL.Geometry.Vector3d.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="F:JGL.Geometry.Normal.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="F:JGL.Geometry.Vertex.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="T:JGL.Heirarchy.Library.Box">
+            <summary>
+            A mesh representation of a box in 3D space
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Library.Box.#ctor(JGL.Heirarchy.Library.Box.BoxTexturiseMode)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Box" /> class.
+            </summary>
+            <param name="name">Name</param>
+        </member>
+        <member name="M:JGL.Heirarchy.Library.Box.#ctor(System.String,JGL.Heirarchy.Library.Box.BoxTexturiseMode)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Box" /> class.
+            </summary>
+            <param name="name">Name</param>
+        </member>
+        <member name="M:JGL.Heirarchy.Library.Box.#ctor(System.String,System.Double,System.Double,System.Double,JGL.Heirarchy.Library.Box.BoxTexturiseMode)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Box" /> class.
+            </summary>
+            <param name="name">Name</param>
+            <param name="xSize">X size</param>
+            <param name="ySize">Y size</param>
+            <param name="zSize">Z size</param>
+        </member>
+        <member name="M:JGL.Heirarchy.Library.Box.#ctor(System.Double,System.Double,System.Double,JGL.Heirarchy.Library.Box.BoxTexturiseMode)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Box" /> class.
+            </summary>
+            <param name="xSize">X size</param>
+            <param name="ySize">Y size</param>
+            <param name="zSize">Z size</param>
+        </member>
+        <member name="T:JGL.Heirarchy.Library.Box.BoxTexturiseMode">
+            <summary>
+            Box texturise mode
+            </summary>
+            <remarks>Passed to texturise methods to indicate how texture coordinates are generated</remarks>
+        </member>
+        <member name="F:JGL.Heirarchy.Library.Box.BoxTexturiseMode.TextureEachFace">
+            <summary>
+            Each face of the box displays the whole texture from (0,0) to (1,1)
+            </summary>
+        </member>
+        <member name="F:JGL.Heirarchy.Library.Box.BoxTexturiseMode.TextureWholeBox">
+            <summary>
+            Texture is mapped around the box
+            </summary>
+            <remarks>
+            	- Texture aspect ratio should be 4:3
+            		- Left 1/4 of texture contains top, front and bottom sides
+            		- Vertically middle 1/3 of texture contains front, right, back and left sides
+            		- Other half of texture coordinate space not used
+            </remarks>
+        </member>
+        <member name="F:JGL.Heirarchy.Library.Box.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Library.Box.Init(System.Double,System.Double,System.Double,JGL.Heirarchy.Library.Box.BoxTexturiseMode)">
+            <summary>
+            Init the specified xSize, ySize, zSize and material.
+            </summary>
+            <param name="xSize">X size</param>
+            <param name="ySize">Y size</param>
+            <param name="zSize">Z size</param>
+            <param name="mode">Box texturing mode</param>
+            <remarks>
+            	-	Worth rewriting this and below methods to get texcoord array from another method, selected using BoxTexturingMode?
+            </remarks>
+        </member>
+        <member name="M:JGL.Heirarchy.Library.Box.Texturise(JGL.Heirarchy.Library.Box.BoxTexturiseMode)">
+            <summary>
+            Generates texture coordinates for the box using the specified mode
+            </summary>
+            <param name="mode">Mode of texture coordinate generation</param>
+            <remarks>
+            	-	Should this assume all vertices have been generated, insert new texcoords directly into Triangles array??
+            		-	See remarks for <see cref="M:JGL.Heirarchy.Library.Box.Init(System.Double,System.Double,System.Double,JGL.Heirarchy.Library.Box.BoxTexturiseMode)" /></remarks>
+        </member>
+        <member name="F:JGL.Heirarchy.MaterialLibrary.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="P:JGL.Heirarchy.MaterialLibrary.Count">
+            <summary>
+            Gets the count.
+            </summary>
+            <value>
+            The count.
+            </value>
+            <remarks>ICollection[Material] implementation</remarks>
+        </member>
+        <member name="P:JGL.Heirarchy.MaterialLibrary.IsReadOnly">
+            <summary>
+            Gets a value indicating whether this instance is read only.
+            </summary>
+            <value>
+                <c>true</c> if this instance is read only; otherwise, <c>false</c>.
+            </value>
+            <remarks>ICollection[Material] implementation</remarks>
+        </member>
+        <member name="M:JGL.Heirarchy.MaterialLibrary.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Gets the enumerator.
+            </summary>
+            <returns>
+            The enumerator.
+            </returns>
+            <remarks>IEnumerable[Material] implementation</remarks>
+        </member>
+        <member name="M:JGL.Heirarchy.MaterialLibrary.Add(JGL.Heirarchy.Material)">
+            <summary>
+            Add the specified item.
+            </summary>
+            <param name="item">
+            Item.
+            </param>
+            <exception cref="T:System.InvalidOperationException">
+            Is thrown when an operation cannot be performed.
+            </exception>
+            <remarks>ICollection[Material] implementation</remarks>
+        </member>
+        <member name="M:JGL.Heirarchy.MaterialLibrary.Clear">
+            <summary>
+            Clear this instance.
+            </summary>
+            <remarks>ICollection[Material] implementation</remarks>
+        </member>
+        <member name="M:JGL.Heirarchy.MaterialLibrary.Contains(JGL.Heirarchy.Material)">
+            <summary>
+            Contains the specified item.
+            </summary>
+            <param name="item">
+            If set to <c>true</c> item.
+            </param>
+            <remarks>ICollection[Material] implementation</remarks>
+        </member>
+        <member name="M:JGL.Heirarchy.MaterialLibrary.Contains(System.String)">
+            <summary>
+            Contains the specified materialName.
+            </summary>
+            <param name="materialName">
+            If set to <c>true</c> material name.
+            </param>
+        </member>
+        <member name="M:JGL.Heirarchy.MaterialLibrary.CopyTo(JGL.Heirarchy.Material[],System.Int32)">
+            <summary>
+            Copies to.
+            </summary>
+            <param name="array">
+            Array.
+            </param>
+            <param name="arrayIndex">
+            Array index.
+            </param>
+            <remarks>ICollection[Material] implementation</remarks>
+        </member>
+        <member name="M:JGL.Heirarchy.MaterialLibrary.Remove(JGL.Heirarchy.Material)">
+            <summary>
+            Remove the specified item.
+            </summary>
+            <param name="item">
+            If set to <c>true</c> item.
+            </param>
+            <exception cref="T:System.InvalidOperationException">
+            Is thrown when an operation cannot be performed.
+            </exception>
+            <remarks>ICollection[Material] implementation</remarks>
+        </member>
+        <member name="M:JGL.Heirarchy.MaterialLibrary.GetEnumerator">
+            <summary>
+            Gets the enumerator.
+            </summary>
+            <returns>
+            The enumerator.
+            </returns>
+            <remarks>IEnumerable[Material] implementation</remarks>
+        </member>
+        <member name="M:JGL.Heirarchy.MaterialLibrary.LoadMtlFile(System.IO.Stream)">
+            <summary>
+            Loads the mtl file.
+            </summary>
+            <param name="fs">
+            Fs.
+            </param>
+        </member>
+        <member name="F:JGL.Heirarchy.Material.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Material.glSet">
+            <summary>
+            Sets the material parameters using OpenGL
+            </summary>
+            <remarks>
+            - May need a parameter in future (RenderArgs?) for making state information available
+            </remarks>
+        </member>
+        <member name="T:JGL.Heirarchy.Library.Quad">
+            <summary>
+            A quad mesh - 4 points, two triangles
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Library.Quad.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Quad" /> class.
+            </summary>
+            <param name="name">Entity name</param>
+        </member>
+        <member name="M:JGL.Heirarchy.Library.Quad.#ctor(System.String,System.Double,System.Double)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Quad" /> class.
+            </summary>
+            <param name="name">Entity name</param>
+            <param name="xSize">X size</param>
+            <param name="zSize">Z size</param>
+        </member>
+        <member name="M:JGL.Heirarchy.Library.Quad.#ctor(System.Double,System.Double)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Quad" /> class.
+            </summary>
+            <param name="xSize">X size</param>
+            <param name="zSize">Z size</param>
+        </member>
+        <member name="F:JGL.Heirarchy.Library.Quad.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Library.Quad.Init(System.Double,System.Double)">
+            <summary>
+            Init the specified xSize and zSize.
+            </summary>
+            <param name="xSize">X size</param>
+            <param name="zSize">Z size</param>
+        </member>
+        <member name="T:JGL.Heirarchy.Library.Triangle">
+            <summary>
+            A triangle mesh - 3 points, one triangle
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Library.Triangle.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Triangle" /> class.
+            </summary>
+            <param name="name">Entity name</param>
+        </member>
+        <member name="M:JGL.Heirarchy.Library.Triangle.#ctor(System.String,System.Double,System.Double)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Triangle" /> class.
+            </summary>
+            <param name="name">Entity name</param>
+            <param name="xSize">X size</param>
+            <param name="zSize">Z size</param>
+        </member>
+        <member name="M:JGL.Heirarchy.Library.Triangle.#ctor(System.Double,System.Double)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Triangle" /> class.
+            </summary>
+            <param name="xSize">X size</param>
+            <param name="zSize">Z size</param>
+        </member>
+        <member name="F:JGL.Heirarchy.Library.Triangle.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Library.Triangle.Init(System.Double,System.Double)">
+            <summary>
+            Init the specified xSize and zSize.
+            </summary>
+            <param name="xSize">X size</param>
+            <param name="zSize">Z size</param>
+        </member>
+        <member name="T:JGL.Heirarchy.Library.Grid">
+            <summary>
+            A grid mesh
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Library.Grid.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Grid" /> class.
+            </summary>
+        </member>
+        <member name="F:JGL.Heirarchy.Library.Grid.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Library.Grid.Init(System.Double,System.Double)">
+            <summary>
+            Init the specified xSize and zSize.
+            </summary>
+            <param name="xSize">X size</param>
+            <param name="zSize">Z size</param>
+        </member>
+        <member name="T:JGL.Heirarchy.RenderArgs">
+            <summary>
+            Contains info relevant to classes' implementations of <see cref="M:JGL.Heirarchy.IRenderable.Render(JGL.Heirarchy.RenderArgs)" /></summary>
+        </member>
+        <member name="M:JGL.Heirarchy.RenderArgs.#ctor(OpenTK.Graphics.IGraphicsContext,JGL.Heirarchy.EntityContext,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.RenderArgs" /> class.
+            </summary>
+            <param name="graphicsContext">Graphics context.</param>
+            <param name="entityContext">Entity context.</param>
+        </member>
+        <member name="F:JGL.Heirarchy.RenderArgs.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="F:JGL.Heirarchy.RenderArgs.Graphics">
+            <summary>
+            Graphics context being rendered to (which should always be the current one according to GraphicsContext.CurrentContext)
+            </summary>
+        </member>
+        <member name="F:JGL.Heirarchy.RenderArgs.Width">
+            <summary>
+            Window width
+            </summary>
+        </member>
+        <member name="F:JGL.Heirarchy.RenderArgs.Height">
+            <summary>
+            Window height
+            </summary>
+        </member>
+        <member name="F:JGL.Heirarchy.RenderArgs.Entities">
+            <summary>
+            The stack of <see cref="!:JGL.Heirarchy.Context" />s as rendered so far
+            </summary>
+        </member>
+        <member name="F:JGL.Heirarchy.RenderArgs.CurrentLightName">
+            <summary>
+            The current GL light. When <see cref="M:JGL.Heirarchy.Light.Render(JGL.Heirarchy.RenderArgs)" /> is called, the method increments this value.
+            </summary>
+        </member>
+        <member name="P:JGL.Heirarchy.RenderArgs.Entity">
+            <summary>
+            The current <see cref="!:JGL.Heirarchy.Context" /> being rendered
+            </summary>
+        </member>
+        <member name="P:JGL.Heirarchy.RenderArgs.IsEntityContextStackEmpty">
+            <summary>
+            Gets a value indicating whether the entity context stack <see cref="F:JGL.Heirarchy.RenderArgs.Entities" /> is empty
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.RenderArgs.Start">
+            <summary>
+            Marks the start time of a render frame
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.RenderArgs.Stop">
+            <summary>
+            Marks the stop time of a render frame
+            </summary>
+        </member>
+        <member name="F:JGL.Geometry.TriangleFace.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="T:JGL.Resource.Texture">
+            <summary>
+            Texture <see cref="T:JGL.Resource.Resource" /></summary>
+        </member>
+        <member name="M:JGL.Resource.Texture.#ctor(System.Uri)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Resource.Texture" /> class.
+            </summary>
+            <param name="uri">
+                <see cref="T:JGL.Resource.Texture" />
+                <see cref="T:System.Uri" />
+            </param>
+        </member>
+        <member name="M:JGL.Resource.Texture.#ctor(System.String,System.Uri)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Resource.Texture" /> class.
+            </summary>
+            <param name="name">
+                <see cref="T:JGL.Resource.Texture" />
+                <see cref="P:JGL.Heirarchy.Entity.Name" />
+            </param>
+            <param name="uri">
+                <see cref="T:JGL.Resource.Texture" />
+                <see cref="T:System.Uri" />
+            </param>
+        </member>
+        <member name="F:JGL.Resource.Texture.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="P:JGL.Resource.Texture.Image">
+            <summary>
+            Gets or sets the <see cref="T:JGL.Resource.Texture" /> image
+            </summary>
+        </member>
+        <member name="P:JGL.Resource.Texture.Width">
+            <summary>
+            Gets the width.
+            </summary>
+        </member>
+        <member name="P:JGL.Resource.Texture.Height">
+            <summary>
+            Gets the height.
+            </summary>
+        </member>
+        <member name="P:JGL.Resource.Texture.TextureId">
+            <summary>
+            The OpenGL texture id, stored for each GL context it has been used on
+            </summary>
+        </member>
+        <member name="M:JGL.Resource.Texture.Init(System.String,System.Uri)">
+            <summary>
+            Init the instance using given name and uri.
+            </summary>
+            <param name="name">
+                <see cref="T:JGL.Resource.Texture" />
+                <see cref="P:JGL.Heirarchy.Entity.Name" />
+            </param>
+            <param name="uri">
+                <see cref="T:JGL.Resource.Texture" />
+                <see cref="T:System.Uri" />
+            </param>
+        </member>
+        <member name="M:JGL.Resource.Texture.Load">
+            <summary>
+            Loads a <see cref="T:JGL.Resource.Texture" /><see cref="T:JGL.Resource.Resource" /></summary>
+            <returns>
+                <c>true</c> if successful, otherwise, <c>false</c></returns>
+            <remarks>
+            	- Executed on <see cref="F:JGL.Resource.Resource.LoadThread" /></remarks>
+        </member>
+        <member name="M:JGL.Resource.Texture.CreateGLTexture(JGL.Resource.Texture)">
+            <summary>
+            Creates the GL texture - called once for each GL graphics context the texture is used on (tex ids are different per context - correct?)
+            </summary>
+            <returns>The GL texture id</returns>
+            <param name="texture">
+                <see cref="T:JGL.Resource.Texture" />
+            </param>
+        </member>
+        <member name="T:JGL.Extensions.Uri_Ext">
+            <summary>
+            Extension method class for <see cref="T:System.Uri" /></summary>
+            <remarks>
+            	- TODO:
+            		- Tracing (sort out overall tracing approach (source names, how many sources, etc) within JGL project)
+            </remarks>
+        </member>
+        <member name="F:JGL.Extensions.Uri_Ext.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="M:JGL.Extensions.Uri_Ext.Open(System.Uri,System.IO.FileMode,System.IO.FileAccess,System.IO.FileShare)">
+            <summary>
+            Open the <paramref name="uri" /> and return a <see cref="!:System.Stream" /> representing it
+            </summary>
+            <param name="uri">
+                <see cref="T:System.Uri" /> to open</param>
+        </member>
+        <member name="T:JGL.Geometry.VertexData">
+            <summary>
+            Describes a collection vertices, and optionally normals, texture coordinates and materials, used by <see cref="T:JGL.Heirarchy.Mesh" /></summary>
+        </member>
+        <member name="M:JGL.Geometry.VertexData.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="!:JGL.Geometry.MeshVertexData" /> class.
+            </summary>
+        </member>
+        <member name="F:JGL.Geometry.VertexData.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="P:JGL.Geometry.VertexData.Vertices">
+            <summary>
+            The vertices.
+            </summary>
+        </member>
+        <member name="P:JGL.Geometry.VertexData.Normals">
+            <summary>
+            The normals.
+            </summary>
+        </member>
+        <member name="P:JGL.Geometry.VertexData.TexCoords">
+            <summary>
+            The tex coords.
+            </summary>
+        </member>
+        <member name="P:JGL.Geometry.VertexData.Materials">
+            <summary>
+            The texture.
+            </summary>
+        </member>
+        <member name="M:JGL.Geometry.VertexData.Clear">
+            <summary>
+            Clear this instance.
+            </summary>
+        </member>
+        <member name="T:JGL.Heirarchy.EntityRootContext">
+            <summary>
+            A special subclass of <see cref="!:JGL.Heirarchy.Context" /> designed
+            ... ??
+            to hold all <see cref="T:JGL.Heirarchy.Scene" />s ??
+            other top level entities??
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.EntityRootContext.#ctor(JGL.Heirarchy.Entity[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.EntityRootContext" /> class.
+            </summary>
+            <param name="entities">Optional parameter array of child <see cref="T:JGL.Heirarchy.Entity" /> instances</param>
+        </member>
+        <member name="M:JGL.Heirarchy.EntityRootContext.#ctor(System.String,JGL.Heirarchy.Entity[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.EntityRootContext" /> class.
+            </summary>
+            <param name="name">Name for the new <see cref="!:JGL.Heirarchy.Context" /></param>
+            <param name="entities">Optional parameter array of child <see cref="T:JGL.Heirarchy.Entity" /> instances</param>
+        </member>
+        <member name="F:JGL.Heirarchy.EntityRootContext.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
         <member name="T:JGL.Heirarchy.EntityContext">
             <summary>
             An <see cref="T:JGL.Heirarchy.Entity" />-derived class that contains 0+ child entities
@@ -122,6 +1501,11 @@
         <member name="F:JGL.Heirarchy.EntityContext._maxAutoNameIndexes">
             <summary>
             Constant: Maximum number of indexes that can be used for autonaming an <see cref="T:JGL.Heirarchy.Entity" /></summary>
+        </member>
+        <member name="F:JGL.Heirarchy.EntityContext.Trace">
+            <summary>
+            Tracing
+            </summary>
         </member>
         <member name="F:JGL.Heirarchy.EntityContext.RootContext">
             <summary>
@@ -271,1111 +1655,5 @@
             <param name="arrayIndex">The base index into the array to start copying to</param>
         </member>
         <!--FIXME: Invalid documentation markup was found for member M:JGL.Heirarchy.EntityContext.GetEnumerator-->
-        <member name="T:JGL.Heirarchy.Scene">
-            <summary>
-            Represents a scene graph, i.e. the top level <see cref="!:JGL.Heirarchy.Context" /> containing
-            a heirarchy of <see cref="T:JGL.Heirarchy.Entity" />s
-            </summary>
-        </member>
-        <member name="M:JGL.Heirarchy.Scene.#ctor(JGL.Heirarchy.Entity[])">
-            <summary>
-            Construct a new <see cref="T:JGL.Heirarchy.Scene" /></summary>
-            <param name="name">
-                <see cref="P:JGL.Heirarchy.Entity.Name" /> of the new scene</param>
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Scene" /> class.
-            </summary>
-            <param name="children">Zero or more child entities to add to this <see cref="!:JGL.Heirarchy.Context" /></param>
-        </member>
-        <member name="M:JGL.Heirarchy.Scene.#ctor(System.String,JGL.Heirarchy.Entity[])">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Scene" /> class.
-            </summary>
-            <param name="children">Zero or more child entities to add to this <see cref="!:JGL.Heirarchy.Context" /></param>
-            <param name="name">Entity name</param>
-        </member>
-        <member name="M:JGL.Heirarchy.Scene.Render(JGL.Heirarchy.RenderArgs)">
-            <summary>
-            Renders the scene by recursing through the heirarchy, inspecting each <see cref="T:JGL.Heirarchy.Entity" />
-            to see which interfaces it implements and performing the appropriate operations.
-            </summary>
-            <param name="renderArgs">Render context.</param>
-            <remarks>IRenderable implementation</remarks>
-        </member>
-        <member name="T:JGL.Heirarchy.Sector">
-            <summary>
-            Represents a subspace of a <see cref="T:JGL.Heirarchy.Scene" />, and contains child <see cref="T:JGL.Heirarchy.Entity" />s
-            (such as <see cref="!:JGL.Heirarchy.MeshObject" />s)
-            </summary>
-        </member>
-        <member name="M:JGL.Heirarchy.Sector.#ctor(JGL.Heirarchy.Entity[])">
-            <summary>
-            Initializes a new <see cref="T:JGL.Heirarchy.Sector" /> instance, optionally containing supplied
-            child <see cref="T:JGL.Heirarchy.Entity" />s.
-            </summary>
-            <param name="children">Child entities to add to this <see cref="!:JGL.Heirarchy.Context" /></param>
-        </member>
-        <member name="P:JGL.Heirarchy.Sector.Objects">
-            <summary>
-            Gets child objects
-            </summary>
-        </member>
-        <member name="P:JGL.Heirarchy.Sector.Position">
-            <summary>
-            Position in 3D space
-            </summary>
-            <remarks>IPositionable implementation</remarks>
-        </member>
-        <member name="P:JGL.Heirarchy.Sector.Rotation">
-            <summary>
-            Rotation in 3D space (X,Y,Z each describe number of degrees rotation around the X/Y/Z unit vector)
-            </summary>
-            <remarks>IRotatable implementation</remarks>
-        </member>
-        <member name="T:JGL.Heirarchy.IRenderable">
-            <summary>
-            Implemented by renderable instances in a <see cref="T:JGL.Heirarchy.Scene" /></summary>
-        </member>
-        <member name="M:JGL.Heirarchy.IRenderable.Render(JGL.Heirarchy.RenderArgs)">
-            <summary>
-            Render the specified currentlyUnused.
-            </summary>
-            <param name="currentlyUnused">Will probably need to pass some sort of state and/or context</param>
-        </member>
-        <member name="T:JGL.Heirarchy.Mesh">
-            <summary>
-            Represents a 3D mesh made up of a vertex array, and optionally normal and texture coordinate arrays
-            If using texture coordinates the <see cref="!:JGL.Heirarchy.Mesh.Texture" /> property should also be set
-            </summary>
-        </member>
-        <member name="M:JGL.Heirarchy.Mesh.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Mesh" /> class.
-            </summary>
-            <param name="name">
-            Name.
-            </param>
-        </member>
-        <member name="M:JGL.Heirarchy.Mesh.#ctor(System.String,JGL.Geometry.VertexData,System.Collections.Generic.IList{JGL.Geometry.TriangleFace})">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Mesh" /> class.
-            </summary>
-            <param name="vertexData">
-            VertexData.
-            </param>
-        </member>
-        <member name="M:JGL.Heirarchy.Mesh.#ctor(System.String,JGL.Geometry.VertexData,System.Collections.Generic.IEnumerable{JGL.Geometry.TriangleFace})">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Mesh" /> class.
-            </summary>
-            <param name="name">
-            Name.
-            </param>
-            <param name="vertexData">
-            VertexData.
-            </param>
-            <param name="triangles">
-            Triangles.
-            </param>
-        </member>
-        <member name="M:JGL.Heirarchy.Mesh.#ctor(System.String,System.Boolean)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Mesh" /> class from an .OBJ (lightwave) file
-            </summary>
-            <param name="filename">
-            Filename.
-            </param>
-            <param name="dummy">
-            Dummy.
-            </param>
-        </member>
-        <!--FIXME: Invalid documentation markup was found for member F:JGL.Heirarchy.Mesh.VertexData-->
-        <member name="F:JGL.Heirarchy.Mesh.Material">
-            <summary>
-            The material.
-            </summary>
-        </member>
-        <member name="F:JGL.Heirarchy.Mesh.Triangles">
-            <summary>
-            The triangles.
-            </summary>
-        </member>
-        <member name="F:JGL.Heirarchy.Mesh.TwoSided">
-            <summary>
-            Gets the triangles as an array.
-            </summary>
-            <remarks>
-            	-	TODO: Look into (think about, test) if using this would speed up looping through triangles when rendering?
-            		-	Any benefit probably limited/negated/overshadowed by having to copy elements to a new array each time
-            </remarks>
-            <summary>
-            Indicate if mesh faces should be drawn one or two sided
-            </summary>
-        </member>
-        <member name="M:JGL.Heirarchy.Mesh.Render(JGL.Heirarchy.RenderArgs)">
-            <summary>
-            Render <see cref="T:JGL.Heirarchy.Mesh" /></summary>
-            <param name="args">Render arguments</param>
-            <remarks>IRenderable implementation</remarks>
-        </member>
-        <member name="M:JGL.Heirarchy.Mesh.RenderFaces">
-            <summary>
-            Renders triangles, not using a texture
-            </summary>
-            <remarks>
-            	-	Assumes <see cref="F:JGL.Heirarchy.Mesh.Triangles" /> != <c>null</c></remarks>
-        </member>
-        <member name="M:JGL.Heirarchy.Mesh.RenderFacesTextured">
-            <summary>
-            Renders triangles, using <see cref="!:Mesh.Material.Texture" /></summary>
-            <remarks>
-            	-	Assumes <see cref="F:JGL.Heirarchy.Mesh.Triangles" /> != <c>null</c> and in each <see cref="!:Triangle" />, assumes
-            		<see cref="!:Triangle.V" /> != <c>null</c>, <see cref="!:Triangle.N" /> != <c>null</c> and <see cref="!:Triangle.T" /> != <c>null</c></remarks>
-        </member>
-        <member name="M:JGL.Heirarchy.Mesh.LoadObjFile(System.IO.Stream)">
-            <summary>
-            Loads the object file.
-            </summary>
-            <param name="fs">Stream containing lightwave .OBJ format data</param>
-        </member>
-        <member name="T:JGL.Resource.Resource">
-            <summary>
-            Abstract resource base class
-            </summary>
-        </member>
-        <member name="M:JGL.Resource.Resource.#ctor(System.Uri)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Resource.Resource" /> class with an autogenerated <see cref="!:Heirarchy.Entity.Name" /></summary>
-            <param name="uri">
-                <see cref="T:System.Uri" /> of the stored resource</param>
-        </member>
-        <member name="M:JGL.Resource.Resource.#ctor(System.String,System.Uri)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Resource.Resource" /> class.
-            </summary>
-            <param name="name">Resource name (no requirement to be unique)</param>
-            <param name="uri">
-                <see cref="T:System.Uri" /> of the stored resource</param>
-        </member>
-        <member name="F:JGL.Resource.Resource.LoadThreadSleepTime">
-            <summary>
-            Constant load thread sleep time.
-            </summary>
-        </member>
-        <member name="F:JGL.Resource.Resource.LoadThread">
-            <summary>
-            Dedicated <see cref="T:JGL.Resource.Resource" /> loading thread
-            </summary>
-        </member>
-        <member name="P:JGL.Resource.Resource.IsLoaded">
-            <summary>
-            Gets a value indicating whether this resource is loaded.
-            </summary>
-        </member>
-        <member name="P:JGL.Resource.Resource.URI">
-            <summary>
-            The <see cref="T:System.Uri" /> of the stored resource
-            </summary>
-        </member>
-        <member name="M:JGL.Resource.Resource.LoadResources">
-            <summary>
-            Executed on the dedicated <see cref="T:JGL.Resource.Resource" /> loading thread, <see cref="F:JGL.Resource.Resource.LoadThread" /></summary>
-        </member>
-        <member name="M:JGL.Resource.Resource.Get(System.String)">
-            <summary>
-            Get the specified <see cref="T:JGL.Resource.Resource" /></summary>
-            <param name="name">The <see cref="P:JGL.Heirarchy.Entity.Name" /> of the <see cref="T:JGL.Resource.Resource" /> to get</param>
-            <returns>The <see cref="T:JGL.Resource.Resource" /> with name <paramref name="name" />, if it exists, contained in <see cref="F:JGL.Heirarchy.EntityContext.RootContext" /></returns>
-        </member>
-        <member name="M:JGL.Resource.Resource.Init(System.String,System.Uri)">
-            <summary>
-            Init the instance using given name and uri.
-            </summary>
-            <param name="name">
-                <see cref="!:Heirarchy.Entity.Name" />
-            </param>
-            <param name="uri">Resource URI</param>
-            <exception cref="T:System.IO.FileNotFoundException">Thrown if <paramref name="uri" /> is a file <see cref="T:System.Uri" /> and the file does not exist</exception>
-        </member>
-        <member name="M:JGL.Resource.Resource.GenerateBaseName">
-            <summary>
-            Generates the <see cref="P:JGL.Heirarchy.Entity.Name" /> base for auto naming
-            </summary>
-            <remarks>
-            Bases names on <see cref="P:JGL.Resource.Resource.URI" /> path, includes as a suffix, the URI scheme and, if not a file URI, the URI hostname
-            </remarks>
-        </member>
-        <member name="M:JGL.Resource.Resource.Load">
-            <summary>
-            Load the <see cref="T:JGL.Resource.Resource" /></summary>
-            <returns>
-                <c>true</c>, if loaded successfully, otherwise, <c>false</c></returns>
-        </member>
-        <member name="T:JGL.OpenGL.GLContextualData`2">
-            <summary>
-            GL contextual.
-            </summary>
-        </member>
-        <member name="M:JGL.OpenGL.GLContextualData`2.#ctor(GLContextualDataCreationHandler,`0)">
-            <summary>
-            Initializes a new instance of the <see cref="!:JGL.GL.GLContextualData" /> class.
-            </summary>
-        </member>
-        <member name="T:JGL.Heirarchy.Camera">
-            <summary>
-            Camera entity.
-            </summary>
-        </member>
-        <member name="M:JGL.Heirarchy.Camera.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Camera" /> class.
-            </summary>
-            <param name="name">Camera's entity name</param>
-        </member>
-        <member name="M:JGL.Heirarchy.Camera.Render(JGL.Heirarchy.RenderArgs)">
-            <summary>
-            Render owner <see cref="T:JGL.Heirarchy.Scene" /> using the perspective of this <see cref="T:JGL.Heirarchy.Camera" />,
-            </summary>
-            <param name="renderArgs">Render arguments.</param>
-            <remarks>IRenderable implementation</remarks>
-        </member>
-        <member name="T:JGL.Heirarchy.IPositionable">
-            <summary>
-            I positionable.
-            </summary>
-        </member>
-        <member name="P:JGL.Heirarchy.IPositionable.Position">
-            <summary>
-            Position in 3D space
-            </summary>
-        </member>
-        <member name="T:JGL.Heirarchy.IRotatable">
-            <summary>
-            I rotatable.
-            </summary>
-        </member>
-        <member name="P:JGL.Heirarchy.IRotatable.Rotation">
-            <summary>
-            Rotation in 3D space (X,Y,Z each describe number of degrees rotation around the X/Y/Z unit vector)
-            </summary>
-        </member>
-        <member name="P:JGL.Heirarchy.IRotatable.Orientation">
-            <summary>
-            Gets or sets the object orientation (linked to <see cref="P:JGL.Heirarchy.Object.Rotation" /></summary>
-        </member>
-        <member name="M:JGL.Heirarchy.SimpleObject.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.SimpleObject" /> class.
-            </summary>
-        </member>
-        <member name="M:JGL.Heirarchy.SimpleObject.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.SimpleObject" /> class.
-            </summary>
-            <param name="name">Object name</param>
-        </member>
-        <member name="M:JGL.Heirarchy.SimpleObject.#ctor(System.String,JGL.Heirarchy.SimpleObject.RenderFunc)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.SimpleObject" /> class.
-            </summary>
-            <param name="name">Object name</param>
-        </member>
-        <member name="M:JGL.Heirarchy.SimpleObject.#ctor(JGL.Heirarchy.SimpleObject.RenderFunc)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.SimpleObject" /> class.
-            </summary>
-            <param name="name">Object name</param>
-        </member>
-        <member name="P:JGL.Heirarchy.SimpleObject.Position">
-            <summary>
-            Position in 3D space
-            </summary>
-            <remarks>IPositionable implementation</remarks>
-        </member>
-        <member name="P:JGL.Heirarchy.SimpleObject.Rotation">
-            <summary>
-            Rotation in 3D space (X,Y,Z each describe number of degrees rotation around the X/Y/Z unit vector)
-            </summary>
-            <remarks>IRotatable implementation</remarks>
-        </member>
-        <member name="M:JGL.Heirarchy.Light.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Light" /> class.
-            </summary>
-        </member>
-        <member name="F:JGL.Heirarchy.Light.Enabled">
-            <summary>
-            Enable/disable the light
-            </summary>
-        </member>
-        <member name="F:JGL.Heirarchy.Light.Ambient">
-            <summary>
-            Ambient light color.
-            </summary>
-        </member>
-        <member name="F:JGL.Heirarchy.Light.Diffuse">
-            <summary>
-            Ambient light color.
-            </summary>
-        </member>
-        <member name="F:JGL.Heirarchy.Light.Specular">
-            <summary>
-            Ambient light color.
-            </summary>
-        </member>
-        <member name="P:JGL.Heirarchy.Light.Position">
-            <summary>
-            Light's position
-            </summary>
-            <remarks>
-                <see cref="T:JGL.Heirarchy.IPositionable" /> implementation</remarks>
-        </member>
-        <member name="P:JGL.Heirarchy.Light.Rotation">
-            <summary>
-            Light's rotation
-            </summary>
-            <remarks>
-                <see cref="T:JGL.Heirarchy.IRotatable" /> implementation</remarks>
-        </member>
-        <member name="P:JGL.Heirarchy.Light.Orientation">
-            <summary>
-            Gets or sets the object orientation (linked to <see cref="P:JGL.Heirarchy.Object.Rotation" /></summary>
-        </member>
-        <member name="M:JGL.Heirarchy.Light.Render(JGL.Heirarchy.RenderArgs)">
-            <summary>
-            Renders the light
-            </summary>
-            <param name="renderArgs">Render arguments.</param>
-            <remarks>
-                <see cref="T:JGL.Heirarchy.IRenderable" /> implementation</remarks>
-        </member>
-        <member name="T:JGL.Heirarchy.EntityRootContext">
-            <summary>
-            A special subclass of <see cref="!:JGL.Heirarchy.Context" /> designed
-            ... ??
-            to hold all <see cref="T:JGL.Heirarchy.Scene" />s ??
-            other top level entities??
-            </summary>
-        </member>
-        <member name="M:JGL.Heirarchy.EntityRootContext.#ctor(JGL.Heirarchy.Entity[])">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.EntityRootContext" /> class.
-            </summary>
-            <param name="entities">Optional parameter array of child <see cref="T:JGL.Heirarchy.Entity" /> instances</param>
-        </member>
-        <member name="M:JGL.Heirarchy.EntityRootContext.#ctor(System.String,JGL.Heirarchy.Entity[])">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.EntityRootContext" /> class.
-            </summary>
-            <param name="name">Name for the new <see cref="!:JGL.Heirarchy.Context" /></param>
-            <param name="entities">Optional parameter array of child <see cref="T:JGL.Heirarchy.Entity" /> instances</param>
-        </member>
-        <member name="T:JGL.Debugging.AsyncTraceListener">
-            <summary>
-            A trace listener that queues data it receives into a static (shared among all <see cref="T:JGL.Debugging.AsyncTraceListener" />s)
-            queue until the background thread (see <see cref="M:JGL.Debugging.AsyncTraceListener.RunThread" />) formats it for output and writes it to the <see cref="T:System.IO.Stream" />
-            associated with the <see cref="T:JGL.Debugging.AsyncTraceListener" /> the message belongs too
-            </summary>
-        </member>
-        <member name="M:JGL.Debugging.AsyncTraceListener.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Debugging.AsyncTraceListener" /> class.
-            </summary>
-            <param name="name">Name</param>
-        </member>
-        <member name="T:JGL.Debugging.AsyncTraceListener.LogMessage">
-            <summary>
-            Log message class stores log message parameters
-            </summary>
-        </member>
-        <member name="M:JGL.Debugging.AsyncTraceListener.LogMessage.#ctor(JGL.Debugging.AsyncTraceListener,System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Debugging.AsyncTraceListener.LogMessage" /> class.
-            </summary>
-            <param name="listener">The listener the message is for</param>
-            <param name="eventCache">Event cache</param>
-            <param name="source">Source</param>
-            <param name="eventType">Event type</param>
-            <param name="id">Identifier</param>
-            <param name="data">Data</param>
-        </member>
-        <member name="F:JGL.Debugging.AsyncTraceListener.LogMessage.EventCache">
-            <summary>Event cache</summary>
-        </member>
-        <member name="F:JGL.Debugging.AsyncTraceListener.LogMessage.Source">
-            <summary>The <see cref="T:System.Diagnostics.TraceSource" /> that the message originated from</summary>
-        </member>
-        <member name="F:JGL.Debugging.AsyncTraceListener.LogMessage.EventType">
-            <summary>
-            </summary>
-        </member>
-        <member name="F:JGL.Debugging.AsyncTraceListener.LogMessage.Id">
-            <summary>
-            </summary>
-        </member>
-        <member name="F:JGL.Debugging.AsyncTraceListener.LogMessage.Data">
-            <summary>
-            </summary>
-        </member>
-        <member name="F:JGL.Debugging.AsyncTraceListener.LogMessage.Listener">
-            <summary>
-            </summary>
-        </member>
-        <member name="F:JGL.Debugging.AsyncTraceListener.LogMessage.OutputOptions">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:JGL.Debugging.AsyncTraceListener.LogMessage.Message">
-            <summary>
-            Gets the formatted message string
-            </summary>
-        </member>
-        <member name="F:JGL.Debugging.AsyncTraceListener.Trace">
-            <summary>
-            Tracing
-            </summary>
-        </member>
-        <member name="F:JGL.Debugging.AsyncTraceListener._threadLooping">
-            <summary>
-            The _thread looping.
-            </summary>
-        </member>
-        <member name="M:JGL.Debugging.AsyncTraceListener.RunThread">
-            <summary>
-            Thread entry point
-            </summary>
-            <remarks>
-            TODO: Try out a few different approaches to this e.g.
-            		- 31/5 This current approach is the 1-thread running in the background, with a single queue,
-            		handling stream writing for all listeners and their streams
-            			+ just noticed _messageQueue.TryDequeue should be in a while() conditional expression, not an if
-            				(with if thread Sleeps() inbetween writing every message - should loop until queue empty without delay?
-            				maybe small delay? don't want this thread randomly hammering a more important thread (e.g. update/render scenes)
-            				- Fixed 8/6
-            		- Would 1 thread per listener/stream work better?
-            		- Both above approaches with varying Thread.Sleep() times
-            		- Use Async File operations? How to get an async-capable file handle?
-            			+ Thread doesn't wait for each Stream.Write(), instead collects IAsyncResults from a BeginWrite for every
-            				message found in the queue for this iteration. Also builds list of the listeners that were involved.
-            				At end of thread, calls all the Stream.EndRead() methods and then flushes each listener once
-            					- This approach may or may not work - depends on semantics of Stream's Async methods
-            					  Definitely worth looking into, the Async approach is probably the best of these above alternatives to try first (?)
-            </remarks>
-        </member>
-        <member name="M:JGL.Debugging.AsyncTraceListener.StopAll">
-            <summary>
-            Stops all <see cref="T:JGL.Debugging.AsyncTraceListener" />s by setting a flag that indicates that <see cref="M:JGL.Debugging.AsyncTraceListener.RunThread" /> should return
-            </summary>
-        </member>
-        <member name="M:JGL.Debugging.AsyncTraceListener.GetOrCreate(System.String,System.Type)">
-            <summary>
-            Gets or create a <see cref="T:JGL.Debugging.AsyncTraceListener" /></summary>
-            <returns>
-            The retrieved or newly created <see cref="T:JGL.Debugging.AsyncTraceListener" /></returns>
-            <param name="name">Name of listener to get/create</param>
-            <param name="type">Type of listener to create</param>
-        </member>
-        <member name="M:JGL.Debugging.AsyncTraceListener.FormatMessage(JGL.Debugging.AsyncTraceListener.LogMessage)">
-            <summary>
-            Format message delegate method. Formats a <see cref="T:JGL.Debugging.AsyncTraceListener.LogMessage" /> instance into <see cref="T:System.Byte[]" /> data to be
-            written to the output <see cref="T:System.IO.Stream" />. Override to customise behaviour.
-            </summary>
-        </member>
-        <member name="M:JGL.Debugging.AsyncTraceListener.OpenStream">
-            <summary>
-            The open stream method opens the output stream when required by the background thread. Override to customise behaviour.
-            </summary>
-        </member>
-        <member name="M:JGL.Debugging.AsyncTraceListener.Dispose(System.Boolean)">
-            <summary>
-            Dispose of this <see cref="T:JGL.Debugging.AsyncTraceListener" /> (calls <see cref="!:Stop" />)
-            </summary>
-            <param name="disposing">Disposing</param>
-        </member>
-        <member name="M:JGL.Debugging.AsyncTraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)">
-            <summary>
-            Called by <see cref="T:System.Diagnostics.TraceSource" /> methods to specify a message to log
-            </summary>
-            <param name="eventCache">Event cache</param>
-            <param name="source">Source</param>
-            <param name="eventType">Event type</param>
-            <param name="id">Identifier</param>
-            <param name="data">Data</param>
-        </member>
-        <member name="M:JGL.Debugging.AsyncTraceListener.Write(System.String)">
-            <summary>
-            Write the specified message.
-            </summary>
-            <param name="message">
-            Message.
-            </param>
-            <exception cref="T:System.InvalidOperationException">
-            Is thrown when an operation cannot be performed.
-            </exception>
-            <remarks>Only implemented because base class marks it as abstract - due to my <see cref="M:JGL.Debugging.AsyncTraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)" /> override this should never execute</remarks>
-        </member>
-        <member name="M:JGL.Debugging.AsyncTraceListener.WriteLine(System.String)">
-            <summary>
-            Write the specified message.
-            </summary>
-            <param name="message">
-            Message.
-            </param>
-            <exception cref="T:System.InvalidOperationException">
-            Is thrown when an operation cannot be performed.
-            </exception>
-            <remarks>Only implemented because base class marks it as abstract - due to my <see cref="M:JGL.Debugging.AsyncTraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)" /> override this should never execute</remarks>
-        </member>
-        <member name="T:JGL.Debugging.AsyncFileTraceListener">
-            <summary>
-            Asynchronous trace listener that writes to a file
-            </summary>
-        </member>
-        <member name="M:JGL.Debugging.AsyncFileTraceListener.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Debugging.AsyncFileTraceListener" /> class.
-            </summary>
-            <param name="name">Name of the new trace listener</param>
-        </member>
-        <member name="F:JGL.Debugging.AsyncFileTraceListener.PathPrefix">
-            <summary>
-            The path prefix.
-            </summary>
-        </member>
-        <member name="F:JGL.Debugging.AsyncFileTraceListener.PathSuffix">
-            <summary>
-            The path suffix.
-            </summary>
-        </member>
-        <member name="F:JGL.Debugging.AsyncFileTraceListener.TruncateFile">
-            <summary>
-            Whether to truncate the file before opening it for writing
-            </summary>
-        </member>
-        <member name="P:JGL.Debugging.AsyncFileTraceListener.Path">
-            <summary>
-            Path of the file that this trace listener will open
-            </summary>
-        </member>
-        <member name="M:JGL.Debugging.AsyncFileTraceListener.OpenStream">
-            <summary>
-            Opens the <see cref="T:System.IO.Stream" /> the trace listener will write to
-            </summary>
-            <returns>The newly opened <see cref="T:System.IO.Stream" /></returns>
-            <remarks>
-            Implementation of abstract member of JGL.Debugging.AsyncTraceListener
-            </remarks>
-        </member>
-        <member name="T:JGL.Heirarchy.Object">
-            <summary>
-            An <see cref="T:JGL.Heirarchy.Entity" /> in 3D space, ie it implements <see cref="T:JGL.Heirarchy.IPositionable" /> and <see cref="T:JGL.Heirarchy.IRotatable" /></summary>
-        </member>
-        <member name="M:JGL.Heirarchy.Object.#ctor(JGL.Heirarchy.Entity[])">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Object" /> class.
-            </summary>
-        </member>
-        <member name="M:JGL.Heirarchy.Object.#ctor(System.String,JGL.Heirarchy.Entity[])">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Object" /> class.
-            </summary>
-        </member>
-        <member name="P:JGL.Heirarchy.Object.Position">
-            <summary>
-            Position in 3D space
-            </summary>
-            <remarks>IPositionable implementation</remarks>
-        </member>
-        <member name="P:JGL.Heirarchy.Object.Rotation">
-            <summary>
-            Rotation in 3D space (X,Y,Z each describe number of degrees rotation around the X/Y/Z unit vector)
-            </summary>
-            <remarks>IRotatable implementation</remarks>
-        </member>
-        <member name="P:JGL.Heirarchy.Object.Orientation">
-            <summary>
-            Gets or sets the object orientation (linked to <see cref="P:JGL.Heirarchy.Object.Rotation" /></summary>
-        </member>
-        <member name="P:JGL.Heirarchy.Object.SubObjects">
-            <summary>
-            Gets child objects
-            </summary>
-        </member>
-        <member name="M:JGL.Heirarchy.Object.Move(OpenTK.Vector3d,System.Double)">
-            <summary>
-            Move Position vector a distance in the given direction
-            </summary>
-            <param name="direction">
-            Orientation.
-            </param>
-            <param name="distance">
-            Distance.
-            </param>
-            <remarks>
-            TODO:
-            Implement/find your own Vector3d class, use that, move this method into that class. Could leave it here as well and
-            call the Vector3d member. V3d class will need explicit (and implicit if possible?) conversion operator to OpenTK.Vector3d
-            </remarks>
-        </member>
-        <member name="M:JGL.Heirarchy.Object.MoveForward(System.Double)">
-            <summary>Moves <see cref="T:JGL.Heirarchy.Entity" /> forward</summary>
-            <param name="distance">Distance to move, default 1.0</param>
-        </member>
-        <member name="M:JGL.Heirarchy.Object.MoveBackward(System.Double)">
-            <summary>Moves <see cref="T:JGL.Heirarchy.Entity" /> backward</summary>
-            <param name="distance">Distance to move, default 1.0</param>
-        </member>
-        <member name="T:JGL.Heirarchy.Library.Box">
-            <summary>
-            A mesh representation of a box in 3D space
-            </summary>
-        </member>
-        <member name="M:JGL.Heirarchy.Library.Box.#ctor(JGL.Heirarchy.Library.Box.BoxTexturiseMode)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Box" /> class.
-            </summary>
-            <param name="name">Name</param>
-        </member>
-        <member name="M:JGL.Heirarchy.Library.Box.#ctor(System.String,JGL.Heirarchy.Library.Box.BoxTexturiseMode)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Box" /> class.
-            </summary>
-            <param name="name">Name</param>
-        </member>
-        <member name="M:JGL.Heirarchy.Library.Box.#ctor(System.String,System.Double,System.Double,System.Double,JGL.Heirarchy.Library.Box.BoxTexturiseMode)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Box" /> class.
-            </summary>
-            <param name="name">Name</param>
-            <param name="xSize">X size</param>
-            <param name="ySize">Y size</param>
-            <param name="zSize">Z size</param>
-        </member>
-        <member name="M:JGL.Heirarchy.Library.Box.#ctor(System.Double,System.Double,System.Double,JGL.Heirarchy.Library.Box.BoxTexturiseMode)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Box" /> class.
-            </summary>
-            <param name="xSize">X size</param>
-            <param name="ySize">Y size</param>
-            <param name="zSize">Z size</param>
-        </member>
-        <member name="T:JGL.Heirarchy.Library.Box.BoxTexturiseMode">
-            <summary>
-            Box texturise mode
-            </summary>
-            <remarks>Passed to texturise methods to indicate how texture coordinates are generated</remarks>
-        </member>
-        <member name="F:JGL.Heirarchy.Library.Box.BoxTexturiseMode.TextureEachFace">
-            <summary>
-            Each face of the box displays the whole texture from (0,0) to (1,1)
-            </summary>
-        </member>
-        <member name="F:JGL.Heirarchy.Library.Box.BoxTexturiseMode.TextureWholeBox">
-            <summary>
-            Texture is mapped around the box
-            </summary>
-            <remarks>
-            	- Texture aspect ratio should be 4:3
-            		- Left 1/4 of texture contains top, front and bottom sides
-            		- Vertically middle 1/3 of texture contains front, right, back and left sides
-            		- Other half of texture coordinate space not used
-            </remarks>
-        </member>
-        <member name="M:JGL.Heirarchy.Library.Box.Init(System.Double,System.Double,System.Double,JGL.Heirarchy.Library.Box.BoxTexturiseMode)">
-            <summary>
-            Init the specified xSize, ySize, zSize and material.
-            </summary>
-            <param name="xSize">X size</param>
-            <param name="ySize">Y size</param>
-            <param name="zSize">Z size</param>
-            <param name="mode">Box texturing mode</param>
-            <remarks>
-            	-	Worth rewriting this and below methods to get texcoord array from another method, selected using BoxTexturingMode?
-            </remarks>
-        </member>
-        <member name="M:JGL.Heirarchy.Library.Box.Texturise(JGL.Heirarchy.Library.Box.BoxTexturiseMode)">
-            <summary>
-            Generates texture coordinates for the box using the specified mode
-            </summary>
-            <param name="mode">Mode of texture coordinate generation</param>
-            <remarks>
-            	-	Should this assume all vertices have been generated, insert new texcoords directly into Triangles array??
-            		-	See remarks for <see cref="M:JGL.Heirarchy.Library.Box.Init(System.Double,System.Double,System.Double,JGL.Heirarchy.Library.Box.BoxTexturiseMode)" /></remarks>
-        </member>
-        <member name="P:JGL.Heirarchy.MaterialLibrary.Count">
-            <summary>
-            Gets the count.
-            </summary>
-            <value>
-            The count.
-            </value>
-            <remarks>ICollection[Material] implementation</remarks>
-        </member>
-        <member name="P:JGL.Heirarchy.MaterialLibrary.IsReadOnly">
-            <summary>
-            Gets a value indicating whether this instance is read only.
-            </summary>
-            <value>
-                <c>true</c> if this instance is read only; otherwise, <c>false</c>.
-            </value>
-            <remarks>ICollection[Material] implementation</remarks>
-        </member>
-        <member name="M:JGL.Heirarchy.MaterialLibrary.System#Collections#IEnumerable#GetEnumerator">
-            <summary>
-            Gets the enumerator.
-            </summary>
-            <returns>
-            The enumerator.
-            </returns>
-            <remarks>IEnumerable[Material] implementation</remarks>
-        </member>
-        <member name="M:JGL.Heirarchy.MaterialLibrary.Add(JGL.Heirarchy.Material)">
-            <summary>
-            Add the specified item.
-            </summary>
-            <param name="item">
-            Item.
-            </param>
-            <exception cref="T:System.InvalidOperationException">
-            Is thrown when an operation cannot be performed.
-            </exception>
-            <remarks>ICollection[Material] implementation</remarks>
-        </member>
-        <member name="M:JGL.Heirarchy.MaterialLibrary.Clear">
-            <summary>
-            Clear this instance.
-            </summary>
-            <remarks>ICollection[Material] implementation</remarks>
-        </member>
-        <member name="M:JGL.Heirarchy.MaterialLibrary.Contains(JGL.Heirarchy.Material)">
-            <summary>
-            Contains the specified item.
-            </summary>
-            <param name="item">
-            If set to <c>true</c> item.
-            </param>
-            <remarks>ICollection[Material] implementation</remarks>
-        </member>
-        <member name="M:JGL.Heirarchy.MaterialLibrary.Contains(System.String)">
-            <summary>
-            Contains the specified materialName.
-            </summary>
-            <param name="materialName">
-            If set to <c>true</c> material name.
-            </param>
-        </member>
-        <member name="M:JGL.Heirarchy.MaterialLibrary.CopyTo(JGL.Heirarchy.Material[],System.Int32)">
-            <summary>
-            Copies to.
-            </summary>
-            <param name="array">
-            Array.
-            </param>
-            <param name="arrayIndex">
-            Array index.
-            </param>
-            <remarks>ICollection[Material] implementation</remarks>
-        </member>
-        <member name="M:JGL.Heirarchy.MaterialLibrary.Remove(JGL.Heirarchy.Material)">
-            <summary>
-            Remove the specified item.
-            </summary>
-            <param name="item">
-            If set to <c>true</c> item.
-            </param>
-            <exception cref="T:System.InvalidOperationException">
-            Is thrown when an operation cannot be performed.
-            </exception>
-            <remarks>ICollection[Material] implementation</remarks>
-        </member>
-        <member name="M:JGL.Heirarchy.MaterialLibrary.GetEnumerator">
-            <summary>
-            Gets the enumerator.
-            </summary>
-            <returns>
-            The enumerator.
-            </returns>
-            <remarks>IEnumerable[Material] implementation</remarks>
-        </member>
-        <member name="M:JGL.Heirarchy.MaterialLibrary.LoadMtlFile(System.IO.Stream)">
-            <summary>
-            Loads the mtl file.
-            </summary>
-            <param name="fs">
-            Fs.
-            </param>
-        </member>
-        <member name="M:JGL.Heirarchy.Material.glSet">
-            <summary>
-            Sets the material parameters using OpenGL
-            </summary>
-            <remarks>
-            - May need a parameter in future (RenderArgs?) for making state information available
-            </remarks>
-        </member>
-        <member name="T:JGL.Heirarchy.Library.Quad">
-            <summary>
-            A quad mesh - 4 points, two triangles
-            </summary>
-        </member>
-        <member name="M:JGL.Heirarchy.Library.Quad.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Quad" /> class.
-            </summary>
-            <param name="name">Entity name</param>
-        </member>
-        <member name="M:JGL.Heirarchy.Library.Quad.#ctor(System.String,System.Double,System.Double)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Quad" /> class.
-            </summary>
-            <param name="name">Entity name</param>
-            <param name="xSize">X size</param>
-            <param name="zSize">Z size</param>
-        </member>
-        <member name="M:JGL.Heirarchy.Library.Quad.#ctor(System.Double,System.Double)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Quad" /> class.
-            </summary>
-            <param name="xSize">X size</param>
-            <param name="zSize">Z size</param>
-        </member>
-        <member name="M:JGL.Heirarchy.Library.Quad.Init(System.Double,System.Double)">
-            <summary>
-            Init the specified xSize and zSize.
-            </summary>
-            <param name="xSize">X size</param>
-            <param name="zSize">Z size</param>
-        </member>
-        <member name="T:JGL.Heirarchy.Library.Triangle">
-            <summary>
-            A triangle mesh - 3 points, one triangle
-            </summary>
-        </member>
-        <member name="M:JGL.Heirarchy.Library.Triangle.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Triangle" /> class.
-            </summary>
-            <param name="name">Entity name</param>
-        </member>
-        <member name="M:JGL.Heirarchy.Library.Triangle.#ctor(System.String,System.Double,System.Double)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Triangle" /> class.
-            </summary>
-            <param name="name">Entity name</param>
-            <param name="xSize">X size</param>
-            <param name="zSize">Z size</param>
-        </member>
-        <member name="M:JGL.Heirarchy.Library.Triangle.#ctor(System.Double,System.Double)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Triangle" /> class.
-            </summary>
-            <param name="xSize">X size</param>
-            <param name="zSize">Z size</param>
-        </member>
-        <member name="M:JGL.Heirarchy.Library.Triangle.Init(System.Double,System.Double)">
-            <summary>
-            Init the specified xSize and zSize.
-            </summary>
-            <param name="xSize">X size</param>
-            <param name="zSize">Z size</param>
-        </member>
-        <member name="T:JGL.Heirarchy.Library.Grid">
-            <summary>
-            A grid mesh
-            </summary>
-        </member>
-        <member name="M:JGL.Heirarchy.Library.Grid.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Grid" /> class.
-            </summary>
-        </member>
-        <member name="M:JGL.Heirarchy.Library.Grid.Init(System.Double,System.Double)">
-            <summary>
-            Init the specified xSize and zSize.
-            </summary>
-            <param name="xSize">X size</param>
-            <param name="zSize">Z size</param>
-        </member>
-        <member name="T:JGL.Heirarchy.RenderArgs">
-            <summary>
-            Contains info relevant to classes' implementations of <see cref="M:JGL.Heirarchy.IRenderable.Render(JGL.Heirarchy.RenderArgs)" /></summary>
-        </member>
-        <member name="M:JGL.Heirarchy.RenderArgs.#ctor(OpenTK.Graphics.IGraphicsContext,JGL.Heirarchy.EntityContext,System.Int32,System.Int32)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.RenderArgs" /> class.
-            </summary>
-            <param name="graphicsContext">Graphics context.</param>
-            <param name="entityContext">Entity context.</param>
-        </member>
-        <member name="F:JGL.Heirarchy.RenderArgs.Graphics">
-            <summary>
-            Graphics context being rendered to (which should always be the current one according to GraphicsContext.CurrentContext)
-            </summary>
-        </member>
-        <member name="F:JGL.Heirarchy.RenderArgs.Width">
-            <summary>
-            Window width
-            </summary>
-        </member>
-        <member name="F:JGL.Heirarchy.RenderArgs.Height">
-            <summary>
-            Window height
-            </summary>
-        </member>
-        <member name="F:JGL.Heirarchy.RenderArgs.Entities">
-            <summary>
-            The stack of <see cref="!:JGL.Heirarchy.Context" />s as rendered so far
-            </summary>
-        </member>
-        <member name="F:JGL.Heirarchy.RenderArgs.CurrentLightName">
-            <summary>
-            The current GL light. When <see cref="M:JGL.Heirarchy.Light.Render(JGL.Heirarchy.RenderArgs)" /> is called, the method increments this value.
-            </summary>
-        </member>
-        <member name="P:JGL.Heirarchy.RenderArgs.Entity">
-            <summary>
-            The current <see cref="!:JGL.Heirarchy.Context" /> being rendered
-            </summary>
-        </member>
-        <member name="P:JGL.Heirarchy.RenderArgs.IsEntityContextStackEmpty">
-            <summary>
-            Gets a value indicating whether the entity context stack <see cref="F:JGL.Heirarchy.RenderArgs.Entities" /> is empty
-            </summary>
-        </member>
-        <member name="M:JGL.Heirarchy.RenderArgs.Start">
-            <summary>
-            Marks the start time of a render frame
-            </summary>
-        </member>
-        <member name="M:JGL.Heirarchy.RenderArgs.Stop">
-            <summary>
-            Marks the stop time of a render frame
-            </summary>
-        </member>
-        <member name="T:JGL.Resource.Texture">
-            <summary>
-            Texture <see cref="T:JGL.Resource.Resource" /></summary>
-        </member>
-        <member name="M:JGL.Resource.Texture.#ctor(System.Uri)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Resource.Texture" /> class.
-            </summary>
-            <param name="uri">
-                <see cref="T:JGL.Resource.Texture" />
-                <see cref="T:System.Uri" />
-            </param>
-        </member>
-        <member name="M:JGL.Resource.Texture.#ctor(System.String,System.Uri)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Resource.Texture" /> class.
-            </summary>
-            <param name="name">
-                <see cref="T:JGL.Resource.Texture" />
-                <see cref="P:JGL.Heirarchy.Entity.Name" />
-            </param>
-            <param name="uri">
-                <see cref="T:JGL.Resource.Texture" />
-                <see cref="T:System.Uri" />
-            </param>
-        </member>
-        <member name="P:JGL.Resource.Texture.Image">
-            <summary>
-            Gets or sets the <see cref="T:JGL.Resource.Texture" /> image
-            </summary>
-        </member>
-        <member name="P:JGL.Resource.Texture.Width">
-            <summary>
-            Gets the width.
-            </summary>
-        </member>
-        <member name="P:JGL.Resource.Texture.Height">
-            <summary>
-            Gets the height.
-            </summary>
-        </member>
-        <member name="P:JGL.Resource.Texture.TextureId">
-            <summary>
-            The OpenGL texture id, stored for each GL context it has been used on
-            </summary>
-        </member>
-        <member name="M:JGL.Resource.Texture.Init(System.String,System.Uri)">
-            <summary>
-            Init the instance using given name and uri.
-            </summary>
-            <param name="name">
-                <see cref="T:JGL.Resource.Texture" />
-                <see cref="P:JGL.Heirarchy.Entity.Name" />
-            </param>
-            <param name="uri">
-                <see cref="T:JGL.Resource.Texture" />
-                <see cref="T:System.Uri" />
-            </param>
-        </member>
-        <member name="M:JGL.Resource.Texture.Load">
-            <summary>
-            Loads a <see cref="T:JGL.Resource.Texture" /><see cref="T:JGL.Resource.Resource" /></summary>
-            <returns>
-                <c>true</c> if successful, otherwise, <c>false</c></returns>
-            <remarks>
-            	- Executed on <see cref="F:JGL.Resource.Resource.LoadThread" /></remarks>
-        </member>
-        <member name="M:JGL.Resource.Texture.CreateGLTexture(JGL.Resource.Texture)">
-            <summary>
-            Creates the GL texture - called once for each GL graphics context the texture is used on (tex ids are different per context - correct?)
-            </summary>
-            <returns>The GL texture id</returns>
-            <param name="texture">
-                <see cref="T:JGL.Resource.Texture" />
-            </param>
-        </member>
-        <member name="T:JGL.Extensions.Uri_Ext">
-            <summary>
-            Extension method class for <see cref="T:System.Uri" /></summary>
-            <remarks>
-            	- TODO:
-            		- Tracing (sort out overall tracing approach (source names, how many sources, etc) within JGL project)
-            </remarks>
-        </member>
-        <member name="M:JGL.Extensions.Uri_Ext.Open(System.Uri,System.IO.FileMode,System.IO.FileAccess,System.IO.FileShare)">
-            <summary>
-            Open the <paramref name="uri" /> and return a <see cref="!:System.Stream" /> representing it
-            </summary>
-            <param name="uri">
-                <see cref="T:System.Uri" /> to open</param>
-        </member>
-        <member name="T:JGL.Geometry.VertexData">
-            <summary>
-            Describes a collection vertices, and optionally normals, texture coordinates and materials, used by <see cref="T:JGL.Heirarchy.Mesh" /></summary>
-        </member>
-        <member name="M:JGL.Geometry.VertexData.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="!:JGL.Geometry.MeshVertexData" /> class.
-            </summary>
-        </member>
-        <member name="P:JGL.Geometry.VertexData.Vertices">
-            <summary>
-            The vertices.
-            </summary>
-        </member>
-        <member name="P:JGL.Geometry.VertexData.Normals">
-            <summary>
-            The normals.
-            </summary>
-        </member>
-        <member name="P:JGL.Geometry.VertexData.TexCoords">
-            <summary>
-            The tex coords.
-            </summary>
-        </member>
-        <member name="P:JGL.Geometry.VertexData.Materials">
-            <summary>
-            The texture.
-            </summary>
-        </member>
-        <member name="M:JGL.Geometry.VertexData.Clear">
-            <summary>
-            Clear this instance.
-            </summary>
-        </member>
     </members>
 </doc>

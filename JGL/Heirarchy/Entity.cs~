@@ -1,9 +1,9 @@
 using System;
-using System.Diagnostics;
+//using System.Diagnostics;
 using System.Runtime.Serialization;
 using System.Xml;
 using System.Xml.Serialization;
-
+using JGL.Debugging;
 //using JGL.Data;
 
 namespace JGL.Heirarchy
@@ -20,6 +20,11 @@ namespace JGL.Heirarchy
 	[Serializable]
 	public class Entity : IXmlSerializable
 	{
+		/// <summary>
+		/// Tracing
+		/// </summary>
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate("Entity", AsyncFileTraceListener.GetOrCreate("JGL"));
+
 		#region Private fields and methods
 		private EntityContext _owner = null;
 		private EntityContext _parent = null;

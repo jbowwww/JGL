@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using JGL.Geometry;
 using JGL.Heirarchy;
+using JGL.Debugging;
 
 namespace JGL.Geometry
 {
@@ -10,6 +11,11 @@ namespace JGL.Geometry
 	/// </summary>
 	public class VertexData
 	{
+		/// <summary>
+		/// Tracing
+		/// </summary>
+		public static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
+
 		/// <summary>
 		/// The vertices.
 		/// </summary>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenTK.Graphics.OpenGL;
 using JGL.Geometry;
+using JGL.Debugging;
 
 namespace JGL.Heirarchy
 {
@@ -12,6 +13,11 @@ namespace JGL.Heirarchy
 	/// </summary>
 	public class Sector : EntityContext, IPositionable, IRotatable
 	{
+		/// <summary>
+		/// Tracing
+		/// </summary>
+		public static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
+
 		/// <summary>
 		/// Initializes a new <see cref="JGL.Heirarchy.Sector"/> instance, optionally containing supplied
 		 /// child <see cref="JGL.Heirarchy.Entity"/>s.

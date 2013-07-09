@@ -18,6 +18,11 @@ namespace JGL.Heirarchy
 	public class Mesh : Object, IRenderable
 	{
 		/// <summary>
+		/// Tracing
+		/// </summary>
+		public static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
+
+		/// <summary>
 		/// Vertex (and possibly normal, texture coordinates, and materials) data for the <see cref="Mesh">.
 		/// This can be shared with other <see cref="Mesh">es.
 		/// </summary>

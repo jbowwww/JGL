@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenTK;
+using JGL.Debugging;
 
 namespace JGL.Heirarchy
 {
@@ -10,6 +11,11 @@ namespace JGL.Heirarchy
 	/// </summary>
 	public class Object : EntityContext, IPositionable, IRotatable
 	{
+		/// <summary>
+		/// Tracing
+		/// </summary>
+		public static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
+
 		/// <summary>
 		/// Position in 3D space
 		/// </summary>

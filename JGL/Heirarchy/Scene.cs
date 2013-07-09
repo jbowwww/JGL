@@ -16,6 +16,11 @@ namespace JGL.Heirarchy
 	/// </summary>
 	public class Scene : EntityContext, IRenderable
 	{
+		/// <summary>
+		/// Tracing
+		/// </summary>
+		public static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
+
 		public readonly Camera DefaultCamera = new Camera("DefaultCamera");
 		
 		/// <summary>

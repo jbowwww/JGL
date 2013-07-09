@@ -12,6 +12,11 @@ namespace JGL.Heirarchy
 {
 	public class MaterialLibrary : ICollection<Material>
 	{
+		/// <summary>
+		/// Tracing
+		/// </summary>
+		public static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
+
 		private readonly ConcurrentDictionary<string, Material> _materials = new ConcurrentDictionary<string, Material>();
 		
 		public ICollection<Material> Materials {

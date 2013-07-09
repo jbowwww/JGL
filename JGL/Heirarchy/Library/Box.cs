@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using JGL.Heirarchy;
 using JGL.Geometry;
+using JGL.Debugging;
 
 namespace JGL.Heirarchy.Library
 {
@@ -10,6 +11,11 @@ namespace JGL.Heirarchy.Library
 	/// </summary>
 	public class Box : Mesh
 	{
+		/// <summary>
+		/// Tracing
+		/// </summary>
+		public static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
+
 		/// <summary>
 		/// Box texturise mode
 		/// </summary>

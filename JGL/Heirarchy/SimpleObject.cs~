@@ -1,12 +1,18 @@
 using System;
 using System.Xml;
 using System.Xml.Serialization;
+using JGL.Debugging;
 
 namespace JGL.Heirarchy
 {
 	[Serializable]
 	public class SimpleObject : Object, IPositionable, IRotatable, IRenderable
 	{
+		/// <summary>
+		/// Tracing
+		/// </summary>
+		public static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
+
 		public delegate void RenderFunc(RenderArgs renderArgs);
 		
 		private RenderFunc _renderFunc = null;

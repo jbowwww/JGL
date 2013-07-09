@@ -13,12 +13,17 @@ namespace JGL.Debugging
 	public static class Debug
 	{
 		/// <summary>
+		/// Tracing
+		/// </summary>
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate("Debug", AsyncFileTraceListener.GetOrCreate("JGL"));
+
+		/// <summary>
 		/// Assert the specified condition.
 		/// </summary>
 		/// <param name="condition">Condition</param>
 		public static void Assert(bool condition)
 		{
-			System.Diagnostics.Debug.Assert(condition);
+			Trace.Assert(condition);
 		}
 	}
 }

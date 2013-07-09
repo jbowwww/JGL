@@ -2,12 +2,9 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="JGL/Debugging/AutoTraceSource.cs">
     <Files>
-      <File FileName="JGL/Debugging/AsyncFileTraceListener.cs" Line="48" Column="12" />
-      <File FileName="JGL/Debugging/AsyncTraceListener.cs" Line="254" Column="3" />
-      <File FileName="JGL/Debugging/AutoTraceSource.cs" Line="34" Column="41" />
-      <File FileName="JGL/Debugging/Debug.cs" Line="15" Column="3" />
-      <File FileName="JGL/XML comment clipboard.txt.cs" Line="9" Column="5" />
-      <File FileName="JGL/Features.txt" Line="3" Column="1" />
+      <File FileName="JGL/Extensions/Type.cs" Line="7" Column="3" />
+      <File FileName="JGL/Heirarchy/Entity.cs" Line="2" Column="3" />
+      <File FileName="JGL/Debugging/AutoTraceSource.cs" Line="79" Column="78" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -27,8 +24,12 @@
             <Node name="Debugging" expanded="True">
               <Node name="AutoTraceSource.cs" selected="True" />
             </Node>
+            <Node name="Extensions" expanded="True" />
+            <Node name="Geometry" expanded="True" />
+            <Node name="GL" expanded="True" />
             <Node name="Heirarchy" expanded="True">
               <Option id="ShowAllFiles" value="False" />
+              <Node name="Library" expanded="True" />
             </Node>
             <Node name="Resource" expanded="True" />
           </Node>

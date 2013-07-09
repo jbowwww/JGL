@@ -3,9 +3,10 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading;
+using OpenTK.Graphics.OpenGL;
 using JGL.Extensions;
 using JGL.OpenGL;
-using OpenTK.Graphics.OpenGL;
+using JGL.Debugging;
 
 namespace JGL.Resource
 {
@@ -14,6 +15,11 @@ namespace JGL.Resource
 	/// </summary>
 	public class Texture : Resource
 	{
+		/// <summary>
+		/// Tracing
+		/// </summary>
+		public static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
+
 		/// <summary>
 		/// Gets or sets the <see cref="Texture"/> image
 		/// </summary>

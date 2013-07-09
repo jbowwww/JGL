@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using JGL.Heirarchy;
 using JGL.Geometry;
+using JGL.Debugging;
 
 namespace JGL.Heirarchy.Library
 {
@@ -10,6 +11,11 @@ namespace JGL.Heirarchy.Library
 	/// </summary>
 	public class Quad : Mesh
 	{
+		/// <summary>
+		/// Tracing
+		/// </summary>
+		public static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="JGL.Heirarchy.Library.Quad"/> class.
 		/// </summary>

@@ -10,13 +10,18 @@ namespace JGL.Debugging
 	public class AsyncFileTraceListener : AsyncTraceListener
 	{
 		/// <summary>
+		/// Tracing
+		/// </summary>
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate("Camera", AsyncFileTraceListener.GetOrCreate("JGL"));
+
+		/// <summary>
 		/// Gets (if exists) or creates a <see cref="AsyncFileTraceListener"/> with the specified <paramref name="name"/>
 		/// </summary>
 		/// <returns>An <see cref="AsyncFileTraceListener"/> reference</returns>
 		/// <param name="name">Name of the <see cref="AsyncFileTraceListener"/> to get or create</param>
 		public static AsyncFileTraceListener GetOrCreate(string name)
 		{
-			return base.GetOrCreate(name, typeof(AsyncFileTraceListener));
+			return (AsyncFileTraceListener)AsyncTraceListener.GetOrCreate(name, typeof(AsyncFileTraceListener));
 		}
 
 		/// <summary>

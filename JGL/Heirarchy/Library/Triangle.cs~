@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using JGL.Heirarchy;
 using JGL.Geometry;
+using JGL.Debugging;
 
 namespace JGL.Heirarchy.Library
 {
@@ -10,6 +11,11 @@ namespace JGL.Heirarchy.Library
 	/// </summary>
 	public class Triangle : Mesh
 	{
+		/// <summary>
+		/// Tracing
+		/// </summary>
+		public static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="JGL.Heirarchy.Library.Triangle"/> class.
 		/// </summary>
@@ -55,7 +61,7 @@ namespace JGL.Heirarchy.Library
 			Vertex[] v = new Vertex[] { new Vertex(-x, 0, +z), new Vertex(+x, 0, +z), new Vertex(+x, 0, -z) };
 			Normal[] n = new Normal[] { new Normal(0, +1, 0) };
 			TexCoord[] t = new TexCoord[] { new TexCoord(0, 0), new TexCoord(1, 0), new TexCoord(1, 1) };
-			VertexData = new MeshVertexData() { Vertices = v, Normals = n, TexCoords = t };
+			VertexData = new VertexData() { Vertices = v, Normals = n, TexCoords = t };
 			Triangles = new List<TriangleFace>(new TriangleFace[] { new TriangleFace(new int[] { 0, 1, 2 }, new int[] { 0, 0, 0 }, new int[] { 0, 1, 2 }) });
 		}
 	}

@@ -16,6 +16,12 @@ namespace JGL.Debugging
 	public abstract class AsyncTraceListener : TraceListener
 	{
 		/// <summary>
+		/// Tracing
+		/// </summary>
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate("AsyncTraceListener", AsyncFileTraceListener.GetOrCreate("JGL"));
+			//new AutoTraceSource(typeof(AsyncTraceListener).Name, new ConsoleTraceListener(),AsyncTraceListener.GetOrCreate("JGL", /*typeof(AsyncTraceListener).Name,*/ typeof(AsyncFileTraceListener)));
+
+		/// <summary>
 		/// Log message class stores log message parameters
 		/// </summary>
 		internal class LogMessage
@@ -90,12 +96,6 @@ namespace JGL.Debugging
 		}
 
 		#region Static members
-		/// <summary>
-		/// Tracing
-		/// </summary>
-		public static readonly AutoTraceSource Trace = new AutoTraceSource(typeof(AsyncTraceListener).Name, new ConsoleTraceListener(),
-			AsyncTraceListener.GetOrCreate("JGL", /*typeof(AsyncTraceListener).Name,*/ typeof(AsyncFileTraceListener)));
-
 		#region Private fields
 		private static bool _threadLooping = true;
 		private static Thread _fileIoThread;
@@ -346,6 +346,6 @@ namespace JGL.Debugging
 		/// <summary>
 		/// The open stream method opens the output stream when required by the background thread. Override to customise behaviour.
 		/// </summary>
-		public abstract Stream OpenStream();
+		protected abstract Stream OpenStream();
 	}
 }
