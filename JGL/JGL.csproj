@@ -111,7 +111,6 @@
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup>
-    <None Include="XML comment clipboard.txt" />
     <None Include="XML comment clipboard.txt.cs" />
   </ItemGroup>
 </Project>

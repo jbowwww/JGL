@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerializationTests", "Seria
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtilityPrograms", "..\UtilityPrograms\UtilityPrograms.csproj", "{7FB80FA6-E2CE-419C-8E2A-D788E8E92F77}"
 EndProject
-Project("{9344bdbb-3e7f-41fc-a0dd-8665d75ee146}") = "Data", "Data\Data.mdproj", "{5D17F246-0BB0-4570-BB40-D7A0A0B60071}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{69166F42-EFE7-4A8D-9596-870273BCF64E}"
 	ProjectSection(SolutionItems) = preProject
 		commit.sh = commit.sh
@@ -27,12 +25,6 @@ Global
 		{1A4EC1C4-498A-42C7-ABC6-D4B9D889B8A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A4EC1C4-498A-42C7-ABC6-D4B9D889B8A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A4EC1C4-498A-42C7-ABC6-D4B9D889B8A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5D17F246-0BB0-4570-BB40-D7A0A0B60071}.Debug|Any CPU.ActiveCfg = Default|Any CPU
-		{5D17F246-0BB0-4570-BB40-D7A0A0B60071}.Debug|Any CPU.Build.0 = Default|Any CPU
-		{5D17F246-0BB0-4570-BB40-D7A0A0B60071}.Default|Any CPU.ActiveCfg = Default|Any CPU
-		{5D17F246-0BB0-4570-BB40-D7A0A0B60071}.Default|Any CPU.Build.0 = Default|Any CPU
-		{5D17F246-0BB0-4570-BB40-D7A0A0B60071}.Release|Any CPU.ActiveCfg = Default|Any CPU
-		{5D17F246-0BB0-4570-BB40-D7A0A0B60071}.Release|Any CPU.Build.0 = Default|Any CPU
 		{7FB80FA6-E2CE-419C-8E2A-D788E8E92F77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7FB80FA6-E2CE-419C-8E2A-D788E8E92F77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FB80FA6-E2CE-419C-8E2A-D788E8E92F77}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -47,7 +39,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = DynamicCodeTests\DynamicCodeTests.csproj
+		StartupItem = JGL\JGL.csproj
 		Policies = $0
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = Hierarchical

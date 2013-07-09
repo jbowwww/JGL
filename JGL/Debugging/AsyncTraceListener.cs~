@@ -13,13 +13,12 @@ namespace JGL.Debugging
 	/// queue until the background thread (see <see cref="RunThread"/>) formats it for output and writes it to the <see cref="Stream"/>
 	/// associated with the <see cref="AsyncTraceListener"/> the message belongs too
 	/// </summary>
-	public abstract class AsyncTraceListener : System.Diagnostics.TraceListener
+	public abstract class AsyncTraceListener : TraceListener
 	{
 		/// <summary>
 		/// Tracing
 		/// </summary>
-		public static readonly AutoTraceSource Trace = new AutoTraceSource(typeof(AsyncTraceListener).Name,
-			new System.Diagnostics.ConsoleTraceListener(),
+		public static readonly AutoTraceSource Trace = new AutoTraceSource(typeof(AsyncTraceListener).Name, new ConsoleTraceListener(),
 			AsyncTraceListener.GetOrCreate("JGL", /*typeof(AsyncTraceListener).Name,*/ typeof(AsyncFileTraceListener)));
 
 		/// <summary>

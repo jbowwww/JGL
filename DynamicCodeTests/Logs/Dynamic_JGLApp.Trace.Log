@@ -1,4 +1,4 @@
-001 13-07-07 23:39:51.930329 P:18091 T: JGLApp Information JGLApp.Main() started
-002 13-07-07 23:39:51.982006 P:18091 T: JGLApp Information Starting JGLApp:ctor
-006 13-07-07 23:39:59.733251 P:18091 T: JGLApp Information Started SceneWindowThread for scene "Scene1 #001" .. 
-007 13-07-07 23:42:01.509663 P:18091 T: JGLApp Verbose JGLApp.Main() finishing
+001 13-07-08 00:51:35.048730 P:21886 T: JGLApp Information JGLApp.Main() started
+002 13-07-08 00:51:35.091075 P:21886 T: JGLApp Information Starting JGLApp:ctor
+006 13-07-08 00:52:21.710225 P:21886 T: JGLApp Information Started SceneWindowThread for scene "Scene1 #001" .. 
+007 13-07-08 00:52:31.309645 P:21886 T: JGLApp Verbose JGLApp.Main() finishing

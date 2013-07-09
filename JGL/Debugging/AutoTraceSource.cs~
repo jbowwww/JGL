@@ -8,8 +8,17 @@ using System.Threading;
 
 namespace JGL.Debugging
 {
+	/// <summary>
+	/// Designed to simplify use of <see cref="System.Diagnostics.TraceSource"/>
+	/// </summary>
 	public class AutoTraceSource : TraceSource
 	{
+		public static readonly AutoTraceSource Trace = new AutoTraceSource(typeof(AutoTraceSource).Name,
+			new ConsoleTraceListener(), new 
+		/// <summary>
+		/// Assert the specified condition.
+		/// </summary>
+		/// <param name="condition">Condition</param>
 		public void Assert(bool condition)
 		{
 			Debug.Assert(condition);
