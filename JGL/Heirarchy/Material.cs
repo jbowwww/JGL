@@ -69,9 +69,15 @@ namespace JGL.Heirarchy
 			GL.Material(MaterialFace.FrontAndBack, MaterialParameter.Ambient, Ambient);
 			GL.Material(MaterialFace.FrontAndBack, MaterialParameter.Diffuse, Diffuse);
 			GL.Material(MaterialFace.FrontAndBack, MaterialParameter.Specular, Specular);
-//			GL.Disable(EnableCap.Texture2D);
-//			GL.BindTexture(TextureTarget.Texture2D, 0);
-//			GL.Color4()
+			if (HasTexture)
+			{
+				GL.Enable(EnableCap.Texture2D);
+				GL.BindTexture(TextureTarget.Texture2D, TextureAmbient.TextureId);
+			}
+			else
+			{
+				GL.Disable(EnableCap.Texture2D);
+			}
 		}
 	}
 }

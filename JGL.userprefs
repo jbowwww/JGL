@@ -1,10 +1,20 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="JGL/Debugging/AutoTraceSource.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="JGL/Heirarchy/Library/Box.cs">
     <Files>
-      <File FileName="JGL/Extensions/Type.cs" Line="7" Column="3" />
-      <File FileName="JGL/Heirarchy/Entity.cs" Line="2" Column="3" />
-      <File FileName="JGL/Debugging/AutoTraceSource.cs" Line="79" Column="78" />
+      <File FileName="DynamicCodeTests/DynamicCode/Heirarchy/Scene1.cs" Line="40" Column="46" />
+      <File FileName="JGL/Heirarchy/Material.cs" Line="75" Column="71" />
+      <File FileName="JGL/Resource/Texture.cs" Line="115" Column="69" />
+      <File FileName="JGL/Resource/Resource.cs" Line="136" Column="29" />
+      <File FileName="DynamicCodeTests/JGLApp.cs" Line="8" Column="11" />
+      <File FileName="DynamicCodeTests/UI/CodeWindow.cs" Line="442" Column="1" />
+      <File FileName="JGL/Debugging/AutoTraceSource.cs" Line="15" Column="15" />
+      <File FileName="JGL/Heirarchy/Entity.cs" Line="45" Column="22" />
+      <File FileName="JGL/Heirarchy/MaterialLibrary.cs" Line="256" Column="52" />
+      <File FileName="JGL/Engine.cs" Line="18" Column="18" />
+      <File FileName="JGL/GL/GLContextualData.cs" Line="14" Column="15" />
+      <File FileName="JGL/Heirarchy/Library/Box.cs" Line="202" Column="1" />
+      <File FileName="JGL/Heirarchy/Object.cs" Line="23" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -12,20 +22,18 @@
           <Node name="Solution Items">
             <Option id="ShowAllFiles" value="True" />
           </Node>
-          <Node name="DynamicCodeTests">
-            <Node name="DynamicCode">
+          <Node name="DynamicCodeTests" expanded="True" selected="True">
+            <Node name="DynamicCode" expanded="True">
               <Option id="ShowAllFiles" value="False" />
+              <Node name="Heirarchy" expanded="True" />
             </Node>
-            <Node name="Logs">
+            <Node name="Logs" expanded="True">
               <Option id="ShowAllFiles" value="True" />
             </Node>
+            <Node name="UI" expanded="True" />
           </Node>
           <Node name="JGL" expanded="True">
-            <Node name="Debugging" expanded="True">
-              <Node name="AutoTraceSource.cs" selected="True" />
-            </Node>
-            <Node name="Extensions" expanded="True" />
-            <Node name="Geometry" expanded="True" />
+            <Node name="Debugging" expanded="True" />
             <Node name="GL" expanded="True" />
             <Node name="Heirarchy" expanded="True">
               <Option id="ShowAllFiles" value="False" />
@@ -64,9 +72,9 @@
       <Breakpoint file="/home/jk/Code/JGL/DynamicCodeTests/UI/ProjectWindow.cs" line="55" />
       <Breakpoint file="/home/jk/Code/JGL/DynamicCodeTests/UI/ProjectPreferencesDialog.cs" line="86" />
       <Breakpoint file="/home/jk/Code/JGL/DynamicCodeTests/UI/CodeWindow.cs" line="911" />
-      <Breakpoint file="/home/jk/Code/JGL/DynamicCodeTests/JGLApp.cs" line="72" />
-      <Breakpoint file="/home/jk/Code/JGL/JGL/Debugging/AsyncTraceListener.cs" line="208" />
-      <Breakpoint file="/home/jk/Code/JGL/JGL/Debugging/AsyncTraceListener.cs" line="188" />
+      <Breakpoint file="/home/jk/Code/JGL/JGL/Debugging/AsyncTraceListener.cs" line="211" />
+      <Breakpoint file="/home/jk/Code/JGL/JGL/Debugging/AsyncTraceListener.cs" line="191" />
+      <Breakpoint file="/home/jk/Code/JGL/DynamicCodeTests/UI/CodeWindow.cs" line="406" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

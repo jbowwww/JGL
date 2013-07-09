@@ -245,15 +245,15 @@ namespace JGL.Heirarchy
 								break;
 							case "map_ka":
 								Debug.Assert(tokens.Length == 2 && m != null);
-								m.TextureAmbient = new Texture(new Uri(string.Concat("file://", tokens[1]), UriKind.RelativeOrAbsolute));
+								m.TextureAmbient = new Texture(tokens[1]);
 								break;
 							case "map_kd":
 								Debug.Assert(tokens.Length == 2 && m != null);
-								m.TextureDiffuse = new Texture(new Uri(string.Concat("file://", tokens[1]), UriKind.RelativeOrAbsolute));
+								m.TextureDiffuse = new Texture(tokens[1]);
 								break;
 							case "map_ks":
 								Debug.Assert(tokens.Length == 2 && m != null);
-								m.TextureSpecular = new Texture(new Uri(string.Concat("file://", tokens[1]), UriKind.RelativeOrAbsolute));
+								m.TextureSpecular = new Texture(tokens[1]);
 								break;
 							
 						}

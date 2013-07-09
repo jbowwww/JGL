@@ -130,7 +130,7 @@ namespace JGL.Heirarchy
 		/// <summary>
 		/// Initializes a new <see cref="JGL.Heirarchy.Entity"/> instance without setting a name
 		/// </summary>
-		internal Entity ()
+		public Entity ()
 		{
 
 		}

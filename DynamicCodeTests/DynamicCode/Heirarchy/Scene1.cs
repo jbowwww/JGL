@@ -1,6 +1,7 @@
 using System;
 using System.Runtime;
 using System.Reflection;
+using JGL.Resource;
 using JGL.Heirarchy;
 using JGL.Heirarchy.Library;
 using OpenTK;
@@ -31,7 +32,15 @@ namespace Dynamic
 				new Tree1() { Position = new Vector3d(1.25, -0.3, -8), Rotation = new Vector3d(1, 2, 0) },
 				new WhiteLight() { Position = new Vector3d(3.5, 3.5, -1) },
 				new WhiteLight(0.68f, 0.22f, 0.338f) { Position = new Vector3d(-0.2, 1.8, 2) },
-				new Box(3, 2, 1) { Position = new Vector3d(-2, 1, 0.5), Material = new Material("White"), TwoSided = true });
+				new Box(3, 2, 1)
+				{
+					Position = new Vector3d(-2, 1, 0.5),
+					Material = new Material("White")
+					{
+						TextureAmbient = new Texture("test1.png")
+					},
+					TwoSided = true
+				});
 			DefaultCamera.Position = new Vector3d(0.5, 0.75, 8);
 		}
 	}

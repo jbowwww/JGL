@@ -23,7 +23,8 @@ namespace JGL.Debugging
 		/// <param name="condition">Condition</param>
 		public static void Assert(bool condition)
 		{
-			Trace.Assert(condition);
+			//Trace.Assert(condition);
+			System.Diagnostics.Debug.Assert(condition);
 		}
 	}
 }

@@ -2,9 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
+using System.Text;
 using System.Reflection;
-using System.Diagnostics;
 using System.Threading;
+using System.Diagnostics;
 
 namespace JGL.Debugging
 {
@@ -152,10 +153,10 @@ namespace JGL.Debugging
 		}
 
 		/// <summary>
-		/// Log specified <paramref name="data"/> in a <see cref="LogMessage"/> using the specified <see cref="TraceEventType"/>
+		/// Log specified <paramref name="data"/> using the specified <see cref="TraceEventType"/>
 		/// </summary>
-		/// <param name="type">The <see cref="TraceEventType"/> for this <see cref="LogMessage"/></param>
-		/// <param name="data">Data to log in <see cref="LogMessage"/></param>
+		/// <param name="type">The <see cref="TraceEventType"/> to use</param>
+		/// <param name="data">Data to log</param>
 		public void Log(TraceEventType type, params object[] data)
 		{
 //			TraceData(type, TraceId, data);
@@ -168,10 +169,10 @@ namespace JGL.Debugging
 		}
 		
 		/// <summary>
-		/// Log specified <paramref name="data"/> in a <see cref="LogMessage"/> using the specified <see cref="TraceEventType"/>
+		/// Log specified <paramref name="message"/> using the specified <see cref="TraceEventType"/>
 		/// </summary>
-		/// <param name="type">The <see cref="TraceEventType"/> for this <see cref="LogMessage"/></param>
-		/// <param name="message">Message to log in <see cref="LogMessage"/></param>
+		/// <param name="type">The <see cref="TraceEventType"/> to use</param>
+		/// <param name="message">Message to log</param>
 		public void Log(TraceEventType type, string message)
 		{
 //			TraceEvent(type, TraceId, message);
@@ -184,11 +185,11 @@ namespace JGL.Debugging
 		}
 		
 		/// <summary>
-		/// Log specified <paramref name="data"/> in a <see cref="LogMessage"/> using the specified <see cref="TraceEventType"/>
+		/// Log specified <paramref name="data"/> using the specified <see cref="TraceEventType"/>
 		/// </summary>
-		/// <param name="type">The <see cref="TraceEventType"/> for this <see cref="LogMessage"/></param>
-		/// <param name="format">Message/Format string to log in <see cref="LogMessage"/></param>
-		/// <param name="data">Data to log in <see cref="LogMessage"/></param>
+		/// <param name="type">The <see cref="TraceEventType"/> to use</param>
+		/// <param name="format">Message/Format string to log</param>
+		/// <param name="data">Data to log</param>
 		public void Log(TraceEventType type, string format, params object[] data)
 		{
 //			TraceEvent(type, TraceId, format, data);
@@ -197,6 +198,31 @@ namespace JGL.Debugging
 				int id = TraceId;
 				foreach (TraceListener listener in this.Listeners)
 					listener.TraceEvent(new TraceEventCache(), Name, type, id, format, data);
+			}
+		}
+
+		/// <summary>
+		/// Log the specified <see cref="Exception"/> using the specified <see cref="TraceEventType"/>
+		/// </summary>
+		/// <param name="type">The <see cref="TraceEventType"/> to use</param>
+		/// <param name="ex">The <see cref="Exception"/> to log</param>
+		public void Log(TraceEventType type, Exception ex)
+		{
+			StringBuilder sb = new StringBuilder();
+			string message, indent = string.Empty;
+			for (Exception _ex = ex; _ex != null; _ex = _ex.InnerException)
+			{
+				sb.AppendFormat("{0}{1}: {2}\n{0}Stacktrace:\n{0}    {3}", indent, _ex.GetType().Name, _ex.Message, _ex.StackTrace.Replace("\n", "\n    " + indent));
+				if (ex.InnerException != null)
+					sb.AppendFormat("{0}InnerException:\n    ", indent);
+				indent += "    ";
+			}
+			message = sb.ToString();
+			lock ((Listeners as ICollection).SyncRoot)
+			{
+				int id = TraceId;
+				foreach (TraceListener listener in this.Listeners)
+					listener.TraceEvent(new TraceEventCache(), Name, type, id, message);
 			}
 		}
 
@@ -212,7 +238,7 @@ namespace JGL.Debugging
 				Trace.Log(TraceEventType.Verbose, "Assert OK at {0}+{1} (in file {2}:{3},{4}", sf.GetMethod().Name,
 					sf.GetILOffset(), sf.GetFileName(), sf.GetFileLineNumber(), sf.GetFileColumnNumber());
 			else
-				Trace.Log(TraceEventType.Information, "Assert FAILED at {0}+{1} (in file {2}:{3},{4}", sf.GetMethod().Name,
+				Trace.Log(TraceEventType.Information, "Assert FAILED at {0}+{1} (in file {2}:{3},{4})", sf.GetMethod().Name,
 					sf.GetILOffset(), sf.GetFileName(), sf.GetFileLineNumber(), sf.GetFileColumnNumber());
 		}
 	}

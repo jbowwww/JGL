@@ -1,5 +1,5 @@
-003 13-07-08 00:52:20.399982 P:21886 T: Compiler Verbose CodeProvider: CSharpCodeProvider
-004 13-07-08 00:52:20.415664 P:21886 T: Compiler Verbose Compiler Parameters =
+001 13-07-10 06:17:34.305396 P:1683 T: Compiler Verbose CodeProvider: CSharpCodeProvider
+002 13-07-10 06:17:34.334774 P:1683 T: Compiler Verbose Compiler Parameters =
 {
 	Generate Executable: True
 	Generate In Memory: False
@@ -16,4 +16,42 @@
 	Referenced Assemblies: System.dll JGL.dll /home/jk/Code/Resources/CS/OpenTK 1.0/Binaries/OpenTK/Release/OpenTK.dll
 	Temp Files: 
 }
-005 13-07-08 00:52:21.087058 P:21886 T: Compiler Information Source built into DynamicCodeTests-Scene.dll successfully.
+003 13-07-10 06:17:35.436096 P:1683 T: Compiler Information Source built into DynamicCodeTests-Scene.dll successfully.
+004 13-07-10 06:18:30.917789 P:1683 T: Compiler Verbose CodeProvider: CSharpCodeProvider
+005 13-07-10 06:18:30.918765 P:1683 T: Compiler Verbose Compiler Parameters =
+{
+	Generate Executable: True
+	Generate In Memory: False
+	Output Assembly: DynamicCodeTests-Scene.dll
+	Include Debug Info: False
+	Warnings As Errors: False
+	Warning Level: -1
+	Compiler Options: 
+	Main Class: 
+	User Token: 0
+	Win32 Resource: 
+	Embedded Resources: 
+	Linked Resources: 
+	Referenced Assemblies: System.dll JGL.dll /home/jk/Code/Resources/CS/OpenTK 1.0/Binaries/OpenTK/Release/OpenTK.dll
+	Temp Files: 
+}
+006 13-07-10 06:18:31.877696 P:1683 T: Compiler Information Source built into DynamicCodeTests-Scene.dll successfully.
+007 13-07-10 06:20:45.695713 P:1683 T: Compiler Verbose CodeProvider: CSharpCodeProvider
+008 13-07-10 06:20:45.696978 P:1683 T: Compiler Verbose Compiler Parameters =
+{
+	Generate Executable: True
+	Generate In Memory: False
+	Output Assembly: DynamicCodeTests-Scene.dll
+	Include Debug Info: False
+	Warnings As Errors: False
+	Warning Level: -1
+	Compiler Options: 
+	Main Class: 
+	User Token: 0
+	Win32 Resource: 
+	Embedded Resources: 
+	Linked Resources: 
+	Referenced Assemblies: System.dll JGL.dll /home/jk/Code/Resources/CS/OpenTK 1.0/Binaries/OpenTK/Release/OpenTK.dll
+	Temp Files: 
+}
+009 13-07-10 06:20:46.730912 P:1683 T: Compiler Information Source built into DynamicCodeTests-Scene.dll successfully.

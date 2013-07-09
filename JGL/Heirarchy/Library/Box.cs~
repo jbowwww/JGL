@@ -14,49 +14,120 @@ namespace JGL.Heirarchy.Library
 		/// <summary>
 		/// Tracing
 		/// </summary>
-		public static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
+		public new static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
 
+		#region Box texturise methods
 		/// <summary>
-		/// Box texturise mode
+		/// Texturise method arguments base class.
 		/// </summary>
-		/// <remarks>Passed to texturise methods to indicate how texture coordinates are generated</remarks>
-		public enum BoxTexturiseMode
+		public abstract class BoxTexturiseMethod
 		{
 			/// <summary>
-			/// Each face of the box displays the whole texture from (0,0) to (1,1)
+			/// Texturise this instance.
 			/// </summary>
-			TextureEachFace,
+			public abstract void Texturise(Box box);
+		}
+
+		/// <summary>
+		/// Each face of the <see cref="Box"/> displays the <see cref="Texture"/>, repeated <see cref="TexturiseEachFace.URepeat"/>
+		/// times in the U dimension and <see cref="TexturiseEachFace.VRepeat"/> in the V direction
+		/// </summary>
+		public class TexturiseEachFace : BoxTexturiseMethod
+		{
+			/// <summary>
+			/// How many times to repeat the <see cref="Texture"/> in the X (U) direction
+			/// </summary>
+			int URepeat = 1;
 
 			/// <summary>
-			/// Texture is mapped around the box
+			/// How many times to repeat the <see cref="Texture"/> in the Y (V) direction
 			/// </summary>
-			/// <remarks>
-			///	- Texture aspect ratio should be 4:3
-			///		- Left 1/4 of texture contains top, front and bottom sides
-			///		- Vertically middle 1/3 of texture contains front, right, back and left sides
-			///		- Other half of texture coordinate space not used
-			/// </remarks>
-			TextureWholeBox
-		};
+			int VRepeat = 1;
+
+			/// <summary>
+			/// Texturise this instance.
+			/// </summary>
+			public override void Texturise(Box box)
+			{
+				box.VertexData.TexCoords = new TexCoord[]
+				{
+					new TexCoord(0, 0), new TexCoord(0, VRepeat),
+					new TexCoord(URepeat, VRepeat), new TexCoord(URepeat, 0)
+				};
+				for (int i = 0; i < 12; i+=2)
+				{
+					box.Triangles[i].T = new int[] { 2, 1, 0 };
+					box.Triangles[i + 1].T = new int[] { 0, 2, 3 };
+				}
+			}
+		}
+
+		/// <summary>
+		/// Texturise whole box.
+		/// </summary>
+		public class TexturiseWholeBox : BoxTexturiseMethod
+		{
+			/// <summary>
+			/// Generates texture coordinates that will wrap a single <see cref="Texture"/> around the whole box
+			/// </summary>
+			public override void Texturise(Box box)
+			{
+				box.VertexData.TexCoords = new TexCoord[]
+				{
+					new TexCoord(0, 0), new TexCoord(0, 0.3333333), new TexCoord(0, 0.6666666), new TexCoord(0, 1),
+					new TexCoord(0.25, 0), new TexCoord(0.25, 0.3333333), new TexCoord(0.25, 0.6666666), new TexCoord(0.25, 1),
+					new TexCoord(0.5, 0), new TexCoord(0.5, 0.3333333), new TexCoord(0.5, 0.6666666), new TexCoord(0.5, 1),
+					new TexCoord(0.75, 0), new TexCoord(0.75, 0.3333333), new TexCoord(0.75, 0.6666666), new TexCoord(0.75, 1),
+					new TexCoord(1, 0), new TexCoord(1, 0.3333333), new TexCoord(1, 0.6666666), new TexCoord(1, 1)
+				};
+				box.Triangles[0].T = new int[] { 6, 2, 1 };
+				box.Triangles[1].T = new int[] { 5, 6, 2 };
+				box.Triangles[2].T = new int[] { 10, 6, 5 };
+				box.Triangles[3].T = new int[] { 9, 10, 6 };
+				box.Triangles[4].T = new int[] { 14, 10, 9 };
+				box.Triangles[5].T = new int[] { 13, 14, 10 };
+				box.Triangles[6].T = new int[] { 18, 14, 1 };
+				box.Triangles[7].T = new int[] { 17, 18, 14 };
+				box.Triangles[8].T = new int[] { 3, 2, 7 };
+				box.Triangles[9].T = new int[] { 2, 6, 7 };
+				box.Triangles[10].T = new int[] { 4, 5, 1 };
+				box.Triangles[11].T = new int[] { 4, 1, 0 };
+			}
+		}
+
+		/// <summary>
+		/// Texturise each face with default parameters
+		/// </summary>
+		/// <remarks>
+		/// <see cref="TexturiseEachFace.URepeat"/> = 1, <see cref="TexturiseEachFace.VRepeat"/> = 1
+		/// </remarks>
+		public readonly BoxTexturiseMethod DefaultTexturiseEachFace = new TexturiseEachFace();
+
+		/// <summary>
+		/// Texturise whole box with default parameters
+		/// </summary>
+		public readonly BoxTexturiseMethod DefaultTexturiseWholeBox = new TexturiseWholeBox();
+		#endregion
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="JGL.Heirarchy.Library.Box"/> class.
 		/// </summary>
-		/// <param name="name">Name</param>
-		public Box(BoxTexturiseMode mode = BoxTexturiseMode.TextureEachFace)
+		/// <param name="texturiseMethod">A <see cref="BoxTexturiseMethod"/> instance, or null to use <see cref="DefaultTexturiseEachFace"/></param>
+		public Box(BoxTexturiseMethod texturiseMethod = null)
 			: base(null)
 		{
-			Init(1, 1, 1, mode);
+			Init(1, 1, 1, texturiseMethod);
 		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="JGL.Heirarchy.Library.Box"/> class.
 		/// </summary>
 		/// <param name="name">Name</param>
-		public Box(string name, BoxTexturiseMode mode = BoxTexturiseMode.TextureEachFace)
+		/// <param name="texturiseMethod">A <see cref="BoxTexturiseMethod"/> instance, or null to use <see cref="DefaultTexturiseEachFace"/></param>
+		public Box(string name, BoxTexturiseMethod texturiseMethod = null)
 			: base(name)
 		{
-			Init(1, 1, 1, mode);
+			Init(1, 1, 1, texturiseMethod);
 		}
 
 		/// <summary>
@@ -66,10 +137,11 @@ namespace JGL.Heirarchy.Library
 		/// <param name="xSize">X size</param>
 		/// <param name="ySize">Y size</param>
 		/// <param name="zSize">Z size</param>
-		public Box(string name, double xSize, double ySize, double zSize, BoxTexturiseMode mode = BoxTexturiseMode.TextureEachFace)
+		/// <param name="texturiseMethod">A <see cref="BoxTexturiseMethod"/> instance, or null to use <see cref="DefaultTexturiseEachFace"/></param>
+		public Box(string name, double xSize, double ySize, double zSize, BoxTexturiseMethod texturiseMethod = null)
 			: base(name)
 		{
-			Init(xSize, ySize, zSize, mode);
+			Init(xSize, ySize, zSize, texturiseMethod);
 		}
 
 		/// <summary>
@@ -78,10 +150,11 @@ namespace JGL.Heirarchy.Library
 		/// <param name="xSize">X size</param>
 		/// <param name="ySize">Y size</param>
 		/// <param name="zSize">Z size</param>
-		public Box(double xSize, double ySize, double zSize, BoxTexturiseMode mode = BoxTexturiseMode.TextureEachFace)
+		/// <param name="texturiseMethod">A <see cref="BoxTexturiseMethod"/> instance, or null to use <see cref="DefaultTexturiseEachFace"/></param>
+		public Box(double xSize, double ySize, double zSize, BoxTexturiseMethod texturiseMethod = null)
 			: base(null)
 		{
-			Init(xSize, ySize, zSize, mode);
+			Init(xSize, ySize, zSize, texturiseMethod);
 		}
 
 		/// <summary>
@@ -90,11 +163,8 @@ namespace JGL.Heirarchy.Library
 		/// <param name="xSize">X size</param>
 		/// <param name="ySize">Y size</param>
 		/// <param name="zSize">Z size</param>
-		/// <param name="mode">Box texturing mode</param>
-		/// <remarks>
-		///	-	Worth rewriting this and below methods to get texcoord array from another method, selected using BoxTexturingMode?
-		/// </remarks>
-		protected void Init(double xSize, double ySize, double zSize, BoxTexturiseMode mode)
+		/// <param name="texturiseMethod">A <see cref="BoxTexturiseMethod"/> instance, or null to use <see cref="DefaultTexturiseEachFace"/></param>
+		protected void Init(double xSize, double ySize, double zSize, BoxTexturiseMethod texturiseMethod)
 		{
 			double x = xSize / 2;
 			double y = ySize / 2;
@@ -127,63 +197,9 @@ namespace JGL.Heirarchy.Library
 				new TriangleFace(new int[] { 3, 7, 4 }, new int[] { 5, 5, 5 }),//, new int[] { 2, 1, 0 }),
 				new TriangleFace(new int[] { 3, 4, 0 }, new int[] { 5, 5, 5 }),//, new int[] { 3, 2, 0 }),
 			});
-			Texturise(mode);
-		}
-
-		/// <summary>
-		/// Generates texture coordinates for the box using the specified mode
-		/// </summary>
-		/// <param name="mode">Mode of texture coordinate generation</param>
-		/// <remarks>
-		///	-	Should this assume all vertices have been generated, insert new texcoords directly into Triangles array??
-		///		-	See remarks for <see cref="Init"/>
-		/// </remarks>
-		public void Texturise(BoxTexturiseMode mode)
-		{
-			switch (mode)
-			{
-				case BoxTexturiseMode.TextureEachFace:
-					VertexData.TexCoords = new TexCoord[]
-					{
-						new TexCoord(0, 0), new TexCoord(0, 1),
-						new TexCoord(1, 1), new TexCoord(1, 0)
-					};
-					for (int i = 0; i < 12; i+=2)
-					{
-						Triangles[i].T = new int[] { 2, 1, 0 };
-						Triangles[i + 1].T = new int[] { 0, 2, 3 };
-					}
-					break;
-
-				case BoxTexturiseMode.TextureWholeBox:
-					VertexData.TexCoords = new TexCoord[]
-					{
-						new TexCoord(0, 0), new TexCoord(0, 0.3333333), new TexCoord(0, 0.6666666), new TexCoord(0, 1),
-						new TexCoord(0.25, 0), new TexCoord(0.25, 0.3333333), new TexCoord(0.25, 0.6666666), new TexCoord(0.25, 1),
-						new TexCoord(0.5, 0), new TexCoord(0.5, 0.3333333), new TexCoord(0.5, 0.6666666), new TexCoord(0.5, 1),
-						new TexCoord(0.75, 0), new TexCoord(0.75, 0.3333333), new TexCoord(0.75, 0.6666666), new TexCoord(0.75, 1),
-						new TexCoord(1, 0), new TexCoord(1, 0.3333333), new TexCoord(1, 0.6666666), new TexCoord(1, 1)
-					};
-
-					Triangles[0].T = new int[] { 6, 2, 1 };
-					Triangles[1].T = new int[] { 5, 6, 2 };
-					Triangles[2].T = new int[] { 10, 6, 5 };
-					Triangles[3].T = new int[] { 9, 10, 6 };
-					Triangles[0].T = new int[] { 14, 10, 9 };
-					Triangles[1].T = new int[] { 13, 14, 10 };
-					Triangles[0].T = new int[] { 18, 14, 1 };
-					Triangles[1].T = new int[] { 17, 18, 14 };
-					Triangles[0].T = new int[] { 3, 2, 7 };
-					Triangles[1].T = new int[] { 2, 6, 7 };
-					Triangles[0].T = new int[] { 4, 5, 1 };
-					Triangles[1].T = new int[] { 4, 1, 0 };
-
-					break;
-
-				default:
-					throw new Exception("Just shouldn't happen!! mode=" + mode.ToString());
-					break;
-			}
+			if (texturiseMethod == null)
+				texturiseMethod = DefaultTexturiseEachFace;
+			texturiseMethod.Texturise(this);
 		}
 	}
 }

@@ -90,6 +90,7 @@
     <Compile Include="Geometry\VertexData.cs" />
     <Compile Include="Heirarchy\EntityRootContext.cs" />
     <Compile Include="Heirarchy\EntityContext.cs" />
+    <Compile Include="Engine.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

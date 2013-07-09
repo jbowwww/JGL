@@ -403,12 +403,12 @@ namespace Dynamic.UI
 					sb.AppendFormat("{0} errors while compiling {1} sources:\n", cr.Errors.Count, sources.Count);
 					foreach (System.CodeDom.Compiler.CompilerError error in cr.Errors)
 						sb.AppendFormat("{0} {1} @ {2}:{3},{4}: {5}\n", error.IsWarning ? "Warning" : "Error", error.ErrorNumber, error.FileName, error.Line, error.Column, error.ErrorText);
-					MessageDialog mDlg = new MessageDialog(null, DialogFlags.Modal, MessageType.Error, ButtonsType.Ok, sb.ToString());
-					mDlg.Response += delegate(object o, ResponseArgs args) {
-						if (args.ResponseId == ResponseType.Ok || args.ResponseId == ResponseType.Close)
-							mDlg.Destroy();
-					};
-					mDlg.Show();
+//					MessageDialog mDlg = new MessageDialog(null, DialogFlags.Modal, MessageType.Error, ButtonsType.Ok, sb.ToString());
+//					mDlg.Response += delegate(object o, ResponseArgs args) {
+//						if (args.ResponseId == ResponseType.Ok || args.ResponseId == ResponseType.Close)
+//							mDlg.Destroy();
+//					};
+//					mDlg.Show();
 				}
 	
 				// Compilation success
@@ -476,7 +476,7 @@ namespace Dynamic.UI
 						}
 						catch (Exception ex)
 						{
-							Trace.Log(TraceEventType.Error, ex.Message + "\nStacktrace:\n" + ex.StackTrace);
+							Trace.Log(TraceEventType.Error, ex);
 						}
 						PopulateHeirarchy();
 					}

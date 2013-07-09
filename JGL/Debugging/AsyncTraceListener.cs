@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using System.Threading;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace JGL.Debugging
 {
@@ -115,12 +116,14 @@ namespace JGL.Debugging
 		/// <param name="type">Type of listener to create</param>
 		public static AsyncTraceListener GetOrCreate(string name, Type type)
 		{
-			Thread.BeginCriticalRegion();
+			//Thread.BeginCriticalRegion();
 			if (_namedListeners == null)
 				_namedListeners = new ConcurrentDictionary<string, AsyncTraceListener>();
-			Thread.EndCriticalRegion();
-			return _namedListeners.ContainsKey(name) ? _namedListeners[name]
-				: _namedListeners[name] = (AsyncTraceListener)type.GetConstructor(new Type[] { typeof(string) }).Invoke(new object[] { name });
+			//Thread.EndCriticalRegion();
+			if (!_namedListeners.ContainsKey(name))
+				_namedListeners[name] = (AsyncTraceListener)type.GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null,
+					new Type[] { typeof(string) }, new ParameterModifier[] {}).Invoke(new object[] { name });
+			return _namedListeners[name];
 		}
 
 		/// <summary>

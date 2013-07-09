@@ -30,6 +30,12 @@
 /// <see cref="Mesh">
 /// <see cref="JGL.Heirarchy.Mesh">
 
+// JGL.Resource
+/// <see cref="JGL.Resource.Texture"/>
+/// <see cref="Texture"/>
+/// <see cref="JGL.Resource.Resource"/>
+/// <see cref="Resource"/>
+
 // JGL.Data
 /// <see cref="JGL.Data."/>
 /// <see cref="JGL.Data.Contract"/>

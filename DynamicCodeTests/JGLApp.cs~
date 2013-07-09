@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading;
 using System.Diagnostics;
 using Gtk;
+using JGL;
 using JGL.Heirarchy;
 using JGL.Debugging;
 using OpenTK.Graphics.OpenGL;
@@ -51,6 +52,7 @@ namespace Dynamic
 				Scenes = new ConcurrentBag<Scene>();
 				Application.Init("JGLApp", ref args);
 				JGLApp.TheApp = new JGLApp(args);			// Set global static application variables
+				Engine.Init();
 				Application.Run();
 			}
 			catch (Exception ex)
@@ -60,7 +62,7 @@ namespace Dynamic
 			finally
 			{
 				Trace.Log(TraceEventType.Verbose, "JGLApp.Main() finishing");
-				AsyncTraceListener.StopAll();
+				Engine.Quit();
 			}
 		}
 
@@ -70,16 +72,8 @@ namespace Dynamic
 		protected static void UnhandledException(GLib.UnhandledExceptionArgs args)
 		{
 			Trace.Log(TraceEventType.Information, "JGLApp.UnhandledException() (ExceptionObject={0}, IsTerminating={1}, ExitApplication={2})", args.ExceptionObject, args.IsTerminating, args.ExitApplication);
-			StringBuilder sb = new StringBuilder();
-			string indent = string.Empty;
-			for (Exception ex = args.ExceptionObject as Exception; ex != null; ex = ex.InnerException)
-			{
-				sb.AppendFormat("{0}{1}: {2}\n{0}Stacktrace:\n{0}    {3}\n{0}InnerException:\n    ", indent, ex.GetType().Name, ex.Message, ex.StackTrace.Replace("\n", "\n    " + indent));
-				indent += "    ";
-			}
-			Trace.Log(TraceEventType.Error, sb.ToString());
 
-
+			Trace.Log(TraceEventType.Error, args.ExceptionObject as Exception);
 				// trace logs should flush/close without needing these lines (finally clause in JGLApp.Main())
 				//				if (args.IsTerminating || args.ExitApplication)
 //				{

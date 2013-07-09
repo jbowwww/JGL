@@ -3,6 +3,7 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading;
+using System.Diagnostics;
 using OpenTK.Graphics.OpenGL;
 using JGL.Extensions;
 using JGL.OpenGL;
@@ -18,12 +19,12 @@ namespace JGL.Resource
 		/// <summary>
 		/// Tracing
 		/// </summary>
-		public static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncFileTraceListener.GetOrCreate("JGL"));
 
 		/// <summary>
 		/// Gets or sets the <see cref="Texture"/> image
 		/// </summary>
-		public Image Image { get; protected set; }
+		public Bitmap Image { get; protected set; }
 
 		/// <summary>
 		/// Gets the width.
@@ -43,32 +44,32 @@ namespace JGL.Resource
 		/// <summary>
 		/// Initializes a new instance of the <see cref="JGL.Resource.Texture"/> class.
 		/// </summary>
-		/// <param name="uri"><see cref="Texture"/> <see cref="Uri"/></param>
-		public Texture(Uri uri)
-			: base(uri)
+		/// <param name="path">Path to <see cref="Texture"/></param>
+		public Texture(string path)
+			: base(path)
 		{
-			Init(null, uri);
+			Init(base.Name, path);
 		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="JGL.Resource.Texture"/> class.
 		/// </summary>
 		/// <param name="name"><see cref="Texture"/> <see cref="JGL.Heirarchy.Entity.Name"/></param>
-		/// <param name="uri"><see cref="Texture"/> <see cref="Uri"/></param>
-		public Texture(string name, Uri uri)
-			: base(name, uri)
+		/// <param name="path"><see cref="Texture"/> path</param>
+		public Texture(string name, string path)
+			: base(name, path)
 		{
-			Init(name, uri);
+			Init(name, path);
 		}
 
 		/// <summary>
 		///  Init the instance using given name and uri.
 		/// </summary>
 		/// <param name="name"><see cref="Texture"/> <see cref="JGL.Heirarchy.Entity.Name"/></param>
-		/// <param name="uri"><see cref="Texture"/> <see cref="Uri"/></param>
-		private void Init(string name, Uri uri)
+		/// <param name="path"><see cref="Texture"/> path</param>
+		private void Init(string name, string path)
 		{
-
+			Trace.Log(TraceEventType.Information, "Init(name=\"{0}\", path=\"{1}\")", name, path);
 		}
 
 		#region Implemented abstract members of JGL.Resource.Resource
@@ -84,14 +85,17 @@ namespace JGL.Resource
 			Stream s = null;
 			try
 			{
-				using (s = URI.Open())
+				using (s = File.Open(string.IsNullOrEmpty(System.IO.Path.GetDirectoryName(Path)) ? "../../../Data/Textures/" + Path : Path, FileMode.Open, FileAccess.Read, FileShare.Read))
 				{
-					Image = Image.FromStream(s);
+					Image = new Bitmap(s);
+						//Bitmap.FromStream(s);
 					TextureId = new GLContextualData<Texture, int>(CreateGLTexture, this);
+					Trace.Log(TraceEventType.Information, "Load (this.Name=\"{0}\", this.Path=\"{1}\") loaded {2}x{3} image, {4}", Name, Path, Image.Width, Image.Height, Image.PixelFormat);
 				}
 			}
 			catch (Exception ex)
 			{
+				Trace.Log(TraceEventType.Error, ex);
 				throw new Exception(string.Format("Failed loading texture \"{0}\" from stream \"{1}\"", Name, s == null ? "(null)" : s.ToString()), ex);
 			}
 		}
@@ -103,9 +107,21 @@ namespace JGL.Resource
 		/// <param name="texture"><see cref="Texture"/></param>
 		private static int CreateGLTexture(Texture texture)
 		{
+			Bitmap img = texture.Image;
 			int glid = GL.GenTexture();
-			// how to get pixel data out of this.Image??
-//			GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, Width, Height, 0, Image.PixelFormat, PixelType.Bitmap, new BitmapData());
+			GL.BindTexture(TextureTarget.Texture2D, glid);
+
+			BitmapData bd = img.LockBits(new Rectangle(0, 0, img.Width, img.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+			GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, bd.Width, bd.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgr, PixelType.UnsignedByte, bd.Scan0);
+			img.UnlockBits(bd);
+ 
+			// We haven't uploaded mipmaps, so disable mipmapping (otherwise the texture will not appear).
+			// On newer video cards, we can use GL.GenerateMipmaps() or GL.Ext.GenerateMipmaps() to create
+			// mipmaps automatically. In that case, use TextureMinFilter.LinearMipmapLinear to enable them.
+			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+
+			Trace.Log(TraceEventType.Information, "CreateGLTexture(texture=\"{0}\") generated GL texture ID {1}", texture.Id, glid);
 			return glid;
 		}
 		#endregion
