@@ -112,5 +112,6 @@
   </ProjectExtensions>
   <ItemGroup>
     <None Include="XML comment clipboard.txt.cs" />
+    <None Include="Features.txt" />
   </ItemGroup>
 </Project>

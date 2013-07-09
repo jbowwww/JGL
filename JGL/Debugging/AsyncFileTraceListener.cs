@@ -10,6 +10,16 @@ namespace JGL.Debugging
 	public class AsyncFileTraceListener : AsyncTraceListener
 	{
 		/// <summary>
+		/// Gets (if exists) or creates a <see cref="AsyncFileTraceListener"/> with the specified <paramref name="name"/>
+		/// </summary>
+		/// <returns>An <see cref="AsyncFileTraceListener"/> reference</returns>
+		/// <param name="name">Name of the <see cref="AsyncFileTraceListener"/> to get or create</param>
+		public static AsyncFileTraceListener GetOrCreate(string name)
+		{
+			return base.GetOrCreate(name, typeof(AsyncFileTraceListener));
+		}
+
+		/// <summary>
 		/// The path prefix.
 		/// </summary>
 		public string PathPrefix = "../../Logs/";
@@ -35,7 +45,7 @@ namespace JGL.Debugging
 		/// Initializes a new instance of the <see cref="JGL.Debugging.AsyncFileTraceListener"/> class.
 		/// </summary>
 		/// <param name="name">Name of the new trace listener</param>
-		public AsyncFileTraceListener(string name)
+		protected AsyncFileTraceListener(string name)
 			: base(name)
 		{
 		}
@@ -47,7 +57,7 @@ namespace JGL.Debugging
 		/// <remarks>
 		/// Implementation of abstract member of JGL.Debugging.AsyncTraceListener
 		/// </remarks>
-		public override System.IO.Stream OpenStream()
+		protected override System.IO.Stream OpenStream()
 		{
 			string path = Path;
 			string dir = System.IO.Path.GetDirectoryName(path);

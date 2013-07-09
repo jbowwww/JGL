@@ -1,13 +1,18 @@
-/// System
+// System
 /// <see cref="System.Type"/>
 /// <see cref="System.Object"/>
 
-// System.Diagnostics
+// JGL.Debugging
 /// <see cref="AutoTraceSource.Debug"/>
+/// <see cref="AsyncTraceListener"/>
+/// <see cref="AsyncFileTraceListener"/>
+/// <see cref="LogMessage"/>
 
 // System.Collections
 /// <see cref="System.Collections.Generic.ICollection<Entity>"/>
-/// <see cref="System.Collections.Generic.ICollection<Entity>"/>
+/// <see cref="ICollection<Entity>"/>
+/// <see cref="System.Collections.Generic.IList<Entity>"/>
+/// <see cref="IList<Entity>"/>
 
 // Gtk
 /// <see cref="Gtk."/>

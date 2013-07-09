@@ -1,32 +1,37 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="JGL/Debugging/AutoTraceSource.cs">
+    <Files>
+      <File FileName="JGL/Debugging/AsyncFileTraceListener.cs" Line="48" Column="12" />
+      <File FileName="JGL/Debugging/AsyncTraceListener.cs" Line="254" Column="3" />
+      <File FileName="JGL/Debugging/AutoTraceSource.cs" Line="34" Column="41" />
+      <File FileName="JGL/Debugging/Debug.cs" Line="15" Column="3" />
+      <File FileName="JGL/XML comment clipboard.txt.cs" Line="9" Column="5" />
+      <File FileName="JGL/Features.txt" Line="3" Column="1" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
-          <Node name="Data">
+          <Node name="Solution Items">
             <Option id="ShowAllFiles" value="True" />
           </Node>
-          <Node name="DynamicCodeTests" expanded="True">
+          <Node name="DynamicCodeTests">
             <Node name="DynamicCode">
               <Option id="ShowAllFiles" value="False" />
             </Node>
             <Node name="Logs">
               <Option id="ShowAllFiles" value="True" />
             </Node>
-            <Node name="UI" expanded="True" />
           </Node>
           <Node name="JGL" expanded="True">
-            <Node name="Geometry" expanded="True" />
-            <Node name="GL" expanded="True" />
+            <Node name="Debugging" expanded="True">
+              <Node name="AutoTraceSource.cs" selected="True" />
+            </Node>
             <Node name="Heirarchy" expanded="True">
               <Option id="ShowAllFiles" value="False" />
-              <Node name="Library" expanded="True" />
-              <Node name="EntityContext.cs" selected="True" />
             </Node>
             <Node name="Resource" expanded="True" />
           </Node>
-          <Node name="UtilityPrograms" expanded="True" />
         </State>
       </Pad>
       <Pad Id="ClassPad">
@@ -57,11 +62,10 @@
     <BreakpointStore>
       <Breakpoint file="/home/jk/Code/JGL/DynamicCodeTests/UI/ProjectWindow.cs" line="55" />
       <Breakpoint file="/home/jk/Code/JGL/DynamicCodeTests/UI/ProjectPreferencesDialog.cs" line="86" />
-      <Breakpoint file="/home/jk/Code/JGL/JGL/Debugging/AsyncTraceListener.cs" line="199" />
-      <Breakpoint file="/home/jk/Code/JGL/JGL/Debugging/AsyncTraceListener.cs" line="179" />
       <Breakpoint file="/home/jk/Code/JGL/DynamicCodeTests/UI/CodeWindow.cs" line="911" />
-      <Breakpoint file="/home/jk/Code/JGL/DynamicCodeTests/UI/CodeWindow.cs" line="197" />
       <Breakpoint file="/home/jk/Code/JGL/DynamicCodeTests/JGLApp.cs" line="72" />
+      <Breakpoint file="/home/jk/Code/JGL/JGL/Debugging/AsyncTraceListener.cs" line="208" />
+      <Breakpoint file="/home/jk/Code/JGL/JGL/Debugging/AsyncTraceListener.cs" line="188" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

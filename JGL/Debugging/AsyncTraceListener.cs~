@@ -16,12 +16,6 @@ namespace JGL.Debugging
 	public abstract class AsyncTraceListener : TraceListener
 	{
 		/// <summary>
-		/// Tracing
-		/// </summary>
-		public static readonly AutoTraceSource Trace = new AutoTraceSource(typeof(AsyncTraceListener).Name, new ConsoleTraceListener(),
-			AsyncTraceListener.GetOrCreate("JGL", /*typeof(AsyncTraceListener).Name,*/ typeof(AsyncFileTraceListener)));
-
-		/// <summary>
 		/// Log message class stores log message parameters
 		/// </summary>
 		internal class LogMessage
@@ -29,27 +23,25 @@ namespace JGL.Debugging
 			/// <summary>Event cache</summary>
 			public readonly System.Diagnostics.TraceEventCache EventCache;
 
-			/// <summary>The <see cref="System.Diagnostics.TraceSource"/> that the message originated from</summary>
+			/// <summary>The <see cref="TraceSource"/> that the message originated from</summary>
 			public readonly string Source;
 
-			/// <summary></summary>
-			public readonly System.Diagnostics.TraceEventType EventType;
+			/// <summary><see cref="TraceEventType"/> event type</summary>
+			public readonly TraceEventType EventType;
 
-			/// <summary></summary>
+			/// <summary>Trace message ID</summary>
 			public readonly int Id;
 
-			/// <summary></summary>
+			/// <summary>Data to go with the </summary>
 			public readonly object Data;
 
-			/// <summary></summary>
+			/// <summary>Listener the <see cref="LogMessage"/> is intended for</summary>
 			public readonly AsyncTraceListener Listener;
 
-			/// <summary></summary>
-			public readonly System.Diagnostics.TraceOptions OutputOptions;
+			/// <summary><see cref="TraceOptions"/> for output</summary>
+			public readonly TraceOptions OutputOptions;
 
-			/// <summary>
-			/// Gets the formatted message string
-			/// </summary>
+			/// <summary>Gets the formatted message string</summary>
 			public string Message {
 				get
 				{
@@ -94,24 +86,42 @@ namespace JGL.Debugging
 				Data = data;
 				Listener = listener;
 				OutputOptions = listener.TraceOutputOptions;
-
 			}
 		}
 
-		#region Private fields
-		private const int ThreadWaitTime = 141;
+		#region Static members
 		/// <summary>
-		/// The _thread looping.
+		/// Tracing
 		/// </summary>
+		public static readonly AutoTraceSource Trace = new AutoTraceSource(typeof(AsyncTraceListener).Name, new ConsoleTraceListener(),
+			AsyncTraceListener.GetOrCreate("JGL", /*typeof(AsyncTraceListener).Name,*/ typeof(AsyncFileTraceListener)));
+
+		#region Private fields
 		private static bool _threadLooping = true;
 		private static Thread _fileIoThread;
 		private static bool _stopAll = false;
 		private static ConcurrentQueue<LogMessage> _messageQueue = new ConcurrentQueue<LogMessage>();
 		private static ConcurrentQueue<AsyncTraceListener> _closeQueue = new ConcurrentQueue<AsyncTraceListener>();
 		private static ConcurrentDictionary<string, AsyncTraceListener> _namedListeners;
-		private bool _stop = false;
-		private Stream Stream = null;
 		#endregion
+
+		/// <summary>
+		/// Gets or create a <see cref="AsyncTraceListener"/>
+		/// </summary>
+		/// <returns>
+		/// The retrieved or newly created <see cref="AsyncTraceListener"/>
+		/// </returns>
+		/// <param name="name">Name of listener to get/create</param>
+		/// <param name="type">Type of listener to create</param>
+		public static AsyncTraceListener GetOrCreate(string name, Type type)
+		{
+			Thread.BeginCriticalRegion();
+			if (_namedListeners == null)
+				_namedListeners = new ConcurrentDictionary<string, AsyncTraceListener>();
+			Thread.EndCriticalRegion();
+			return _namedListeners.ContainsKey(name) ? _namedListeners[name]
+				: _namedListeners[name] = (AsyncTraceListener)type.GetConstructor(new Type[] { typeof(string) }).Invoke(new object[] { name });
+		}
 
 		/// <summary>
 		/// Thread entry point
@@ -222,7 +232,26 @@ namespace JGL.Debugging
 			Trace.Log(System.Diagnostics.TraceEventType.Information, "StopAll() ({0} named listeners)", _namedListeners.Count);
 			_stopAll = true;
 		}
+		#endregion
 
+		#region Private members
+		/// <summary>
+		/// Time (in milliseconds) for <see cref="AsyncTraceListener.RunThread"/> to sleep for,
+		/// after writing all <see cref="LogMessage"/>s in queue
+		/// </summary>
+		private const int ThreadWaitTime = 141;
+
+		/// <summary>
+		/// Indicates that this <see cref="AsyncTraceListener"/> should be stopped
+		/// </summary>
+		private bool _stop = false;
+
+		/// <summary>
+		/// The stream that this <see cref="AsyncTraceListener"/> writes to
+		/// </summary>
+		private Stream Stream = null;
+		#endregion
+		
 		/// <summary>
 		/// Initializes a new instance of the <see cref="JGL.Debugging.AsyncTraceListener"/> class.
 		/// </summary>
@@ -243,24 +272,6 @@ namespace JGL.Debugging
 		}
 
 		/// <summary>
-		/// Gets or create a <see cref="AsyncTraceListener"/>
-		/// </summary>
-		/// <returns>
-		/// The retrieved or newly created <see cref="AsyncTraceListener"/>
-		/// </returns>
-		/// <param name="name">Name of listener to get/create</param>
-		/// <param name="type">Type of listener to create</param>
-		public static AsyncTraceListener GetOrCreate(string name, Type type)
-		{
-			Thread.BeginCriticalRegion();
-			if (_namedListeners == null)
-				_namedListeners = new ConcurrentDictionary<string, AsyncTraceListener>();
-			Thread.EndCriticalRegion();
-			return _namedListeners.ContainsKey(name) ? _namedListeners[name]
-				: _namedListeners[name] = (AsyncTraceListener)type.GetConstructor(new Type[] { typeof(string) }).Invoke(new object[] { name });
-		}
-
-		/// <summary>
 		/// Format message delegate method. Formats a <see cref="LogMessage"/> instance into <see cref="byte[]"/> data to be
 		/// written to the output <see cref="Stream"/>. Override to customise behaviour.
 		/// </summary>
@@ -268,11 +279,6 @@ namespace JGL.Debugging
 		{
 			return Encoding.ASCII.GetBytes(message.Message);
 		}
-
-		/// <summary>
-		/// The open stream method opens the output stream when required by the background thread. Override to customise behaviour.
-		/// </summary>
-		public abstract Stream OpenStream();
 
 		/// <summary>
 		/// Dispose of this <see cref="AsyncTraceListener"/> (calls <see cref="Stop"/>)
@@ -336,5 +342,10 @@ namespace JGL.Debugging
 		{
 			throw new InvalidOperationException(string.Format("AsyncTraceListener(\"{0}\").Write(message=\"{1}\"): Should not be inside this method, TraceData override should avoid that!?!", Name, message));
 		}
+
+		/// <summary>
+		/// The open stream method opens the output stream when required by the background thread. Override to customise behaviour.
+		/// </summary>
+		public abstract Stream OpenStream();
 	}
 }
