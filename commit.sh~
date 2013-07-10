@@ -14,8 +14,8 @@ echo Changes:
 git status
 
 echo Committing...
-git commit -a -m "$*"
+git commit -m "$*"
 
-git push -v --repo=origin
+git push -v --all
 
 echo Done.

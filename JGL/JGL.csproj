@@ -91,6 +91,7 @@
     <Compile Include="Heirarchy\EntityRootContext.cs" />
     <Compile Include="Heirarchy\EntityContext.cs" />
     <Compile Include="Engine.cs" />
+    <Compile Include="Extensions\Object.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

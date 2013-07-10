@@ -268,7 +268,11 @@ namespace Dynamic.UI
 				SaveProject();
 				CodeWindow cw;
 				if (SceneWindowThread != null)
+				{
 					sw.Exit();
+					SceneWindowThread.Join(new TimeSpan(0, 0, 8));
+				}
+
 				CodeWindows.TryRemove(this, out cw);
 				if (CodeWindows.Count == 0)
 					Gtk.Application.Quit();
@@ -470,7 +474,7 @@ namespace Dynamic.UI
 									}
 									Application.Invoke(this, new FinishExecuteArgs() { Scene = newScene, SceneWindow = sw, SceneWindowThread = SceneWindowThread }, OnFinishExecute);
 								}
-							});
+							}) { Name = "SceneWindowThread" };
 							SceneWindowThread.Start();
 							Trace.Log(TraceEventType.Information, "Started SceneWindowThread for scene \"{0}\" .. ", newScene.Id);
 						}

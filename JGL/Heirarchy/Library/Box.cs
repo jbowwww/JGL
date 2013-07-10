@@ -14,7 +14,7 @@ namespace JGL.Heirarchy.Library
 		/// <summary>
 		/// Tracing
 		/// </summary>
-		public new static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
+		public new static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncFileTraceListener.GetOrCreate("JGL"));
 
 		#region Box texturise methods
 		/// <summary>

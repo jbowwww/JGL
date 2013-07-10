@@ -21,6 +21,14 @@
             <param name="T">The type to test</param>
         </member>
         <!--FIXME: Invalid documentation markup was found for member M:JGL.Extensions.Type_Ext.GetBaseTypes(System.Type,System.Func{System.Type,System.Boolean})-->
+        <member name="M:JGL.Extensions.Type_Ext.IsTypeOf(System.Type,System.Type)">
+            <summary>
+            Determines whether this type is equal to or a subclass of <paramref name="typeOf" /></summary>
+            <returns>
+                <c>true</c> if <paramref name="T" /> is a type of <paramref name="typeOf" />; otherwise, <c>false</c></returns>
+            <param name="T">This <see cref="T:System.Type" /> instance</param>
+            <param name="typeOf">A <see cref="!:typeOf" /> to test for</param>
+        </member>
         <!--FIXME: Invalid documentation markup was found for member M:JGL.Extensions.Type_Ext.HasElementValueType(System.Type)-->
         <!--FIXME: Invalid documentation markup was found for member M:JGL.Extensions.Type_Ext.GetElementValueType(System.Type,System.Boolean@)-->
         <member name="T:JGL.Heirarchy.Entity">
@@ -538,9 +546,13 @@
         <member name="T:JGL.Debugging.AsyncTraceListener">
             <summary>
             A trace listener that queues data it receives into a static (shared among all <see cref="T:JGL.Debugging.AsyncTraceListener" />s)
-            queue until the background thread (see <see cref="M:JGL.Debugging.AsyncTraceListener.RunThread" />) formats it for output and writes it to the <see cref="T:System.IO.Stream" />
+            queue until the background thread (see <see cref="!:RunThread" />) formats it for output and writes it to the <see cref="T:System.IO.Stream" />
             associated with the <see cref="T:JGL.Debugging.AsyncTraceListener" /> the message belongs too
             </summary>
+            <remarks>
+            	-	TODO: I just realised, for a background tracing thread to take as much load off the main thread as possible, shouldn't the
+            		threading be performed at the <see cref="T:JGL.Debugging.AutoTraceSource" /> level?? Otherwise calling thread will always go thru
+            		<see cref="M:JGL.Debugging.AutoTraceSource.Log(System.Diagnostics.TraceEventType,System.Object[])" />, <see cref="!:System.TraceSource" /> methods, <see cref="!:AsyncTraceListener.Log" /></remarks>
         </member>
         <member name="M:JGL.Debugging.AsyncTraceListener.#ctor(System.String)">
             <summary>
@@ -548,52 +560,10 @@
             </summary>
             <param name="name">Name</param>
         </member>
-        <member name="T:JGL.Debugging.AsyncTraceListener.LogMessage">
-            <summary>
-            Log message class stores log message parameters
-            </summary>
-        </member>
-        <member name="M:JGL.Debugging.AsyncTraceListener.LogMessage.#ctor(JGL.Debugging.AsyncTraceListener,System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Debugging.AsyncTraceListener.LogMessage" /> class.
-            </summary>
-            <param name="listener">The listener the message is for</param>
-            <param name="eventCache">Event cache</param>
-            <param name="source">Source</param>
-            <param name="eventType">Event type</param>
-            <param name="id">Identifier</param>
-            <param name="data">Data</param>
-        </member>
-        <member name="F:JGL.Debugging.AsyncTraceListener.LogMessage.EventCache">
-            <summary>Event cache</summary>
-        </member>
-        <member name="F:JGL.Debugging.AsyncTraceListener.LogMessage.Source">
-            <summary>The <see cref="T:System.Diagnostics.TraceSource" /> that the message originated from</summary>
-        </member>
-        <member name="F:JGL.Debugging.AsyncTraceListener.LogMessage.EventType">
-            <summary>
-                <see cref="T:System.Diagnostics.TraceEventType" /> event type</summary>
-        </member>
-        <member name="F:JGL.Debugging.AsyncTraceListener.LogMessage.Id">
-            <summary>Trace message ID</summary>
-        </member>
-        <member name="F:JGL.Debugging.AsyncTraceListener.LogMessage.Data">
-            <summary>Data to go with the </summary>
-        </member>
-        <member name="F:JGL.Debugging.AsyncTraceListener.LogMessage.Listener">
-            <summary>Listener the <see cref="T:JGL.Debugging.AsyncTraceListener.LogMessage" /> is intended for</summary>
-        </member>
-        <member name="F:JGL.Debugging.AsyncTraceListener.LogMessage.OutputOptions">
-            <summary>
-                <see cref="T:System.Diagnostics.TraceOptions" /> for output</summary>
-        </member>
-        <member name="P:JGL.Debugging.AsyncTraceListener.LogMessage.Message">
-            <summary>Gets the formatted message string</summary>
-        </member>
         <member name="F:JGL.Debugging.AsyncTraceListener.ThreadWaitTime">
             <summary>
-            Time (in milliseconds) for <see cref="M:JGL.Debugging.AsyncTraceListener.RunThread" /> to sleep for,
-            after writing all <see cref="T:JGL.Debugging.AsyncTraceListener.LogMessage" />s in queue
+            Time (in milliseconds) for <see cref="!:AsyncTraceListener.RunThread" /> to sleep for,
+            after writing all <see cref="!:LogMessage" />s in queue
             </summary>
         </member>
         <member name="F:JGL.Debugging.AsyncTraceListener.Trace">
@@ -619,36 +589,9 @@
             <param name="name">Name of listener to get/create</param>
             <param name="type">Type of listener to create</param>
         </member>
-        <member name="M:JGL.Debugging.AsyncTraceListener.RunThread">
+        <member name="M:JGL.Debugging.AsyncTraceListener.FormatMessage(System.String)">
             <summary>
-            Thread entry point
-            </summary>
-            <remarks>
-            TODO: Try out a few different approaches to this e.g.
-            		- 31/5 This current approach is the 1-thread running in the background, with a single queue,
-            		handling stream writing for all listeners and their streams
-            			+ just noticed _messageQueue.TryDequeue should be in a while() conditional expression, not an if
-            				(with if thread Sleeps() inbetween writing every message - should loop until queue empty without delay?
-            				maybe small delay? don't want this thread randomly hammering a more important thread (e.g. update/render scenes)
-            				- Fixed 8/6
-            		- Would 1 thread per listener/stream work better?
-            		- Both above approaches with varying Thread.Sleep() times
-            		- Use Async File operations? How to get an async-capable file handle?
-            			+ Thread doesn't wait for each Stream.Write(), instead collects IAsyncResults from a BeginWrite for every
-            				message found in the queue for this iteration. Also builds list of the listeners that were involved.
-            				At end of thread, calls all the Stream.EndRead() methods and then flushes each listener once
-            					- This approach may or may not work - depends on semantics of Stream's Async methods
-            					  Definitely worth looking into, the Async approach is probably the best of these above alternatives to try first (?)
-            </remarks>
-        </member>
-        <member name="M:JGL.Debugging.AsyncTraceListener.StopAll">
-            <summary>
-            Stops all <see cref="T:JGL.Debugging.AsyncTraceListener" />s by setting a flag that indicates that <see cref="M:JGL.Debugging.AsyncTraceListener.RunThread" /> should return
-            </summary>
-        </member>
-        <member name="M:JGL.Debugging.AsyncTraceListener.FormatMessage(JGL.Debugging.AsyncTraceListener.LogMessage)">
-            <summary>
-            Format message delegate method. Formats a <see cref="T:JGL.Debugging.AsyncTraceListener.LogMessage" /> instance into <see cref="T:System.Byte[]" /> data to be
+            Format message delegate method. Formats a <see cref="!:LogMessage" /> instance into <see cref="T:System.Byte[]" /> data to be
             written to the output <see cref="T:System.IO.Stream" />. Override to customise behaviour.
             </summary>
         </member>
@@ -701,12 +644,6 @@
             <summary>
             Designed to simplify use of <see cref="T:System.Diagnostics.TraceSource" /></summary>
         </member>
-        <member name="M:JGL.Debugging.AutoTraceSource.#ctor(System.Diagnostics.TraceListener[])">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Debugging.AutoTraceSource" /> class.
-            </summary>
-            <param name="traceListeners">Trace listeners to add to the <see cref="T:JGL.Debugging.AutoTraceSource" /></param>
-        </member>
         <member name="M:JGL.Debugging.AutoTraceSource.#ctor(System.String,System.Diagnostics.TraceListener[])">
             <summary>
             Initializes a new instance of the <see cref="T:JGL.Debugging.AutoTraceSource" /> class.
@@ -714,13 +651,75 @@
             <param name="name">Name for the new <see cref="T:JGL.Debugging.AutoTraceSource" /></param>
             <param name="traceListeners">Trace listeners to add to the <see cref="T:JGL.Debugging.AutoTraceSource" /></param>
         </member>
-        <member name="M:JGL.Debugging.AutoTraceSource.#ctor(System.Type,System.Diagnostics.TraceListener[])">
+        <member name="T:JGL.Debugging.AutoTraceSource.LogMessage">
             <summary>
-            Initializes a new instance of the <see cref="T:JGL.Debugging.AutoTraceSource" /> class.
+            Log message class stores log message parameters
             </summary>
-            <param name="type">
-                <see cref="T:System.Type" /> that this <see cref="T:JGL.Debugging.AutoTraceSource" /> is intended to trace for</param>
-            <param name="traceListeners">Trace listeners to add to the <see cref="T:JGL.Debugging.AutoTraceSource" /></param>
+        </member>
+        <member name="M:JGL.Debugging.AutoTraceSource.LogMessage.#ctor(System.Diagnostics.TraceEventCache,System.Diagnostics.TraceSource,System.Diagnostics.TraceEventType,System.Int32,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="!:JGL.Debugging.AsyncTraceListener.LogMessage" /> class.
+            </summary>
+            <param name="listener">The listener the message is for</param>
+            <param name="eventCache">Event cache</param>
+            <param name="source">Source</param>
+            <param name="eventType">Event type</param>
+            <param name="id">Identifier</param>
+            <param name="data">Data</param>
+        </member>
+        <member name="M:JGL.Debugging.AutoTraceSource.LogMessage.#ctor(System.Diagnostics.TraceEventCache,System.Diagnostics.TraceSource,System.Diagnostics.TraceEventType,System.Int32,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="!:JGL.Debugging.AsyncTraceListener.LogMessage" /> class.
+            </summary>
+            <param name="listener">The listener the message is for</param>
+            <param name="eventCache">Event cache</param>
+            <param name="source">Source</param>
+            <param name="eventType">Event type</param>
+            <param name="id">Identifier</param>
+            <param name="message">Message</param>
+        </member>
+        <member name="M:JGL.Debugging.AutoTraceSource.LogMessage.#ctor(System.Diagnostics.TraceEventCache,System.Diagnostics.TraceSource,System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[])">
+            <summary>
+            Initializes a new instance of the <see cref="!:JGL.Debugging.AsyncTraceListener.LogMessage" /> class.
+            </summary>
+            <param name="listener">The listener the message is for</param>
+            <param name="eventCache">Event cache</param>
+            <param name="source">Source</param>
+            <param name="eventType">Event type</param>
+            <param name="id">Identifier</param>
+            <param name="format">Message</param>
+        </member>
+        <member name="F:JGL.Debugging.AutoTraceSource.LogMessage.EventCache">
+            <summary>Event cache</summary>
+        </member>
+        <member name="F:JGL.Debugging.AutoTraceSource.LogMessage.Source">
+            <summary>The <see cref="T:System.Diagnostics.TraceSource" /> that the message originated from</summary>
+        </member>
+        <member name="F:JGL.Debugging.AutoTraceSource.LogMessage.EventType">
+            <summary>
+                <see cref="T:System.Diagnostics.TraceEventType" /> event type</summary>
+        </member>
+        <member name="F:JGL.Debugging.AutoTraceSource.LogMessage.Id">
+            <summary>Trace message ID</summary>
+        </member>
+        <member name="F:JGL.Debugging.AutoTraceSource.LogMessage.Format">
+            <summary>Format string (or just a plain message string)</summary>
+        </member>
+        <member name="F:JGL.Debugging.AutoTraceSource.LogMessage.Data">
+            <summary>Data to go with the </summary>
+        </member>
+        <member name="F:JGL.Debugging.AutoTraceSource.LogMessage.OutputOptions">
+            <summary>Listener the <see cref="T:JGL.Debugging.AutoTraceSource.LogMessage" /> is intended for</summary>
+            <summary>
+                <see cref="T:System.Diagnostics.TraceOptions" /> for output</summary>
+        </member>
+        <member name="P:JGL.Debugging.AutoTraceSource.LogMessage.Message">
+            <summary>Gets the formatted message string</summary>
+        </member>
+        <member name="F:JGL.Debugging.AutoTraceSource.TraceThreadSleepTime">
+            <summary>
+            Constant trace thread sleep time.
+            </summary>
         </member>
         <member name="F:JGL.Debugging.AutoTraceSource.Trace">
             <summary>
@@ -730,9 +729,28 @@
             <summary>
                 <see cref="T:JGL.Debugging.AutoTraceSource" /> instances, keyed by <see cref="P:System.Diagnostics.TraceSource.Name" /></summary>
         </member>
+        <member name="F:JGL.Debugging.AutoTraceSource._messageQueue">
+            <summary>
+            The _message queue.
+            </summary>
+        </member>
+        <member name="F:JGL.Debugging.AutoTraceSource.TraceThread">
+            <summary>
+            The trace thread.
+            </summary>
+        </member>
+        <member name="F:JGL.Debugging.AutoTraceSource._stopThread">
+            <summary>
+            Set this flag to stop <see cref="F:JGL.Debugging.AutoTraceSource.TraceThread" /></summary>
+        </member>
         <member name="F:JGL.Debugging.AutoTraceSource._traceId">
             <summary>
             Current trace id
+            </summary>
+        </member>
+        <member name="P:JGL.Debugging.AutoTraceSource.TraceThreadRunning">
+            <summary>
+            Indicates if <see cref="F:JGL.Debugging.AutoTraceSource.TraceThread" /> is still looping
             </summary>
         </member>
         <member name="P:JGL.Debugging.AutoTraceSource.TraceId">
@@ -748,6 +766,33 @@
         <member name="P:JGL.Debugging.AutoTraceSource.SourceLevels">
             <summary>
             The <see cref="!:TraceSource.Switch.Level" /></summary>
+        </member>
+        <member name="M:JGL.Debugging.AutoTraceSource.RunTrace">
+            <summary>
+            Thread entry point
+            </summary>
+            <remarks>
+            TODO: Try out a few different approaches to this e.g.
+            		- 31/5 This current approach is the 1-thread running in the background, with a single queue,
+            		handling stream writing for all listeners and their streams
+            			+ just noticed _messageQueue.TryDequeue should be in a while() conditional expression, not an if
+            				(with if thread Sleeps() inbetween writing every message - should loop until queue empty without delay?
+            				maybe small delay? don't want this thread randomly hammering a more important thread (e.g. update/render scenes)
+            				- Fixed 8/6
+            		- Would 1 thread per listener/stream work better?
+            		- Both above approaches with varying Thread.Sleep() times
+            		- Use Async File operations? How to get an async-capable file handle?
+            			+ Thread doesn't wait for each Stream.Write(), instead collects IAsyncResults from a BeginWrite for every
+            				message found in the queue for this iteration. Also builds list of the listeners that were involved.
+            				At end of thread, calls all the Stream.EndRead() methods and then flushes each listener once
+            					- This approach may or may not work - depends on semantics of Stream's Async methods
+            					  Definitely worth looking into, the Async approach is probably the best of these above alternatives to try first (?)
+            </remarks>
+        </member>
+        <member name="M:JGL.Debugging.AutoTraceSource.StopTraceThread">
+            <summary>
+            Stops all <see cref="T:JGL.Debugging.AsyncTraceListener" />s by setting a flag that indicates that <see cref="!:RunThread" /> should return
+            </summary>
         </member>
         <member name="M:JGL.Debugging.AutoTraceSource.GetOrCreate(System.Diagnostics.TraceListener[])">
             <summary>
@@ -1681,6 +1726,20 @@
             <summary>
             Engine.
             </summary>
+        </member>
+        <member name="T:JGL.Extensions.Object_Ext">
+            <summary>
+                <see cref="T:System.Object" /> extension methods
+            </summary>
+        </member>
+        <member name="M:JGL.Extensions.Object_Ext.IsTypeOf(System.Object,System.Type)">
+            <summary>
+            Determines whether this instance's <see cref="T:System.Type" /> is of the specified <see cref="T:System.Type" /><paramref name="typeOf" /></summary>
+            <returns>
+                <c>true</c> if this instance's <see cref="T:System.Type" /> is of the specified <see cref="T:System.Type" /><paramref name="typeOf" />; otherwise, <c>false</c>.
+            </returns>
+            <param name="obj">If set to <c>true</c> object</param>
+            <param name="typeOf">If set to <c>true</c> type of</param>
         </member>
     </members>
 </doc>

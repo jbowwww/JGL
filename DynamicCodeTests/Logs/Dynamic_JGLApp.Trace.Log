@@ -1,7 +1,4 @@
-001 13-07-10 06:17:06.548837 P:1683 T: JGLApp Information JGLApp.Main() started
-002 13-07-10 06:17:06.632684 P:1683 T: JGLApp Information Starting JGLApp:ctor
-003 13-07-10 06:17:36.216334 P:1683 T: JGLApp Information Started SceneWindowThread for scene "Scene1 #001" .. 
-004 13-07-10 06:18:29.404885 P:1683 T: JGLApp Information Ended SceneWindowThread for scene "Scene1 #001"
-005 13-07-10 06:20:40.903672 P:1683 T: JGLApp Information Started SceneWindowThread for scene "Scene1 #001" .. 
-006 13-07-10 06:20:43.219415 P:1683 T: JGLApp Information Ended SceneWindowThread for scene "Scene1 #001"
-007 13-07-10 06:20:52.353581 P:1683 T: JGLApp Information Started SceneWindowThread for scene "Scene1 #001" .. 
+13-07-10 08:06:19.284916 P:5567 T: JGLApp 001 Information c'tor(name="JGLApp", traceListeners = TraceListener[] { ConsoleTraceListener (Name=""), ConsoleTraceListener (Name=""), AsyncFileTraceListener (Name="Dynamic_JGLApp") })
+13-07-10 08:06:19.294162 P:5567 T: JGLApp 002 Information JGLApp.Main() started
+13-07-10 08:06:19.351496 P:5567 T: JGLApp 003 Information Starting JGLApp:ctor
+13-07-10 08:28:52.855556 P:5567 T: JGLApp 004 Verbose JGLApp.Main() finishing

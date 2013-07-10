@@ -95,7 +95,6 @@ namespace JGL.Resource
 			}
 			catch (Exception ex)
 			{
-				Trace.Log(TraceEventType.Error, ex);
 				throw new Exception(string.Format("Failed loading texture \"{0}\" from stream \"{1}\"", Name, s == null ? "(null)" : s.ToString()), ex);
 			}
 		}

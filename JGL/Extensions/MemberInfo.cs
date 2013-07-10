@@ -9,7 +9,7 @@ namespace JGL.Extensions
 		/// <summary>
 		/// Tracing
 		/// </summary>
-		public static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncFileTraceListener.GetOrCreate("JGL"));
 
 		public static bool HasAttribute<TAttribute>(this MemberInfo member)
 			where TAttribute : Attribute

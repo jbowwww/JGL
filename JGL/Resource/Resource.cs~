@@ -21,7 +21,7 @@ namespace JGL.Resource
 		/// <summary>
 		/// Constant load thread sleep time.
 		/// </summary>
-		public const int LoadThreadSleepTime = 144;
+		public const int LoadThreadSleepTime = 132;
 
 		/// <summary>
 		/// Dedicated <see cref="Resource"/> loading thread
@@ -41,20 +41,22 @@ namespace JGL.Resource
 		{
 			Trace.Log(TraceEventType.Information, "LoadResources thread started");
 			Resource r;
-			while (!_stopLoadThread)
+			while (!_stopLoadThread || !_loadQueue.IsEmpty)
 			{
 				while (_loadQueue.TryDequeue(out r))
 				{
 					try
 					{
 						r.Load();
+						r.IsLoaded = true;
 					}
 					catch (Exception ex)
 					{
-						// TODO: Trace log ex
+						Trace.Log(TraceEventType.Error, ex);
 					}
 				}
-				Thread.Sleep(LoadThreadSleepTime);
+				if (!_stopLoadThread && _loadQueue.IsEmpty)
+					Thread.Sleep(LoadThreadSleepTime);
 			}
 			Trace.Log(TraceEventType.Information, "LoadResources thread stopped");
 		}
@@ -65,6 +67,8 @@ namespace JGL.Resource
 		public static void StopLoadThread()
 		{
 			_stopLoadThread = true;
+			if (LoadThread != null)
+				LoadThread.Join(new TimeSpan(0, 0, 8));
 		}
 
 		/// <summary>
@@ -128,6 +132,7 @@ namespace JGL.Resource
 				if (LoadThread == null)
 				{
 					LoadThread = new Thread(LoadResources);
+					LoadThread.Name = "Resource.LoadResources";
 					LoadThread.Start();
 				}
 			}

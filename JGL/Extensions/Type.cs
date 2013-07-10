@@ -13,7 +13,7 @@ namespace JGL.Extensions
 		/// <summary>
 		/// Tracing
 		/// </summary>
-		public static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncFileTraceListener.GetOrCreate("JGL"));
 
 		/// <summary>
 		/// Determines whether the given type is simple (i.e. a primitive, a string, datetime or timespan)
@@ -44,7 +44,18 @@ namespace JGL.Extensions
 			heirarchy.Reverse();
 			return heirarchy;
 		}
-		
+
+		/// <summary>
+		/// Determines whether this type is equal to or a subclass of <paramref name="typeOf"/>
+		/// </summary>
+		/// <returns><c>true</c> if <paramref name="T"/> is a type of <paramref name="typeOf"/>; otherwise, <c>false</c></returns>
+		/// <param name="T">This <see cref="Type"/> instance</param>
+		/// <param name="typeOf">A <see cref="typeOf"/> to test for</param>
+		public static bool IsTypeOf(this Type T, Type typeOf)
+		{
+			return T.Equals(typeOf) || T.IsSubclassOf(typeOf);
+		}
+
 		/// <summary>
 		/// Determines whether <paramref name="T"/> has an element value type
 		/// </summary>

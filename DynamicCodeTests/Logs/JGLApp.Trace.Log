@@ -1,0 +1,24 @@
+13-07-10 11:36:15.911032 P:11477 T:JGLApp.Main Dynamic.JGLApp 001 Information JGLApp.Main() started
+13-07-10 11:36:16.016331 P:11477 T:JGLApp.Main Dynamic.JGLApp 002 Information Starting JGLApp:ctor
+13-07-10 11:37:15.095184 P:11477 T:JGLApp.Main Dynamic.Compiler 001 Verbose CodeProvider: CSharpCodeProvider
+13-07-10 11:37:15.102007 P:11477 T:JGLApp.Main Dynamic.Compiler 002 Verbose Compiler Parameters =
+{
+	Generate Executable: True
+	Generate In Memory: False
+	Output Assembly: DynamicCodeTests-Scene.dll
+	Include Debug Info: False
+	Warnings As Errors: False
+	Warning Level: -1
+	Compiler Options: 
+	Main Class: 
+	User Token: 0
+	Win32 Resource: 
+	Embedded Resources: 
+	Linked Resources: 
+	Referenced Assemblies: System.dll JGL.dll /home/jk/Code/Resources/CS/OpenTK 1.0/Binaries/OpenTK/Release/OpenTK.dll
+	Temp Files: 
+}
+13-07-10 11:37:15.840935 P:11477 T:JGLApp.Main Dynamic.Compiler 003 Information Source built into DynamicCodeTests-Scene.dll successfully.
+13-07-10 11:37:16.502129 P:11477 T:JGLApp.Main Dynamic.JGLApp 003 Information Started SceneWindowThread for scene "Scene1 #001" .. 
+13-07-10 11:38:30.916457 P:11477 T:JGLApp.Main Dynamic.JGLApp 004 Information Ended SceneWindowThread for scene "Scene1 #001"
+13-07-10 11:38:34.462736 P:11477 T:JGLApp.Main Dynamic.JGLApp 005 Verbose JGLApp.Main() finishing

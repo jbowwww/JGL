@@ -1,16 +1,11 @@
-001 13-07-10 06:17:35.442116 P:1683 T: AutoTraceSource Verbose Assert OK at OnExecute+580 (in file :0,0
-001 13-07-10 06:17:36.141746 P:1683 T: JGL.Resource.Resource Information Init(name="", path="test1.png")
-002 13-07-10 06:17:36.154659 P:1683 T: JGL.Resource.Resource Information LoadResources thread started
-001 13-07-10 06:17:36.157773 P:1683 T: JGL.Resource.Texture Information Init(name="test1 #001", path="test1.png")
-002 13-07-10 06:17:36.215290 P:1683 T: JGL.Resource.Texture Information Load (this.Name="test1 #001", this.Path="test1.png") loaded 256x256 image, Format24bppRgb
-003 13-07-10 06:17:37.516234 P:1683 T: JGL.Resource.Texture Information CreateGLTexture(texture="test1 #001") generated GL texture ID 1
-002 13-07-10 06:18:31.878902 P:1683 T: AutoTraceSource Verbose Assert OK at OnExecute+580 (in file :0,0
-003 13-07-10 06:20:40.885804 P:1683 T: JGL.Resource.Resource Information Init(name="", path="test1.png")
-004 13-07-10 06:20:40.888998 P:1683 T: JGL.Resource.Texture Information Init(name="test1 #002", path="test1.png")
-005 13-07-10 06:20:41.028991 P:1683 T: JGL.Resource.Texture Information Load (this.Name="test1 #002", this.Path="test1.png") loaded 256x256 image, Format24bppRgb
-006 13-07-10 06:20:41.136304 P:1683 T: JGL.Resource.Texture Information CreateGLTexture(texture="test1 #002") generated GL texture ID 1
-003 13-07-10 06:20:46.732504 P:1683 T: AutoTraceSource Verbose Assert OK at OnExecute+580 (in file :0,0
-004 13-07-10 06:20:52.304656 P:1683 T: JGL.Resource.Resource Information Init(name="", path="test1.png")
-007 13-07-10 06:20:52.307859 P:1683 T: JGL.Resource.Texture Information Init(name="test1 #003", path="test1.png")
-008 13-07-10 06:20:52.479869 P:1683 T: JGL.Resource.Texture Information Load (this.Name="test1 #003", this.Path="test1.png") loaded 256x256 image, Format24bppRgb
-009 13-07-10 06:20:52.605786 P:1683 T: JGL.Resource.Texture Information CreateGLTexture(texture="test1 #003") generated GL texture ID 1
+13-07-10 11:36:15.911042 P:11477 T:AutoTraceSource.RunTrace JGL.Debugging.AutoTraceSource 001 Verbose RunTrace started
+13-07-10 11:36:15.943863 P:11477 T:AutoTraceSource.RunTrace JGL.Debugging.AsyncFileTraceListener 001 Information OpenStream (this.Name = "JGLApp", this.Path = "../../Logs/JGLApp.Trace.Log")
+13-07-10 11:36:15.990860 P:11477 T:AutoTraceSource.RunTrace JGL.Debugging.AsyncFileTraceListener 002 Information OpenStream (this.Name = "JGL", this.Path = "../../Logs/JGL.Trace.Log")
+13-07-10 11:37:15.845345 P:11477 T:JGLApp.Main JGL.Debugging.AutoTraceSource 002 Verbose Assert OK at OnExecute+580 (in file :0,0
+13-07-10 11:37:16.478896 P:11477 T:JGLApp.Main JGL.Resource.Resource 001 Information Init(name="", path="test1.png")
+13-07-10 11:37:16.482275 P:11477 T:Resource.LoadResources JGL.Resource.Resource 002 Information LoadResources thread started
+13-07-10 11:37:16.483495 P:11477 T:JGLApp.Main JGL.Resource.Texture 001 Information Init(name="test1 #001", path="test1.png")
+13-07-10 11:37:16.788765 P:11477 T:Resource.LoadResources JGL.Resource.Texture 002 Information Load (this.Name="test1 #001", this.Path="test1.png") loaded 256x256 image, Format24bppRgb
+13-07-10 11:37:17.658854 P:11477 T:SceneWindowThread JGL.Resource.Texture 003 Information CreateGLTexture(texture="test1 #001") generated GL texture ID 1
+13-07-10 11:38:34.521400 P:11477 T:Resource.LoadResources JGL.Resource.Resource 003 Information LoadResources thread stopped
+13-07-10 11:38:34.522651 P:11477 T:JGLApp.Main JGL.Debugging.AutoTraceSource 003 Information RunTrace thread stopping (2 open listeners will now be closed)

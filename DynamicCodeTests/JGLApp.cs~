@@ -21,9 +21,7 @@ namespace Dynamic
 		/// <summary>
 		/// <see cref="JGL.Debugging.AutoTraceSource"/> for <see cref="DynamicCodeTests.JGLApp"/>
 		/// </summary>
-		public readonly static AutoTraceSource Trace = new AutoTraceSource(typeof(JGLApp).Name,
-			new ConsoleTraceListener(),
-			AsyncTraceListener.GetOrCreate( "Dynamic_JGLApp", /*typeof(JGLApp).Name*/ typeof(AsyncFileTraceListener)));
+		public readonly static AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncFileTraceListener.GetOrCreate("JGLApp"));
 
 		/// <summary>
 		/// Global static application reference
@@ -45,6 +43,7 @@ namespace Dynamic
 		/// </remarks>
 		public static void Main(string[] args)
 		{
+			Thread.CurrentThread.Name = "JGLApp.Main";
 			Trace.Log(TraceEventType.Information, "JGLApp.Main() started");
 			try
 			{

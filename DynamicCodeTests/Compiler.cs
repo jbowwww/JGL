@@ -19,9 +19,7 @@ namespace Dynamic
 		/// <summary>
 		/// Tracing
 		/// </summary>
-		public readonly static AutoTraceSource Trace = new AutoTraceSource(typeof(Compiler).Name,
-			new ConsoleTraceListener(),
-			AsyncTraceListener.GetOrCreate( "Dynamic", /*typeof(Compiler).Name*/ typeof(AsyncFileTraceListener)));
+		public readonly static AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncFileTraceListener.GetOrCreate( "JGLApp"));
 		
 		/// <summary>
 		/// Compiles the C sharp code.

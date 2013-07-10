@@ -14,7 +14,7 @@ namespace JGL.Heirarchy.Library
 		/// <summary>
 		/// Tracing
 		/// </summary>
-		public static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncFileTraceListener.GetOrCreate("JGL"));
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="JGL.Heirarchy.Library.Quad"/> class.

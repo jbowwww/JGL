@@ -9,7 +9,7 @@ namespace JGL.Geometry
 		/// <summary>
 		/// Tracing
 		/// </summary>
-		public static readonly AutoTraceSource Trace = new AutoTraceSource(AsyncFileTraceListener.GetOrCreate("JGL"));
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncFileTraceListener.GetOrCreate("JGL"));
 
 		#region Private fields
 		private double[] _components = new double[] { 0, 0, 0 };

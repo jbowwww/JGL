@@ -15,7 +15,7 @@ namespace JGL
 		public static void Quit()
 		{
 			JGL.Resource.Resource.StopLoadThread();
-			JGL.Debugging.AsyncTraceListener.StopAll();
+			JGL.Debugging.AutoTraceSource.StopTraceThread();
 		}
 
 	}

@@ -12,7 +12,7 @@ namespace JGL.Debugging
 		/// <summary>
 		/// Tracing
 		/// </summary>
-		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate("Camera", AsyncFileTraceListener.GetOrCreate("JGL"));
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncFileTraceListener.GetOrCreate("JGL"));
 
 		/// <summary>
 		/// Gets (if exists) or creates a <see cref="AsyncFileTraceListener"/> with the specified <paramref name="name"/>
@@ -50,7 +50,7 @@ namespace JGL.Debugging
 		/// Initializes a new instance of the <see cref="JGL.Debugging.AsyncFileTraceListener"/> class.
 		/// </summary>
 		/// <param name="name">Name of the new trace listener</param>
-		protected AsyncFileTraceListener(string name)
+		internal AsyncFileTraceListener(string name)
 			: base(name)
 		{
 		}
@@ -64,16 +64,15 @@ namespace JGL.Debugging
 		/// </remarks>
 		protected override System.IO.Stream OpenStream()
 		{
-			string path = Path;
-			string dir = System.IO.Path.GetDirectoryName(path);
-			string file = System.IO.Path.GetFileName(path);
+			string dir = System.IO.Path.GetDirectoryName(Path);
+			string file = System.IO.Path.GetFileName(Path);
 			if (!Directory.Exists(dir))
 				Directory.CreateDirectory(dir);
-			if (File.Exists(path) && TruncateFile)
-				File.Delete(path);
-			Stream stream = File.Open(string.Concat(PathPrefix, Name, PathSuffix), FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read);
+			if (File.Exists(Path) && TruncateFile)
+				File.Delete(Path);
+			Stream stream = File.Open(Path, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read);
+			Trace.Log(TraceEventType.Information, "OpenStream (this.Name = \"{0}\", this.Path = \"{1}\")", Name, Path);
 			return stream;
 		}
 	}
 }
-
