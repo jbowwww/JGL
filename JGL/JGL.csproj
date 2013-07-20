@@ -71,7 +71,6 @@
     <Compile Include="Debugging\Debug.cs" />
     <Compile Include="Debugging\AsyncTraceListener.cs" />
     <Compile Include="Debugging\AutoTraceSource.cs" />
-    <Compile Include="Debugging\AsyncFileTraceListener.cs" />
     <Compile Include="Heirarchy\Object.cs" />
     <Compile Include="Geometry\Vector3d_Ext.cs" />
     <Compile Include="Geometry\Vector3d.cs" />
@@ -92,6 +91,9 @@
     <Compile Include="Heirarchy\EntityContext.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="Extensions\Object.cs" />
+    <Compile Include="Debugging\LogMessage.cs" />
+    <Compile Include="Debugging\AsyncTextFileTraceListener.cs" />
+    <Compile Include="Debugging\AsyncXmlFileTraceListener.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -21,7 +21,7 @@ namespace Dynamic
 		/// <summary>
 		/// <see cref="JGL.Debugging.AutoTraceSource"/> for <see cref="DynamicCodeTests.JGLApp"/>
 		/// </summary>
-		public readonly static AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncFileTraceListener.GetOrCreate("JGLApp"));
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(new ConsoleTraceListener(), AsyncTextFileTraceListener.GetOrCreate("JGLApp"));
 
 		/// <summary>
 		/// Global static application reference
@@ -43,8 +43,8 @@ namespace Dynamic
 		/// </remarks>
 		public static void Main(string[] args)
 		{
-			Thread.CurrentThread.Name = "JGLApp.Main";
-			Trace.Log(TraceEventType.Information, "JGLApp.Main() started");
+			Thread.CurrentThread.Name = "Main";
+			Trace.Log(TraceEventType.Information, "Started");
 			try
 			{
 				GLib.ExceptionManager.UnhandledException += UnhandledException;
@@ -60,7 +60,7 @@ namespace Dynamic
 			}
 			finally
 			{
-				Trace.Log(TraceEventType.Verbose, "JGLApp.Main() finishing");
+				Trace.Log(TraceEventType.Verbose, "Finished, exiting ..");
 				Engine.Quit();
 			}
 		}
@@ -70,24 +70,8 @@ namespace Dynamic
 		/// </summary>
 		protected static void UnhandledException(GLib.UnhandledExceptionArgs args)
 		{
-			Trace.Log(TraceEventType.Information, "JGLApp.UnhandledException() (ExceptionObject={0}, IsTerminating={1}, ExitApplication={2})", args.ExceptionObject, args.IsTerminating, args.ExitApplication);
-
+			Trace.Log(TraceEventType.Verbose, "IsTerminating={0}, ExitApplication={1})", args.IsTerminating, args.ExitApplication);
 			Trace.Log(TraceEventType.Error, args.ExceptionObject as Exception);
-				// trace logs should flush/close without needing these lines (finally clause in JGLApp.Main())
-				//				if (args.IsTerminating || args.ExitApplication)
-//				{
-//					Trace.Log(TraceEventType.Information, "{0}JGLApp:UnhandledException(): quitting (IsTerminating={1}, ExitApplication={2})", indent, args.IsTerminating, args.ExitApplication);
-//					Trace.Flush();
-//					Trace.Close();
-//					AsyncTraceListener.StopAll();
-//				}
-//				else
-//				{
-//					Trace.Log(TraceEventType.Information, "{0}JGLApp:UnhandledException(): continuing (IsTerminating={1}, ExitApplication={2})", indent, args.IsTerminating, args.ExitApplication);
-//				}
-//				indent += "    ";
-//			}
-//			Trace.Log(TraceEventType.Error,
 		}
 		
 		/// <summary>
@@ -96,12 +80,8 @@ namespace Dynamic
 		/// </summary>
 		public JGLApp(params string[] initialFiles)
 		{
-			// Create default windows
-			Trace.Log(TraceEventType.Information, "Starting JGLApp:ctor");
-
 			// Start a new code window
-			new CodeWindow(initialFiles) { Trace = JGLApp.Trace };
-//			new ProjectWindow();
+			new CodeWindow(initialFiles);
 		}
 	}
 }

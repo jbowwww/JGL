@@ -23,15 +23,25 @@ namespace JGL.Resource
 		/// </summary>
 		public const int LoadThreadSleepTime = 132;
 
+		#region Static members
+		/// <summary>
+		/// The sync root.
+		/// </summary>
+		private static object SyncRoot = new object();
+
 		/// <summary>
 		/// Dedicated <see cref="Resource"/> loading thread
 		/// </summary>
 		public static Thread LoadThread = null;
 
+		/// <summary>
+		/// The _load queue.
+		/// </summary>
 		private static readonly ConcurrentQueue<Resource> _loadQueue = new ConcurrentQueue<Resource>();
 
-		private object SyncRoot = new object();
-
+		/// <summary>
+		/// The _stop load thread.
+		/// </summary>
 		private static bool _stopLoadThread = false;
 
 		/// <summary>
@@ -62,6 +72,22 @@ namespace JGL.Resource
 		}
 
 		/// <summary>
+		/// Starts the load thread, if not already running
+		/// </summary>
+		public static void StartLoadThread()
+		{
+			lock (SyncRoot)
+			{
+				if (LoadThread == null)
+				{
+					LoadThread = new Thread(LoadResources);
+					LoadThread.Name = "Resource.LoadResources";
+					LoadThread.Start();
+				}
+			}
+		}
+
+		/// <summary>
 		/// Stops the load thread.
 		/// </summary>
 		public static void StopLoadThread()
@@ -82,7 +108,8 @@ namespace JGL.Resource
 				throw new ArgumentException(string.Format("Resource \"{0}\" not found", name), "name");
 			return EntityContext.RootContext[name] as Resource;
 		}
-
+		#endregion
+		
 		/// <summary>
 		/// Gets a value indicating whether this resource is loaded.
 		/// </summary>
@@ -127,26 +154,11 @@ namespace JGL.Resource
 			IsLoaded = false;
 			Path = path;
 
-			lock (SyncRoot)
-			{
-				if (LoadThread == null)
-				{
-					LoadThread = new Thread(LoadResources);
-					LoadThread.Name = "Resource.LoadResources";
-					LoadThread.Start();
-				}
-			}
+			StartLoadThread();
 
 			EntityContext.RootContext.Add(this);				// Add all resources as child entities of EntityContext.RootContext
 			_loadQueue.Enqueue(this);
 		}
-			// think i can remove this, because a FileNotFound exc will be thrown in Uri_Ext.Open() by the File.Open() call if it doesnt exist (correct?)
-//			if (uri.IsFile)
-//			{
-//				string filename = uri.GetLeftPart(UriPartial.Path);
-//				if (!File.Exists(uri.GetLeftPart(UriPartial.Path)))
-//					throw new FileNotFoundException(string.Format("{0} resource file \"{1}\" not found", GetType().FullName, filename), filename);
-//			}
 
 		/// <summary>
 		/// Generates the <see cref="Entity.Name"/> base for auto naming

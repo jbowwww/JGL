@@ -27,12 +27,12 @@ namespace JGL.Debugging
 		/// <summary>
 		/// The path prefix.
 		/// </summary>
-		public string PathPrefix = "../../Logs/";
+		public virtual string PathPrefix { get { return "../../Logs/"; } }
 
 		/// <summary>
 		/// The path suffix.
 		/// </summary>
-		public string PathSuffix = ".Trace.Log";
+		public virtual string PathSuffix { get { return ".Trace.Log"; } }
 
 		/// <summary>
 		/// Path of the file that this trace listener will open
@@ -62,10 +62,9 @@ namespace JGL.Debugging
 		/// <remarks>
 		/// Implementation of abstract member of JGL.Debugging.AsyncTraceListener
 		/// </remarks>
-		protected override System.IO.Stream OpenStream()
+		protected override Stream OpenStream()
 		{
 			string dir = System.IO.Path.GetDirectoryName(Path);
-			string file = System.IO.Path.GetFileName(Path);
 			if (!Directory.Exists(dir))
 				Directory.CreateDirectory(dir);
 			if (File.Exists(Path) && TruncateFile)
@@ -73,6 +72,22 @@ namespace JGL.Debugging
 			Stream stream = File.Open(Path, FileMode.OpenOrCreate, FileAccess.Write, FileShare.Read);
 			Trace.Log(TraceEventType.Information, "OpenStream (this.Name = \"{0}\", this.Path = \"{1}\")", Name, Path);
 			return stream;
+		}
+
+		/// <summary>
+		/// Called by <see cref="System.Diagnostics.TraceSource"/> methods to specify a message to log
+		/// </summary>
+		/// <param name="eventCache">Event cache</param>
+		/// <param name="source">Source</param>
+		/// <param name="eventType">Event type</param>
+		/// <param name="id">Identifier</param>
+		/// <param name="data">Data</param>
+		public override void TraceData(TraceEventCache eventCache, string source, TraceEventType eventType, int id, object data)
+		{
+			LogMessage msg = (LogMessage)data;
+			byte[] buf = FormatMessage(string.Concat(msg.MessageAsText, "\n"));
+			Stream.Write(buf, 0, buf.Length);													// Write message buffer
+			Stream.Flush();
 		}
 	}
 }

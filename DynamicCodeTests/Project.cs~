@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
+using System.Diagnostics;
+using JGL.Debugging;
 
 namespace Dynamic
 {
@@ -10,6 +12,8 @@ namespace Dynamic
 	/// </summary>
 	public class Project
 	{
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncFileTraceListener.GetOrCreate("JGLApp"));
+
 		/// <summary>
 		/// Reference path tree node class
 		/// </summary>
@@ -68,6 +72,7 @@ namespace Dynamic
 		/// </summary>
 		protected Project()
 		{
+			Trace.Log(TraceEventType.Verbose, "Protected c'tor for deserialization");
 		}
 
 		/// <summary>
@@ -89,6 +94,10 @@ namespace Dynamic
 		/// </summary>
 		protected void Init(string[] sourcePaths, string[] referencePaths)
 		{
+			Trace.Log(TraceEventType.Verbose, "Init(sourcePaths={0}, referencePaths={1})",
+			          sourcePaths == null ? "(null)" : string.Concat("string[", sourcePaths.Length, "]"),
+			          referencePaths == null ? "(null)" : string.Concat("string[", referencePaths.Length, "]"));
+
 			Name = "New Project";
 			SourcePaths = new List<string>(sourcePaths != null ? sourcePaths : new string[] {});
 			ReferencePaths = new List<string>(referencePaths != null ? referencePaths : DefaultReferencePaths);
@@ -101,6 +110,7 @@ namespace Dynamic
 		/// </summary>
 		public void Save()
 		{
+			Trace.Log(TraceEventType.Information, "Save");
 			XmlSerializer xs = new XmlSerializer(typeof(Project), new XmlAttributeOverrides(), new Type[] { },
 					new XmlRootAttribute(){ DataType="project", Namespace="jgl.dynamic" }, "jgl");
 			using (Stream s = File.Open(string.Format("../../../Data/Projects/{0}.project.xml", Name), FileMode.Create))
@@ -112,6 +122,7 @@ namespace Dynamic
 		/// </summary>
 		public static Project Load(string filename)
 		{
+			Trace.Log(TraceEventType.Information, "Load(filename=\"{0}\")", filename);
 			XmlSerializer xs = new XmlSerializer(typeof(Project), new XmlAttributeOverrides(), new Type[] { },
 					new XmlRootAttribute(){ DataType="project", Namespace="jgl.dynamic" }, "jgl");
 			using (Stream s = File.Open(filename, FileMode.Open))

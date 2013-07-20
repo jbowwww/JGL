@@ -23,7 +23,7 @@ namespace Dynamic.UI
 		/// <summary>
 		/// The trace.
 		/// </summary>
-		public AutoTraceSource Trace;
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncTextFileTraceListener.GetOrCreate("JGLApp"));
 
 		/// <summary>
 		/// A <see cref="ConcurrentBag"/> of all <see cref="DynamicCodeTests.CodeWindow"/> instances
@@ -92,6 +92,8 @@ namespace Dynamic.UI
 		/// </summary>
 		public CodeWindow(params string[] files)
 		{
+			Trace.Log(TraceEventType.Information, "CodeWindow.c'tor(params string[] files = string[{0}])", files.Length);
+
 			CodeWindows.TryAdd(this, this);															// store this CodeWindow instance
 			
 			Glade.XML gxml = new Glade.XML(/*"/home/jk/Code/JGL/DynamicCodeTests/UI/*/ "CodeWindow.glade", "CodeWindow", null);
@@ -128,6 +130,7 @@ namespace Dynamic.UI
 		/// </summary>
 		public void PopulateHeirarchy()
 		{
+			Trace.Log(TraceEventType.Verbose, "PopulateHeirarchy()");
 			entProjectName.Text = Project.Name;
 			storeHeirarchy.Clear();
 			if (EntityContext.RootContext != null)
@@ -144,6 +147,7 @@ namespace Dynamic.UI
 		/// <param name='tnParent'><see cref="Gtk.TreeNode"/> that is to hold the child tree nodes representing the subheirarchy of <paramref name="ec"/></param>
 		private void PopulateHeirarchy(Entity entity, TreeNode tnParent = null)
 		{
+			Trace.Log(TraceEventType.Verbose, "PopulateHeirarchy(entity.Id=\"{0}\", tnParent=\"{1}\")", entity.Id, tnParent == null ? "(null)" : tnParent.ToString());
 			TreeNode tnNew = new EntityTreeNode(entity);
 			if (tnParent == null)
 				storeHeirarchy.AddNode(tnNew);
@@ -160,6 +164,7 @@ namespace Dynamic.UI
 		/// <param name='filenames'>Array of filename strings giving paths to files to open</param>
 		public void OpenSourceFiles(params string[] filenames)
 		{
+			Trace.Log(TraceEventType.Information, "OpenSourceFiles(params string[] filenames = string[{0}])", filenames.Length);
 			int setPage = nbCode.NPages;
 			int newPages = 0;
 			foreach (string filename in filenames)
@@ -195,6 +200,7 @@ namespace Dynamic.UI
 		/// <param name="filename">The project file path. Its extension should be ".project.xml"</param>
 		public void OpenProject(string filename)
 		{
+			Trace.Log(TraceEventType.Information, "OpenProject(filename={0})", filename);
 			if (filename.Substring(filename.Length - 12).ToLower() != ".project.xml")
 				// TODO: Don't want to throw back to JGLApp.Unhandled exception (i think?) Want to log/display warning?
 				throw new ArgumentOutOfRangeException("filename", filename, "Invalid project file extension (must be a .project.xml file)");
@@ -208,6 +214,7 @@ namespace Dynamic.UI
 		/// </summary>
 		protected void SaveProject()
 		{
+			Trace.Log(TraceEventType.Information, "SaveProject()");
 			if (Project == null)
 				throw new InvalidOperationException("Project == null");
 			Project.Save();
@@ -276,6 +283,8 @@ namespace Dynamic.UI
 				CodeWindows.TryRemove(this, out cw);
 				if (CodeWindows.Count == 0)
 					Gtk.Application.Quit();
+
+				Trace.Log(TraceEventType.Information, "CodeWindow.OnWidgetDeleteEvent()");
 			}
 		}
 		
@@ -284,6 +293,8 @@ namespace Dynamic.UI
 		/// </summary>
 		protected void OnFileNew(object sender, EventArgs e)
 		{
+			Trace.Log(TraceEventType.Verbose, "OnFileNew()");
+
 			StaticCodePage cp = new StaticCodePage();
 			nbCode.AppendPage(cp, cp.TabLabel);
 			nbCode.ShowAll();
@@ -292,14 +303,9 @@ namespace Dynamic.UI
 		/// <summary>
 		/// Raises the file open event.
 		/// </summary>
-		/// <param name='sender'>
-		/// Sender.
-		/// </param>
-		/// <param name='e'>
-		/// E.
-		/// </param>
 		protected void OnFileOpen(object sender, EventArgs e)
 		{
+			Trace.Log(TraceEventType.Verbose, "OnFileOpen");
 			FileChooserDialog fDlg = new FileChooserDialog("Open File", null, FileChooserAction.Open, "Cancel", ResponseType.Cancel, "Open", ResponseType.Accept);
 			fDlg.SelectMultiple = true;
 			if (fDlg.Run() == (int)ResponseType.Accept)
@@ -310,10 +316,10 @@ namespace Dynamic.UI
 				if (projectFilenames.Length > 1)							// filenames include multiple project files
 					throw new InvalidOperationException("Cannot open multiple project files. Filenames must include <= 1 project file (*.project.xml)");
 				else if (projectFilenames.Length == 1)				// filenames include a project file to open; open the project and then open any selected source files in the project
-				{
-					OpenProject(projectFilenames[0]);
-					filenames.Remove(projectFilenames[0]);
-				}
+					{
+						OpenProject(projectFilenames[0]);
+						filenames.Remove(projectFilenames[0]);
+					}
 				OpenSourceFiles(filenames.ToArray());
 			}
 			fDlg.Destroy();
@@ -322,14 +328,9 @@ namespace Dynamic.UI
 		/// <summary>
 		/// Raises the file save event.
 		/// </summary>
-		/// <param name='sender'>
-		/// Sender.
-		/// </param>
-		/// <param name='e'>
-		/// E.
-		/// </param>
 		protected void OnFileSave(object sender, EventArgs e)
 		{
+			Trace.Log(TraceEventType.Verbose, "OnFileSave");
 			if (nbCode.NPages > 0)
 			{
 				StaticCodePage cp = (StaticCodePage)nbCode.GetNthPage(nbCode.Page);
@@ -349,14 +350,9 @@ namespace Dynamic.UI
 		/// <summary>
 		/// Raises the file save event.
 		/// </summary>
-		/// <param name='sender'>
-		/// Sender.
-		/// </param>
-		/// <param name='e'>
-		/// E.
-		/// </param>
 		protected void OnFileSaveAs(object sender, EventArgs e)
 		{
+			Trace.Log(TraceEventType.Verbose, "OnFileSaveAs");
 			if (nbCode.NPages > 0)
 			{
 				StaticCodePage cp = (StaticCodePage)nbCode.GetNthPage(nbCode.Page);
@@ -377,14 +373,9 @@ namespace Dynamic.UI
 		/// <summary>
 		/// Raises the execute event.
 		/// </summary>
-		/// <param name='sender'>
-		/// Sender.
-		/// </param>
-		/// <param name='e'>
-		/// E.
-		/// </param>
 		protected void OnExecute(object sender, EventArgs e)
 		{
+			Trace.Log(TraceEventType.Information, "OnExecute");
 			if (SceneWindowThread != null)
 			{
 				Trace.Log(TraceEventType.Warning, "SceneWindowThread already started for this CodeWindow");
@@ -397,7 +388,7 @@ namespace Dynamic.UI
 					sources.Add(cp.Source);
 	
 				// Compile code
-				System.CodeDom.Compiler.CompilerResults cr = Compiler.CompileCSharpCode(sources.ToArray(), Project.ReferencePaths.ToArray());
+				System.CodeDom.Compiler.CompilerResults cr = Compiler.CompileCode(sources.ToArray(), Project.ReferencePaths.ToArray());
 	
 				// Compile errors
 				if (cr.Errors.Count > 0)
@@ -469,7 +460,7 @@ namespace Dynamic.UI
 								{
 									if (sw != null)
 									{
-										sw.Dispose();
+										sw.Close();		//.Dispose();
 										sw = null;
 									}
 									Application.Invoke(this, new FinishExecuteArgs() { Scene = newScene, SceneWindow = sw, SceneWindowThread = SceneWindowThread }, OnFinishExecute);
@@ -494,6 +485,7 @@ namespace Dynamic.UI
 		/// </summary>
 		protected void OnFinishExecute(object sender, EventArgs args)
 		{
+			Trace.Log(TraceEventType.Information, "OnFinishExecute");
 			FinishExecuteArgs _args = args as FinishExecuteArgs;
 			Trace.Log(TraceEventType.Information, "Ended SceneWindowThread for scene \"{0}\"", _args.Scene.Id);
 			nbCode.RemovePage(page);
@@ -508,20 +500,17 @@ namespace Dynamic.UI
 		/// </summary>
 		protected void OnRefresh(object sender, EventArgs args)
 		{
+			Trace.Log(TraceEventType.Verbose, "OnRefresh");
 			PopulateHeirarchy();
 		}
 
 		/// <summary>
 		/// Raises the edit preferences event.
 		/// </summary>
-		/// <param name='sender'>
-		/// Sender.
-		/// </param>
-		/// <param name='args'>
-		/// Arguments.
-		/// </param>
 		protected void OnProjectPreferences(object sender, EventArgs args)
 		{
+			Trace.Log(TraceEventType.Information, "OnProjectPreferences");
+
 			ProjectDialog ppDlg = new ProjectDialog(GtkWindow as Gtk.Window, Project);
 
 			int r = ppDlg.GtkDialog.Run();

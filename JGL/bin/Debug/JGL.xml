@@ -324,9 +324,24 @@
             Tracing
             </summary>
         </member>
+        <member name="F:JGL.Resource.Resource.SyncRoot">
+            <summary>
+            The sync root.
+            </summary>
+        </member>
         <member name="F:JGL.Resource.Resource.LoadThread">
             <summary>
             Dedicated <see cref="T:JGL.Resource.Resource" /> loading thread
+            </summary>
+        </member>
+        <member name="F:JGL.Resource.Resource._loadQueue">
+            <summary>
+            The _load queue.
+            </summary>
+        </member>
+        <member name="F:JGL.Resource.Resource._stopLoadThread">
+            <summary>
+            The _stop load thread.
             </summary>
         </member>
         <member name="P:JGL.Resource.Resource.IsLoaded">
@@ -342,6 +357,11 @@
         <member name="M:JGL.Resource.Resource.LoadResources">
             <summary>
             Executed on the dedicated <see cref="T:JGL.Resource.Resource" /> loading thread, <see cref="F:JGL.Resource.Resource.LoadThread" /></summary>
+        </member>
+        <member name="M:JGL.Resource.Resource.StartLoadThread">
+            <summary>
+            Starts the load thread, if not already running
+            </summary>
         </member>
         <member name="M:JGL.Resource.Resource.StopLoadThread">
             <summary>
@@ -549,10 +569,6 @@
             queue until the background thread (see <see cref="!:RunThread" />) formats it for output and writes it to the <see cref="T:System.IO.Stream" />
             associated with the <see cref="T:JGL.Debugging.AsyncTraceListener" /> the message belongs too
             </summary>
-            <remarks>
-            	-	TODO: I just realised, for a background tracing thread to take as much load off the main thread as possible, shouldn't the
-            		threading be performed at the <see cref="T:JGL.Debugging.AutoTraceSource" /> level?? Otherwise calling thread will always go thru
-            		<see cref="M:JGL.Debugging.AutoTraceSource.Log(System.Diagnostics.TraceEventType,System.Object[])" />, <see cref="!:System.TraceSource" /> methods, <see cref="!:AsyncTraceListener.Log" /></remarks>
         </member>
         <member name="M:JGL.Debugging.AsyncTraceListener.#ctor(System.String)">
             <summary>
@@ -563,12 +579,17 @@
         <member name="F:JGL.Debugging.AsyncTraceListener.ThreadWaitTime">
             <summary>
             Time (in milliseconds) for <see cref="!:AsyncTraceListener.RunThread" /> to sleep for,
-            after writing all <see cref="!:LogMessage" />s in queue
+            after writing all <see cref="T:JGL.Debugging.LogMessage" />s in queue
             </summary>
         </member>
         <member name="F:JGL.Debugging.AsyncTraceListener.Trace">
             <summary>
             Tracing
+            </summary>
+        </member>
+        <member name="F:JGL.Debugging.AsyncTraceListener._namedListeners">
+            <summary>
+                <see cref="T:JGL.Debugging.AsyncTraceListener" />s, keyed by name
             </summary>
         </member>
         <member name="F:JGL.Debugging.AsyncTraceListener._stop">
@@ -591,7 +612,7 @@
         </member>
         <member name="M:JGL.Debugging.AsyncTraceListener.FormatMessage(System.String)">
             <summary>
-            Format message delegate method. Formats a <see cref="!:LogMessage" /> instance into <see cref="T:System.Byte[]" /> data to be
+            Format message delegate method. Formats a <see cref="T:JGL.Debugging.LogMessage" /> instance into <see cref="T:System.Byte[]" /> data to be
             written to the output <see cref="T:System.IO.Stream" />. Override to customise behaviour.
             </summary>
         </member>
@@ -601,7 +622,17 @@
             </summary>
             <param name="disposing">Disposing</param>
         </member>
-        <member name="M:JGL.Debugging.AsyncTraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)">
+        <member name="M:JGL.Debugging.AsyncTraceListener.EnsureOpen">
+            <summary>
+            Ensures <see cref="T:System.IO.Stream" /> is a valid open stream
+            </summary>
+        </member>
+        <member name="M:JGL.Debugging.AsyncTraceListener.OpenStream">
+            <summary>
+            The open stream method opens the output stream when required by the background thread. Override to customise behaviour.
+            </summary>
+        </member>
+        <member name="M:JGL.Debugging.AsyncTraceListener.Flush">
             <summary>
             Called by <see cref="T:System.Diagnostics.TraceSource" /> methods to specify a message to log
             </summary>
@@ -610,6 +641,23 @@
             <param name="eventType">Event type</param>
             <param name="id">Identifier</param>
             <param name="data">Data</param>
+            <summary>
+            Base implementation throws exception if <paramref name="data" /> is <c>null</c> or not of type <see cref="T:JGL.Debugging.LogMessage" /></summary>
+            <param name="eventCache">
+            </param>
+            <param name="source">
+            </param>
+            <param name="eventType">
+            </param>
+            <param name="id">
+            </param>
+            <param name="data">A <see cref="T:JGL.Debugging.LogMessage" /> instance</param>
+            <summary>
+            Flush this instance.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">
+            Is thrown when an operation cannot be performed.
+            </exception>
         </member>
         <member name="M:JGL.Debugging.AsyncTraceListener.Write(System.String)">
             <summary>
@@ -621,7 +669,7 @@
             <exception cref="T:System.InvalidOperationException">
             Is thrown when an operation cannot be performed.
             </exception>
-            <remarks>Only implemented because base class marks it as abstract - due to my <see cref="M:JGL.Debugging.AsyncTraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)" /> override this should never execute</remarks>
+            <remarks>Only implemented because base class marks it as abstract - due to my <see cref="M:System.Diagnostics.TraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)" /> override this should never execute</remarks>
         </member>
         <member name="M:JGL.Debugging.AsyncTraceListener.WriteLine(System.String)">
             <summary>
@@ -633,12 +681,7 @@
             <exception cref="T:System.InvalidOperationException">
             Is thrown when an operation cannot be performed.
             </exception>
-            <remarks>Only implemented because base class marks it as abstract - due to my <see cref="M:JGL.Debugging.AsyncTraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)" /> override this should never execute</remarks>
-        </member>
-        <member name="M:JGL.Debugging.AsyncTraceListener.OpenStream">
-            <summary>
-            The open stream method opens the output stream when required by the background thread. Override to customise behaviour.
-            </summary>
+            <remarks>Only implemented because base class marks it as abstract - due to my <see cref="M:System.Diagnostics.TraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)" /> override this should never execute</remarks>
         </member>
         <member name="T:JGL.Debugging.AutoTraceSource">
             <summary>
@@ -646,75 +689,14 @@
         </member>
         <member name="M:JGL.Debugging.AutoTraceSource.#ctor(System.String,System.Diagnostics.TraceListener[])">
             <summary>
+            Initializes a new instance of the <see cref="T:JGL.Debugging.AutoTraceSource" /> class, using the executing module's name
+            </summary>
+            <param name="traceListeners">Trace listeners</param>
+            <summary>
             Initializes a new instance of the <see cref="T:JGL.Debugging.AutoTraceSource" /> class.
             </summary>
             <param name="name">Name for the new <see cref="T:JGL.Debugging.AutoTraceSource" /></param>
             <param name="traceListeners">Trace listeners to add to the <see cref="T:JGL.Debugging.AutoTraceSource" /></param>
-        </member>
-        <member name="T:JGL.Debugging.AutoTraceSource.LogMessage">
-            <summary>
-            Log message class stores log message parameters
-            </summary>
-        </member>
-        <member name="M:JGL.Debugging.AutoTraceSource.LogMessage.#ctor(System.Diagnostics.TraceEventCache,System.Diagnostics.TraceSource,System.Diagnostics.TraceEventType,System.Int32,System.Object)">
-            <summary>
-            Initializes a new instance of the <see cref="!:JGL.Debugging.AsyncTraceListener.LogMessage" /> class.
-            </summary>
-            <param name="listener">The listener the message is for</param>
-            <param name="eventCache">Event cache</param>
-            <param name="source">Source</param>
-            <param name="eventType">Event type</param>
-            <param name="id">Identifier</param>
-            <param name="data">Data</param>
-        </member>
-        <member name="M:JGL.Debugging.AutoTraceSource.LogMessage.#ctor(System.Diagnostics.TraceEventCache,System.Diagnostics.TraceSource,System.Diagnostics.TraceEventType,System.Int32,System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="!:JGL.Debugging.AsyncTraceListener.LogMessage" /> class.
-            </summary>
-            <param name="listener">The listener the message is for</param>
-            <param name="eventCache">Event cache</param>
-            <param name="source">Source</param>
-            <param name="eventType">Event type</param>
-            <param name="id">Identifier</param>
-            <param name="message">Message</param>
-        </member>
-        <member name="M:JGL.Debugging.AutoTraceSource.LogMessage.#ctor(System.Diagnostics.TraceEventCache,System.Diagnostics.TraceSource,System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[])">
-            <summary>
-            Initializes a new instance of the <see cref="!:JGL.Debugging.AsyncTraceListener.LogMessage" /> class.
-            </summary>
-            <param name="listener">The listener the message is for</param>
-            <param name="eventCache">Event cache</param>
-            <param name="source">Source</param>
-            <param name="eventType">Event type</param>
-            <param name="id">Identifier</param>
-            <param name="format">Message</param>
-        </member>
-        <member name="F:JGL.Debugging.AutoTraceSource.LogMessage.EventCache">
-            <summary>Event cache</summary>
-        </member>
-        <member name="F:JGL.Debugging.AutoTraceSource.LogMessage.Source">
-            <summary>The <see cref="T:System.Diagnostics.TraceSource" /> that the message originated from</summary>
-        </member>
-        <member name="F:JGL.Debugging.AutoTraceSource.LogMessage.EventType">
-            <summary>
-                <see cref="T:System.Diagnostics.TraceEventType" /> event type</summary>
-        </member>
-        <member name="F:JGL.Debugging.AutoTraceSource.LogMessage.Id">
-            <summary>Trace message ID</summary>
-        </member>
-        <member name="F:JGL.Debugging.AutoTraceSource.LogMessage.Format">
-            <summary>Format string (or just a plain message string)</summary>
-        </member>
-        <member name="F:JGL.Debugging.AutoTraceSource.LogMessage.Data">
-            <summary>Data to go with the </summary>
-        </member>
-        <member name="F:JGL.Debugging.AutoTraceSource.LogMessage.OutputOptions">
-            <summary>Listener the <see cref="T:JGL.Debugging.AutoTraceSource.LogMessage" /> is intended for</summary>
-            <summary>
-                <see cref="T:System.Diagnostics.TraceOptions" /> for output</summary>
-        </member>
-        <member name="P:JGL.Debugging.AutoTraceSource.LogMessage.Message">
-            <summary>Gets the formatted message string</summary>
         </member>
         <member name="F:JGL.Debugging.AutoTraceSource.TraceThreadSleepTime">
             <summary>
@@ -725,6 +707,10 @@
             <summary>
             Tracing <see cref="T:JGL.Debugging.AutoTraceSource" /></summary>
         </member>
+        <member name="F:JGL.Debugging.AutoTraceSource.RootTraceLock">
+            <summary>
+            Used for locking when testing/assigning <see cref="F:JGL.Debugging.AutoTraceSource.Trace" /></summary>
+        </member>
         <member name="F:JGL.Debugging.AutoTraceSource._namedSources">
             <summary>
                 <see cref="T:JGL.Debugging.AutoTraceSource" /> instances, keyed by <see cref="P:System.Diagnostics.TraceSource.Name" /></summary>
@@ -734,7 +720,15 @@
             The _message queue.
             </summary>
         </member>
+        <member name="F:JGL.Debugging.AutoTraceSource.openListeners">
+            <summary>
+            The open listeners.
+            </summary>
+        </member>
         <member name="F:JGL.Debugging.AutoTraceSource.TraceThread">
+            <summary>
+            The close queue.
+            </summary>
             <summary>
             The trace thread.
             </summary>
@@ -800,6 +794,12 @@
             <returns>An <see cref="T:JGL.Debugging.AutoTraceSource" /> reference</returns>
             <param name="traceListeners">
                 <see cref="T:System.Diagnostics.TraceListener" />s that should be in <see cref="P:System.Diagnostics.TraceSource.Listeners" /></param>
+            <remarks>
+            	-	TODO:
+            		-	Create another override for this method that takens no params, and gets its default traceListeners
+            			(or info to create them) from ONE single location, config of some sort, be it file or otherwise. User
+            			can modify default trace listeners, names, filenames??
+            </remarks>
         </member>
         <member name="M:JGL.Debugging.AutoTraceSource.GetOrCreate(System.String,System.Diagnostics.TraceListener[])">
             <summary>
@@ -817,6 +817,13 @@
             <param name="autoAddConsoleListener">Whether to add a new <see cref="T:System.Diagnostics.ConsoleTraceListener" /> to the <see cref="T:JGL.Debugging.AutoTraceSource" /> if creating a new instance</param>
             <param name="traceListeners">
                 <see cref="T:System.Diagnostics.TraceListener" />s that should be in <see cref="P:System.Diagnostics.TraceSource.Listeners" /></param>
+        </member>
+        <member name="M:JGL.Debugging.AutoTraceSource.Init(System.String,System.Diagnostics.TraceListener[])">
+            <summary>
+            Init the specified name and traceListeners.
+            </summary>
+            <param name="name">Source name</param>
+            <param name="traceListeners">Trace listeners</param>
         </member>
         <member name="M:JGL.Debugging.AutoTraceSource.Log(System.Diagnostics.TraceEventType,System.Object[])">
             <summary>
@@ -847,57 +854,6 @@
             <summary>
             Assert the specified condition, logging result to <see cref="F:JGL.Debugging.AutoTraceSource.Trace" /></summary>
             <param name="condition">Condition</param>
-        </member>
-        <member name="T:JGL.Debugging.AsyncFileTraceListener">
-            <summary>
-            Asynchronous trace listener that writes to a file
-            </summary>
-        </member>
-        <member name="M:JGL.Debugging.AsyncFileTraceListener.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Debugging.AsyncFileTraceListener" /> class.
-            </summary>
-            <param name="name">Name of the new trace listener</param>
-        </member>
-        <member name="F:JGL.Debugging.AsyncFileTraceListener.Trace">
-            <summary>
-            Tracing
-            </summary>
-        </member>
-        <member name="F:JGL.Debugging.AsyncFileTraceListener.PathPrefix">
-            <summary>
-            The path prefix.
-            </summary>
-        </member>
-        <member name="F:JGL.Debugging.AsyncFileTraceListener.PathSuffix">
-            <summary>
-            The path suffix.
-            </summary>
-        </member>
-        <member name="F:JGL.Debugging.AsyncFileTraceListener.TruncateFile">
-            <summary>
-            Whether to truncate the file before opening it for writing
-            </summary>
-        </member>
-        <member name="P:JGL.Debugging.AsyncFileTraceListener.Path">
-            <summary>
-            Path of the file that this trace listener will open
-            </summary>
-        </member>
-        <member name="M:JGL.Debugging.AsyncFileTraceListener.GetOrCreate(System.String)">
-            <summary>
-            Gets (if exists) or creates a <see cref="T:JGL.Debugging.AsyncFileTraceListener" /> with the specified <paramref name="name" /></summary>
-            <returns>An <see cref="T:JGL.Debugging.AsyncFileTraceListener" /> reference</returns>
-            <param name="name">Name of the <see cref="T:JGL.Debugging.AsyncFileTraceListener" /> to get or create</param>
-        </member>
-        <member name="M:JGL.Debugging.AsyncFileTraceListener.OpenStream">
-            <summary>
-            Opens the <see cref="T:System.IO.Stream" /> the trace listener will write to
-            </summary>
-            <returns>The newly opened <see cref="T:System.IO.Stream" /></returns>
-            <remarks>
-            Implementation of abstract member of JGL.Debugging.AsyncTraceListener
-            </remarks>
         </member>
         <member name="T:JGL.Heirarchy.Object">
             <summary>
@@ -1727,6 +1683,16 @@
             Engine.
             </summary>
         </member>
+        <member name="M:JGL.Engine.Init">
+            <summary>
+            Init this instance.
+            </summary>
+        </member>
+        <member name="M:JGL.Engine.Quit">
+            <summary>
+            Quit this instance.
+            </summary>
+        </member>
         <member name="T:JGL.Extensions.Object_Ext">
             <summary>
                 <see cref="T:System.Object" /> extension methods
@@ -1740,6 +1706,233 @@
             </returns>
             <param name="obj">If set to <c>true</c> object</param>
             <param name="typeOf">If set to <c>true</c> type of</param>
+        </member>
+        <member name="T:JGL.Debugging.LogMessage">
+            <summary>
+            Log message class stores log message parameters
+            </summary>
+        </member>
+        <member name="M:JGL.Debugging.LogMessage.#ctor(System.Diagnostics.TraceEventCache,System.Diagnostics.TraceSource,System.Diagnostics.TraceEventType,System.Int32,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="!:JGL.Debugging.AsyncTraceListener.LogMessage" /> class.
+            </summary>
+            <param name="listener">The listener the message is for</param>
+            <param name="eventCache">Event cache</param>
+            <param name="source">Source</param>
+            <param name="eventType">Event type</param>
+            <param name="id">Identifier</param>
+            <param name="data">Data</param>
+        </member>
+        <member name="M:JGL.Debugging.LogMessage.#ctor(System.Diagnostics.TraceEventCache,System.Diagnostics.TraceSource,System.Diagnostics.TraceEventType,System.Int32,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="!:JGL.Debugging.AsyncTraceListener.LogMessage" /> class.
+            </summary>
+            <param name="listener">The listener the message is for</param>
+            <param name="eventCache">Event cache</param>
+            <param name="source">Source</param>
+            <param name="eventType">Event type</param>
+            <param name="id">Identifier</param>
+            <param name="message">Message</param>
+        </member>
+        <member name="M:JGL.Debugging.LogMessage.#ctor(System.Diagnostics.TraceEventCache,System.Diagnostics.TraceSource,System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object[])">
+            <summary>
+            Initializes a new instance of the <see cref="!:JGL.Debugging.AsyncTraceListener.LogMessage" /> class.
+            </summary>
+            <param name="listener">The listener the message is for</param>
+            <param name="eventCache">Event cache</param>
+            <param name="source">Source</param>
+            <param name="eventType">Event type</param>
+            <param name="id">Identifier</param>
+            <param name="format">Message</param>
+        </member>
+        <member name="F:JGL.Debugging.LogMessage.EventCache">
+            <summary>
+            Ensures that <paramref name="message" /> is of type <see cref="T:JGL.Debugging.LogMessage" />.
+            </summary>
+            <remarks>
+            	-	Used internally for <see cref="T:System.Diagnostics.TraceListener" />s that override <see cref="M:System.Diagnostics.TraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)" /></remarks>
+            <param name="message">Instance to check type of</param>
+            <exception cref="T:System.ArgumentNullException">
+            Is thrown when an argument passed to a method is invalid because it is <see langword="null" /> .
+            </exception>
+            <exception cref="T:System.ArgumentException">
+            Is thrown when an argument passed to a method is invalid.
+            </exception>
+            <summary>Event cache</summary>
+        </member>
+        <member name="F:JGL.Debugging.LogMessage.Source">
+            <summary>The <see cref="T:System.Diagnostics.TraceSource" /> that the message originated from</summary>
+        </member>
+        <member name="F:JGL.Debugging.LogMessage.OutputOptions">
+            <summary>
+                <see cref="T:System.Diagnostics.TraceOptions" /> for output</summary>
+        </member>
+        <member name="F:JGL.Debugging.LogMessage.EventType">
+            <summary>
+                <see cref="T:System.Diagnostics.TraceEventType" /> event type</summary>
+        </member>
+        <member name="F:JGL.Debugging.LogMessage.Id">
+            <summary>Trace message ID</summary>
+        </member>
+        <member name="F:JGL.Debugging.LogMessage.Format">
+            <summary>Format string (or just a plain message string)</summary>
+        </member>
+        <member name="F:JGL.Debugging.LogMessage.Data">
+            <summary>Data to go with the </summary>
+        </member>
+        <member name="P:JGL.Debugging.LogMessage.Time">
+            <summary>Time</summary>
+        </member>
+        <member name="P:JGL.Debugging.LogMessage.TimeStamp">
+            <summary>Time stamp</summary>
+        </member>
+        <member name="P:JGL.Debugging.LogMessage.Process">
+            <summary>Process Id</summary>
+        </member>
+        <member name="P:JGL.Debugging.LogMessage.Thread">
+            <summary>Thread Id</summary>
+        </member>
+        <member name="P:JGL.Debugging.LogMessage.Frame">
+            <summary>
+            The <see cref="T:System.Diagnostics.StackFrame" /> that called <see cref="M:JGL.Debugging.AutoTraceSource.Log(System.Diagnostics.TraceEventType,System.Object[])" /></summary>
+        </member>
+        <member name="P:JGL.Debugging.LogMessage.Callstack">
+            <summary>Callstack</summary>
+        </member>
+        <member name="P:JGL.Debugging.LogMessage.LogicalOperationStack">
+            <summary>Logical operation stack</summary>
+        </member>
+        <member name="P:JGL.Debugging.LogMessage.Message">
+            <summary>Message text</summary>
+            <remarks>
+            	-	If <code><see cref="F:JGL.Debugging.LogMessage.Format" /> == null</code>, returns <code><see cref="F:JGL.Debugging.LogMessage.Data" />.ToString()&gt;</code>
+            	-	Else if <code><see cref="F:JGL.Debugging.LogMessage.Data" /> == null</code>, returns <see cref="F:JGL.Debugging.LogMessage.Format" />
+            	-	Else returns <code>string.Format(<see cref="F:JGL.Debugging.LogMessage.Format" />, returns <see cref="F:JGL.Debugging.LogMessage.Data" />)</code></remarks>
+        </member>
+        <member name="P:JGL.Debugging.LogMessage.MessageAsText">
+            <summary>Gets the formatted message string</summary>
+        </member>
+        <member name="M:JGL.Debugging.LogMessage.Init(System.Diagnostics.TraceEventCache,System.Diagnostics.TraceSource,System.Diagnostics.TraceEventType,System.Int32,System.String,System.Object)">
+            <summary>
+            Init the specified eventCache, source, eventType, id, format and data.
+            </summary>
+            <param name="listener">The listener the message is for</param>
+            <param name="eventCache">Event cache</param>
+            <param name="source">Source</param>
+            <param name="eventType">Event type</param>
+            <param name="id">Identifier</param>
+            <param name="format">Message</param>
+        </member>
+        <member name="M:JGL.Debugging.LogMessage.ToString">
+            <summary>
+            Returns a <see cref="T:System.String" /> that represents the current <see cref="T:JGL.Debugging.LogMessage" />.
+            </summary>
+            <remarks>
+            	-	<see cref="T:System.Diagnostics.ConsoleTraceListener" /> relies on this
+            </remarks>
+        </member>
+        <member name="M:JGL.Debugging.LogMessage.WriteXml(System.Xml.XmlWriter)">
+            <summary>
+            Writes the xml.
+            </summary>
+            <param name="writer">The <see cref="T:System.Xml.XmlWriter" /> to write to</param>
+        </member>
+        <member name="M:JGL.Debugging.LogMessage.GetSchema">
+            <summary>
+            Gets the schema.
+            </summary>
+            <exception cref="T:System.NotImplementedException">
+            Is thrown when a requested operation is not implemented for a given type.
+            </exception>
+        </member>
+        <member name="M:JGL.Debugging.LogMessage.ReadXml(System.Xml.XmlReader)">
+            <summary>
+            Reads the xml.
+            </summary>
+            <exception cref="T:System.NotImplementedException">
+            Is thrown when a requested operation is not implemented for a given type.
+            </exception>
+        </member>
+        <member name="T:JGL.Debugging.AsyncTextFileTraceListener">
+            <summary>
+            Asynchronous trace listener that writes to a file
+            </summary>
+        </member>
+        <member name="M:JGL.Debugging.AsyncTextFileTraceListener.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Debugging.AsyncTextFileTraceListener" /> class.
+            </summary>
+            <param name="name">Name of the new trace listener</param>
+        </member>
+        <member name="F:JGL.Debugging.AsyncTextFileTraceListener.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="F:JGL.Debugging.AsyncTextFileTraceListener.TruncateFile">
+            <summary>
+            Whether to truncate the file before opening it for writing
+            </summary>
+        </member>
+        <member name="P:JGL.Debugging.AsyncTextFileTraceListener.PathPrefix">
+            <summary>
+            The path prefix.
+            </summary>
+        </member>
+        <member name="P:JGL.Debugging.AsyncTextFileTraceListener.PathSuffix">
+            <summary>
+            The path suffix.
+            </summary>
+        </member>
+        <member name="P:JGL.Debugging.AsyncTextFileTraceListener.Path">
+            <summary>
+            Path of the file that this trace listener will open
+            </summary>
+        </member>
+        <member name="M:JGL.Debugging.AsyncTextFileTraceListener.GetOrCreate(System.String)">
+            <summary>
+            Gets (if exists) or creates a <see cref="!:AsyncFileTraceListener" /> with the specified <paramref name="name" /></summary>
+            <returns>An <see cref="!:AsyncFileTraceListener" /> reference</returns>
+            <param name="name">Name of the <see cref="!:AsyncFileTraceListener" /> to get or create</param>
+        </member>
+        <member name="M:JGL.Debugging.AsyncTextFileTraceListener.OpenStream">
+            <summary>
+            Opens the <see cref="T:System.IO.Stream" /> the trace listener will write to
+            </summary>
+            <returns>The newly opened <see cref="T:System.IO.Stream" /></returns>
+            <remarks>
+            Implementation of abstract member of JGL.Debugging.AsyncTraceListener
+            </remarks>
+        </member>
+        <member name="M:JGL.Debugging.AsyncTextFileTraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)">
+            <summary>
+            Called by <see cref="T:System.Diagnostics.TraceSource" /> methods to specify a message to log
+            </summary>
+            <param name="eventCache">Event cache</param>
+            <param name="source">Source</param>
+            <param name="eventType">Event type</param>
+            <param name="id">Identifier</param>
+            <param name="data">Data</param>
+        </member>
+        <member name="T:JGL.Debugging.AsyncXmlFileTraceListener">
+            <summary>
+            Async xml trace listener.
+            </summary>
+        </member>
+        <member name="M:JGL.Debugging.AsyncXmlFileTraceListener.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Debugging.AsyncXmlFileTraceListener" /> class.
+            </summary>
+        </member>
+        <member name="M:JGL.Debugging.AsyncXmlFileTraceListener.TraceData(System.Diagnostics.TraceEventCache,System.String,System.Diagnostics.TraceEventType,System.Int32,System.Object)">
+            <summary>
+            Traces the data.
+            </summary>
+            <param name="eventCache">Event cache</param>
+            <param name="source">Source</param>
+            <param name="eventType">Event type</param>
+            <param name="id">Identifier</param>
+            <param name="data">Data - should be a <see cref="T:JGL.Debugging.LogMessage" /> instance</param>
         </member>
     </members>
 </doc>
