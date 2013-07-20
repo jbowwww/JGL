@@ -355,8 +355,8 @@ namespace JGL.Debugging
 			string message, indent = string.Empty;
 			for (Exception _ex = ex; _ex != null; _ex = _ex.InnerException)
 			{
-				sb.AppendFormat("{0}{1}: {2}\n{0}Stacktrace:\n{0}    {3}", indent, _ex.GetType().Name, _ex.Message, _ex.StackTrace.Replace("\n", "\n    " + indent));
-				if (ex.InnerException != null)
+				sb.AppendFormat("{0}{1}: {2}\n{0}Stacktrace:\n{0}    {3}\n", indent, _ex.GetType().Name, _ex.Message, _ex.StackTrace.Replace("\n", "\n    " + indent));
+				if (_ex.InnerException != null)
 					sb.AppendFormat("{0}InnerException:\n    ", indent);
 				indent += "    ";
 			}

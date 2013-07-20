@@ -1,14 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="DynamicCodeTests/Logs/JGLApp.Trace.Log">
+  <MonoDevelop.Ide.Workbench ActiveDocument="JGL/Resource/Texture.cs">
     <Files>
-      <File FileName="JGL/Debugging/AutoTraceSource.cs" Line="165" Column="1" />
-      <File FileName="JGL/Debugging/AsyncTraceListener.cs" Line="41" Column="4" />
-      <File FileName="JGL/Debugging/AsyncTextFileTraceListener.cs" Line="89" Column="62" />
-      <File FileName="JGL/Debugging/AsyncXmlFileTraceListener.cs" Line="40" Column="161" />
-      <File FileName="JGL/Debugging/LogMessage.cs" Line="120" Column="40" />
-      <File FileName="DynamicCodeTests/Logs/JGL.Trace.Log.Xml" Line="26" Column="88" />
-      <File FileName="DynamicCodeTests/Logs/JGLApp.Trace.Log" Line="2" Column="10" />
+      <File FileName="DynamicCodeTests/DynamicCode/Heirarchy/Scene1.cs" Line="19" Column="4" />
+      <File FileName="DynamicCodeTests/Compiler.cs" Line="60" Column="263" />
+      <File FileName="JGL/Heirarchy/EntityContext.cs" Line="66" Column="68" />
+      <File FileName="JGL/Heirarchy/EntityRootContext.cs" Line="18" Column="1" />
+      <File FileName="JGL/Resource/Texture.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -17,33 +15,21 @@
             <Option id="ShowAllFiles" value="True" />
           </Node>
           <Node name="DynamicCodeTests" expanded="True">
-            <Node name="bin" selected="True" />
-            <Node name="DynamicCode">
-              <Option id="ShowAllFiles" value="False" />
-            </Node>
-            <Node name="Logs" expanded="True">
+            <Node name="Logs">
               <Option id="ShowAllFiles" value="True" />
             </Node>
-            <Node name="UI" expanded="True" />
           </Node>
-          <Node name="JGL" expanded="True">
-            <Node name="Debugging" expanded="True" />
-            <Node name="Extensions" expanded="True" />
-            <Node name="Geometry" expanded="True" />
+          <Node name="JGL" expanded="True" selected="True">
             <Node name="GL" expanded="True" />
             <Node name="Heirarchy" expanded="True">
               <Option id="ShowAllFiles" value="False" />
-              <Node name="Library" expanded="True" />
             </Node>
             <Node name="Resource" expanded="True" />
           </Node>
         </State>
       </Pad>
       <Pad Id="ClassPad">
-        <State expanded="True">
-          <Node name="DynamicCodeTests" expanded="True" selected="True">
-            <Node name="References" expanded="True" />
-          </Node>
+        <State expanded="True" selected="True">
           <Node name="JGL" expanded="True">
             <Node name="JGL" expanded="True">
               <Node name="OpenGL" expanded="True" />

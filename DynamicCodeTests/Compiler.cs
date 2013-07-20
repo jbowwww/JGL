@@ -57,7 +57,7 @@ namespace Dynamic
 			string r = string.Empty;
 			try
 			{
-				string prefix = "Scene[] Scenes = new Scene[EntityContext.RootContext.Count]; EntityContext.RootContext.CopyTo(Scenes, 0); EntityContext RootContext = EntityContext.RootContext; EntityContext CurrentContext = EntityContext.CurrentContext;";
+				string prefix = "EntityContext RootContext = EntityContext.RootContext; EntityContext CurrentContext = EntityContext.CurrentContext; ICollection<Scene> _scenes = RootContext.OfType<Scene>(); Scene[] Scenes = new Scene[_scenes.Count]; _scenes.CopyTo(Scenes, 0);";
 				string source = prefix + code;
 				if (code.Contains(";"))
 				{

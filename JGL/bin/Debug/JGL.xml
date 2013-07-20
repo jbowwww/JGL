@@ -265,6 +265,12 @@
             Indicate if mesh faces should be drawn one or two sided
             </summary>
         </member>
+        <member name="M:JGL.Heirarchy.Mesh.Texturise``1(JGL.Heirarchy.TexturiseMethod{``0})">
+            <summary>
+            Texturise the specified texturiseMethod.
+            </summary>
+            <param name="texturiseMethod">Texturise method</param>
+        </member>
         <member name="M:JGL.Heirarchy.Mesh.Render(JGL.Heirarchy.RenderArgs)">
             <summary>
             Render <see cref="T:JGL.Heirarchy.Mesh" /></summary>
@@ -861,6 +867,11 @@
         </member>
         <member name="M:JGL.Heirarchy.Object.#ctor(JGL.Heirarchy.Entity[])">
             <summary>
+            Gets child objects
+            </summary>
+            <remarks>
+            Unnecessary, use <see cref="P:JGL.Heirarchy.EntityContext.Objects" /></remarks>
+            <summary>
             Initializes a new instance of the <see cref="T:JGL.Heirarchy.Object" /> class.
             </summary>
         </member>
@@ -890,11 +901,6 @@
             <summary>
             Gets or sets the object orientation (linked to <see cref="P:JGL.Heirarchy.Object.Rotation" /></summary>
         </member>
-        <member name="P:JGL.Heirarchy.Object.SubObjects">
-            <summary>
-            Gets child objects
-            </summary>
-        </member>
         <member name="M:JGL.Heirarchy.Object.Move(OpenTK.Vector3d,System.Double)">
             <summary>
             Move Position vector a distance in the given direction
@@ -918,6 +924,34 @@
         <member name="M:JGL.Heirarchy.Object.MoveBackward(System.Double)">
             <summary>Moves <see cref="T:JGL.Heirarchy.Entity" /> backward</summary>
             <param name="distance">Distance to move, default 1.0</param>
+        </member>
+        <member name="M:JGL.Heirarchy.Object.IncludeAll(JGL.Heirarchy.Mesh)">
+            <summary>
+            Default <see cref="M:JGL.Heirarchy.Object.MergeChildMeshes(JGL.Heirarchy.Object.MeshInclusionTest)" /> inclusion test includes all.
+            </summary>
+            <returns>
+                <c>true</c>, always</returns>
+            <param name="mesh">The <see cref="T:JGL.Heirarchy.Mesh" /> that will be included</param>
+        </member>
+        <member name="M:JGL.Heirarchy.Object.MergeChildMeshes(JGL.Heirarchy.Object.MeshInclusionTest)">
+            <summary>
+            Merges selected (by <paramref name="inclusionTest" />) child <see cref="T:JGL.Heirarchy.Mesh" /><see cref="T:JGL.Heirarchy.Entity" />s'
+            <see cref="F:JGL.Heirarchy.Mesh.VertexData" />s into a single instance, and referenced only by a single <see cref="T:JGL.Heirarchy.Mesh" /><see cref="T:JGL.Heirarchy.Entity" /> that has had all the children's <see cref="F:JGL.Heirarchy.Mesh.Triangles" /> copied to it. If this
+            <see cref="T:JGL.Heirarchy.Object" /> instance is not a <see cref="T:JGL.Heirarchy.Mesh" />, a new one is created and returned, after replacing
+            <c>this</c> instance in the heirarchy (hence unless it is referenced elsewhere, <c>this</c> instance should be
+            marked for garbage collection.
+            </summary>
+            <returns>
+            Unless there are no child M<see cref="T:JGL.Heirarchy.Mesh" />es (whether they are selected for merging or not), returns a <see cref="T:JGL.Heirarchy.Mesh" />
+            instance, that is either <c>this</c>, or a newly created instance. If there are no child <see cref="T:JGL.Heirarchy.Mesh" />es, returns <c>this</c></returns>
+            <param name="inclusionTest">Inclusion test, default includes all</param>
+        </member>
+        <member name="M:JGL.Heirarchy.Object.CombineChildMeshes(JGL.Heirarchy.Object.MeshInclusionTest)">
+            <summary>
+            Merges selected (by <paramref name="inclusionTest" />) child <see cref="T:JGL.Heirarchy.Mesh" /><see cref="T:JGL.Heirarchy.Entity" />s'
+            <see cref="F:JGL.Heirarchy.Mesh.VertexData" />s into a single instance, which is then referenced by all the child <see cref="T:JGL.Heirarchy.Mesh" /><see cref="T:JGL.Heirarchy.Entity" />s that were selected for combining.
+            </summary>
+            <param name="inclusionTest">Inclusion test</param>
         </member>
         <member name="F:JGL.Geometry.Vector3d_Ext.Trace">
             <summary>
@@ -944,20 +978,20 @@
             A mesh representation of a box in 3D space
             </summary>
         </member>
-        <member name="M:JGL.Heirarchy.Library.Box.#ctor(JGL.Heirarchy.Library.Box.BoxTexturiseMethod)">
+        <member name="M:JGL.Heirarchy.Library.Box.#ctor(JGL.Heirarchy.TexturiseMethod{JGL.Heirarchy.Library.Box})">
             <summary>
             Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Box" /> class.
             </summary>
-            <param name="texturiseMethod">A <see cref="T:JGL.Heirarchy.Library.Box.BoxTexturiseMethod" /> instance, or null to use <see cref="F:JGL.Heirarchy.Library.Box.DefaultTexturiseEachFace" /></param>
+            <param name="texturiseMethod">A <see cref="!:BoxTexturiseMethod" /> instance, or null to use <see cref="!:DefaultTexturiseEachFace" /></param>
         </member>
-        <member name="M:JGL.Heirarchy.Library.Box.#ctor(System.String,JGL.Heirarchy.Library.Box.BoxTexturiseMethod)">
+        <member name="M:JGL.Heirarchy.Library.Box.#ctor(System.String,JGL.Heirarchy.TexturiseMethod{JGL.Heirarchy.Library.Box})">
             <summary>
             Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Box" /> class.
             </summary>
             <param name="name">Name</param>
-            <param name="texturiseMethod">A <see cref="T:JGL.Heirarchy.Library.Box.BoxTexturiseMethod" /> instance, or null to use <see cref="F:JGL.Heirarchy.Library.Box.DefaultTexturiseEachFace" /></param>
+            <param name="texturiseMethod">A <see cref="!:BoxTexturiseMethod" /> instance, or null to use <see cref="!:DefaultTexturiseEachFace" /></param>
         </member>
-        <member name="M:JGL.Heirarchy.Library.Box.#ctor(System.String,System.Double,System.Double,System.Double,JGL.Heirarchy.Library.Box.BoxTexturiseMethod)">
+        <member name="M:JGL.Heirarchy.Library.Box.#ctor(System.String,System.Double,System.Double,System.Double,JGL.Heirarchy.TexturiseMethod{JGL.Heirarchy.Library.Box})">
             <summary>
             Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Box" /> class.
             </summary>
@@ -965,28 +999,21 @@
             <param name="xSize">X size</param>
             <param name="ySize">Y size</param>
             <param name="zSize">Z size</param>
-            <param name="texturiseMethod">A <see cref="T:JGL.Heirarchy.Library.Box.BoxTexturiseMethod" /> instance, or null to use <see cref="F:JGL.Heirarchy.Library.Box.DefaultTexturiseEachFace" /></param>
+            <param name="texturiseMethod">A <see cref="!:BoxTexturiseMethod" /> instance, or null to use <see cref="!:DefaultTexturiseEachFace" /></param>
         </member>
-        <member name="M:JGL.Heirarchy.Library.Box.#ctor(System.Double,System.Double,System.Double,JGL.Heirarchy.Library.Box.BoxTexturiseMethod)">
+        <member name="M:JGL.Heirarchy.Library.Box.#ctor(System.Double,System.Double,System.Double,JGL.Heirarchy.TexturiseMethod{JGL.Heirarchy.Library.Box})">
             <summary>
             Initializes a new instance of the <see cref="T:JGL.Heirarchy.Library.Box" /> class.
             </summary>
             <param name="xSize">X size</param>
             <param name="ySize">Y size</param>
             <param name="zSize">Z size</param>
-            <param name="texturiseMethod">A <see cref="T:JGL.Heirarchy.Library.Box.BoxTexturiseMethod" /> instance, or null to use <see cref="F:JGL.Heirarchy.Library.Box.DefaultTexturiseEachFace" /></param>
+            <param name="texturiseMethod">A <see cref="!:BoxTexturiseMethod" /> instance, or null to use <see cref="!:DefaultTexturiseEachFace" /></param>
         </member>
-        <member name="T:JGL.Heirarchy.Library.Box.BoxTexturiseMethod">
+        <member name="T:JGL.Heirarchy.Library.Box.TexturiseEachFace">
             <summary>
             Texturise method arguments base class.
             </summary>
-        </member>
-        <member name="M:JGL.Heirarchy.Library.Box.BoxTexturiseMethod.Texturise(JGL.Heirarchy.Library.Box)">
-            <summary>
-            Texturise this instance.
-            </summary>
-        </member>
-        <member name="T:JGL.Heirarchy.Library.Box.TexturiseEachFace">
             <summary>
             Each face of the <see cref="T:JGL.Heirarchy.Library.Box" /> displays the <see cref="!:Texture" />, repeated <see cref="F:JGL.Heirarchy.Library.Box.TexturiseEachFace.URepeat" />
             times in the U dimension and <see cref="F:JGL.Heirarchy.Library.Box.TexturiseEachFace.VRepeat" /> in the V direction
@@ -1022,27 +1049,14 @@
             Tracing
             </summary>
         </member>
-        <member name="F:JGL.Heirarchy.Library.Box.DefaultTexturiseEachFace">
-            <summary>
-            Texturise each face with default parameters
-            </summary>
-            <remarks>
-                <see cref="F:JGL.Heirarchy.Library.Box.TexturiseEachFace.URepeat" /> = 1, <see cref="F:JGL.Heirarchy.Library.Box.TexturiseEachFace.VRepeat" /> = 1
-            </remarks>
-        </member>
-        <member name="F:JGL.Heirarchy.Library.Box.DefaultTexturiseWholeBox">
-            <summary>
-            Texturise whole box with default parameters
-            </summary>
-        </member>
-        <member name="M:JGL.Heirarchy.Library.Box.Init(System.Double,System.Double,System.Double,JGL.Heirarchy.Library.Box.BoxTexturiseMethod)">
+        <member name="M:JGL.Heirarchy.Library.Box.Init(System.Double,System.Double,System.Double,JGL.Heirarchy.TexturiseMethod{JGL.Heirarchy.Library.Box})">
             <summary>
             Init the specified xSize, ySize, zSize and material.
             </summary>
             <param name="xSize">X size</param>
             <param name="ySize">Y size</param>
             <param name="zSize">Z size</param>
-            <param name="texturiseMethod">A <see cref="T:JGL.Heirarchy.Library.Box.BoxTexturiseMethod" /> instance, or null to use <see cref="F:JGL.Heirarchy.Library.Box.DefaultTexturiseEachFace" /></param>
+            <param name="texturiseMethod">A <see cref="!:BoxTexturiseMethod" /> instance, or null to use <see cref="!:DefaultTexturiseEachFace" /></param>
         </member>
         <member name="F:JGL.Heirarchy.MaterialLibrary.Trace">
             <summary>
@@ -1191,6 +1205,31 @@
             <param name="xSize">X size</param>
             <param name="zSize">Z size</param>
         </member>
+        <member name="T:JGL.Heirarchy.Library.Quad.SimpleTexturise">
+            <summary>
+            Simple texturise method
+            </summary>
+            <remarks>
+            	-	UV coords for vertices are (0,0), (1, 0), (1, 1), (0, 1) respectively
+            </remarks>
+        </member>
+        <member name="F:JGL.Heirarchy.Library.Quad.SimpleTexturise.URepeat">
+            <summary>
+            The U repeat.
+            </summary>
+        </member>
+        <member name="F:JGL.Heirarchy.Library.Quad.SimpleTexturise.VRepeat">
+            <summary>
+            The V repeat.
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Library.Quad.SimpleTexturise.Texturise(JGL.Heirarchy.Library.Quad)">
+            <summary>
+            Texturise the specified mesh. UV coords for vertices are (0,0), (1, 0), (1, 1), (0, 1) respectively.
+            </summary>
+            <param name="mesh">Mesh</param>
+            <remarks>Implemented abstract member of JGL.Heirarchy.TexturiseMethod[Quad]</remarks>
+        </member>
         <member name="F:JGL.Heirarchy.Library.Quad.Trace">
             <summary>
             Tracing
@@ -1323,6 +1362,23 @@
             <summary>
             Marks the stop time of a render frame
             </summary>
+        </member>
+        <member name="M:JGL.Geometry.TriangleFace.#ctor(JGL.Geometry.TriangleFace,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Geometry.TriangleFace" /> class, by cloning another and then
+            adding an adjustment to all of the vertex, nromal and texture coord indices. Used by <see cref="!:Object.MergeChildMeshes" /></summary>
+            <param name="source">
+            Source.
+            </param>
+            <param name="viAdjust">
+            Vi adjust.
+            </param>
+            <param name="niAdjust">
+            Ni adjust.
+            </param>
+            <param name="tiAdjust">
+            Ti adjust.
+            </param>
         </member>
         <member name="F:JGL.Geometry.TriangleFace.Trace">
             <summary>
@@ -1933,6 +1989,24 @@
             <param name="eventType">Event type</param>
             <param name="id">Identifier</param>
             <param name="data">Data - should be a <see cref="T:JGL.Debugging.LogMessage" /> instance</param>
+        </member>
+        <member name="T:JGL.Heirarchy.TexturiseMethod`1">
+            <summary>
+            An abstract representation of a "Texturise" method. Generates texture coordinates and
+            applies them to a specific type of mesh (e.g. <see cref="!:Box" />, <see cref="!:Quad" />)
+            </summary>
+            <typeparam name="T">A <see cref="T:JGL.Heirarchy.Mesh" />-derived type that this texturise method operates on</typeparam>
+        </member>
+        <member name="M:JGL.Heirarchy.TexturiseMethod`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="!:TexturiseMethod`1" /> class.
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.TexturiseMethod`1.Texturise(`0)">
+            <summary>
+            Texturise the specified mesh.
+            </summary>
+            <param name="mesh">A <see cref="T:JGL.Heirarchy.Mesh" />-derived instance to be texturised</param>
         </member>
     </members>
 </doc>

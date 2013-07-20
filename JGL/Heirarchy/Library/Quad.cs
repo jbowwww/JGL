@@ -17,6 +17,39 @@ namespace JGL.Heirarchy.Library
 		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncXmlFileTraceListener.GetOrCreate("JGL"));
 
 		/// <summary>
+		/// Simple texturise method
+		/// </summary>
+		/// <remarks>
+		///	-	UV coords for vertices are (0,0), (1, 0), (1, 1), (0, 1) respectively
+		/// </remarks>
+		public class SimpleTexturise
+			: TexturiseMethod<Quad>
+		{
+			/// <summary>
+			/// The U repeat.
+			/// </summary>
+			public double URepeat = 1;
+
+			/// <summary>
+			/// The V repeat.
+			/// </summary>
+			public double VRepeat  = 1;
+
+			/// <summary>
+			/// Texturise the specified mesh. UV coords for vertices are (0,0), (1, 0), (1, 1), (0, 1) respectively.
+			/// </summary>
+			/// <param name="mesh">Mesh</param>
+			/// <remarks>Implemented abstract member of JGL.Heirarchy.TexturiseMethod[Quad]</remarks>
+			public override void Texturise(Quad mesh)
+			{
+//				TexCoord[] t = new TexCoord[] { new TexCoord(0, 0), new TexCoord(1, 0), new TexCoord(1, 1), new TexCoord(0, 1) };
+				mesh.VertexData.TexCoords = new TexCoord[] { new TexCoord(0, 0), new TexCoord(URepeat, 0), new TexCoord(URepeat, VRepeat), new TexCoord(0, VRepeat) };
+				mesh.Triangles[0].T = new int[] { 0, 1, 2 };
+				mesh.Triangles[1].T = new int[] { 0, 2, 3 };
+			}
+		}
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="JGL.Heirarchy.Library.Quad"/> class.
 		/// </summary>
 		/// <param name='name'>Entity name</param>
@@ -60,13 +93,13 @@ namespace JGL.Heirarchy.Library
 			double z = zSize / 2;
 			Vertex[] v = new Vertex[] { new Vertex(-x, 0, +z), new Vertex(+x, 0, +z), new Vertex(+x, 0, -z), new Vertex(-x, 0, -z) };
 			Normal[] n = new Normal[] { new Normal(0, +1, 0) };
-			TexCoord[] t = new TexCoord[] { new TexCoord(0, 0), new TexCoord(1, 0), new TexCoord(1, 1), new TexCoord(0, 1) };
-			VertexData = new VertexData() { Vertices = v, Normals = n, TexCoords = t };
+			VertexData = new VertexData() { Vertices = v, Normals = n };
 			Triangles = new List<TriangleFace>(new TriangleFace[]
 			{
-				new TriangleFace(new int[] { 0, 1, 2 }, new int[] { 0, 0, 0 }, new int[] { 0, 1, 2 }),
-				new TriangleFace(new int[] { 0, 2, 3 }, new int[] { 0, 0, 0 }, new int[] { 0, 2, 3 }),
+				new TriangleFace(new int[] { 0, 1, 2 }, new int[] { 0, 0, 0 }),		// new int[] { 0, 1, 2 }),
+				new TriangleFace(new int[] { 0, 2, 3 }, new int[] { 0, 0, 0 }),		// new int[] { 0, 2, 3 }),
 			});
+			Texturise<Quad>(new SimpleTexturise());
 		}
 	}
 }

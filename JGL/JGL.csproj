@@ -94,6 +94,7 @@
     <Compile Include="Debugging\LogMessage.cs" />
     <Compile Include="Debugging\AsyncTextFileTraceListener.cs" />
     <Compile Include="Debugging\AsyncXmlFileTraceListener.cs" />
+    <Compile Include="Heirarchy\TexturiseMethod.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

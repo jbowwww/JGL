@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using OpenTK;
+//using JGL.Geometry;
+using JGL.Extensions;
 using JGL.Debugging;
 
 namespace JGL.Heirarchy
@@ -14,7 +16,7 @@ namespace JGL.Heirarchy
 		/// <summary>
 		/// Tracing
 		/// </summary>
-		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncFileTraceListener.GetOrCreate("JGL"));
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncXmlFileTraceListener.GetOrCreate("JGL"));
 
 		/// <summary>
 		/// Position in 3D space
@@ -49,9 +51,12 @@ namespace JGL.Heirarchy
 		/// <summary>
 		/// Gets child objects
 		/// </summary>
-		public IEnumerable<Object> SubObjects {
-			get { return Entities.OfType<Object>(); }
-		}
+		/// <remarks>
+		/// Unnecessary, use <see cref="EntityContext.Objects"/>
+		/// </remarks>
+//		public IEnumerable<Object> SubObjects {
+//			get { return Entities.OfType<Object>(); }
+//		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="JGL.Heirarchy.Object"/> class.
@@ -100,6 +105,93 @@ namespace JGL.Heirarchy
 		public void MoveBackward(double distance = 1.0)
 		{
 			Position -= Orientation * distance;
-		}		
+		}
+
+		public delegate bool MeshInclusionTest(Mesh mesh);
+
+		/// <summary>
+		/// Default <see cref="MergeChildMeshes"/> inclusion test includes all.
+		/// </summary>
+		/// <returns><c>true</c>, always</returns>
+		/// <param name="mesh">The <see cref="Mesh"/> that will be included</param>
+		private static bool IncludeAll(Mesh mesh) { return true; }
+
+		/// <summary>
+		/// Merges selected (by <paramref name="inclusionTest"/>) child <see cref="Mesh"/> <see cref="Entity"/>s'
+		/// <see cref="Mesh.VertexData"/>s into a single instance, and referenced only by a single <see cref="Mesh"/>
+		/// <see cref="Entity"/> that has had all the children's <see cref="Mesh.Triangles"/> copied to it. If this
+		/// <see cref="Object"/> instance is not a <see cref="Mesh"/>, a new one is created and returned, after replacing
+		/// <c>this</c> instance in the heirarchy (hence unless it is referenced elsewhere, <c>this</c> instance should be
+		/// marked for garbage collection.
+		/// </summary>
+		/// <returns>
+		/// Unless there are no child M<see cref="Mesh"/>es (whether they are selected for merging or not), returns a <see cref="Mesh"/>
+		/// instance, that is either <c>this</c>, or a newly created instance. If there are no child <see cref="Mesh"/>es, returns <c>this</c>
+		/// </returns>
+		/// <param name="inclusionTest">Inclusion test, default includes all</param>
+		public Object MergeChildMeshes(MeshInclusionTest inclusionTest = null)
+		{
+			IEnumerable<Mesh> childMeshes = Objects.OfType<Mesh>();
+
+			if (childMeshes.Count() > 0)
+			{
+				if (inclusionTest == null)
+					inclusionTest = IncludeAll;
+				bool isThisMesh = this.GetType().IsTypeOf(typeof(Mesh));
+
+				JGL.Geometry.VertexData vertexData = isThisMesh ? (this as Mesh).VertexData : new JGL.Geometry.VertexData();
+				IList<JGL.Geometry.TriangleFace> triangles = isThisMesh ? (this as Mesh).Triangles : new List<JGL.Geometry.TriangleFace>();
+
+				int vc = 0, nc = 0, tc = 0;
+				foreach (Mesh childMesh in childMeshes)
+				{
+					if (childMesh.Triangles.Count > 0 && inclusionTest(childMesh))
+					{
+						vc += childMesh.VertexData.Vertices.Count;
+						nc += childMesh.VertexData.Normals.Count;
+						tc += childMesh.VertexData.TexCoords.Count;
+						vertexData.Vertices.Concat(childMesh.VertexData.Vertices);
+						vertexData.Normals.Concat(childMesh.VertexData.Normals);
+						vertexData.TexCoords.Concat(childMesh.VertexData.TexCoords);
+						foreach (JGL.Geometry.TriangleFace tf in childMesh.Triangles)
+							triangles.Add(new JGL.Geometry.TriangleFace(tf, vc, nc, tc));
+					}
+				}
+
+				Mesh mesh = isThisMesh ? this as Mesh : new Mesh(null);
+				mesh.VertexData = vertexData;
+				mesh.Triangles = triangles;
+
+				if (!isThisMesh)
+				{
+					// this is a newly created Mesh instance that needs to replace this non-Mesh Entity in the Heirarchy
+					if (Parent != null)
+					{
+						Parent.Remove(this);
+						Parent.Add(mesh);
+					}
+				}
+
+				return mesh;
+			}
+			return this;
+		}
+
+		/// <summary>
+		/// Merges selected (by <paramref name="inclusionTest"/>) child <see cref="Mesh"/> <see cref="Entity"/>s'
+		/// <see cref="Mesh.VertexData"/>s into a single instance, which is then referenced by all the child <see cref="Mesh"/>
+		/// <see cref="Entity"/>s that were selected for combining.
+		/// </summary>
+		/// <param name="inclusionTest">Inclusion test</param>
+		public void CombineChildMeshes(MeshInclusionTest inclusionTest = null)
+		{
+			IEnumerable<Mesh> childMeshes = Objects.OfType<Mesh>();
+
+			if (childMeshes.Count() > 0)
+			{
+				if (inclusionTest == null)
+					inclusionTest = IncludeAll;
+			}
+		}
 	}
 }

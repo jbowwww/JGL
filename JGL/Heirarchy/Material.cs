@@ -71,8 +71,17 @@ namespace JGL.Heirarchy
 			GL.Material(MaterialFace.FrontAndBack, MaterialParameter.Specular, Specular);
 			if (HasTexture)
 			{
-				GL.Enable(EnableCap.Texture2D);
-				GL.BindTexture(TextureTarget.Texture2D, TextureAmbient.TextureId);
+				if (TextureAmbient.IsLoaded)
+				{
+					GL.Enable(EnableCap.Texture2D);
+					GL.BindTexture(TextureTarget.Texture2D, TextureAmbient.TextureId);
+				}
+				else
+				{
+					Trace.Log(System.Diagnostics.TraceEventType.Warning, "Material \"{0}\" failed to load TextureAmbient, disabling for this Material", Name);
+					TextureAmbient = null;
+					GL.Disable(EnableCap.Texture2D);
+				}
 			}
 			else
 			{

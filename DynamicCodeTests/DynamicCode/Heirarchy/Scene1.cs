@@ -40,6 +40,12 @@ namespace Dynamic
 						TextureAmbient = new Texture("test1.png")
 					},
 					TwoSided = true
+				},
+				new Quad(7.8, 7.2)
+				{
+					Position = new Vector3d(+1.2, -0.042, -0.55),
+					Material = new Material("tex2") { TextureAmbient = new Texture("tex2.png") },
+					TwoSided = true
 				});
 			DefaultCamera.Position = new Vector3d(0.5, 0.75, 8);
 		}

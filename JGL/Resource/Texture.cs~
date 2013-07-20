@@ -19,7 +19,7 @@ namespace JGL.Resource
 		/// <summary>
 		/// Tracing
 		/// </summary>
-		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncFileTraceListener.GetOrCreate("JGL"));
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncXmlFileTraceListener.GetOrCreate("JGL"));
 
 		/// <summary>
 		/// Gets or sets the <see cref="Texture"/> image
@@ -88,14 +88,17 @@ namespace JGL.Resource
 				using (s = File.Open(string.IsNullOrEmpty(System.IO.Path.GetDirectoryName(Path)) ? "../../../Data/Textures/" + Path : Path, FileMode.Open, FileAccess.Read, FileShare.Read))
 				{
 					Image = new Bitmap(s);
-						//Bitmap.FromStream(s);
-					TextureId = new GLContextualData<Texture, int>(CreateGLTexture, this);
+					//Bitmap.FromStream(s);
 					Trace.Log(TraceEventType.Information, "Load (this.Name=\"{0}\", this.Path=\"{1}\") loaded {2}x{3} image, {4}", Name, Path, Image.Width, Image.Height, Image.PixelFormat);
 				}
 			}
 			catch (Exception ex)
 			{
 				throw new Exception(string.Format("Failed loading texture \"{0}\" from stream \"{1}\"", Name, s == null ? "(null)" : s.ToString()), ex);
+			}
+			finally
+			{
+				TextureId = new GLContextualData<Texture, int>(CreateGLTexture, this);
 			}
 		}
 
@@ -106,6 +109,9 @@ namespace JGL.Resource
 		/// <param name="texture"><see cref="Texture"/></param>
 		private static int CreateGLTexture(Texture texture)
 		{
+			if (!texture.IsLoaded)
+				throw new InvalidDataException(string.Format("Texture resource \"{0}\" failed to load and nothing noticed until it tried to use it!!", texture.Name));
+
 			Bitmap img = texture.Image;
 			int glid = GL.GenTexture();
 			GL.BindTexture(TextureTarget.Texture2D, glid);

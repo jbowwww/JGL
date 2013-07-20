@@ -25,7 +25,7 @@ namespace JGL.Heirarchy
 		/// <summary>
 		/// Tracing
 		/// </summary>
-		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncFileTraceListener.GetOrCreate("JGL"));
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncXmlFileTraceListener.GetOrCreate("JGL"));
 
 		#region Static members
 		/// <summary>
@@ -59,6 +59,11 @@ namespace JGL.Heirarchy
 		/// </summary>
 		public ICollection<Entity> Entities {
 			get { return (this as ICollection<Entity>); }// _entities.Values; }
+		}
+
+		public ICollection<TEntity> OfType<TEntity>()
+		{
+			return (this as ICollection<Entity>).OfType<TEntity>().ToList();
 		}
 
 		/// <summary>

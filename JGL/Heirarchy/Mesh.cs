@@ -130,6 +130,16 @@ namespace JGL.Heirarchy
 		#endregion
 
 		/// <summary>
+		/// Texturise the specified texturiseMethod.
+		/// </summary>
+		/// <param name="texturiseMethod">Texturise method</param>
+		public virtual void Texturise<TMesh>(TexturiseMethod<TMesh> texturiseMethod)
+			where TMesh : Mesh
+		{
+			texturiseMethod.Texturise(this as TMesh);
+		}
+
+		/// <summary>
 		/// Render <see cref="Mesh"/>
 		/// </summary>
 		/// <param name="args">Render arguments</param>

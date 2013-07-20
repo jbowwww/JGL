@@ -61,6 +61,11 @@ namespace JGL.Heirarchy
 			get { return (this as ICollection<Entity>); }// _entities.Values; }
 		}
 
+		public ICollection<TEntity> OfType<TEntity>()
+		{
+			return (this as ICollection<Entity>).OfType<TEntity>().ToList();
+		}
+
 		/// <summary>
 		/// Return a <see cref="System.Collections.Generic.ICollection[JGL.Heirarchy.Object]"/>
 		/// representing the current direct child entities of this <see cref="JGL.Heirarchy.EntityContext"/>

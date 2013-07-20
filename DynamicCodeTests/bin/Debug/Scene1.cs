@@ -37,11 +37,17 @@ namespace Dynamic
 					Position = new Vector3d(-2, 1, 0.5),
 					Material = new Material("White")
 					{
-						TextureAmbient = new Texture("test1.jpg")
+						TextureAmbient = new Texture("test1.png")
 					},
 					TwoSided = true
+				},
+				new Quad(7.8, 7.2)
+				{
+					Position = new Vector3d(+1.2, -0.88, -25.5),
+					Material = new Material("tex2") { TextureAmbient = new Texture("tex2.png") },
+					TwoSided = true
 				});
-			DefaultCamera.Position = new Vector3d(0.5, 0.75, 8);
+			DefaultCamera.Position = new Vector3d(0.5, 1.75, 8);
 		}
 	}
 }
