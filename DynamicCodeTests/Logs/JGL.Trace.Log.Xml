@@ -1,0 +1,33 @@
+<Verbose Id="1" Time="13-07-20 10:38:34.641851 " Process="19932" Thread="AutoTraceSource.RunTrace" Source="JGL" Method="AutoTraceSource.RunTrace">
+	<Message>AutoTraceSource.RunTrace RunTrace started</Message>
+</Verbose>
+<Information Id="2" Time="13-07-20 10:38:34.715851 " Process="19932" Thread="AutoTraceSource.RunTrace" Source="JGL" Method="AsyncTextFileTraceListener.OpenStream">
+	<Message>AsyncTextFileTraceListener.OpenStream OpenStream (this.Name = "JGLApp", this.Path = "../../Logs/JGLApp.Trace.Log")</Message>
+</Information>
+<Information Id="3" Time="13-07-20 10:38:34.740544 " Process="19932" Thread="AutoTraceSource.RunTrace" Source="JGL" Method="AsyncTextFileTraceListener.OpenStream">
+	<Message>AsyncTextFileTraceListener.OpenStream OpenStream (this.Name = "JGL", this.Path = "../../Logs/JGL.Trace.Log.Xml")</Message>
+</Information>
+<Verbose Id="4" Time="13-07-20 10:38:42.589390 " Process="19932" Thread="Main" Source="JGL" Method="AutoTraceSource.Assert">
+	<Message>AutoTraceSource.Assert Assert OK at OnExecute+595 (in file :0,0</Message>
+</Verbose>
+<Information Id="5" Time="13-07-20 10:38:43.228233 " Process="19932" Thread="Main" Source="JGL" Method="Resource.Init">
+	<Message>Resource.Init Init(name="", path="test1.png")</Message>
+</Information>
+<Information Id="6" Time="13-07-20 10:38:43.231665 " Process="19932" Thread="Resource.LoadResources" Source="JGL" Method="Resource.LoadResources">
+	<Message>Resource.LoadResources LoadResources thread started</Message>
+</Information>
+<Information Id="7" Time="13-07-20 10:38:43.233439 " Process="19932" Thread="Main" Source="JGL" Method="Texture.Init">
+	<Message>Texture.Init Init(name="test1 #001", path="test1.png")</Message>
+</Information>
+<Information Id="8" Time="13-07-20 10:38:43.276050 " Process="19932" Thread="Resource.LoadResources" Source="JGL" Method="Texture.Load">
+	<Message>Texture.Load Load (this.Name="test1 #001", this.Path="test1.png") loaded 256x256 image, Format24bppRgb</Message>
+</Information>
+<Information Id="9" Time="13-07-20 10:38:44.456216 " Process="19932" Thread="SceneWindowThread" Source="JGL" Method="Texture.CreateGLTexture">
+	<Message>Texture.CreateGLTexture CreateGLTexture(texture="test1 #001") generated GL texture ID 1</Message>
+</Information>
+<Information Id="10" Time="13-07-20 10:38:52.804359 " Process="19932" Thread="Resource.LoadResources" Source="JGL" Method="Resource.LoadResources">
+	<Message>Resource.LoadResources LoadResources thread stopped</Message>
+</Information>
+<Information Id="11" Time="13-07-20 10:38:52.805860 " Process="19932" Thread="Main" Source="JGL" Method="AutoTraceSource.StopTraceThread">
+	<Message>AutoTraceSource.StopTraceThread RunTrace thread stopping (2 open listeners will now be closed)</Message>
+</Information>
