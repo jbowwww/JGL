@@ -17,6 +17,16 @@ namespace JGL.Heirarchy.Library
 		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncXmlFileTraceListener.GetOrCreate("JGL"));
 
 		/// <summary>
+		/// Gets or sets the size of the <see cref="Quad"/> in the X dimension
+		/// </summary>
+		public double XSize { get; private set; }
+
+		/// <summary>
+		/// Gets or sets the size of the <see cref="Quad"/> in the Z dimension
+		/// </summary>
+		public double ZSize { get; private set; }
+
+		/// <summary>
 		/// Simple texturise method
 		/// </summary>
 		/// <remarks>
@@ -38,14 +48,19 @@ namespace JGL.Heirarchy.Library
 			/// <summary>
 			/// Texturise the specified mesh. UV coords for vertices are (0,0), (1, 0), (1, 1), (0, 1) respectively.
 			/// </summary>
-			/// <param name="mesh">Mesh</param>
+			/// <param name="quad">Mesh</param>
 			/// <remarks>Implemented abstract member of JGL.Heirarchy.TexturiseMethod[Quad]</remarks>
-			public override void Texturise(Quad mesh)
+			public override void Texturise(Quad quad)
 			{
-//				TexCoord[] t = new TexCoord[] { new TexCoord(0, 0), new TexCoord(1, 0), new TexCoord(1, 1), new TexCoord(0, 1) };
-				mesh.VertexData.TexCoords = new TexCoord[] { new TexCoord(0, 0), new TexCoord(URepeat, 0), new TexCoord(URepeat, VRepeat), new TexCoord(0, VRepeat) };
-				mesh.Triangles[0].T = new int[] { 0, 1, 2 };
-				mesh.Triangles[1].T = new int[] { 0, 2, 3 };
+				quad.VertexData.TexCoords = new TexCoord[]
+				{
+					new TexCoord(0, 0),
+					new TexCoord(URepeat, 0),
+					new TexCoord(URepeat, VRepeat),
+					new TexCoord(0, VRepeat)
+				};
+				quad.Triangles[0].T = new int[] { 0, 1, 2 };
+				quad.Triangles[1].T = new int[] { 0, 2, 3 };
 			}
 		}
 
@@ -89,6 +104,8 @@ namespace JGL.Heirarchy.Library
 		/// <param name='zSize'>Z size</param>
 		protected void Init(double xSize, double zSize)
 		{
+			XSize = xSize;
+			ZSize = zSize;
 			double x = xSize / 2;
 			double z = zSize / 2;
 			Vertex[] v = new Vertex[] { new Vertex(-x, 0, +z), new Vertex(+x, 0, +z), new Vertex(+x, 0, -z), new Vertex(-x, 0, -z) };

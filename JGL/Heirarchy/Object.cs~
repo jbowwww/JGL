@@ -49,16 +49,6 @@ namespace JGL.Heirarchy
 		}
 
 		/// <summary>
-		/// Gets child objects
-		/// </summary>
-		/// <remarks>
-		/// Unnecessary, use <see cref="EntityContext.Objects"/>
-		/// </remarks>
-//		public IEnumerable<Object> SubObjects {
-//			get { return Entities.OfType<Object>(); }
-//		}
-
-		/// <summary>
 		/// Initializes a new instance of the <see cref="JGL.Heirarchy.Object"/> class.
 		/// </summary>
 		public Object(params Entity[] children)

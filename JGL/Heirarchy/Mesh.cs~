@@ -137,6 +137,8 @@ namespace JGL.Heirarchy
 			where TMesh : Mesh
 		{
 			texturiseMethod.Texturise(this as TMesh);
+			Trace.Log(System.Diagnostics.TraceEventType.Verbose, "Textured {0} mesh \"{1}\" using {2}, {3} texture coordinates",
+				typeof(TMesh).FullName, this.Id, texturiseMethod.ToString(), VertexData.TexCoords.Count);
 		}
 
 		/// <summary>
@@ -146,10 +148,18 @@ namespace JGL.Heirarchy
 		/// <remarks>IRenderable implementation</remarks>
 		public void Render(RenderArgs args)
 		{
-			if (Triangles == null)
-				;
-			else
-			{ 
+			if (Triangles != null && VertexData != null)
+			{
+				// Set one/two sided
+				// TODO: Test this works since changing cullface call in Configuration.Init
+				if (TwoSided)
+					GL.Disable(EnableCap.CullFace);
+				else
+					GL.Enable(EnableCap.CullFace);
+
+				// Render
+				GL.Begin(BeginMode.Triangles);							// begin GL rendering
+
 				// No material set, render as wireframe or solid
 				// TODO: Add additional checks for new wireframe/solid rendering override options if (Material == null)
 				if (Material == null)
@@ -163,28 +173,18 @@ namespace JGL.Heirarchy
 				// Render using material
 				else 			// if (Material != null)
 				{
-					// Set one/two sided
-					// TODO: Test this works since changing cullface call in Configuration.Init
-					if (TwoSided)
-						GL.Disable(EnableCap.CullFace);
-					else
-						GL.Enable(EnableCap.CullFace);
-
 					// Set material
 					GL.ColorMaterial(MaterialFace.FrontAndBack, ColorMaterialParameter.AmbientAndDiffuse);
 					Material.glSet();
 
-					// Render
-					GL.Begin(BeginMode.Triangles);
 					if (Material.HasTexture)			// TODO: (Eventually) Add additional check for a wireframe/disabled texture option state
 						RenderFacesTextured();		// Textured
 					else
 						RenderFaces();						// Non-textured
-					GL.End();
 				}
 
-				// Update triangle count
-				args.TriangleCount += (uint)Triangles.Count;
+				GL.End();																		// end GL rendering
+				args.TriangleCount += (uint)Triangles.Count;		// Update triangle count
 			}
 		}
 
