@@ -5,7 +5,7 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.IO;
 using System.Text;
-using JGL.Resource;
+using JGL.Heirarchy.Resources;
 using JGL.Debugging;
 
 namespace JGL.Heirarchy
@@ -15,7 +15,7 @@ namespace JGL.Heirarchy
 		/// <summary>
 		/// Tracing
 		/// </summary>
-		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncFileTraceListener.GetOrCreate("JGL"));
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncXmlFileTraceListener.GetOrCreate("JGL"));
 
 		private readonly ConcurrentDictionary<string, Material> _materials = new ConcurrentDictionary<string, Material>();
 		

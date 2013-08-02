@@ -31,12 +31,12 @@ namespace JGL.Heirarchy
 		/// <summary>
 		/// The root <see cref="JGL.Heirarchy.EntityContext"/>
 		/// </summary>
-		public static EntityRootContext RootContext = new EntityRootContext();
+		public static readonly EntityRootContext Root = new EntityRootContext();
 
 		/// <summary>
 		/// The current context.
 		/// </summary>
-		public static EntityContext CurrentContext = RootContext;
+		public static EntityContext Current = Root;
 		#endregion
 
 		#region Private members
@@ -61,18 +61,26 @@ namespace JGL.Heirarchy
 			get { return (this as ICollection<Entity>); }// _entities.Values; }
 		}
 
-		public ICollection<TEntity> OfType<TEntity>()
-		{
-			return (this as ICollection<Entity>).OfType<TEntity>().ToList();
-		}
-
 		/// <summary>
 		/// Return a <see cref="System.Collections.Generic.ICollection[JGL.Heirarchy.Object]"/>
 		/// representing the current direct child entities of this <see cref="JGL.Heirarchy.EntityContext"/>
 		/// which are of type <see cref="JGL.Heirarchy.Object"/>
 		/// </summary>
+		/// <remarks>
+		///	-	TODO: Test this. Might need to change to return <c>this.OfType`1[Object]()</c>
+		/// </remarks>
 		public ICollection<Object> Objects {
 			get { return (this as ICollection<Object>); }// _entities.Values; }
+		}
+
+		/// <summary>
+		/// Get <see cref="Entity"/>s contained in this <see cref="EntityContext"/> which are of type <typeparamref name="TEntity"/>
+		/// </summary>
+		/// <returns><see cref="Entity"/>s of type <typeparamref name="TEntity"/></returns>
+		/// <typeparam name="TEntity">The type of <see cref="Entity"/>s to return</typeparam>
+		public ICollection<TEntity> OfType<TEntity>()
+		{
+			return (this as ICollection<Entity>).OfType<TEntity>().ToList();
 		}
 
 		/// <summary>
@@ -102,11 +110,12 @@ namespace JGL.Heirarchy
 		/// Get the <see cref="JGL.Heirarchy.Entity"/> with the specified <paramref name="entityName"/>
 		/// </summary>
 		/// <param name='entityName'>Name of entity to get</param>
-		public Entity this [string entityName] {
+		public Entity this[string entityName] {
 			get
 			{
-				Debug.Assert (!entityName.Contains ('.'));		// ensure it is only an entity name, not a relative ID
-				return _entities[entityName];
+				return Get(entityName);
+//				Debug.Assert (!entityName.Contains ('.'));		// ensure it is only an entity name, not a relative ID
+//				return _entities[entityName];
 			}
 		}
 		
@@ -213,15 +222,12 @@ namespace JGL.Heirarchy
 			Debug.Assert(!string.IsNullOrEmpty(relativeId));
 			Entity e = null;
 			foreach (string partId in relativeId.Split ('.'))
-			{
-				Debug.Assert(e is EntityContext);	
 				e = e == null ? _entities[partId] : (e as EntityContext)._entities[partId];
-			}
 			return e;
 		}
 		#endregion
 
-		#region Collection implementation (ICollection members among others)
+		#region Collection implementation (ICollection members and overloaded members of same name(s))
 		/// <summary>
 		/// Test if the given <see cref="JGL.Heirarchy.Entity"/> exists in this <see cref="JGL.Heirarchy.EntityContext"/>
 		/// </summary>

@@ -104,7 +104,7 @@ namespace JGL.Heirarchy
 		/// </summary>
 		/// <returns><c>true</c>, always</returns>
 		/// <param name="mesh">The <see cref="Mesh"/> that will be included</param>
-		private static bool IncludeAll(Mesh mesh) { return true; }
+		private static bool IncludeAllMeshes(Mesh mesh) { return true; }
 
 		/// <summary>
 		/// Merges selected (by <paramref name="inclusionTest"/>) child <see cref="Mesh"/> <see cref="Entity"/>s'
@@ -126,7 +126,7 @@ namespace JGL.Heirarchy
 			if (childMeshes.Count() > 0)
 			{
 				if (inclusionTest == null)
-					inclusionTest = IncludeAll;
+					inclusionTest = IncludeAllMeshes;
 				bool isThisMesh = this.GetType().IsTypeOf(typeof(Mesh));
 
 				JGL.Geometry.VertexData vertexData = isThisMesh ? (this as Mesh).VertexData : new JGL.Geometry.VertexData();
@@ -180,7 +180,7 @@ namespace JGL.Heirarchy
 			if (childMeshes.Count() > 0)
 			{
 				if (inclusionTest == null)
-					inclusionTest = IncludeAll;
+					inclusionTest = IncludeAllMeshes;
 			}
 		}
 	}

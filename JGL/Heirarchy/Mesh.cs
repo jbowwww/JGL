@@ -5,7 +5,7 @@ using System.Data.Linq;
 using System.IO;
 using System.Text;
 using JGL.Geometry;
-using JGL.Resource;
+using JGL.Heirarchy.Resources;
 using JGL.Debugging;
 using OpenTK.Graphics.OpenGL;
 
@@ -157,16 +157,15 @@ namespace JGL.Heirarchy
 				else
 					GL.Enable(EnableCap.CullFace);
 
-				// Render
-				GL.Begin(BeginMode.Triangles);							// begin GL rendering
-
 				// No material set, render as wireframe or solid
 				// TODO: Add additional checks for new wireframe/solid rendering override options if (Material == null)
 				if (Material == null)
 				{
 					GL.Disable(EnableCap.ColorMaterial);
 					GL.Color4(1.0, 1.0, 1.0, 1.0);
+					GL.Begin(BeginMode.Triangles);
 					RenderFaces();
+					GL.End();
 					GL.Enable(EnableCap.ColorMaterial);
 				}
 
@@ -177,13 +176,14 @@ namespace JGL.Heirarchy
 					GL.ColorMaterial(MaterialFace.FrontAndBack, ColorMaterialParameter.AmbientAndDiffuse);
 					Material.glSet();
 
+					GL.Begin(BeginMode.Triangles);
 					if (Material.HasTexture)			// TODO: (Eventually) Add additional check for a wireframe/disabled texture option state
 						RenderFacesTextured();		// Textured
 					else
 						RenderFaces();						// Non-textured
+					GL.End();
 				}
 
-				GL.End();																		// end GL rendering
 				args.TriangleCount += (uint)Triangles.Count;		// Update triangle count
 			}
 		}

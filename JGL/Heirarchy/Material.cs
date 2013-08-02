@@ -2,7 +2,7 @@ using System;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
-using JGL.Resource;
+using JGL.Heirarchy.Resources;
 using JGL.Debugging;
 
 namespace JGL.Heirarchy

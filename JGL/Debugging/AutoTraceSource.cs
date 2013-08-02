@@ -28,7 +28,6 @@ namespace JGL.Debugging
 		public const int TraceThreadSleepTime = 111;
 
 		#region Static Members
-
 		#region Private Static Members
 		/// <summary>
 		/// Used for locking when testing/assigning <see cref="AutoTraceSource.Trace"/>
@@ -372,10 +371,11 @@ namespace JGL.Debugging
 		{
 			//Debug.Assert(condition);
 			StackFrame sf = new StackFrame(1);
-			if (condition)
-				Trace.Log(TraceEventType.Verbose, "Assert OK at {0}+{1} (in file {2}:{3},{4}", sf.GetMethod().Name,
-					sf.GetILOffset(), sf.GetFileName(), sf.GetFileLineNumber(), sf.GetFileColumnNumber());
-			else
+//			if (condition)
+//				Trace.Log(TraceEventType.Verbose, "Assert OK at {0}+{1} (in file {2}:{3},{4}", sf.GetMethod().Name,
+//					sf.GetILOffset(), sf.GetFileName(), sf.GetFileLineNumber(), sf.GetFileColumnNumber());
+//			else
+			if (!condition)
 				Trace.Log(TraceEventType.Warning, "Assert FAILED at {0}+{1} (in file {2}:{3},{4})", sf.GetMethod().Name,
 					sf.GetILOffset(), sf.GetFileName(), sf.GetFileLineNumber(), sf.GetFileColumnNumber());
 		}

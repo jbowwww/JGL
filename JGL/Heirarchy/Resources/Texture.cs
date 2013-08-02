@@ -9,7 +9,7 @@ using JGL.Extensions;
 using JGL.OpenGL;
 using JGL.Debugging;
 
-namespace JGL.Resource
+namespace JGL.Heirarchy.Resources
 {
 	/// <summary>
 	/// Texture <see cref="Resource"/>
@@ -80,21 +80,23 @@ namespace JGL.Resource
 		/// <remarks>
 		///	- Executed on <see cref="Resource.LoadThread"/>
 		/// </remarks>
-		public override void Load()
+		public override void Load(Stream stream)
 		{
-			Stream s = null;
 			try
 			{
-				using (s = File.Open(string.IsNullOrEmpty(System.IO.Path.GetDirectoryName(Path)) ? "../../../Data/Textures/" + Path : Path, FileMode.Open, FileAccess.Read, FileShare.Read))
-				{
-					Image = new Bitmap(s);
-					//Bitmap.FromStream(s);
-					Trace.Log(TraceEventType.Information, "Load (this.Name=\"{0}\", this.Path=\"{1}\") loaded {2}x{3} image, {4}", Name, Path, Image.Width, Image.Height, Image.PixelFormat);
-				}
+//				using (stream = File.Open(string.IsNullOrEmpty(System.IO.Path.GetDirectoryName(Path)) ?
+//				"../../../Data/Textures/" + Path : Path, FileMode.Open, FileAccess.Read, FileShare.Read))
+//				{
+				Image = new Bitmap(stream);
+				//Bitmap.FromStream(s);
+				Trace.Log(TraceEventType.Information, "Load (this.Name=\"{0}\", this.Path=\"{1}\") loaded {2}x{3} image, {4}",
+					Name, Path, Image.Width, Image.Height, Image.PixelFormat);
+//				}
 			}
 			catch (Exception ex)
 			{
-				throw new Exception(string.Format("Failed loading texture \"{0}\" from stream \"{1}\"", Name, s == null ? "(null)" : s.ToString()), ex);
+				throw new Exception(string.Format("Failed loading texture \"{0}\" from stream \"{1}\"",
+					Name, stream == null ? "(null)" : stream.ToString()), ex);
 			}
 			finally
 			{
@@ -110,7 +112,8 @@ namespace JGL.Resource
 		private static int CreateGLTexture(Texture texture)
 		{
 			if (!texture.IsLoaded)
-				throw new InvalidDataException(string.Format("Texture resource \"{0}\" failed to load and nothing noticed until it tried to use it!!", texture.Name));
+				throw new InvalidDataException(string.Format(
+					"Texture resource \"{0}\" failed to load and nothing noticed until it tried to use it!!", texture.Name));
 
 			Bitmap img = texture.Image;
 			int glid = GL.GenTexture();

@@ -1,0 +1,16 @@
+using System;
+
+namespace JGL.Geometry
+{
+	/// <summary>
+	/// Rotation.
+	/// </summary>
+	public class Orientation
+	{
+
+		public Rotation()
+		{
+		}
+	}
+}
+

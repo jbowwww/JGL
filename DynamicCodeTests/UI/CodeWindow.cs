@@ -116,7 +116,7 @@ namespace Dynamic.UI
 				{
 					Entity entity = (storeHeirarchy.GetNode(paths[0]) as EntityTreeNode).Entity;
 					if (entity.IsContext)
-						EntityContext.CurrentContext = entity as EntityContext;
+						EntityContext.Current = entity as EntityContext;
 				}
 			};
 			PopulateHeirarchy();																					// Populate the NodeView with the Entity heirarchy
@@ -133,9 +133,9 @@ namespace Dynamic.UI
 			Trace.Log(TraceEventType.Verbose, "PopulateHeirarchy()");
 			entProjectName.Text = Project.Name;
 			storeHeirarchy.Clear();
-			if (EntityContext.RootContext != null)
+			if (EntityContext.Root != null)
 			{
-				foreach (Entity e in EntityContext.RootContext)
+				foreach (Entity e in EntityContext.Root)
 					PopulateHeirarchy(e);
 			}
 		}
@@ -435,7 +435,7 @@ namespace Dynamic.UI
 							Trace.Assert(sceneType != null);
 		
 							newScene = sceneType.GetConstructor(new Type[] { typeof(string) }).Invoke(new object[] { null }) as Scene;
-							EntityContext.RootContext.Add(newScene);
+							EntityContext.Root.Add(newScene);
 
 							DynamicCodePage dcp = new DynamicCodePage(Project, this);
 //							dcp.Position = dcp.HeightRequest - 44;
@@ -490,7 +490,7 @@ namespace Dynamic.UI
 			Trace.Log(TraceEventType.Information, "Ended SceneWindowThread for scene \"{0}\"", _args.Scene.Id);
 			nbCode.RemovePage(page);
 			nbCode.RemovePage(page);
-			EntityContext.RootContext.Remove(_args.Scene);
+			EntityContext.Root.Remove(_args.Scene);
 			SceneWindowThread = null;
 			SaveProject();
 		}

@@ -5,7 +5,7 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.IO;
 using System.Text;
-using JGL.Resource;
+using JGL.Heirarchy.Resources;
 using JGL.Debugging;
 
 namespace JGL.Heirarchy

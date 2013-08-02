@@ -1,7 +1,7 @@
 using System;
 using System.Runtime;
 using System.Reflection;
-using JGL.Resource;
+using JGL.Heirarchy.Resources;
 using JGL.Heirarchy;
 using JGL.Heirarchy.Library;
 using OpenTK;

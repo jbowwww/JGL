@@ -14,7 +14,7 @@ namespace JGL.Heirarchy
 		/// Texturise the specified mesh.
 		/// </summary>
 		/// <param name="mesh">A <see cref="Mesh"/>-derived instance to be texturised</param>
-		internal abstract void Texturise(TMesh mesh);
+		public abstract void Texturise(TMesh mesh);
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TexturiseMethod`1"/> class.

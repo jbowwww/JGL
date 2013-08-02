@@ -59,7 +59,6 @@
     <Compile Include="Heirarchy\IRenderable.cs" />
     <Compile Include="Heirarchy\Mesh.cs" />
     <Compile Include="Geometry\TexCoord.cs" />
-    <Compile Include="Resource\Resource.cs" />
     <Compile Include="GL\GLContextualData.cs" />
     <Compile Include="Heirarchy\Camera.cs" />
     <Compile Include="Heirarchy\IPositionable.cs" />
@@ -84,7 +83,6 @@
     <Compile Include="Heirarchy\Library\Grid.cs" />
     <Compile Include="Heirarchy\RenderArgs.cs" />
     <Compile Include="Geometry\TriangleFace.cs" />
-    <Compile Include="Resource\Texture.cs" />
     <Compile Include="Extensions\Uri.cs" />
     <Compile Include="Geometry\VertexData.cs" />
     <Compile Include="Heirarchy\EntityRootContext.cs" />
@@ -95,16 +93,19 @@
     <Compile Include="Debugging\AsyncTextFileTraceListener.cs" />
     <Compile Include="Debugging\AsyncXmlFileTraceListener.cs" />
     <Compile Include="Heirarchy\TexturiseMethod.cs" />
+    <Compile Include="Heirarchy\Resources\Resource.cs" />
+    <Compile Include="Heirarchy\Resources\Texture.cs" />
+    <Compile Include="IO\Filesystem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Extensions\" />
     <Folder Include="Heirarchy\" />
     <Folder Include="Geometry\" />
-    <Folder Include="Resource\" />
     <Folder Include="GL\" />
     <Folder Include="Debugging\" />
     <Folder Include="Heirarchy\Library\" />
+    <Folder Include="IO\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

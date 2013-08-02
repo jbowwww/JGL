@@ -79,11 +79,15 @@ namespace JGL.Heirarchy.Library
 		/// <param name="zSize">Z size</param>
 		/// <param name="xResolution">X resolution (number of points used in X dimension, minus one)</param>
 		/// <param name="zResolution">Z resolution (number of points used in Z dimension, minus one)</param>
+		/// <remarks>
+		///	-	TODO: Finish this
+		///		-	Need to think about how to construct/render trianglefaces in the grid
+		/// </remarks>
 		protected void Init(double xSize, double zSize, int xResolution, int zResolution)
 		{
 			int numVertices = (xResolution + 1) * (zResolution + 1);
-			int x = -xSize / 2;
-			int z = -zSize / 2;
+			double x = -xSize / 2;
+			double z = -zSize / 2;
 			int vi;
 			Vertex[] v = new Vertex[numVertices];
 

@@ -1,4 +1,7 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 namespace JGL
 {
@@ -8,11 +11,20 @@ namespace JGL
 	public static class Engine
 	{
 		/// <summary>
+		/// The resource search paths, indexed by type
+		/// </summary>
+		public static ConcurrentDictionary<Type, string[]> ResourceSearchPaths { get; private set; }
+
+		/// <summary>
 		/// Init this instance.
 		/// </summary>
 		public static void Init()
 		{
-
+			ResourceSearchPaths = new ConcurrentDictionary<Type, string[]>(new KeyValuePair<Type, string[]>[]
+			{
+				new KeyValuePair<Type, string[]>(typeof(Heirarchy.Resources.Texture), new string[] { "../../../Data/Textures/" })
+				// TODO: More as necessary
+			});
 		}
 
 		/// <summary>
@@ -20,7 +32,7 @@ namespace JGL
 		/// </summary>
 		public static void Quit()
 		{
-			JGL.Resource.Resource.StopLoadThread();
+			JGL.Heirarchy.Resources.Resource.StopLoadThread();
 			JGL.Debugging.AutoTraceSource.StopTraceThread();
 		}
 	}
