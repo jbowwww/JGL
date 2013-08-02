@@ -1256,61 +1256,60 @@
             <summary>
             Contains info relevant to classes' implementations of <see cref="M:JGL.Heirarchy.IRenderable.Render(JGL.Heirarchy.RenderArgs)" /></summary>
         </member>
-        <member name="M:JGL.Heirarchy.RenderArgs.#ctor(OpenTK.Graphics.IGraphicsContext,JGL.Heirarchy.EntityContext,System.Int32,System.Int32)">
+        <member name="M:JGL.Heirarchy.RenderArgs.#ctor(System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:JGL.Heirarchy.RenderArgs" /> class.
             </summary>
-            <param name="graphicsContext">Graphics context.</param>
-            <param name="entityContext">Entity context.</param>
+            <param name="mark">Whether to call <see cref="!:TimedEventArgs.Mark" />. Default is false.</param>
         </member>
         <member name="F:JGL.Heirarchy.RenderArgs.Trace">
             <summary>
             Tracing
             </summary>
         </member>
-        <member name="F:JGL.Heirarchy.RenderArgs.Graphics">
+        <member name="F:JGL.Heirarchy.RenderArgs.FrameCount">
             <summary>
-            Graphics context being rendered to (which should always be the current one according to GraphicsContext.CurrentContext)
+            The frame count.
             </summary>
         </member>
-        <member name="F:JGL.Heirarchy.RenderArgs.Width">
+        <member name="F:JGL.Heirarchy.RenderArgs.TriangleCount">
             <summary>
-            Window width
+            The number of triangles in the last render cycle
             </summary>
         </member>
-        <member name="F:JGL.Heirarchy.RenderArgs.Height">
+        <member name="F:JGL.Heirarchy.RenderArgs.TriangleTally">
             <summary>
-            Window height
-            </summary>
-        </member>
-        <member name="F:JGL.Heirarchy.RenderArgs.Entities">
-            <summary>
-            The stack of <see cref="!:JGL.Heirarchy.Context" />s as rendered so far
-            </summary>
+            The number of triangles drawn since <see cref="P:JGL.Heirarchy.RenderArgs.FrameCountMarkTime" /> was updated.
+            Used to calculate <see cref="P:JGL.Heirarchy.RenderArgs.TriangleRate" /></summary>
         </member>
         <member name="F:JGL.Heirarchy.RenderArgs.CurrentLightName">
             <summary>
             The current GL light. When <see cref="M:JGL.Heirarchy.Light.Render(JGL.Heirarchy.RenderArgs)" /> is called, the method increments this value.
             </summary>
         </member>
-        <member name="P:JGL.Heirarchy.RenderArgs.Entity">
+        <member name="P:JGL.Heirarchy.RenderArgs.Graphics">
             <summary>
-            The current <see cref="!:JGL.Heirarchy.Context" /> being rendered
+            Graphics context being rendered to (which should always be the current one according to GraphicsContext.CurrentContext)
             </summary>
         </member>
-        <member name="P:JGL.Heirarchy.RenderArgs.IsEntityContextStackEmpty">
+        <member name="P:JGL.Heirarchy.RenderArgs.Width">
             <summary>
-            Gets a value indicating whether the entity context stack <see cref="F:JGL.Heirarchy.RenderArgs.Entities" /> is empty
+            Window width
             </summary>
         </member>
-        <member name="M:JGL.Heirarchy.RenderArgs.Start">
+        <member name="P:JGL.Heirarchy.RenderArgs.Height">
             <summary>
-            Marks the start time of a render frame
+            Window height
             </summary>
         </member>
-        <member name="M:JGL.Heirarchy.RenderArgs.Stop">
+        <member name="P:JGL.Heirarchy.RenderArgs.TriangleRate">
             <summary>
-            Marks the stop time of a render frame
+            Average number of triangles drawn per second
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.RenderArgs.Update">
+            <summary>
+            Override of <see cref="M:JGL.Heirarchy.RenderArgs.Update" /> updates frame counters etc, only calculates frame rate once per second at most
             </summary>
         </member>
         <member name="M:JGL.Geometry.TriangleFace.#ctor(JGL.Geometry.TriangleFace,System.Int32,System.Int32,System.Int32)">
@@ -2090,8 +2089,90 @@
             Ignored if <paramref name="path" /> is an absolute path.
             </param>
             <returns>A <see cref="T:System.IO.FileStream" /> representing the opened file</returns>
-            <exception cref="!:">
-            </exception>
+        </member>
+        <member name="T:JGL.Heirarchy.UpdateArgs">
+            <summary>
+            Info regarding an openTK update cycle
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.UpdateArgs.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.UpdateArgs" /> class.
+            </summary>
+            <param name="context">
+            Context.
+            </param>
+            <param name="updateRoot">
+            Update root.
+            </param>
+        </member>
+        <member name="F:JGL.Heirarchy.UpdateArgs.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="F:JGL.Heirarchy.UpdateArgs.Graphics">
+            <summary>
+            Graphics context being rendered to (which should always be the current one according to GraphicsContext.CurrentContext)
+            </summary>
+        </member>
+        <member name="T:JGL.Heirarchy.TimedEventArgs">
+            <summary>
+            Base class for event arguments <see cref="T:JGL.Heirarchy.UpdateArgs" /> and <see cref="T:JGL.Heirarchy.RenderArgs" /> that
+            provides ability to capture timing information between recurring events
+            Also maintains <see cref="P:JGL.Heirarchy.TimedEventArgs.Entities" /> stack which stores the state of the heirarchy traversal,
+            the top of this stack is the current entity being operated on, and is referred to as <see cref="P:JGL.Heirarchy.TimedEventArgs.CurrentEntity" /></summary>
+            <remarks>
+            	-	TODO: This base class should define <see cref="P:JGL.Heirarchy.RenderArgs.Graphics" /> and <see cref="F:JGL.Heirarchy.UpdateArgs.Graphics" />
+            		because it is common to both classes. But does that then mean this class is misnamed, or it's intended is not as I thought?
+            </remarks>
+        </member>
+        <member name="M:JGL.Heirarchy.TimedEventArgs.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.TimedEventArgs" /> class.
+            </summary>
+            <param name="mark">
+            If set to <c>true</c>, <see cref="!:Mark" /> is called in the constructor to update <see cref="P:JGL.Heirarchy.TimedEventArgs.MarkTime" />.
+            Defaults to <c>false</c>.
+            </param>
+        </member>
+        <member name="P:JGL.Heirarchy.TimedEventArgs.UpdateRoot">
+            <summary>
+            The root <see cref="T:JGL.Heirarchy.EntityContext" />, which was the first <see cref="T:JGL.Heirarchy.Entity" /> operated on
+            (e.g. rendered with <see cref="T:JGL.Heirarchy.RenderArgs" /> or updated with <see cref="T:JGL.Heirarchy.UpdateArgs" />)
+            </summary>
+        </member>
+        <member name="P:JGL.Heirarchy.TimedEventArgs.CurrentEntity">
+            <summary>
+            Gets the current <see cref="T:JGL.Heirarchy.Entity" /> being operated on (e.g. being rendered in the case of <see cref="T:JGL.Heirarchy.RenderArgs" /></summary>
+        </member>
+        <member name="P:JGL.Heirarchy.TimedEventArgs.Entities">
+            <summary>
+            The stack of <see cref="!:JGL.Heirarchy.Context" />s as rendered so far
+            </summary>
+        </member>
+        <member name="P:JGL.Heirarchy.TimedEventArgs.IsEntityContextStackEmpty">
+            <summary>
+            Gets a value indicating whether the entity context stack <see cref="P:JGL.Heirarchy.TimedEventArgs.Entities" /> is empty
+            </summary>
+        </member>
+        <member name="P:JGL.Heirarchy.TimedEventArgs.MarkTime">
+            <summary>
+            A marked time, usually when the event last occurred. To update this call <see cref="!:Mark" />.
+            </summary>
+        </member>
+        <member name="P:JGL.Heirarchy.TimedEventArgs.TimeElapsed">
+            <summary>
+            Gets the time elapsed since <see cref="P:JGL.Heirarchy.TimedEventArgs.MarkTime" /></summary>
+        </member>
+        <member name="P:JGL.Heirarchy.TimedEventArgs.LastDuration">
+            <summary>
+            The <see cref="T:System.TimeSpan" /> between the two most recent consecutive events (ie when <see cref="!:Mark" /> is called(
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.TimedEventArgs.Update">
+            <summary>
+            Updates <see cref="P:JGL.Heirarchy.TimedEventArgs.MarkTime" /> to <c>DateTime.Now</c></summary>
         </member>
     </members>
 </doc>

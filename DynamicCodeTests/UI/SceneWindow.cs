@@ -19,6 +19,12 @@ namespace Dynamic.UI
 		private DateTime markStart;
 		private DateTime markEnd;
 		private TimeSpan duration;
+		private DateTime markUpdateStart;
+		private DateTime markUpdateEnd;
+		private TimeSpan durationUpdate;
+
+		private UpdateArgs _updateArgs;
+		private RenderArgs _renderArgs;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DynamicCodeTests.SceneWindow"/> class.
@@ -38,34 +44,61 @@ namespace Dynamic.UI
 		/// <param name='title'>
 		/// Title.
 		/// </param>
+		/// <remarks>
+		///	-	TODO: Could <see cref="UpdateArgs"/> and <see cref="RenderArgs"/> be combined into one class and one instance
+		///		to use with both <see cref="UpdateFrame"/> and <see cref="RenderFrame"/>
+		///			- Maybe not, if you want <see cref="RenderArgs"/> to update framerate only once a second or some other arbitrary slow interval
+		/// </remarks>
 		public SceneWindow(int w, int h, OpenTK.Graphics.GraphicsMode gm, Scene scene, string title = "SceneWindow")
 			: base(w, h, gm, title, GameWindowFlags.Default, DisplayDevice.Default)
 		{
 			_scene = scene;
 			camera = scene.DefaultCamera;
-			frames = 0;
-			markStart = DateTime.Now;
+//			frames = 0;
+//			markStart = markUpdateStart = DateTime.Now;
+
+			_updateArgs = new UpdateArgs();
+			_renderArgs = new RenderArgs(true) { Graphics = Context, Width = Width, Height = Height };
+
+			this.UpdateFrame += (sender, e) =>
+			{
+				_updateArgs.UpdateRoot = _scene;
+				_updateArgs.Graphics = Context;
+				_updateArgs.Update();
+				if (InfoPanel != null)
+				{
+					SceneInfoPanel.UpdateEventArgs uArgs = new SceneInfoPanel.UpdateEventArgs()
+						{ Camera = camera, Scene = scene, RenderArgs = _renderArgs, FrameRate = _renderArgs.FrameRate };
+					Gtk.Application.Invoke(this, uArgs, InfoPanel.Update);
+				}
+
+			};
 
 			this.RenderFrame += (sender, e) =>
 			{
+				//RenderArgs ra = new RenderArgs(Context, _scene, Width, Height);
+				_renderArgs.UpdateRoot = _scene;
+				_renderArgs.Graphics = Context;
+				_renderArgs.Width = Width;
+				_renderArgs.Height = Height;
+				_renderArgs.Update();
 				MakeCurrent();
-				RenderArgs ra = new RenderArgs(Context, _scene, Width, Height);
-				SceneInfoPanel.UpdateEventArgs uArgs = new SceneInfoPanel.UpdateEventArgs() { Camera = camera, Scene = scene, RenderArgs = ra };
-				_scene.Render(ra);
+				_scene.Render(_renderArgs);
 				SwapBuffers();
-				markEnd = DateTime.Now;
-				duration = markEnd - markStart;
-				frames++;
-				if (duration.TotalSeconds >= 1)
-				{
-					uArgs.FrameRate = (float)frames * 1000 / (float)duration.TotalMilliseconds;
-					if (InfoPanel != null)
-						Gtk.Application.Invoke(this, uArgs, InfoPanel.Update);
-					markStart = markEnd;
-					frames = 0;
-				}
 			};
-			
+//				frames++;
+//				_renderArgs.FrameCount++;
+//				if (_renderArgs.TimeElapsed.TotalSeconds >= 1)
+//				{
+//					_renderArgs.Mark();
+//					uArgs.FrameRate = (float)_renderArgs.FrameCount * 1000 / (float)_renderArgs.LastDuration.TotalMilliseconds;
+//					if (InfoPanel != null)
+//						Gtk.Application.Invoke(this, uArgs, InfoPanel.Update);
+//					_renderArgs.FrameCount = 0;
+////					markStart = markEnd;
+////					frames = 0;
+//				}
+
 			this.KeyPress += (object sender, KeyPressEventArgs e) =>
 			{
 				switch(e.KeyChar)

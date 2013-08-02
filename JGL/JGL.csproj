@@ -96,6 +96,8 @@
     <Compile Include="Heirarchy\Resources\Resource.cs" />
     <Compile Include="Heirarchy\Resources\Texture.cs" />
     <Compile Include="IO\Filesystem.cs" />
+    <Compile Include="Heirarchy\UpdateArgs.cs" />
+    <Compile Include="Heirarchy\TimedEventArgs.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

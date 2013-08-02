@@ -10,6 +10,7 @@ namespace JGL.Heirarchy
 	/// Contains info relevant to classes' implementations of <see cref="JGL.Heirarchy.IRenderable.Render"/>
 	/// </summary>
 	public class RenderArgs
+		: TimedEventArgs
 	{
 		/// <summary>
 		/// Tracing
@@ -19,88 +20,97 @@ namespace JGL.Heirarchy
 		/// <summary>
 		/// Graphics context being rendered to (which should always be the current one according to GraphicsContext.CurrentContext)
 		/// </summary>
-		public readonly IGraphicsContext Graphics;
+		public IGraphicsContext Graphics { get; set; }
 
 		/// <summary>
 		/// Window width
 		/// </summary>
-		public readonly int Width;
+		public int Width { get; set; }
 
 		/// <summary>
 		/// Window height
 		/// </summary>
-		public readonly int Height;
+		public int Height { get; set; }
 
-		public readonly DateTime CreationTime;
+		/// <summary>
+		/// The frame count.
+		/// </summary>
+		public int FrameCount = 0;
 
+		public float FrameRate { get; private set; }
+
+		public DateTime FrameCountMarkTime { get; private set; }
+
+		public TimeSpan FrameCountTimeElapsed {
+			get { return DateTime.Now - FrameCountMarkTime; }
+		}
+
+		/// <summary>
+		/// The number of triangles in the last render cycle
+		/// </summary>
 		public uint TriangleCount = 0;
 
-		public DateTime StartTime { get; protected set; }
-
-		public DateTime StopTime { get; protected set; }
-
-		public TimeSpan Duration { get; protected set; }
+		/// <summary>
+		/// The number of triangles drawn since <see cref="FrameCountMarkTime"/> was updated.
+		/// Used to calculate <see cref="TriangleRate"/>
+		/// </summary>
+		protected uint TriangleTally = 0;
 
 		/// <summary>
-		/// The current <see cref="JGL.Heirarchy.Context"/> being rendered
+		/// Average number of triangles drawn per second
 		/// </summary>
-		public EntityContext Entity {
-			get
-			{
-				Debug.Assert(Entities.Count >= 1);
-				return Entities.Peek();
-			}
-		}
+		public float TriangleRate { get; private set; }
 
-		/// <summary>
-		/// The stack of <see cref="JGL.Heirarchy.Context"/>s as rendered so far
-		/// </summary>
-		public readonly Stack<EntityContext> Entities;
-		
-		/// <summary>
-		/// Gets a value indicating whether the entity context stack <see cref="JGL.Heirarchy.RenderArgs.Entities"/> is empty
-		/// </summary>
-		public bool IsEntityContextStackEmpty {
-			get { return Entities.Count == 0; }
-		}
-		
 		/// <summary>
 		/// The current GL light. When <see cref="JGL.Heirarchy.Light.Render"/> is called, the method increments this value.
 		/// </summary>
 		public LightName CurrentLightName = LightName.Light0;
 		
-		// TODO: Will need to add more members as you go
-		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="JGL.Heirarchy.RenderArgs"/> class.
+		/// </summary>
+		/// <param name="mark">Whether to call <see cref="TimedEventArgs.Mark"/>. Default is false.</param>
+		public RenderArgs(bool mark = false)
+			: base(mark)
+		{
+			FrameCountMarkTime = DateTime.MinValue;
+		}
+
+		/// <summary>
+		/// Override of <see cref="Update"/> updates frame counters etc, only calculates frame rate once per second at most
+		/// </summary>
+		public override void Update()
+		{
+			CurrentLightName = LightName.Light0;
+			FrameCount++;
+			TriangleTally += TriangleCount;
+			TriangleCount = 0;
+			if (FrameCountTimeElapsed.TotalSeconds >= 1)
+			{
+				TimeSpan elapsed = FrameCountTimeElapsed;
+				FrameCountMarkTime = DateTime.Now;
+				FrameRate = (float)FrameCount * 1000 / (float)elapsed.TotalMilliseconds;
+				FrameCount = 0;
+				TriangleRate = (float)TriangleTally * 1000 / (float)elapsed.TotalMilliseconds;
+				TriangleTally = 0;
+			}
+			base.Update();
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="JGL.Heirarchy.RenderArgs"/> class.
 		/// </summary>
 		/// <param name='graphicsContext'>Graphics context.</param>
 		/// <param name='entityContext'>Entity context.</param>
-		public RenderArgs(IGraphicsContext graphicsContext, EntityContext entityContext, int width, int height)
-		{
-			CreationTime = DateTime.Now;
-			Graphics = graphicsContext;
-			Entities = new Stack<EntityContext>(new EntityContext[] { entityContext });
-			Width = width;
-			Height = height;
-		}
-
-		/// <summary>
-		/// Marks the start time of a render frame
-		/// </summary>
-		public void Start()
-		{
-			StartTime = DateTime.Now;
-		}
-
-		/// <summary>
-		/// Marks the stop time of a render frame
-		/// </summary>
-		public void Stop()
-		{
-			StopTime = DateTime.Now;
-			Duration = StartTime - StopTime;
-		}
+//		public RenderArgs(IGraphicsContext graphicsContext, EntityContext entityContext, int width, int height)
+//		{
+//			CreationTime = DateTime.Now;
+//			Graphics = graphicsContext;
+//			UpdateRoot = entityContext;
+////			Entities = new Stack<EntityContext>(new EntityContext[] { entityContext });
+//			Width = width;
+//			Height = height;
+//		}
 	}
 }
 

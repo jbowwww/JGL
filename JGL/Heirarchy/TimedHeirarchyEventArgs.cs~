@@ -1,0 +1,73 @@
+using System;
+
+namespace JGL.Heirarchy
+{
+	/// <summary>
+	/// Base class for event arguments <see cref="UpdateArgs"/> and <see cref="RenderArgs"/> that
+	/// provides ability to capture timing information between recurring events
+	/// </summary>
+	public class TimedHeirarchyEventArgs
+	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="JGL.Heirarchy.TimedHeirarchyEventArgs"/> class.
+		/// </summary>
+		/// <param name="mark">
+		/// If set to <c>true</c>, <see cref="Mark"/> is called in the constructor to update <see cref="MarkTime"/>.
+		/// Defaults to <c>false</c>.
+		/// </param>
+		public TimedHeirarchyEventArgs(bool mark = false)
+		{
+			if (mark)
+				Mark();
+			else
+				MarkTime = DateTime.MinValue;
+		}
+
+		/// <summary>
+		/// The current <see cref="JGL.Heirarchy.Context"/> being rendered
+		/// </summary>
+		public EntityContext UpdateRoot {
+			get
+			{
+				Debug.Assert(Entities.Count >= 1);
+				return Entities.Peek();
+			}
+			set
+			{
+				Entities = new Stack<EntityContext>(new EntityContext[] { value });
+			}
+		}
+
+		/// <summary>
+		/// The stack of <see cref="JGL.Heirarchy.Context"/>s as rendered so far
+		/// </summary>
+		public Stack<EntityContext> Entities { get; private set; }
+		
+		/// <summary>
+		/// Gets a value indicating whether the entity context stack <see cref="JGL.Heirarchy.RenderArgs.Entities"/> is empty
+		/// </summary>
+		public bool IsEntityContextStackEmpty {
+			get { return Entities.Count == 0; }
+		}
+
+		/// <summary>
+		/// A marked time, usually when the event last occurred. To update this call <see cref="Mark"/>.
+		/// </summary>
+		public DateTime MarkTime { get; private set; }
+
+		/// <summary>
+		/// Gets the time elapsed since <see cref="MarkTime"/>
+		/// </summary>
+		public TimeSpan TimeElapsed {
+			get { return MarkTime == DateTime.MinValue ? TimeSpan.Zero : DateTime.Now - MarkTime; }
+		}
+
+		/// <summary>
+		/// Updates <see cref="MarkTime"/> to <c>DateTime.Now</c>
+		/// </summary>
+		public virtual void Mark()
+		{
+			MarkTime = DateTime.Now;
+		}
+	}
+}

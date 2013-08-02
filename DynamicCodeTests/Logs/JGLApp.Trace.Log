@@ -1,47 +1,51 @@
-13-08-02 10:49:33.794558 P:9446 T:Main DynamicCodeTests JGLApp.Main 001 Information Started
-13-08-02 10:49:33.907489 P:9446 T:Main DynamicCodeTests CodeWindow..ctor 002 Information CodeWindow.c'tor(params string[] files = string[0])
-13-08-02 10:49:34.060654 P:9446 T:Main DynamicCodeTests Project.Init 003 Verbose Init(sourcePaths=(null), referencePaths=(null))
-13-08-02 10:49:34.137824 P:9446 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 004 Verbose PopulateHeirarchy()
-13-08-02 10:49:34.152089 P:9446 T:Main DynamicCodeTests CodeWindow.OpenSourceFiles 005 Information OpenSourceFiles(params string[] filenames = string[0])
-13-08-02 10:49:39.867771 P:9446 T:Main DynamicCodeTests CodeWindow.OnFileOpen 006 Verbose OnFileOpen
-13-08-02 10:49:44.773113 P:9446 T:Main DynamicCodeTests CodeWindow.OpenProject 007 Information OpenProject(filename=/home/jk/Code/JGL/Data/Projects/Scene1.project.xml)
-13-08-02 10:49:44.774350 P:9446 T:Main DynamicCodeTests Project.Load 008 Information Load(filename="/home/jk/Code/JGL/Data/Projects/Scene1.project.xml")
-13-08-02 10:49:44.842575 P:9446 T:Main DynamicCodeTests Project..ctor 009 Verbose Protected c'tor for deserialization
-13-08-02 10:49:44.859246 P:9446 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 010 Verbose PopulateHeirarchy()
-13-08-02 10:49:44.860095 P:9446 T:Main DynamicCodeTests CodeWindow.OpenSourceFiles 011 Information OpenSourceFiles(params string[] filenames = string[5])
-13-08-02 10:49:44.866866 P:9446 T:Main DynamicCodeTests StaticCodePage.Init 012 Information Init(filename="/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/EmptyMain.cs")
-13-08-02 10:49:44.891854 P:9446 T:Main DynamicCodeTests StaticCodePage.Init 013 Information Init(filename="/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Origin.cs")
-13-08-02 10:49:44.895972 P:9446 T:Main DynamicCodeTests StaticCodePage.Init 014 Information Init(filename="/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Tree1.cs")
-13-08-02 10:49:44.899807 P:9446 T:Main DynamicCodeTests StaticCodePage.Init 015 Information Init(filename="/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/WhiteLight.cs")
-13-08-02 10:49:44.903579 P:9446 T:Main DynamicCodeTests StaticCodePage.Init 016 Information Init(filename="/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Scene1.cs")
-13-08-02 10:49:44.909387 P:9446 T:Main DynamicCodeTests CodeWindow.OpenSourceFiles 017 Information OpenSourceFiles(params string[] filenames = string[0])
-13-08-02 10:49:46.279908 P:9446 T:Main DynamicCodeTests CodeWindow.OnExecute 018 Information OnExecute
-13-08-02 10:49:46.286484 P:9446 T:Main DynamicCodeTests Compiler.CompileCode 019 Information CompileCode(source=string[5], referencePaths=string[3])
-13-08-02 10:49:46.288459 P:9446 T:Main DynamicCodeTests Compiler.CompileCode 020 Verbose CodeProvider: CSharpCodeProvider
-13-08-02 10:49:46.293991 P:9446 T:Main DynamicCodeTests Compiler.CompileCode 021 Verbose Compiler Parameters = { Generate Executable: True, Generate In Memory: False, Output Assembly: DynamicCodeTests-Scene.dll, Include Debug Info: False, Warnings As Errors: False, Warning Level: -1, Compiler Options: , Main Class: , User Token: 0, Win32 Resource: , Embedded Resources: , Linked Resources: , Referenced Assemblies: System.dll JGL.dll /home/jk/Code/Resources/CS/OpenTK 1.0/Binaries/OpenTK/Release/OpenTK.dll, Temp Files: 
+13-08-02 17:01:40.608561 P:20130 T:Main DynamicCodeTests JGLApp.Main 001 Information Started
+13-08-02 17:01:40.726022 P:20130 T:Main DynamicCodeTests CodeWindow..ctor 002 Information CodeWindow.c'tor(params string[] files = string[0])
+13-08-02 17:01:40.874130 P:20130 T:Main DynamicCodeTests Project.Init 003 Verbose Init(sourcePaths=(null), referencePaths=(null))
+13-08-02 17:01:40.965116 P:20130 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 004 Verbose PopulateHeirarchy()
+13-08-02 17:01:40.976574 P:20130 T:Main DynamicCodeTests CodeWindow.OpenSourceFiles 005 Information OpenSourceFiles(params string[] filenames = string[0])
+13-08-02 17:01:46.731921 P:20130 T:Main DynamicCodeTests CodeWindow.OnFileOpen 006 Verbose OnFileOpen
+13-08-02 17:01:50.741177 P:20130 T:Main DynamicCodeTests CodeWindow.OpenProject 007 Information OpenProject(filename=/home/jk/Code/JGL/Data/Projects/Scene1.project.xml)
+13-08-02 17:01:50.742527 P:20130 T:Main DynamicCodeTests Project.Load 008 Information Load(filename="/home/jk/Code/JGL/Data/Projects/Scene1.project.xml")
+13-08-02 17:01:50.814589 P:20130 T:Main DynamicCodeTests Project..ctor 009 Verbose Protected c'tor for deserialization
+13-08-02 17:01:50.831717 P:20130 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 010 Verbose PopulateHeirarchy()
+13-08-02 17:01:50.832278 P:20130 T:Main DynamicCodeTests CodeWindow.OpenSourceFiles 011 Information OpenSourceFiles(params string[] filenames = string[5])
+13-08-02 17:01:50.837283 P:20130 T:Main DynamicCodeTests StaticCodePage.Init 012 Information Init(filename="/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/EmptyMain.cs")
+13-08-02 17:01:50.854432 P:20130 T:Main DynamicCodeTests StaticCodePage.Init 013 Information Init(filename="/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Origin.cs")
+13-08-02 17:01:50.859167 P:20130 T:Main DynamicCodeTests StaticCodePage.Init 014 Information Init(filename="/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Tree1.cs")
+13-08-02 17:01:50.863281 P:20130 T:Main DynamicCodeTests StaticCodePage.Init 015 Information Init(filename="/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/WhiteLight.cs")
+13-08-02 17:01:50.867641 P:20130 T:Main DynamicCodeTests StaticCodePage.Init 016 Information Init(filename="/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Scene1.cs")
+13-08-02 17:01:50.873844 P:20130 T:Main DynamicCodeTests CodeWindow.OpenSourceFiles 017 Information OpenSourceFiles(params string[] filenames = string[0])
+13-08-02 17:01:52.049662 P:20130 T:Main DynamicCodeTests CodeWindow.OnExecute 018 Information OnExecute
+13-08-02 17:01:52.055264 P:20130 T:Main DynamicCodeTests Compiler.CompileCode 019 Information CompileCode(source=string[5], referencePaths=string[3])
+13-08-02 17:01:52.056908 P:20130 T:Main DynamicCodeTests Compiler.CompileCode 020 Verbose CodeProvider: CSharpCodeProvider
+13-08-02 17:01:52.063595 P:20130 T:Main DynamicCodeTests Compiler.CompileCode 021 Verbose Compiler Parameters = { Generate Executable: True, Generate In Memory: False, Output Assembly: DynamicCodeTests-Scene.dll, Include Debug Info: False, Warnings As Errors: False, Warning Level: -1, Compiler Options: , Main Class: , User Token: 0, Win32 Resource: , Embedded Resources: , Linked Resources: , Referenced Assemblies: System.dll JGL.dll /home/jk/Code/Resources/CS/OpenTK 1.0/Binaries/OpenTK/Release/OpenTK.dll, Temp Files: 
 } }
-13-08-02 10:49:46.993913 P:9446 T:Main DynamicCodeTests Compiler.CompileCode 022 Information Source built into DynamicCodeTests-Scene.dll successfully.
-13-08-02 10:49:47.634044 P:9446 T:Main DynamicCodeTests DynamicCodePage..ctor 023 Information Init(project="Dynamic.Project", codeWindow="Dynamic.UI.CodeWindow")
-13-08-02 10:49:47.666514 P:9446 T:Main DynamicCodeTests CodeWindow.OnExecute 024 Information Started SceneWindowThread for scene "Scene1 #001" .. 
-13-08-02 10:49:47.667174 P:9446 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 025 Verbose PopulateHeirarchy()
-13-08-02 10:49:47.671239 P:9446 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 026 Verbose PopulateHeirarchy(entity.Id="Scene1 #001", tnParent="(null)")
-13-08-02 10:49:47.682768 P:9446 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 027 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.Tree1 #002", tnParent="Dynamic.UI.EntityTreeNode")
-13-08-02 10:49:47.693889 P:9446 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 028 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.Tree1 #002.tree", tnParent="Dynamic.UI.EntityTreeNode")
-13-08-02 10:49:47.695010 P:9446 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 029 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.Tree1 #002.twig", tnParent="Dynamic.UI.EntityTreeNode")
-13-08-02 10:49:47.697002 P:9446 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 030 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.WhiteLight #002", tnParent="Dynamic.UI.EntityTreeNode")
-13-08-02 10:49:47.697591 P:9446 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 031 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.Origin", tnParent="Dynamic.UI.EntityTreeNode")
-13-08-02 10:49:47.698204 P:9446 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 032 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.WhiteLight #001", tnParent="Dynamic.UI.EntityTreeNode")
-13-08-02 10:49:47.698828 P:9446 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 033 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.Tree1 #003", tnParent="Dynamic.UI.EntityTreeNode")
-13-08-02 10:49:47.700256 P:9446 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 034 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.Tree1 #003.tree", tnParent="Dynamic.UI.EntityTreeNode")
-13-08-02 10:49:47.700776 P:9446 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 035 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.Tree1 #003.twig", tnParent="Dynamic.UI.EntityTreeNode")
-13-08-02 10:49:47.713306 P:9446 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 036 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.Box #001", tnParent="Dynamic.UI.EntityTreeNode")
-13-08-02 10:49:47.714133 P:9446 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 037 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.Tree1 #001", tnParent="Dynamic.UI.EntityTreeNode")
-13-08-02 10:49:47.714818 P:9446 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 038 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.Tree1 #001.tree", tnParent="Dynamic.UI.EntityTreeNode")
-13-08-02 10:49:47.715625 P:9446 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 039 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.Tree1 #001.twig", tnParent="Dynamic.UI.EntityTreeNode")
-13-08-02 10:49:47.716656 P:9446 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 040 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.Quad #001", tnParent="Dynamic.UI.EntityTreeNode")
-13-08-02 10:49:47.717343 P:9446 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 041 Verbose PopulateHeirarchy(entity.Id="tex2 #001", tnParent="(null)")
-13-08-02 10:49:47.720949 P:9446 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 042 Verbose PopulateHeirarchy(entity.Id="test1 #001", tnParent="(null)")
-13-08-02 10:50:11.522099 P:9446 T:Main DynamicCodeTests CodeWindow.SaveProject 043 Information SaveProject()
-13-08-02 10:50:11.522781 P:9446 T:Main DynamicCodeTests Project.Save 044 Information Save
-13-08-02 10:50:11.586561 P:9446 T:Main DynamicCodeTests CodeWindow.OnWidgetDeleteEvent 045 Information CodeWindow.OnWidgetDeleteEvent()
-13-08-02 10:50:11.691512 P:9446 T:Main DynamicCodeTests JGLApp.Main 046 Verbose Finished, exiting ..
+13-08-02 17:01:52.779687 P:20130 T:Main DynamicCodeTests Compiler.CompileCode 022 Information Source built into DynamicCodeTests-Scene.dll successfully.
+13-08-02 17:01:53.451564 P:20130 T:Main DynamicCodeTests DynamicCodePage..ctor 023 Information Init(project="Dynamic.Project", codeWindow="Dynamic.UI.CodeWindow")
+13-08-02 17:01:53.474021 P:20130 T:Main DynamicCodeTests CodeWindow.OnExecute 024 Information Started SceneWindowThread for scene "Scene1 #001" .. 
+13-08-02 17:01:53.474916 P:20130 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 025 Verbose PopulateHeirarchy()
+13-08-02 17:01:53.479201 P:20130 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 026 Verbose PopulateHeirarchy(entity.Id="Scene1 #001", tnParent="(null)")
+13-08-02 17:01:53.491289 P:20130 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 027 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.Tree1 #002", tnParent="Dynamic.UI.EntityTreeNode")
+13-08-02 17:01:53.502563 P:20130 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 028 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.Tree1 #002.tree", tnParent="Dynamic.UI.EntityTreeNode")
+13-08-02 17:01:53.507621 P:20130 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 029 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.Tree1 #002.twig", tnParent="Dynamic.UI.EntityTreeNode")
+13-08-02 17:01:53.508222 P:20130 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 030 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.WhiteLight #002", tnParent="Dynamic.UI.EntityTreeNode")
+13-08-02 17:01:53.508648 P:20130 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 031 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.Origin", tnParent="Dynamic.UI.EntityTreeNode")
+13-08-02 17:01:53.509093 P:20130 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 032 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.WhiteLight #001", tnParent="Dynamic.UI.EntityTreeNode")
+13-08-02 17:01:53.509657 P:20130 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 033 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.Tree1 #003", tnParent="Dynamic.UI.EntityTreeNode")
+13-08-02 17:01:53.510422 P:20130 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 034 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.Tree1 #003.tree", tnParent="Dynamic.UI.EntityTreeNode")
+13-08-02 17:01:53.511198 P:20130 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 035 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.Tree1 #003.twig", tnParent="Dynamic.UI.EntityTreeNode")
+13-08-02 17:01:53.512027 P:20130 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 036 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.Box #001", tnParent="Dynamic.UI.EntityTreeNode")
+13-08-02 17:01:53.513250 P:20130 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 037 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.Tree1 #001", tnParent="Dynamic.UI.EntityTreeNode")
+13-08-02 17:01:53.514014 P:20130 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 038 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.Tree1 #001.tree", tnParent="Dynamic.UI.EntityTreeNode")
+13-08-02 17:01:53.516221 P:20130 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 039 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.Tree1 #001.twig", tnParent="Dynamic.UI.EntityTreeNode")
+13-08-02 17:01:53.516788 P:20130 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 040 Verbose PopulateHeirarchy(entity.Id="Scene1 #001.Quad #001", tnParent="Dynamic.UI.EntityTreeNode")
+13-08-02 17:01:53.517292 P:20130 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 041 Verbose PopulateHeirarchy(entity.Id="tex2 #001", tnParent="(null)")
+13-08-02 17:01:53.524842 P:20130 T:Main DynamicCodeTests CodeWindow.PopulateHeirarchy 042 Verbose PopulateHeirarchy(entity.Id="test1 #001", tnParent="(null)")
+13-08-02 17:01:55.694812 P:20130 T:Main DynamicCodeTests CodeWindow.OnFinishExecute 043 Information OnFinishExecute
+13-08-02 17:01:55.695053 P:20130 T:Main DynamicCodeTests CodeWindow.OnFinishExecute 044 Information Ended SceneWindowThread for scene "Scene1 #001"
+13-08-02 17:01:55.697709 P:20130 T:Main DynamicCodeTests CodeWindow.SaveProject 045 Information SaveProject()
+13-08-02 17:01:55.698187 P:20130 T:Main DynamicCodeTests Project.Save 046 Information Save
+13-08-02 17:01:56.745725 P:20130 T:Main DynamicCodeTests CodeWindow.SaveProject 047 Information SaveProject()
+13-08-02 17:01:56.746444 P:20130 T:Main DynamicCodeTests Project.Save 048 Information Save
+13-08-02 17:01:56.750933 P:20130 T:Main DynamicCodeTests CodeWindow.OnWidgetDeleteEvent 049 Information CodeWindow.OnWidgetDeleteEvent()
+13-08-02 17:01:56.816222 P:20130 T:Main DynamicCodeTests JGLApp.Main 050 Verbose Finished, exiting ..
