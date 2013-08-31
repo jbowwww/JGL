@@ -21,16 +21,15 @@ namespace JGL.Heirarchy
 		/// Position in 3D space
 		/// </summary>
 		/// <remarks>IPositionable implementation</remarks>
-		[XmlElement("Position", typeof(OpenTK.Vector3d))]
-		public OpenTK.Vector3d Position { get; set; }
+//		[XmlElement("Position", typeof(OpenTK.Vector3d))]
+//		public OpenTK.Vector3d Position { get; set; }
 		
 		/// <summary>
 		/// Rotation in 3D space (X,Y,Z each describe number of degrees rotation around the X/Y/Z unit vector)
 		/// </summary>
 		/// <remarks>IRotatable implementation</remarks>
-		[XmlElement("Rotation", typeof(OpenTK.Vector3d))]
-		public OpenTK.Vector3d Rotation { get; set; }
-
+//		[XmlElement("Rotation", typeof(OpenTK.Vector3d))]
+//		public OpenTK.Vector3d Rotation { get; set; }
 
 		#region Constructors
 		/// <summary>
