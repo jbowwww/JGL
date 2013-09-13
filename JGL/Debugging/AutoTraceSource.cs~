@@ -147,7 +147,8 @@ namespace JGL.Debugging
 		/// </summary>
 		public static void StopTraceThread()
 		{
-			Trace.Log(TraceEventType.Information, "RunTrace thread stopping ({0} open listeners will now be closed)", openListeners.Count);
+			if (Trace != null)
+				Trace.Log(TraceEventType.Verbose, "RunTrace thread stopping ({0} open listeners will now be closed)", openListeners.Count);
 			_stopThread = true;
 			if (TraceThread != null)
 				TraceThread.Join(new TimeSpan(0, 0, 8));

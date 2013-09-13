@@ -198,12 +198,12 @@ namespace JGL.Heirarchy
 		{
 			foreach (TriangleFace T in Triangles)
 			{
-				GL.Normal3(VertexData.Normals[T.N[0]].GetComponents());
-				GL.Vertex3(VertexData.Vertices[T.V[0]].GetComponents());
-				GL.Normal3(VertexData.Normals[T.N[1]].GetComponents());
-				GL.Vertex3(VertexData.Vertices[T.V[1]].GetComponents());
-				GL.Normal3(VertexData.Normals[T.N[2]].GetComponents());
-				GL.Vertex3(VertexData.Vertices[T.V[2]].GetComponents());
+				GL.Normal3(VertexData.Normals[T.N[0]].Components);
+				GL.Vertex3(VertexData.Vertices[T.V[0]].Components);
+				GL.Normal3(VertexData.Normals[T.N[1]].Components);
+				GL.Vertex3(VertexData.Vertices[T.V[1]].Components);
+				GL.Normal3(VertexData.Normals[T.N[2]].Components);
+				GL.Vertex3(VertexData.Vertices[T.V[2]].Components);
 			}
 		}
 
@@ -218,15 +218,15 @@ namespace JGL.Heirarchy
 		{
 			foreach (TriangleFace T in Triangles)
 			{
-				GL.Normal3(VertexData.Normals[T.N[0]].GetComponents());
+				GL.Normal3(VertexData.Normals[T.N[0]].Components);
 				GL.TexCoord2(VertexData.TexCoords[T.T[0]].GetComponents());
-				GL.Vertex3(VertexData.Vertices[T.V[0]].GetComponents());
-				GL.Normal3(VertexData.Normals[T.N[1]].GetComponents());
+				GL.Vertex3(VertexData.Vertices[T.V[0]].Components);
+				GL.Normal3(VertexData.Normals[T.N[1]].Components);
 				GL.TexCoord2(VertexData.TexCoords[T.T[1]].GetComponents());
-				GL.Vertex3(VertexData.Vertices[T.V[1]].GetComponents());
-				GL.Normal3(VertexData.Normals[T.N[2]].GetComponents());
+				GL.Vertex3(VertexData.Vertices[T.V[1]].Components);
+				GL.Normal3(VertexData.Normals[T.N[2]].Components);
 				GL.TexCoord2(VertexData.TexCoords[T.T[2]].GetComponents());
-				GL.Vertex3(VertexData.Vertices[T.V[2]].GetComponents());
+				GL.Vertex3(VertexData.Vertices[T.V[2]].Components);
 			}
 		}
 

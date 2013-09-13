@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		commit.sh = commit.sh
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmallConsoleTests", "SmallConsoleTests\SmallConsoleTests.csproj", "{B75803A2-E3E6-4984-9A3D-8EA78ABAE224}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,12 @@ Global
 		{8F163935-50FF-4F0A-A9CF-C5B44774B240}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F163935-50FF-4F0A-A9CF-C5B44774B240}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F163935-50FF-4F0A-A9CF-C5B44774B240}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B75803A2-E3E6-4984-9A3D-8EA78ABAE224}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B75803A2-E3E6-4984-9A3D-8EA78ABAE224}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B75803A2-E3E6-4984-9A3D-8EA78ABAE224}.Default|Any CPU.ActiveCfg = Debug|Any CPU
+		{B75803A2-E3E6-4984-9A3D-8EA78ABAE224}.Default|Any CPU.Build.0 = Debug|Any CPU
+		{B75803A2-E3E6-4984-9A3D-8EA78ABAE224}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B75803A2-E3E6-4984-9A3D-8EA78ABAE224}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EAF6280D-DBAE-450B-95E1-30EFFCA02D21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EAF6280D-DBAE-450B-95E1-30EFFCA02D21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection

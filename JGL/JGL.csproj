@@ -71,7 +71,6 @@
     <Compile Include="Debugging\AsyncTraceListener.cs" />
     <Compile Include="Debugging\AutoTraceSource.cs" />
     <Compile Include="Heirarchy\Object.cs" />
-    <Compile Include="Geometry\Vector3d_Ext.cs" />
     <Compile Include="Geometry\Vector3d.cs" />
     <Compile Include="Geometry\Normal.cs" />
     <Compile Include="Geometry\Vertex.cs" />

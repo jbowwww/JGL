@@ -1,10 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="JGL/Heirarchy/Entity.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SmallConsoleTests/MainClass.cs">
     <Files>
-      <File FileName="DynamicCodeTests/Features.txt" Line="1" Column="1" />
-      <File FileName="JGL/Features.txt" Line="1" Column="1" />
-      <File FileName="JGL/Heirarchy/Entity.cs" Line="27" Column="1" />
+      <File FileName="SmallConsoleTests/MainClass.cs" Line="15" Column="28" />
+      <File FileName="JGL/Geometry/Vector3d.cs" Line="7" Column="15" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -12,15 +11,18 @@
           <Node name="Solution Items">
             <Option id="ShowAllFiles" value="True" />
           </Node>
-          <Node name="DynamicCodeTests" expanded="True">
+          <Node name="DynamicCodeTests">
             <Node name="Logs">
               <Option id="ShowAllFiles" value="True" />
             </Node>
           </Node>
           <Node name="JGL" expanded="True">
-            <Node name="Heirarchy" expanded="True">
-              <Node name="Entity.cs" selected="True" />
-            </Node>
+            <Node name="Geometry" expanded="True" />
+            <Node name="Heirarchy" expanded="True" />
+          </Node>
+          <Node name="SmallConsoleTests" expanded="True">
+            <Node name="References" expanded="True" />
+            <Node name="MainClass.cs" selected="True" />
           </Node>
         </State>
       </Pad>

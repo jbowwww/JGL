@@ -1,0 +1,12 @@
+<Verbose Id="2" Time="13-08-31 20:01:48.751574 " Process="5209" Thread="" Source="JGL" Method="AutoTraceSource.StopTraceThread">
+	<Message>AutoTraceSource.StopTraceThread RunTrace thread stopping (0 open listeners will now be closed)</Message>
+</Verbose>
+<Verbose Id="1" Time="13-08-31 20:01:48.731270 " Process="5209" Thread="AutoTraceSource.RunTrace" Source="JGL" Method="AutoTraceSource.RunTrace">
+	<Message>AutoTraceSource.RunTrace RunTrace started</Message>
+</Verbose>
+<Information Id="3" Time="13-08-31 20:01:48.763101 " Process="5209" Thread="AutoTraceSource.RunTrace" Source="JGL" Method="AsyncTextFileTraceListener.OpenStream">
+	<Message>AsyncTextFileTraceListener.OpenStream OpenStream (this.Name = "JGL", this.Path = "../../Logs/JGL.Trace.Log.Xml")</Message>
+</Information>
+<Information Id="4" Time="13-08-31 20:01:48.779989 " Process="5209" Thread="AutoTraceSource.RunTrace" Source="JGL" Method="AsyncTextFileTraceListener.OpenStream">
+	<Message>AsyncTextFileTraceListener.OpenStream OpenStream (this.Name = "JGL", this.Path = "../../Logs/JGL.Trace.Log.Xml")</Message>
+</Information>

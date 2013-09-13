@@ -70,7 +70,8 @@ namespace JGL.Heirarchy
 		///	-	TODO: Test this. Might need to change to return <c>this.OfType`1[Object]()</c>
 		/// </remarks>
 		public ICollection<Object> Objects {
-			get { return (this as ICollection<Object>); }// _entities.Values; }
+//			get { return (this as ICollection<Object>); }// _entities.Values; }
+			get { return this.OfType<Object>(); }
 		}
 
 		/// <summary>
@@ -109,7 +110,7 @@ namespace JGL.Heirarchy
 		/// <summary>
 		/// Get the <see cref="JGL.Heirarchy.Entity"/> with the specified <paramref name="entityName"/>
 		/// </summary>
-		/// <param name='entityName'>Name of entity to get</param>
+		/// <param name="entityName">Name of entity to get</param>
 		public Entity this[string entityName] {
 			get
 			{
@@ -122,7 +123,7 @@ namespace JGL.Heirarchy
 		/// <summary>
 		/// Gets the <see cref="JGL.Heirarchy.Entity"/> at the specified index <paramref name="entityIndex"/>
 		/// </summary>
-		/// <param name='entityIndex'>Index of the <see cref="JGL.Heirarchy.Entity"/> to get</param>
+		/// <param name="entityIndex">Index of the <see cref="JGL.Heirarchy.Entity"/> to get</param>
 		public Entity this [int entityIndex] {
 			get { return _entities.Values.ElementAt (entityIndex); }
 		}

@@ -356,6 +356,14 @@
         </member>
         <member name="M:JGL.Heirarchy.SimpleObject.#ctor">
             <summary>
+            Position in 3D space
+            </summary>
+            <remarks>IPositionable implementation</remarks>
+            <summary>
+            Rotation in 3D space (X,Y,Z each describe number of degrees rotation around the X/Y/Z unit vector)
+            </summary>
+            <remarks>IRotatable implementation</remarks>
+            <summary>
             Initializes a new instance of the <see cref="T:JGL.Heirarchy.SimpleObject" /> class.
             </summary>
         </member>
@@ -381,18 +389,6 @@
             <summary>
             Tracing
             </summary>
-        </member>
-        <member name="P:JGL.Heirarchy.SimpleObject.Position">
-            <summary>
-            Position in 3D space
-            </summary>
-            <remarks>IPositionable implementation</remarks>
-        </member>
-        <member name="P:JGL.Heirarchy.SimpleObject.Rotation">
-            <summary>
-            Rotation in 3D space (X,Y,Z each describe number of degrees rotation around the X/Y/Z unit vector)
-            </summary>
-            <remarks>IRotatable implementation</remarks>
         </member>
         <member name="M:JGL.Heirarchy.Light.#ctor">
             <summary>
@@ -850,15 +846,20 @@
             </summary>
             <param name="inclusionTest">Inclusion test</param>
         </member>
-        <member name="F:JGL.Geometry.Vector3d_Ext.Trace">
-            <summary>
-            Tracing
-            </summary>
-        </member>
         <member name="F:JGL.Geometry.Vector3d.Trace">
             <summary>
             Tracing
             </summary>
+        </member>
+        <member name="M:JGL.Geometry.Vector3d.GetHashCode">
+            <summary>
+            Serves as a hash function for a <see cref="T:JGL.Geometry.Vector3d" /> object.
+            </summary>
+            <returns>
+            A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a hash table.
+            	-	This is a giant stabby hack in the dark, I have no idea if it is at all suitable as a hash function
+            		(When is it required? Sorting and comparing in dictionaries and such??)
+            </returns>
         </member>
         <member name="F:JGL.Geometry.Normal.Trace">
             <summary>
