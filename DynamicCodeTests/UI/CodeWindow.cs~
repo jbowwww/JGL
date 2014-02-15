@@ -440,7 +440,8 @@ namespace Dynamic.UI
 								sceneType = new SceneTypeDialog(sceneTypes.ToArray(), this).Run();
 							Trace.Assert(sceneType != null);
 		
-							newScene = sceneType.GetConstructor(new Type[] { typeof(string) }).Invoke(new object[] { null }) as Scene;
+//							newScene = sceneType.GetConstructor(new Type[] { typeof(string) }).Invoke(new object[] { null }) as Scene;
+							newScene = sceneType.GetConstructor(new Type[] { }).Invoke(new object[] { }) as Scene;
 							EntityContext.Root.Add(newScene);
 
 							DynamicCodePage dcp = new DynamicCodePage(Project, this);

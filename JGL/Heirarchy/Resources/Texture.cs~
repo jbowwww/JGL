@@ -6,7 +6,7 @@ using System.Threading;
 using System.Diagnostics;
 using OpenTK.Graphics.OpenGL;
 using JGL.Extensions;
-using JGL.OpenGL;
+using JGL.Graphics;
 using JGL.Debugging;
 
 namespace JGL.Heirarchy.Resources

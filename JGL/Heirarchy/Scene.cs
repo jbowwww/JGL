@@ -24,9 +24,9 @@ namespace JGL.Heirarchy
 		/// </summary>
 		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncXmlFileTraceListener.GetOrCreate("JGL"));
 
-		public Camera DefaultCamera = new Camera("DefaultCamera");
+		public Camera DefaultCamera = new Camera() { Name = "DefaultCamera" };
 
-		public readonly IList<Behaviour> Behaviours = new List<Behaviour>();
+		public readonly IList<IBehaviour> Behaviours = new List<IBehaviour>();
 
 		/// <summary>
 		/// Construct a new <see cref="JGL.Heirarchy.Scene"/>
@@ -52,15 +52,15 @@ namespace JGL.Heirarchy
 		/// </summary>
 		/// <param name='children'>Zero or more child entities to add to this <see cref="JGL.Heirarchy.Context"/></param>
 		/// <param name="name">Entity name</param>
-		public Scene (string name, params Entity[] children)
-			: base(name, children)
-		{
-
-		}
+//		public Scene (string name, params Entity[] children)
+//			: base(name, children)
+//		{
+//
+//		}
 
 		public void ProcessBehaviours(RenderArgs renderArgs)
 		{
-			foreach (Behaviour b in Behaviours)
+			foreach (IBehaviour b in Behaviours)
 				b.Process(renderArgs);
 		}
 	}

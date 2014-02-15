@@ -47,21 +47,21 @@ namespace JGL.Heirarchy
 		/// Initializes a new instance of the <see cref="JGL.Heirarchy.SimpleObject"/> class.
 		/// </summary>
 		/// <param name='name'>Object name</param>
-		public SimpleObject(string name = null)
-			: base(name)
-		{
-
-		}
+//		public SimpleObject(string name = null)
+//			: base(name)
+//		{
+//
+//		}
 				
 		/// <summary>
 		/// Initializes a new instance of the <see cref="JGL.Heirarchy.SimpleObject"/> class.
 		/// </summary>
 		/// <param name='name'>Object name</param>
-		public SimpleObject(string name, RenderFunc renderFunc)
-			: base(name)
-		{
-			_renderFunc = renderFunc;
-		}
+//		public SimpleObject(string name, RenderFunc renderFunc)
+//			: base(name)
+//		{
+//			_renderFunc = renderFunc;
+//		}
 				
 		/// <summary>
 		/// Initializes a new instance of the <see cref="JGL.Heirarchy.SimpleObject"/> class.

@@ -54,8 +54,9 @@ namespace JGL.Heirarchy.Library
 		/// <param name="xResolution">X resolution (number of points used in X dimension, minus one)</param>
 		/// <param name="zResolution">Z resolution (number of points used in Z dimension, minus one)</param>
 		public Grid(string name, double xSize, double zSize, int xResolution, int zResolution)
-			: base(name)
+//			: base(name)
 		{
+			base.Name = name;
 			Init(xSize, zSize, xResolution, zResolution);
 		}
 
@@ -67,7 +68,7 @@ namespace JGL.Heirarchy.Library
 		/// <param name="xResolution">X resolution (number of points used in X dimension, minus one)</param>
 		/// <param name="zResolution">Z resolution (number of points used in Z dimension, minus one)</param>
 		public Grid(double xSize, double zSize, int xResolution, int zResolution)
-			: base(null)
+//			: base(null)
 		{
 			Init(xSize, zSize, xResolution, zResolution);
 		}

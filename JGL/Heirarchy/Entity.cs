@@ -42,7 +42,7 @@ namespace JGL.Heirarchy
 		public string Name {
 			get
 			{
-				if (IsAutoNamed)
+				if (IsAutoNamed || string.IsNullOrEmpty(_name))
 				{
 					if (_name != null)
 						throw new HeirarchyException("Entity invalid: IsAutoNamed==true && Name != null")
@@ -53,9 +53,9 @@ namespace JGL.Heirarchy
 					IsAutoNamed = false;
 					return _name = GenerateAutoName();
 				}
-				if (string.IsNullOrEmpty(_name))
-					throw new HeirarchyException("Entity invalid: IsAutoNamed==false && Name == null")
-						{ ContextId = Parent == null ? null : Parent.Id };
+//				if (string.IsNullOrEmpty(_name))
+//					throw new HeirarchyException("Entity invalid: IsAutoNamed==false && Name == null")
+//						{ ContextId = Parent == null ? null : Parent.Id };
 				return _name;
 			}
 			set
@@ -153,15 +153,19 @@ namespace JGL.Heirarchy
 		}
 		#endregion
 
+		// This is going to mean I need to comment out and then tidy/clear out a fair few other bits of constructor code,
+		// but since I changed (improved, I think, hope) the way Entity.Name decides if it is "auto-named" or not, it shouldn't
+		// be necessary to define overriden constructors, with and without a string name argument.
+		// If you want to explicitly set an entity's name, just set the property direclty using braces {} after the constructor
 		/// <summary>
 		/// Initializes a new <see cref="JGL.Heirarchy.Entity"/> instance
 		/// <see cref="JGL.Heirarchy.Context.Entities"/>
 		/// </summary>
 		/// <param name="name">Entity Name</param>
-		public Entity (string name = null)
-		{
-			Name = name;
-		}
+//		public Entity (string name = null)
+//		{
+//			Name = name;
+//		}
 
 		#region Methods
 		/// <summary>

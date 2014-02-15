@@ -32,7 +32,7 @@ namespace JGL.Heirarchy.Resources
 		/// </summary>
 		/// <param name="uri"><see cref="System.Uri"/> of the stored resource</param>
 		protected Resource(string path)
-			: base(path)
+//			: base(path)
 		{
 			Init(path, path);
 		}
@@ -43,7 +43,7 @@ namespace JGL.Heirarchy.Resources
 		/// <param name="name">Resource name (no requirement to be unique)</param>
 		/// <param name="path">Path to the stored resource</param>
 		protected Resource(string name, string path)
-			: base(name)
+//			: base(name)
 		{
 			Init(name, path);
 		}

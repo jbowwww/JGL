@@ -34,7 +34,10 @@ namespace JGL.Heirarchy
 		/// Initializes a new instance of the <see cref="JGL.Heirarchy.EntityRootContext"/> class.
 		/// </summary>
 		/// <param name="entities">Optional parameter array of child <see cref="JGL.Heirarchy.Entity"/> instances</param>
-		public EntityRootContext(params Entity[] entities) : base("EntityRootContext", entities) { }
+		public EntityRootContext(params Entity[] entities) : base(entities)
+		{
+			base.Name = "EntityRootContext";
+		}
 	}
 }
 

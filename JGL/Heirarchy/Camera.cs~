@@ -24,10 +24,10 @@ namespace JGL.Heirarchy
 		/// Initializes a new instance of the <see cref="JGL.Heirarchy.Camera"/> class.
 		/// </summary>
 		/// <param name='name'>Camera's entity name</param>
-		public Camera(string name)
-			: base(name)
-		{
-		}
+//		public Camera(string name)
+//			: base(name)
+//		{
+//		}
 		
 		/// <summary>
 		/// Render owner <see cref="JGL.Heirarchy.Scene"/> using the perspective of this <see cref="JGL.Heirarchy.Camera"/>,

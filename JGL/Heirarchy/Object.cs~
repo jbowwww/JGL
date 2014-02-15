@@ -67,10 +67,10 @@ namespace JGL.Heirarchy
 		/// <summary>
 		/// Initializes a new instance of the <see cref="JGL.Heirarchy.Object"/> class.
 		/// </summary>
-		public Object(string name, params Entity[] children)
-			: base(name, children)
-		{
-		}
+//		public Object(string name, params Entity[] children)
+//			: base(name, children)
+//		{
+//		}
 
 		/// <summary>
 		/// Move Position vector a distance in the given direction
@@ -129,7 +129,7 @@ namespace JGL.Heirarchy
 		/// <param name="inclusionTest">Inclusion test, default includes all</param>
 		public Object MergeChildMeshes(MeshInclusionTest inclusionTest = null)
 		{
-			IEnumerable<Mesh> childMeshes = Objects.OfType<Mesh>();
+			IEnumerable<Mesh> childMeshes = Entities.OfType<Mesh>();
 
 			if (childMeshes.Count() > 0)
 			{
@@ -156,9 +156,9 @@ namespace JGL.Heirarchy
 					}
 				}
 
-				Mesh mesh = isThisMesh ? this as Mesh : new Mesh(null);
-				mesh.VertexData = vertexData;
-				mesh.Triangles = triangles;
+				Mesh mesh = isThisMesh ? this as Mesh : new Mesh(null, vertexData, triangles);
+//				mesh.VertexData = vertexData;
+//				mesh.Triangles = triangles;
 
 				if (!isThisMesh)
 				{
@@ -183,7 +183,7 @@ namespace JGL.Heirarchy
 		/// <param name="inclusionTest">Inclusion test</param>
 		public void CombineChildMeshes(MeshInclusionTest inclusionTest = null)
 		{
-			IEnumerable<Mesh> childMeshes = Objects.OfType<Mesh>();
+			IEnumerable<Mesh> childMeshes = Entities.OfType<Mesh>();
 
 			if (childMeshes.Count() > 0)
 			{

@@ -71,7 +71,7 @@ namespace JGL.Heirarchy
 		/// <param name='name'>
 		/// Name.
 		/// </param>
-		public Mesh(string name = null) : base(name) { }
+		public Mesh() { }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="JGL.Heirarchy.Mesh"/> class.
@@ -79,8 +79,9 @@ namespace JGL.Heirarchy
 		/// <param name='vertexData'>
 		/// VertexData.
 		/// </param>
-		public Mesh(string name, VertexData vertexData, IList<TriangleFace> triangles = null) : base(name)
+		public Mesh(string name, VertexData vertexData, IList<TriangleFace> triangles = null)// : base(name)
 		{
+			base.Name = name;
 			VertexData = vertexData;
 			Triangles = triangles != null ? triangles : new List<TriangleFace>();
 		}
@@ -97,8 +98,9 @@ namespace JGL.Heirarchy
 		/// <param name='triangles'>
 		/// Triangles.
 		/// </param>
-		public Mesh(string name, VertexData vertexData, IEnumerable<TriangleFace> triangles) : base(name)
+		public Mesh(string name, VertexData vertexData, IEnumerable<TriangleFace> triangles)// : base(name)
 		{
+			base.Name = name;
 			VertexData = vertexData;
 			Triangles = new List<TriangleFace>(triangles);
 		}

@@ -39,46 +39,16 @@ namespace JGL.Heirarchy
 		public static EntityContext Current = Root;
 		#endregion
 
-		#region Properties and indexers
+		#region Properties, indexers & read-only fields
 		/// <summary>
 		/// Return a <see cref="System.Collections.Generic.ICollection[JGL.Heirarchy.Entity]"/>
 		/// representing the current direct child entities of this <see cref="JGL.Heirarchy.EntityContext"/>
 		/// </summary>
-		public EntityCollection Entities { get; private set; }
-
-		/// <summary>
-		/// Return a <see cref="System.Collections.Generic.ICollection[JGL.Heirarchy.Object]"/>
-		/// representing the current direct child entities of this <see cref="JGL.Heirarchy.EntityContext"/>
-		/// which are of type <see cref="JGL.Heirarchy.Object"/>
-		/// </summary>
-		/// <remarks>
-		///	-	TODO: Test this. Might need to change to return <c>this.OfType`1[Object]()</c>
-		/// </remarks>
-		public IEnumerable<Object> Objects {
-//			get { return (this as ICollection<Object>); }// _entities.Values; }
-			get { return this.OfType<Object>(); }
-		}
-
-		/// <summary>
-		/// Get <see cref="Entity"/>s contained in this <see cref="EntityContext"/> which are of type <typeparamref name="TEntity"/>
-		/// </summary>
-		/// <returns><see cref="Entity"/>s of type <typeparamref name="TEntity"/></returns>
-		/// <typeparam name="TEntity">The type of <see cref="Entity"/>s to return</typeparam>
-//		public ICollection<TEntity> OfType<TEntity>()
-//		{
-//			return (this as ICollection<Entity>).OfType<TEntity>().ToList();
-//		}
+		public readonly EntityCollection Entities;
 
 		/// <summary>
 		/// Gets the descendant <see cref="JGL.Heirarchy.Entity"/>s of this <see cref="JGL.Heirarchy.EntityContext"/>
 		/// </summary>
-		/// <remarks>
-		/// 	- Uses <c>yield</c>
-		/// 	- TODO: Would be nice if this was an ICollection, because that would mean it has a Count member? (and prob other things)
-		/// 		- NicER would be IEnumerable, (i think) this allows LINQ queries?
-		/// 			- Could use for stuff like foreach (Entity e from RootContext.Descendants
-		/// 																			where e.GetType().Equals(typeof(JGL.Heirarchy.Object)) and e.Id != "excludedId")
-		/// </remarks>
 		public IEnumerable<Entity> Descendants {
 			get
 			{
@@ -92,19 +62,13 @@ namespace JGL.Heirarchy
 				return descendants;
 			}
 		}
-//					yield return e;
-//					if (e.IsContext)
-//						yield return (e as EntityContext).Descendants;
-//					if (e is EntityContext)
-//						foreach (Entity de in (e as EntityContext).Descendants)
-//							yield return de;
 
 		/// <summary>
-		/// Get the <see cref="JGL.Heirarchy.Entity"/> with the specified <paramref name="entityName"/>
+		/// Get the <see cref="JGL.Heirarchy.Entity"/> with the specified <paramref name="relativeId"/>
 		/// </summary>
-		/// <param name="entityName">Name of entity to get</param>
-		public Entity this[string entityName] {
-			get { return Entities.Get(entityName); }
+		/// <param name="relativeId">ID, relative to this <see cref="JGL.Heirarchy.EntityContext"/>, of the entity to get</param>
+		public Entity this[string relativeId] {
+			get { return Get(relativeId); }
 		}
 		
 		/// <summary>
@@ -172,10 +136,11 @@ namespace JGL.Heirarchy
 		/// Constructs a new <see cref="JGL.Heirarchy.EntityContext"/> with zero initial child entities
 		/// </summary>
 		/// <param name="entities">Optional parameter array of child <see cref="JGL.Heirarchy.Entity"/> instances</param>
-		public EntityContext(params Entity[] entities) : base(null)
+		public EntityContext(params Entity[] entities)// : base(null)
 		{
-			Entities = new EntityCollection(this);
-			Add (entities);
+			Entities = new EntityCollection();
+			if (entities != null)
+				Add (entities);
 		}
 
 		/// <summary>
@@ -183,11 +148,11 @@ namespace JGL.Heirarchy
 		/// </summary>
 		/// <param name="name">Name for the new <see cref="JGL.Heirarchy.EntityContext"/></param>
 		/// <param name="entities">Optional parameter array of child <see cref="JGL.Heirarchy.Entity"/> instances</param>
-		public EntityContext (string name, params Entity[] entities) : base (name)
-		{
-			Entities = new EntityCollection(this);
-			Add(entities);
-		}
+//		public EntityContext (string name, params Entity[] entities) : base (name)
+//		{
+//			Entities = new EntityCollection(this);
+//			Add(entities);
+//		}
 		#endregion
 
 		#region Methods
@@ -213,12 +178,40 @@ namespace JGL.Heirarchy
 		}
 
 		/// <summary>
+		/// Get the <see cref="JGL.Heirarchy.Entity"/> using an ID relative to this <see cref="JGL.Heirarchy.EntityContext"/>
+		/// </summary>
+		/// <param name="relativeId">An Id string relative to this <see cref="JGL.Heirarchy.EntityContext"/></param>
+		/// <returns>The <see cref="JGL.Heirarchy.Entity"/> specified by the relative ID</returns>
+		/// <remarks>
+		/// If resources are named as their filename including the extension, the period before the extension causes a problem here
+		/// Hack for now/Possibly longer term: Resources can be specified using "res://" prefix, which causes this method to
+		/// look for an id exactly matching the remainder of the string specified for relative id. EG "res://test1.png" will get child entity
+		/// with the id "test1.png"
+		/// 	-	! Now that I have move this out of EntityCollection and back in here, I may not have to worry about that issue with Resources:
+		/// 		Now I'm using EntityCollection in Behaviour's too, so they should not be aware of the heirarchy (thats why I moved this method back here)
+		/// 		Which means I could use an EntityCollection in the RootContext and/or Scene instances, for storing Resource entities.
+		/// 		The indexer properties in EntityCollection (taking string and int respectively) will now not be aware of any heirarchy, so they
+		/// 		can be used to retrieve resources with '.' in the name, and you can still use '.' for Entity heirarchy ID separation, if you want~!
+		/// </remarks>
+		public Entity Get(string relativeId)
+		{
+			Debug.Assert(!string.IsNullOrEmpty(relativeId));
+			Entity e = null;
+			string[] splitRelativeId = relativeId.Split(new string[] { Entity.EntityIdSeparator }, StringSplitOptions.None);
+			foreach (string partId in splitRelativeId)
+				e = e == null ? Entities[partId] : (e as EntityContext).Entities[partId];
+			return e;
+		}
+
+		/// <summary>
 		/// Add an <see cref="JGL.Heirarchy.Entity"/> to this <see cref="JGL.Heirarchy.EntityContext"/>
 		/// </summary>
 		/// <param name="e">The <see cref="JGL.Heirarchy.Entity"/> to add</param>
 		/// <remarks>ICollection implementation</remarks>
 		public void Add(Entity e)
 		{
+			if (Entities.Contains(e.Name))
+				throw new ArgumentException(string.Concat("Entity name \"", e.Name, "\" already exists in context \"", Id, "\""));
 			Entities.Add(e);
 		}
 
@@ -228,7 +221,7 @@ namespace JGL.Heirarchy
 		/// <param name="entities"><see cref="JGL.Heirarchy.Entity"/> instance(s) to add</param>
 		public void Add(params Entity[] entities)
 		{
-			if (entities != null)	// && entities.GetType().IsArray)
+//			if (entities != null)	// && entities.GetType().IsArray)
 				foreach (Entity child in entities)
 					Entities.Add(child);
 		}
@@ -241,6 +234,8 @@ namespace JGL.Heirarchy
 		/// <remarks>ICollection[Entity] implementation</remarks>
 		public bool Remove(Entity e)
 		{
+			if (!Entities.Contains(e.Name))
+				return false;
 			return Entities.Remove(e);
 		}
 		
@@ -251,6 +246,8 @@ namespace JGL.Heirarchy
 		/// <returns><c>true</c> if found and removed, otherwise, <c>false</c></returns>
 		public bool Remove(string entityName)
 		{
+			if (!Entities.Contains(entityName))
+				return false;
 			return Entities.Remove(entityName);
 		}
 
@@ -260,6 +257,8 @@ namespace JGL.Heirarchy
 		/// <remarks>ICollection[Entity] implementation</remarks>
 		public void Clear()
 		{
+			foreach (Entity e in Entities)
+				e.Parent = null;
 			Entities.Clear();
 		}
 		

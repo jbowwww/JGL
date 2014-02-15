@@ -59,14 +59,12 @@
     <Compile Include="Heirarchy\IRenderable.cs" />
     <Compile Include="Heirarchy\Mesh.cs" />
     <Compile Include="Geometry\TexCoord.cs" />
-    <Compile Include="GL\GLContextualData.cs" />
     <Compile Include="Heirarchy\Camera.cs" />
     <Compile Include="Heirarchy\IPositionable.cs" />
     <Compile Include="Heirarchy\IRotatable.cs" />
     <Compile Include="Geometry\Color.cs" />
     <Compile Include="Heirarchy\SimpleObject.cs" />
     <Compile Include="Heirarchy\Light.cs" />
-    <Compile Include="GL\Configuration.cs" />
     <Compile Include="Debugging\Debug.cs" />
     <Compile Include="Debugging\AsyncTraceListener.cs" />
     <Compile Include="Debugging\AutoTraceSource.cs" />
@@ -100,24 +98,27 @@
     <Compile Include="ConcurrencyException.cs" />
     <Compile Include="Heirarchy\HeirarchyException.cs" />
     <Compile Include="Heirarchy\Resources\Resource_static.cs" />
-    <Compile Include="Heirarchy\RenderArgs.cs" />
-    <Compile Include="Heirarchy\Behaviours\BatchBehaviour.cs" />
     <Compile Include="Heirarchy\Behaviours\Behaviour.cs" />
     <Compile Include="Heirarchy\INewtonian.cs" />
     <Compile Include="Heirarchy\Behaviours\NewtonianMovement.cs" />
     <Compile Include="Heirarchy\Behaviours\Gravity.cs" />
+    <Compile Include="Heirarchy\Behaviours\IBehaviour.cs" />
+    <Compile Include="Graphics\GLContextualData.cs" />
+    <Compile Include="Graphics\Configuration.cs" />
+    <Compile Include="Graphics\RenderArgs.cs" />
+    <Compile Include="Heirarchy\Behaviours\ParticleGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Extensions\" />
     <Folder Include="Heirarchy\" />
     <Folder Include="Geometry\" />
-    <Folder Include="GL\" />
     <Folder Include="Debugging\" />
     <Folder Include="Heirarchy\Library\" />
     <Folder Include="IO\" />
     <Folder Include="UI\" />
     <Folder Include="Heirarchy\Behaviours\" />
+    <Folder Include="Graphics\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -131,5 +132,6 @@
   <ItemGroup>
     <None Include="XML comment clipboard.txt.cs" />
     <None Include="Features.txt" />
+    <None Include="Heirarchy\Behaviours\BatchBehaviour.cs" />
   </ItemGroup>
 </Project>

@@ -42,12 +42,6 @@
             Think about it, first, then code
             </remarks>
         </member>
-        <member name="M:JGL.Heirarchy.Entity.#ctor(System.String)">
-            <summary>
-            Initializes a new <see cref="T:JGL.Heirarchy.Entity" /> instance
-            <see cref="!:JGL.Heirarchy.Context.Entities" /></summary>
-            <param name="name">Entity Name</param>
-        </member>
         <member name="F:JGL.Heirarchy.Entity.Trace">
             <summary>
             Tracing
@@ -91,6 +85,10 @@
         </member>
         <member name="M:JGL.Heirarchy.Entity.GetRelativeId(JGL.Heirarchy.EntityContext)">
             <summary>
+            Initializes a new <see cref="T:JGL.Heirarchy.Entity" /> instance
+            <see cref="!:JGL.Heirarchy.Context.Entities" /></summary>
+            <param name="name">Entity Name</param>
+            <summary>
             Gets this <see cref="T:JGL.Heirarchy.Entity" />'s ID relative to the given <see cref="T:JGL.Heirarchy.EntityContext" />,
             which should be an ancestor of this <see cref="T:JGL.Heirarchy.Entity" /> in the heirarchy.
             </summary>
@@ -124,17 +122,17 @@
             </summary>
             <param name="children">Zero or more child entities to add to this <see cref="!:JGL.Heirarchy.Context" /></param>
         </member>
-        <member name="M:JGL.Heirarchy.Scene.#ctor(System.String,JGL.Heirarchy.Entity[])">
+        <member name="F:JGL.Heirarchy.Scene.Trace">
+            <summary>
+            Tracing
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Scene.ProcessBehaviours(JGL.Graphics.RenderArgs)">
             <summary>
             Initializes a new instance of the <see cref="T:JGL.Heirarchy.Scene" /> class.
             </summary>
             <param name="children">Zero or more child entities to add to this <see cref="!:JGL.Heirarchy.Context" /></param>
             <param name="name">Entity name</param>
-        </member>
-        <member name="F:JGL.Heirarchy.Scene.Trace">
-            <summary>
-            Tracing
-            </summary>
         </member>
         <member name="T:JGL.Heirarchy.Sector">
             <summary>
@@ -187,7 +185,7 @@
             If using texture coordinates the <see cref="!:JGL.Heirarchy.Mesh.Texture" /> property should also be set
             </summary>
         </member>
-        <member name="M:JGL.Heirarchy.Mesh.#ctor(System.String)">
+        <member name="M:JGL.Heirarchy.Mesh.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:JGL.Heirarchy.Mesh" /> class.
             </summary>
@@ -289,28 +287,16 @@
             Tracing
             </summary>
         </member>
-        <member name="T:JGL.OpenGL.GLContextualData`2">
-            <summary>
-            GL contextual.
-            </summary>
-        </member>
-        <member name="M:JGL.OpenGL.GLContextualData`2.#ctor(GLContextualDataCreationHandler,`0)">
-            <summary>
-            Initializes a new instance of the <see cref="!:JGL.GL.GLContextualData" /> class.
-            </summary>
-        </member>
         <member name="T:JGL.Heirarchy.Camera">
             <summary>
             Camera entity.
             </summary>
         </member>
-        <member name="M:JGL.Heirarchy.Camera.#ctor(System.String)">
+        <member name="M:JGL.Heirarchy.Camera.Render(JGL.Graphics.RenderArgs)">
             <summary>
             Initializes a new instance of the <see cref="T:JGL.Heirarchy.Camera" /> class.
             </summary>
             <param name="name">Camera's entity name</param>
-        </member>
-        <member name="M:JGL.Heirarchy.Camera.Render(JGL.Graphics.RenderArgs)">
             <summary>
             Render owner <see cref="T:JGL.Heirarchy.Scene" /> using the perspective of this <see cref="T:JGL.Heirarchy.Camera" />,
             </summary>
@@ -354,19 +340,15 @@
             Initializes a new instance of the <see cref="T:JGL.Heirarchy.SimpleObject" /> class.
             </summary>
         </member>
-        <member name="M:JGL.Heirarchy.SimpleObject.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.SimpleObject" /> class.
-            </summary>
-            <param name="name">Object name</param>
-        </member>
-        <member name="M:JGL.Heirarchy.SimpleObject.#ctor(System.String,JGL.Heirarchy.SimpleObject.RenderFunc)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.SimpleObject" /> class.
-            </summary>
-            <param name="name">Object name</param>
-        </member>
         <member name="M:JGL.Heirarchy.SimpleObject.#ctor(JGL.Heirarchy.SimpleObject.RenderFunc)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.SimpleObject" /> class.
+            </summary>
+            <param name="name">Object name</param>
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.SimpleObject" /> class.
+            </summary>
+            <param name="name">Object name</param>
             <summary>
             Initializes a new instance of the <see cref="T:JGL.Heirarchy.SimpleObject" /> class.
             </summary>
@@ -755,11 +737,6 @@
             Initializes a new instance of the <see cref="T:JGL.Heirarchy.Object" /> class.
             </summary>
         </member>
-        <member name="M:JGL.Heirarchy.Object.#ctor(System.String,JGL.Heirarchy.Entity[])">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Object" /> class.
-            </summary>
-        </member>
         <member name="F:JGL.Heirarchy.Object.Trace">
             <summary>
             Tracing
@@ -782,6 +759,9 @@
             Gets or sets the object orientation (linked to <see cref="P:JGL.Heirarchy.Object.Rotation" /></summary>
         </member>
         <member name="M:JGL.Heirarchy.Object.Move(OpenTK.Vector3d,System.Double)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Object" /> class.
+            </summary>
             <summary>
             Move Position vector a distance in the given direction
             </summary>
@@ -1356,13 +1336,6 @@
             </summary>
             <param name="entities">Optional parameter array of child <see cref="T:JGL.Heirarchy.Entity" /> instances</param>
         </member>
-        <member name="M:JGL.Heirarchy.EntityContext.#ctor(System.String,JGL.Heirarchy.Entity[])">
-            <summary>
-            Constructs a new <see cref="T:JGL.Heirarchy.EntityContext" /> with zero initial child entities
-            </summary>
-            <param name="name">Name for the new <see cref="T:JGL.Heirarchy.EntityContext" /></param>
-            <param name="entities">Optional parameter array of child <see cref="T:JGL.Heirarchy.Entity" /> instances</param>
-        </member>
         <member name="T:JGL.Heirarchy.EntityContext.EntityEventArgs">
             <summary>
             Entity event arguments.
@@ -1393,6 +1366,11 @@
             The current context.
             </summary>
         </member>
+        <member name="F:JGL.Heirarchy.EntityContext.Entities">
+            <summary>
+            Return a <see cref="!:System.Collections.Generic.ICollection" />
+            representing the current direct child entities of this <see cref="T:JGL.Heirarchy.EntityContext" /></summary>
+        </member>
         <member name="E:JGL.Heirarchy.EntityContext.EntityAdded">
             <summary>
             Occurs when an <see cref="T:JGL.Heirarchy.Entity" /> is added to this <see cref="T:JGL.Heirarchy.EntityContext" /></summary>
@@ -1407,42 +1385,17 @@
         </member>
         <member name="P:JGL.Heirarchy.EntityContext.Item(System.String)">
             <summary>
-            Get the <see cref="T:JGL.Heirarchy.Entity" /> with the specified <paramref name="entityName" /></summary>
-            <param name="entityName">Name of entity to get</param>
+            Get the <see cref="T:JGL.Heirarchy.Entity" /> with the specified <paramref name="relativeId" /></summary>
+            <param name="relativeId">ID, relative to this <see cref="T:JGL.Heirarchy.EntityContext" />, of the entity to get</param>
         </member>
         <member name="P:JGL.Heirarchy.EntityContext.Item(System.Int32)">
             <summary>
             Gets the <see cref="T:JGL.Heirarchy.Entity" /> at the specified index <paramref name="entityIndex" /></summary>
             <param name="entityIndex">Index of the <see cref="T:JGL.Heirarchy.Entity" /> to get</param>
         </member>
-        <member name="P:JGL.Heirarchy.EntityContext.Entities">
-            <summary>
-            Return a <see cref="!:System.Collections.Generic.ICollection" />
-            representing the current direct child entities of this <see cref="T:JGL.Heirarchy.EntityContext" /></summary>
-        </member>
-        <member name="P:JGL.Heirarchy.EntityContext.Objects">
-            <summary>
-            Return a <see cref="!:System.Collections.Generic.ICollection" />
-            representing the current direct child entities of this <see cref="T:JGL.Heirarchy.EntityContext" />
-            which are of type <see cref="T:JGL.Heirarchy.Object" /></summary>
-            <remarks>
-            	-	TODO: Test this. Might need to change to return <c>this.OfType`1[Object]()</c></remarks>
-        </member>
         <member name="P:JGL.Heirarchy.EntityContext.Descendants">
             <summary>
-            Get <see cref="T:JGL.Heirarchy.Entity" />s contained in this <see cref="T:JGL.Heirarchy.EntityContext" /> which are of type <typeparamref name="TEntity" /></summary>
-            <returns>
-                <see cref="T:JGL.Heirarchy.Entity" />s of type <typeparamref name="TEntity" /></returns>
-            <typeparam name="TEntity">The type of <see cref="T:JGL.Heirarchy.Entity" />s to return</typeparam>
-            <summary>
             Gets the descendant <see cref="T:JGL.Heirarchy.Entity" />s of this <see cref="T:JGL.Heirarchy.EntityContext" /></summary>
-            <remarks>
-            	- Uses <c>yield</c>
-            	- TODO: Would be nice if this was an ICollection, because that would mean it has a Count member? (and prob other things)
-            		- NicER would be IEnumerable, (i think) this allows LINQ queries?
-            			- Could use for stuff like foreach (Entity e from RootContext.Descendants
-            																			where e.GetType().Equals(typeof(JGL.Heirarchy.Object)) and e.Id != "excludedId")
-            </remarks>
         </member>
         <member name="P:JGL.Heirarchy.EntityContext.Count">
             <summary>
@@ -1467,6 +1420,11 @@
         </member>
         <member name="M:JGL.Heirarchy.EntityContext.Contains(JGL.Heirarchy.Entity)">
             <summary>
+            Constructs a new <see cref="T:JGL.Heirarchy.EntityContext" /> with zero initial child entities
+            </summary>
+            <param name="name">Name for the new <see cref="T:JGL.Heirarchy.EntityContext" /></param>
+            <param name="entities">Optional parameter array of child <see cref="T:JGL.Heirarchy.Entity" /> instances</param>
+            <summary>
             Test if the given <see cref="T:JGL.Heirarchy.Entity" /> exists in this <see cref="T:JGL.Heirarchy.EntityContext" /></summary>
             <param name="e">The <see cref="T:JGL.Heirarchy.Entity" /> to check for existence of</param>
             <returns>
@@ -1479,6 +1437,23 @@
             <param name="entityName">The entity name to check for existence of</param>
             <returns>
                 <c>True</c> if found, otherwise <c>false</c></returns>
+        </member>
+        <member name="M:JGL.Heirarchy.EntityContext.Get(System.String)">
+            <summary>
+            Get the <see cref="T:JGL.Heirarchy.Entity" /> using an ID relative to this <see cref="T:JGL.Heirarchy.EntityContext" /></summary>
+            <param name="relativeId">An Id string relative to this <see cref="T:JGL.Heirarchy.EntityContext" /></param>
+            <returns>The <see cref="T:JGL.Heirarchy.Entity" /> specified by the relative ID</returns>
+            <remarks>
+            If resources are named as their filename including the extension, the period before the extension causes a problem here
+            Hack for now/Possibly longer term: Resources can be specified using "res://" prefix, which causes this method to
+            look for an id exactly matching the remainder of the string specified for relative id. EG "res://test1.png" will get child entity
+            with the id "test1.png"
+            	-	! Now that I have move this out of EntityCollection and back in here, I may not have to worry about that issue with Resources:
+            		Now I'm using EntityCollection in Behaviour's too, so they should not be aware of the heirarchy (thats why I moved this method back here)
+            		Which means I could use an EntityCollection in the RootContext and/or Scene instances, for storing Resource entities.
+            		The indexer properties in EntityCollection (taking string and int respectively) will now not be aware of any heirarchy, so they
+            		can be used to retrieve resources with '.' in the name, and you can still use '.' for Entity heirarchy ID separation, if you want~!
+            </remarks>
         </member>
         <member name="M:JGL.Heirarchy.EntityContext.Add(JGL.Heirarchy.Entity)">
             <summary>
@@ -1991,52 +1966,43 @@
             <summary>
             A collection of <see cref="T:JGL.Heirarchy.Entity" />s contained by an <see cref="T:JGL.Heirarchy.EntityContext" /></summary>
         </member>
-        <member name="M:JGL.Heirarchy.EntityCollection.#ctor(JGL.Heirarchy.EntityContext)">
-            <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.EntityCollection" /> class.
-            </summary>
-        </member>
-        <member name="F:JGL.Heirarchy.EntityCollection._innerDictionary">
+        <member name="F:JGL.Heirarchy.EntityCollection`1._innerDictionary">
             <summary>
             The _inner dictionary.
             </summary>
         </member>
-        <member name="F:JGL.Heirarchy.EntityCollection._context">
-            <summary>
-            The <see cref="T:JGL.Heirarchy.EntityContext" /></summary>
-        </member>
-        <member name="P:JGL.Heirarchy.EntityCollection.Item(System.String)">
+        <member name="P:JGL.Heirarchy.EntityCollection`1.Item(System.String)">
             <summary>
             Gets the <see cref="T:JGL.Heirarchy.Entity" /> with the specified name.
             </summary>
-            <param name="relativeId">Relative Id of the required <see cref="T:JGL.Heirarchy.Entity" /></param>
+            <param name="relativeId">Name of the required <see cref="T:JGL.Heirarchy.Entity" /></param>
         </member>
-        <member name="P:JGL.Heirarchy.EntityCollection.Item(System.Int32)">
+        <member name="P:JGL.Heirarchy.EntityCollection`1.Item(System.Int32)">
             <summary>
             Gets the <see cref="T:JGL.Heirarchy.Entity" /> at the specified index <paramref name="entityIndex" /></summary>
             <param name="entityIndex">Index of the <see cref="T:JGL.Heirarchy.Entity" /> to get</param>
         </member>
-        <member name="P:JGL.Heirarchy.EntityCollection.Names">
+        <member name="P:JGL.Heirarchy.EntityCollection`1.Names">
             <summary>
             Get the names of all <see cref="T:JGL.Heirarchy.Entity" /> instances contained in this <see cref="T:JGL.Heirarchy.EntityCollection" /></summary>
         </member>
-        <member name="P:JGL.Heirarchy.EntityCollection.Count">
+        <member name="P:JGL.Heirarchy.EntityCollection`1.Count">
             <summary>
             Get the number of <see cref="T:JGL.Heirarchy.Entity" />s in this <see cref="T:JGL.Heirarchy.EntityCollection" /></summary>
             <remarks>ICollection[Entity] implementation</remarks>
         </member>
-        <member name="P:JGL.Heirarchy.EntityCollection.IsReadOnly">
+        <member name="P:JGL.Heirarchy.EntityCollection`1.IsReadOnly">
             <summary>
             Gets a value indicating whether this instance is read only.
             </summary>
             <remarks>ICollection[Entity] implementation</remarks>
         </member>
-        <member name="M:JGL.Heirarchy.EntityCollection.System#Collections#IEnumerable#GetEnumerator">
+        <member name="M:JGL.Heirarchy.EntityCollection`1.System#Collections#IEnumerable#GetEnumerator">
             <summary>
             Gets the enumerator.
             </summary>
         </member>
-        <member name="M:JGL.Heirarchy.EntityCollection.UpdateName(JGL.Heirarchy.Entity,System.String)">
+        <member name="M:JGL.Heirarchy.EntityCollection`1.UpdateName(`0,System.String)">
             <summary>
             Called by <see cref="P:JGL.Heirarchy.Entity.Name" /> set accessor when an <see cref="T:JGL.Heirarchy.Entity" /> changes its name, to ensure
             consistency in the <see cref="T:JGL.Heirarchy.EntityContext" /></summary>
@@ -2044,32 +2010,25 @@
                 <c>true</c> if updated successfully, otherwise, <c>false</c></returns>
             <param name="entity">The <see cref="T:JGL.Heirarchy.Entity" /> to update name for, with its current name still set</param>
             <param name="newName">The new <see cref="P:JGL.Heirarchy.Entity.Name" /></param>
-        </member>
-        <member name="M:JGL.Heirarchy.EntityCollection.Get(System.String)">
-            <summary>
-            Get the <see cref="T:JGL.Heirarchy.Entity" /> using an ID relative to this <see cref="T:JGL.Heirarchy.EntityContext" /></summary>
-            <param name="relativeId">An Id string relative to this <see cref="T:JGL.Heirarchy.EntityContext" /></param>
-            <returns>The <see cref="T:JGL.Heirarchy.Entity" /> specified by the relative ID</returns>
             <remarks>
-            If resources are named as their filename including the extension, the period before the extension causes a problem here
-            Hack for now/Possibly longer term: Resources can be specified using "res://" prefix, which causes this method to
-            look for an id exactly matching the remainder of the string specified for relative id. EG "res://test1.png" will get child entity
-            with the id "test1.png"
+            Note this is not meant to check that the entity's new name is valid or not already taken - that's in Entity.Name set accessor
+            This just performs the update in this collection, by adding the same Entity reference with the new name as key, then
+            removing the old one
             </remarks>
         </member>
-        <member name="M:JGL.Heirarchy.EntityCollection.Contains(JGL.Heirarchy.Entity)">
+        <member name="M:JGL.Heirarchy.EntityCollection`1.Contains(`0)">
             <summary>
             Determines if this <see cref="T:JGL.Heirarchy.EntityCollection" /> contains the specified <see cref="T:JGL.Heirarchy.Entity" /></summary>
             <param name="e">The <see cref="T:JGL.Heirarchy.Entity" /> to check for</param>
             <remarks>ICollection[Entity] implementation</remarks>
         </member>
-        <member name="M:JGL.Heirarchy.EntityCollection.Contains(System.String)">
+        <member name="M:JGL.Heirarchy.EntityCollection`1.Contains(System.String)">
             <summary>
             Determines if this <see cref="T:JGL.Heirarchy.EntityCollection" /> contains an <see cref="T:JGL.Heirarchy.Entity" /> with the specified name.
             </summary>
             <param name="entityName">The <see cref="T:JGL.Heirarchy.Entity" /> name to check for</param>
         </member>
-        <member name="M:JGL.Heirarchy.EntityCollection.Add(JGL.Heirarchy.Entity)">
+        <member name="M:JGL.Heirarchy.EntityCollection`1.Add(`0)">
             <summary>
             Adds an <see cref="T:JGL.Heirarchy.Entity" />s to this <see cref="T:JGL.Heirarchy.EntityCollection" /></summary>
             <param name="e">The <see cref="T:JGL.Heirarchy.Entity" /> to add</param>
@@ -2081,13 +2040,13 @@
             </exception>
             <remarks>ICollection[Entity] implementation</remarks>
         </member>
-        <member name="M:JGL.Heirarchy.EntityCollection.Add(JGL.Heirarchy.Entity[])">
+        <member name="M:JGL.Heirarchy.EntityCollection`1.Add(JGL.Heirarchy.Entity[])">
             <summary>
             Add the specified <see cref="T:JGL.Heirarchy.Entity" /> instances
             </summary>
             <param name="entities">One or more <see cref="T:JGL.Heirarchy.Entity" /> instances</param>
         </member>
-        <member name="M:JGL.Heirarchy.EntityCollection.Remove(JGL.Heirarchy.Entity)">
+        <member name="M:JGL.Heirarchy.EntityCollection`1.Remove(`0)">
             <summary>
             Remove the specified <see cref="T:JGL.Heirarchy.Entity" /> from this <see cref="T:JGL.Heirarchy.EntityCollection" /></summary>
             <param name="e">The <see cref="T:JGL.Heirarchy.Entity" /> to remove</param>
@@ -2096,7 +2055,7 @@
             </exception>
             <remarks>ICollection[Entity] implementation</remarks>
         </member>
-        <member name="M:JGL.Heirarchy.EntityCollection.Remove(System.String)">
+        <member name="M:JGL.Heirarchy.EntityCollection`1.Remove(System.String)">
             <summary>
             Remove the <see cref="T:JGL.Heirarchy.Entity" /> with the specified name.
             </summary>
@@ -2105,12 +2064,12 @@
             Thrown when the <paramref name="entityName" /> is found but failed to be removed
             </exception>
         </member>
-        <member name="M:JGL.Heirarchy.EntityCollection.Clear">
+        <member name="M:JGL.Heirarchy.EntityCollection`1.Clear">
             <summary>
             Clears this <see cref="T:JGL.Heirarchy.EntityCollection" /></summary>
             <remarks>ICollection[Entity] implementation</remarks>
         </member>
-        <member name="M:JGL.Heirarchy.EntityCollection.CopyTo(JGL.Heirarchy.Entity[],System.Int32)">
+        <member name="M:JGL.Heirarchy.EntityCollection`1.CopyTo(`0[],System.Int32)">
             <summary>
             Copies the <see cref="T:JGL.Heirarchy.Entity" />s in this <see cref="T:JGL.Heirarchy.EntityCollection" /> to the specified array
             </summary>
@@ -2118,7 +2077,7 @@
             <param name="arrayIndex">The index into the destination array to begin copying at</param>
             <remarks>ICollection[Entity] implementation</remarks>
         </member>
-        <member name="M:JGL.Heirarchy.EntityCollection.GetEnumerator">
+        <member name="M:JGL.Heirarchy.EntityCollection`1.GetEnumerator">
             <summary>
             Gets the enumerator.
             </summary>
@@ -2183,6 +2142,101 @@
         <member name="P:JGL.Heirarchy.HeirarchyException.EntityName">
             <summary>
             Optional name of an <see cref="T:JGL.Heirarchy.Entity" /> that the exception relates to
+            </summary>
+        </member>
+        <member name="T:JGL.Heirarchy.Behaviours.Behaviour`1">
+            <summary>
+            Provides functions that are called by an active <see cref="T:JGL.Heirarchy.Scene" /> to perform
+            some implement some kind of temporal behaviour
+            </summary>
+            <remarks>
+            Not sure yet whether I'm going to be implementing this in object/entity's or implementing it
+            separately in some kind of processor/controller class. Maybe both
+            </remarks>
+        </member>
+        <member name="M:JGL.Heirarchy.Behaviours.Behaviour`1.#ctor(JGL.Heirarchy.Scene)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Behaviours.Behaviour" /> class.
+            </summary>
+            <param name="scene">The <see cref="T:JGL.Heirarchy.Scene" /> that this <see cref="T:JGL.Heirarchy.Behaviours.Behaviour" /> will be performing in</param>
+        </member>
+        <member name="F:JGL.Heirarchy.Behaviours.Behaviour`1.Entities">
+            <summary>
+            The <see cref="T:JGL.Heirarchy.Entity" />s this behaviour is currently applied to
+            </summary>
+        </member>
+        <member name="P:JGL.Heirarchy.Behaviours.Behaviour`1.Scene">
+            <summary>
+            The <see cref="T:JGL.Heirarchy.Scene" /> that this <see cref="T:JGL.Heirarchy.Behaviours.Behaviour" /> will be performing in
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Behaviours.Behaviour`1.Process(JGL.Graphics.RenderArgs,`0)">
+            <summary>
+            Perform the implemented behaviour by process the supplied <paramref name="entity" /></summary>
+            <param name="renderArgs">
+            Supplied primarily for <see cref="P:JGL.Graphics.RenderArgs.LastDuration" />, commonly used so that
+            behaviours are temporally consistent regardless of frame rate. Other members may be useful - see how it goes
+            (if not, maybe just supply the time lapsed since last processing? - think about it, see how it goes)
+            	- It looks wrong, frankly, think of a better way
+            </param>
+            <param name="entity">The <see cref="T:JGL.Heirarchy.Entity" /> to process behaviour for</param>
+            <remarks>
+            This class does not store an Entity reference, as one behaviour instance can be applied to many entities if need be.
+            Not sure exactly how I'm going to implement it yet but I'm thinking maybe Entity needs a member method called
+            ApplyBehaviour(Behaviour): This passes the behaviour instance and its own reference to an internal method
+            using the instance of the entity's owner Scene - that method then somehow stores the two together for easy processing
+            </remarks>
+        </member>
+        <member name="T:JGL.Heirarchy.Behaviours.NewtonianMovement">
+            <summary>
+            Newtonian movement.
+            </summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Behaviours.NewtonianMovement.Process(JGL.Graphics.RenderArgs,JGL.Heirarchy.Object)">
+            <summary>
+            Perform the implemented behaviour by process the supplied <paramref name="entity" /></summary>
+            <param name="entity">The <see cref="T:JGL.Heirarchy.Entity" /> to process behaviour for</param>
+            <remarks>JGL.Heirarchy.BatchBehaviour[Object] abstract method implementation</remarks>
+        </member>
+        <member name="F:JGL.Heirarchy.Behaviours.Gravity.NeutralAccelerationThreshold">
+            <summary>
+            If an <see cref="T:JGL.Heirarchy.Object" />'s Y acceleration component's magnitude is less than this,
+            this behaviour will give it an initial acceleration using the GravityAcceleration property
+            </summary>
+        </member>
+        <member name="F:JGL.Heirarchy.Behaviours.Gravity.GravityAcceleration">
+            <summary>
+            Acceleration due to gravity is 9.8 m/s (might not necessarily look good though, change if need be)
+            </summary>
+        </member>
+        <member name="T:JGL.Heirarchy.Behaviours.IBehaviour">
+            <summary>
+            Defines a behaviour that belongs to an owner <see cref="T:JGL.Heirarchy.Scene" /> and
+            can operate on one or many <see cref="T:JGL.Heirarchy.Entity" />s
+            </summary>
+        </member>
+        <member name="P:JGL.Heirarchy.Behaviours.IBehaviour.Scene">
+            <summary>
+            The <see cref="T:JGL.Heirarchy.Scene" /> that this <see cref="T:JGL.Heirarchy.Behaviours.IBehaviour" /> will be performing in
+            </summary>
+            <remarks>
+            Actually not sure this interface and abstract class need a Scene reference??? It could always get it from the entity
+            it's working on if it does need it??
+            </remarks>
+        </member>
+        <member name="M:JGL.Heirarchy.Behaviours.IBehaviour.Process(JGL.Graphics.RenderArgs)">
+            <summary>
+            Perform the implemented behaviour by process the supplied <paramref name="entity" /></summary>
+            <remarks>See <see cref="T:JGL.Heirarchy.Behaviours.Behaviour" /></remarks>
+        </member>
+        <member name="T:JGL.Graphics.GLContextualData`2">
+            <summary>
+            GL contextual.
+            </summary>
+        </member>
+        <member name="M:JGL.Graphics.GLContextualData`2.#ctor(GLContextualDataCreationHandler,`0)">
+            <summary>
+            Initializes a new instance of the <see cref="!:JGL.GL.GLContextualData" /> class.
             </summary>
         </member>
         <member name="T:JGL.Graphics.RenderArgs">
@@ -2275,35 +2329,5 @@
             Reset the triangle count, record the timespan since the last mark time and mark it again
             </summary>s
             <remarks>This should get called before every rendering</remarks></member>
-        <member name="T:JGL.Heirarchy.Behaviours.BatchBehaviour`1">
-            <summary>
-            An abstract type of <see cref="T:JGL.Heirarchy.Behaviours.Behaviour" /> that can control several <see cref="T:JGL.Heirarchy.Entity" />'s with one instance
-            </summary>
-            <remarks>
-            Maybe in the very distant future you could find a way to implement this in a highly parallel fashion.
-            Some ideas - SIMD instructions (can i even use those in C# tho), thread pools, task parallel library?
-            </remarks>
-        </member>
-        <member name="T:JGL.Heirarchy.Behaviours.Behaviour">
-            <summary>
-            Provides functions that are called by an active <see cref="T:JGL.Heirarchy.Scene" /> to perform
-            some implement some kind of temporal behaviour
-            </summary>
-            <remarks>
-            Not sure yet whether I'm going to be implementing this in object/entity's or implementing it
-            separately in some kind of processor/controller class. Maybe both
-            </remarks>
-        </member>
-        <member name="F:JGL.Heirarchy.Behaviours.Gravity.NeutralAccelerationThreshold">
-            <summary>
-            If an <see cref="T:JGL.Heirarchy.Object" />'s Y acceleration component's magnitude is less than this,
-            this behaviour will give it an initial acceleration using the GravityAcceleration property
-            </summary>
-        </member>
-        <member name="F:JGL.Heirarchy.Behaviours.Gravity.GravityAcceleration">
-            <summary>
-            Acceleration due to gravity is 9.8 m/s (might not necessarily look good though, change if need be)
-            </summary>
-        </member>
     </members>
 </doc>

@@ -21,8 +21,9 @@ namespace JGL.Heirarchy.Library
 		/// </summary>
 		/// <param name='name'>Entity name</param>
 		public Triangle(string name = null)
-			: base(name)
+//			: base(name)
 		{
+			base.Name = name;
 			Init(1, 1);
 		}
 
@@ -33,8 +34,9 @@ namespace JGL.Heirarchy.Library
 		/// <param name='xSize'>X size</param>
 		/// <param name='zSize'>Z size</param>
 		public Triangle(string name, double xSize, double zSize)
-			: base(name)
+//			: base(name)
 		{
+			base.Name = name;
 			Init(xSize, zSize);
 		}
 
@@ -44,7 +46,7 @@ namespace JGL.Heirarchy.Library
 		/// <param name='xSize'>X size</param>
 		/// <param name='zSize'>Z size</param>
 		public Triangle(double xSize, double zSize)
-			: base(null)
+//			: base(null)
 		{
 			Init(xSize, zSize);
 		}

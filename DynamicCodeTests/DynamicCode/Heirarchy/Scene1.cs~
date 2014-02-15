@@ -17,15 +17,16 @@ namespace Dynamic
 	[Serializable]
 	public class Scene1 : Scene
 	{
-		public Scene1() : base("Scene1")
+		public Scene1()		// : base()
 		{
+			base.Name = "Scene1";
 			Init();
 		}
 
-		public Scene1(string name) : base(name)
-		{
-			Init();
-		}
+//		public Scene1()		//(string name) : base(name)
+//		{
+//			Init();
+//		}
 
 		public void Init()
 		{
@@ -55,7 +56,7 @@ namespace Dynamic
 
 			Gravity gravity = new Gravity(this);
 			foreach (JGL.Heirarchy.Object o in this.Entities.OfType<JGL.Heirarchy.Object>())
-				gravity.Entities.Add(o);
+				gravity.ApplyTo(o);
 			Behaviours.Add(gravity);
 		}
 	}

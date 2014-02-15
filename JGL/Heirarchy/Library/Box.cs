@@ -102,8 +102,9 @@ namespace JGL.Heirarchy.Library
 		/// </summary>
 		/// <param name="texturiseMethod">A <see cref="BoxTexturiseMethod"/> instance, or null to use <see cref="DefaultTexturiseEachFace"/></param>
 		public Box(TexturiseMethod<Box> texturiseMethod = null)
-			: base(null)
+//			: base(null)
 		{
+			base.Name = null;
 			Init(1, 1, 1, texturiseMethod);
 		}
 
@@ -113,8 +114,9 @@ namespace JGL.Heirarchy.Library
 		/// <param name="name">Name</param>
 		/// <param name="texturiseMethod">A <see cref="BoxTexturiseMethod"/> instance, or null to use <see cref="DefaultTexturiseEachFace"/></param>
 		public Box(string name, TexturiseMethod<Box> texturiseMethod = null)
-			: base(name)
+//			: base(name)
 		{
+			base.Name = name;
 			Init(1, 1, 1, texturiseMethod);
 		}
 
@@ -127,8 +129,9 @@ namespace JGL.Heirarchy.Library
 		/// <param name="zSize">Z size</param>
 		/// <param name="texturiseMethod">A <see cref="BoxTexturiseMethod"/> instance, or null to use <see cref="DefaultTexturiseEachFace"/></param>
 		public Box(string name, double xSize, double ySize, double zSize, TexturiseMethod<Box> texturiseMethod = null)
-			: base(name)
+//			: base(name)
 		{
+			base.Name = name;
 			Init(xSize, ySize, zSize, texturiseMethod);
 		}
 
@@ -140,7 +143,7 @@ namespace JGL.Heirarchy.Library
 		/// <param name="zSize">Z size</param>
 		/// <param name="texturiseMethod">A <see cref="BoxTexturiseMethod"/> instance, or null to use <see cref="DefaultTexturiseEachFace"/></param>
 		public Box(double xSize, double ySize, double zSize, TexturiseMethod<Box> texturiseMethod = null)
-			: base(null)
+//			: base(null)
 		{
 			Init(xSize, ySize, zSize, texturiseMethod);
 		}

@@ -1,12 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="DynamicCodeTests/DynamicCode/Heirarchy/Scene1.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="JGL/Heirarchy/Behaviours/Gravity.cs">
     <Files>
-      <File FileName="JGL/Heirarchy/Behaviours/NewtonianMovement.cs" Line="16" Column="1" />
-      <File FileName="JGL/Heirarchy/Behaviours/Gravity.cs" Line="18" Column="44" />
-      <File FileName="DynamicCodeTests/DynamicCode/Heirarchy/Scene1.cs" Line="57" Column="74" />
-      <File FileName="JGL/UI/SceneWindow.cs" Line="56" Column="21" />
-      <File FileName="JGL/Heirarchy/Scene.cs" Line="61" Column="15" />
+      <File FileName="DynamicCodeTests/DynamicCode/Heirarchy/Scene1.cs" Line="18" Column="27" />
+      <File FileName="JGL/Heirarchy/Behaviours/Gravity.cs" Line="33" Column="4" />
+      <File FileName="JGL/Heirarchy/Scene.cs" Line="63" Column="21" />
+      <File FileName="JGL/Heirarchy/Behaviours/IBehaviour.cs" Line="7" Column="20" />
+      <File FileName="JGL/Heirarchy/Behaviours/Behaviour.cs" Line="37" Column="10" />
+      <File FileName="JGL/Heirarchy/Behaviours/NewtonianMovement.cs" Line="14" Column="4" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -16,16 +17,14 @@
           </Node>
           <Node name="DynamicCodeTests" expanded="True">
             <Node name="DynamicCode" expanded="True">
-              <Node name="Heirarchy" expanded="True">
-                <Node name="Scene1.cs" selected="True" />
-              </Node>
+              <Node name="Heirarchy" expanded="True" />
             </Node>
           </Node>
           <Node name="JGL" expanded="True">
-            <Node name="GL" expanded="True" />
             <Node name="Heirarchy" expanded="True">
-              <Option id="ShowAllFiles" value="False" />
-              <Node name="Behaviours" expanded="True" />
+              <Node name="Behaviours" expanded="True">
+                <Node name="Gravity.cs" selected="True" />
+              </Node>
             </Node>
             <Node name="UI" expanded="True" />
           </Node>
