@@ -7,7 +7,7 @@ namespace JGL
 {
 	public static class Configuration
 	{
-		public static void Init(RenderArgs renderArgs)
+		public static void Init(int width, int height)
 		{
 			GL.Enable(EnableCap.LineSmooth);
 			GL.ShadeModel(ShadingModel.Smooth);
@@ -26,9 +26,9 @@ namespace JGL
 //			for (int lightIndex = 0; lightIndex < 8; lightIndex++)		// disable all lights by default before each frame rendering,
 //				GL.Disable(EnableCap.Light0 + lightIndex);					// let the JoGL.Heirarchy.Light entity re-enable as necessary
 			
-			GL.Viewport(0, 0, renderArgs.Width, renderArgs.Height);
+			GL.Viewport(0, 0, width, height);
 			GL.MatrixMode(MatrixMode.Projection);
-			Matrix4d m = Matrix4d.CreatePerspectiveFieldOfView(MathHelper.PiOver4, renderArgs.Width / renderArgs.Height, 0.1d, 500d);
+			Matrix4d m = Matrix4d.CreatePerspectiveFieldOfView(MathHelper.PiOver4, width / height, 0.1d, 500d);
 			GL.LoadMatrix(ref m);
 			GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);
 			

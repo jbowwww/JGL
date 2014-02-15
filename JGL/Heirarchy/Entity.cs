@@ -25,30 +25,75 @@ namespace JGL.Heirarchy
 		/// </summary>
 		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncXmlFileTraceListener.GetOrCreate("JGL"));
 
-		#region Private fields and methods
-		private EntityContext _owner = null;
-		private EntityContext _parent = null;
-		private string _name = null;
+		public const string EntityIdSeparator = ":";
+
+		#region Private fields
+		private string _name;
 		private string _id = null;
-		private bool _isAutoNamed = true;
-		private static int _genNameCount = 0;
+		private EntityContext _parent = null;
+		private EntityContext _owner = null;
 		#endregion
-		
+
+		#region Properties
 		/// <summary>
-		/// Owner is the top level entity in a heirarchy, and has no parent
+		/// Gets or sets the <see cref="JGL.Heirarchy.Entity"/> name
 		/// </summary>
-		public EntityContext Owner {
+		[XmlElement("Name")]
+		public string Name {
 			get
 			{
-				if (_owner == null)
+				if (IsAutoNamed)
 				{
-					Entity e = this;
-				     while (e.Parent != null)
-				     	e = e.Parent;
-					Debug.Assert (e is EntityContext);
-					_owner = e as EntityContext;
+					if (_name != null)
+						throw new HeirarchyException("Entity invalid: IsAutoNamed==true && Name != null")
+						{
+							ContextId = Parent == null ? null : Parent.Id,
+							EntityName = _name
+						};
+					IsAutoNamed = false;
+					return _name = GenerateAutoName();
 				}
-				return _owner;
+				if (string.IsNullOrEmpty(_name))
+					throw new HeirarchyException("Entity invalid: IsAutoNamed==false && Name == null")
+						{ ContextId = Parent == null ? null : Parent.Id };
+				return _name;
+			}
+			set
+			{
+				if (value == null)
+				{
+					if (_parent != null)
+						throw new HeirarchyException("Could not set entity name to null (for autonaming): It is already has a parent")
+							{ ContextId = Parent.Id, EntityName = _name };
+					IsAutoNamed = true;
+					_name = null;
+				}
+				else if (value != _name)
+					{
+						if (_parent != null)
+						{
+							if (_parent.Contains(value))			// UpdateName(this, value)
+								throw new HeirarchyException("Could not change entity name: Name already exists")
+								{ ContextId = _parent.Id, EntityName = _name };
+							_parent.Entities.UpdateName(this, value);			// update the EntityContext's collection
+						}
+						IsAutoNamed = false;
+						_name = value;
+						_id = null;
+					}
+			}
+		}
+
+		/// <summary>
+		/// Id of this entity is the concatenation of the parent's Id, a period, and the entity name, or
+		/// if this entity has no parent, Id is equal to the name
+		/// </summary>
+		public string Id {
+			get
+			{
+				return _id != null ? _id :
+					_id = _parent == null || _parent.IsRootContext ?
+						Name : string.Concat(_parent.Id, EntityIdSeparator, Name);
 			}
 		}
 		
@@ -69,97 +114,56 @@ namespace JGL.Heirarchy
 		}
 		
 		/// <summary>
-		/// Id of this entity is the concatenation of the parent's Id, a period, and the entity name, or
-		/// if this entity has no parent, Id is equal to the name
+		/// Owner is the top level entity in a heirarchy, and has no parent
 		/// </summary>
-		public string Id {
+		public EntityContext Owner {
 			get
 			{
-				string pid;
-				return _parent == null || (pid = _parent.Id) == string.Empty ? Name : string.Concat(pid, ".", Name);
-//				return _id != null ? _id :
-//					_id = _parent == null || _parent.Id == string.Empty ?
-//						Name : string.Concat (_parent.Id, ".", Name);
+				if (_owner == null)
+				{
+					Entity e = this;
+					while (e.Parent != null)
+						e = e.Parent;
+					Debug.Assert(e is EntityContext);
+					_owner = e as EntityContext;
+				}
+				return _owner;
 			}
 		}
 		
-		/// <summary>
-		/// Gets or sets the <see cref="JGL.Heirarchy.Entity"/> name
-		/// </summary>
-		[XmlElement("Name")]
-		public string Name {
-			get { return _name != null ? _name : _name = GenerateBaseName(); }
-			set
-			{
-				Debug.Assert(!string.IsNullOrWhiteSpace(value));
-				if (value != _name)
-				{
-					if (_parent != null)
-					{
-						if (value == null)
-							throw new InvalidOperationException(string.Format(
-								"Could not set entity \"{0}\" name to null (for entity autonaming) because it is contained by context \"{1}\"", _name != null ? _name : "(null)", Id));
-						if (_parent.Contains(value))			// UpdateName(this, value)
-							throw new InvalidOperationException("Could not change entity \"{0}\" name to \"{1}\" because the context \"{2}\" already has an entity with that name");
-						_parent.UpdateName(this, value);			// update the EntityContext's collection
-					}
-					_name = value;
-					_isAutoNamed = _name == null;
-					_id = null;
-				}
-			}
-		}
-
 		/// <summary>
 		/// Gets a value indicating whether this Entity has been autonamed (either a name was never set at construction,
 		/// or the name has deliberately been set to <c>null</c> to cause an auto name to be generated as required, when
 		/// adding to an <see cref="JGL.Heirarchy.Context"/>)
 		/// </summary>
-		public bool IsAutoNamed {
-			get { return _isAutoNamed; }
-		}
+		public bool IsAutoNamed { get; private set; }
 
 		/// <summary>
 		/// Gets a value indicating whether this <see cref="JGL.Heirarchy.Entity"/> is an <see cref="JGL.Heirarchy.EntityContext"/>
 		/// </summary>
 		public bool IsContext {
-			get { return this.GetType().IsSubclassOf(typeof(EntityContext)); }
+			get { return this is EntityContext; }		//.GetType().IsSubclassOf(typeof(EntityContext)); }
 		}
 
-		#region Constructors
 		/// <summary>
-		/// Initializes a new <see cref="JGL.Heirarchy.Entity"/> instance without setting a name
+		/// Gets a value indicating whether this <see cref="Entity"/> is an <see cref="EntityRootContext"/>
 		/// </summary>
-		public Entity ()
-		{
-
+		public bool IsRootContext {
+			get { return this is EntityRootContext; }
 		}
+		#endregion
 
 		/// <summary>
 		/// Initializes a new <see cref="JGL.Heirarchy.Entity"/> instance
 		/// <see cref="JGL.Heirarchy.Context.Entities"/>
 		/// </summary>
-		/// <param name='name'>Entity Name</param>
-		public Entity (string name)
+		/// <param name="name">Entity Name</param>
+		public Entity (string name = null)
 		{
 			Name = name;
 		}
-		#endregion
 
-		/// <summary>
-		/// Generates a base name for use when auto-naming <see cref="JGL.Heirarchy.Entity"/>s (ie when <see cref="JGL.Heirarchy.Entity.Name"/>
-		/// has not been explicitly set, or it has been set to null
-		/// </summary>
-		/// <returns>
-		/// The name.
-		/// </returns>
-		public virtual string GenerateBaseName()
-		{
-//			return string.Format ("AutoEntity:{0}#{1:d4}", this.GetType ().Name, _genNameCount++);
-			_genNameCount++;
-			return this.GetType().Name;
-		}
-
+		#region Methods
 		/// <summary>
 		/// Gets this <see cref="JGL.Heirarchy.Entity"/>'s ID relative to the given <see cref="JGL.Heirarchy.EntityContext"/>,
 		/// which should be an ancestor of this <see cref="JGL.Heirarchy.Entity"/> in the heirarchy.
@@ -169,11 +173,27 @@ namespace JGL.Heirarchy
 		/// <exception cref='ArgumentOutOfRangeException'>Thrown if <paramref name="reference"/> is not an ancestor of this <see cref="JGL.Heirarchy.Entity"/></exception>
 		public string GetRelativeId(EntityContext reference)
 		{
-			Debug.Assert (reference != null && this.Id.StartsWith(reference.Id + "."));
-			if (!this.Id.StartsWith(reference.Id + "."))
+			Debug.Assert (reference != null && this.Id.StartsWith(reference.Id + EntityIdSeparator));
+			if (!this.Id.StartsWith(reference.Id + EntityIdSeparator))
 				throw new ArgumentOutOfRangeException("reference", reference, string.Concat ("Not an ancestor of Entity \"", this.Id, "\""));
-			return this.Id.Substring ((reference.Id + ".").Length);
+			return this.Id.Substring ((reference.Id + EntityIdSeparator).Length);
 		}
+
+		/// <summary>
+		/// Generates a base name for use when auto-naming <see cref="JGL.Heirarchy.Entity"/>s (ie when <see cref="JGL.Heirarchy.Entity.Name"/>
+		/// has not been explicitly set, or it has been set to null
+		/// </summary>
+		/// <returns>
+		/// The name.
+		/// </returns>
+		protected virtual string GenerateAutoName()
+		{
+			byte[] tickBytes = BitConverter.GetBytes(DateTime.Now.Ticks);
+			short timeStamp = (short)(BitConverter.ToInt16(tickBytes, 0) + BitConverter.ToInt16(tickBytes, 2) +
+				BitConverter.ToInt16(tickBytes, 4) + BitConverter.ToInt16(tickBytes, 6));
+			return string.Format("{0} #{1:x4}", this.GetType().Name, timeStamp);
+		}
+		#endregion
 
 		#region IXmlSerializable implementation
 		public System.Xml.Schema.XmlSchema GetSchema()

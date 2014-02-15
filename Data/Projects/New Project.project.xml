@@ -5,7 +5,13 @@
     <string>JGL.dll</string>
     <string>/home/jk/Code/Resources/CS/OpenTK 1.0/Binaries/OpenTK/Release/OpenTK.dll</string>
   </ReferencePaths>
-  <SourcePaths />
+  <SourcePaths>
+    <string>/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/EmptyMain.cs</string>
+    <string>/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Origin.cs</string>
+    <string>/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Scene1.cs</string>
+    <string>/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Tree1.cs</string>
+    <string>/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/WhiteLight.cs</string>
+  </SourcePaths>
   <CodeUsings>using System;
 using System.Collections;
 using System.Collections.Generic;

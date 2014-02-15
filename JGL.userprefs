@@ -1,9 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="SmallConsoleTests/MainClass.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="DynamicCodeTests/DynamicCode/Heirarchy/Scene1.cs">
     <Files>
-      <File FileName="SmallConsoleTests/MainClass.cs" Line="15" Column="28" />
-      <File FileName="JGL/Geometry/Vector3d.cs" Line="7" Column="15" />
+      <File FileName="JGL/Heirarchy/Behaviours/NewtonianMovement.cs" Line="16" Column="1" />
+      <File FileName="JGL/Heirarchy/Behaviours/Gravity.cs" Line="18" Column="44" />
+      <File FileName="DynamicCodeTests/DynamicCode/Heirarchy/Scene1.cs" Line="57" Column="74" />
+      <File FileName="JGL/UI/SceneWindow.cs" Line="56" Column="21" />
+      <File FileName="JGL/Heirarchy/Scene.cs" Line="61" Column="15" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -11,46 +14,44 @@
           <Node name="Solution Items">
             <Option id="ShowAllFiles" value="True" />
           </Node>
-          <Node name="DynamicCodeTests">
-            <Node name="Logs">
-              <Option id="ShowAllFiles" value="True" />
+          <Node name="DynamicCodeTests" expanded="True">
+            <Node name="DynamicCode" expanded="True">
+              <Node name="Heirarchy" expanded="True">
+                <Node name="Scene1.cs" selected="True" />
+              </Node>
             </Node>
           </Node>
           <Node name="JGL" expanded="True">
-            <Node name="Geometry" expanded="True" />
-            <Node name="Heirarchy" expanded="True" />
-          </Node>
-          <Node name="SmallConsoleTests" expanded="True">
-            <Node name="References" expanded="True" />
-            <Node name="MainClass.cs" selected="True" />
+            <Node name="GL" expanded="True" />
+            <Node name="Heirarchy" expanded="True">
+              <Option id="ShowAllFiles" value="False" />
+              <Node name="Behaviours" expanded="True" />
+            </Node>
+            <Node name="UI" expanded="True" />
           </Node>
         </State>
       </Pad>
       <Pad Id="ClassPad">
-        <State expanded="True" selected="True">
+        <State expanded="True">
           <Node name="JGL" expanded="True">
             <Node name="JGL" expanded="True">
-              <Node name="OpenGL" expanded="True" />
+              <Node name="Heirarchy" expanded="True" selected="True" />
             </Node>
           </Node>
         </State>
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State>
-          <Value>renderArgs.CurrentLightName</Value>
-          <Value>Id</Value>
+          <Value>this.OwnerScene</Value>
+          <Value>this.UpdateRoot</Value>
+          <Value>value</Value>
+          <Value>EntityContext.Root</Value>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/home/jk/Code/JGL/DynamicCodeTests/UI/ProjectWindow.cs" line="55" />
-      <Breakpoint file="/home/jk/Code/JGL/DynamicCodeTests/UI/ProjectPreferencesDialog.cs" line="86" />
-      <Breakpoint file="/home/jk/Code/JGL/DynamicCodeTests/UI/CodeWindow.cs" line="904" />
-      <Breakpoint file="/home/jk/Code/JGL/JGL/Heirarchy/EntityContext.cs" line="73" />
-      <Breakpoint file="/home/jk/Code/JGL/JGL/Heirarchy/TimedEventArgs.cs" line="38" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

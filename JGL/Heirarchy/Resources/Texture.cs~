@@ -45,8 +45,7 @@ namespace JGL.Heirarchy.Resources
 		/// Initializes a new instance of the <see cref="JGL.Resource.Texture"/> class.
 		/// </summary>
 		/// <param name="path">Path to <see cref="Texture"/></param>
-		public Texture(string path)
-			: base(path)
+		public Texture(string path) : base(path)
 		{
 			Init(base.Name, path);
 		}
@@ -56,8 +55,7 @@ namespace JGL.Heirarchy.Resources
 		/// </summary>
 		/// <param name="name"><see cref="Texture"/> <see cref="JGL.Heirarchy.Entity.Name"/></param>
 		/// <param name="path"><see cref="Texture"/> path</param>
-		public Texture(string name, string path)
-			: base(name, path)
+		public Texture(string name, string path) : base(name, path)
 		{
 			Init(name, path);
 		}

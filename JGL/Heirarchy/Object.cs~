@@ -11,7 +11,7 @@ namespace JGL.Heirarchy
 	/// <summary>
 	/// An <see cref="Entity"/> in 3D space, ie it implements <see cref="IPositionable"/> and <see cref="IRotatable"/>
 	/// </summary>
-	public class Object : EntityContext, IPositionable, IRotatable
+	public class Object : EntityContext, INewtonian		// IPositionable, IRotatable
 	{
 		/// <summary>
 		/// Tracing
@@ -23,12 +23,20 @@ namespace JGL.Heirarchy
 		/// </summary>
 		/// <remarks>IPositionable implementation</remarks>
 		public Vector3d Position { get; set; }
-		
+
+		public Vector3d Velocity { get; set; }
+
+		public Vector3d Acceleration { get; set; }
+
 		/// <summary>
 		/// Rotation in 3D space (X,Y,Z each describe number of degrees rotation around the X/Y/Z unit vector)
 		/// </summary>
 		/// <remarks>IRotatable implementation</remarks>
 		public Vector3d Rotation { get; set; }
+
+		public Vector3d AngularVelocity { get; set; }
+
+		public Vector3d AngularAcceleration { get; set; }
 
 		/// <summary>
 		/// Gets or sets the object orientation (linked to <see cref="Object.Rotation"/>

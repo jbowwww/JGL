@@ -10,7 +10,7 @@ namespace JGL.Heirarchy
 	/// Info regarding an openTK update cycle
 	/// </summary>
 	public class UpdateArgs
-		: TimedEventArgs
+		: CounterTimer
 	{
 		/// <summary>
 		/// Tracing
@@ -20,7 +20,7 @@ namespace JGL.Heirarchy
 		/// <summary>
 		/// Graphics context being rendered to (which should always be the current one according to GraphicsContext.CurrentContext)
 		/// </summary>
-		public IGraphicsContext Graphics;
+//		public IGraphicsContext Graphics;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="JGL.Heirarchy.UpdateArgs"/> class.

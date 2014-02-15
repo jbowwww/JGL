@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using JGL.Heirarchy.Resources;
 using JGL.Debugging;
 
@@ -20,8 +21,12 @@ namespace JGL.Heirarchy
 		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncXmlFileTraceListener.GetOrCreate("JGL"));
 
 		#region Properties and indexers
-		public ICollection<Resource> Resources {
-			get { return OfType<Resource>(); }
+		public IEnumerable<Scene> Scenes {
+			get { return Entities.OfType<Scene>(); }
+		}
+
+		public IEnumerable<Resource> Resources {
+			get { return Entities.OfType<Resource>(); }
 		}
 		#endregion
 
@@ -29,20 +34,7 @@ namespace JGL.Heirarchy
 		/// Initializes a new instance of the <see cref="JGL.Heirarchy.EntityRootContext"/> class.
 		/// </summary>
 		/// <param name="entities">Optional parameter array of child <see cref="JGL.Heirarchy.Entity"/> instances</param>
-		public EntityRootContext(params Entity[] entities)
-			: base(null, entities)
-		{
-		}
-		
-		/// <summary>
-		/// Initializes a new instance of the <see cref="JGL.Heirarchy.EntityRootContext"/> class.
-		/// </summary>
-		/// <param name="name">Name for the new <see cref="JGL.Heirarchy.Context"/></param>
-		/// <param name="entities">Optional parameter array of child <see cref="JGL.Heirarchy.Entity"/> instances</param>
-		public EntityRootContext(string name, params Entity[] entities)
-			: base(name, entities)
-		{
-		}
+		public EntityRootContext(params Entity[] entities) : base("EntityRootContext", entities) { }
 	}
 }
 

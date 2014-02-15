@@ -1,11 +1,11 @@
 using System;
-using Gtk;
+//using Gtk;
 using JGL.Heirarchy;
 
 namespace Dynamic.UI
 {
 	[Gtk.TreeNode]
-	class EntityTreeNode : TreeNode
+	class EntityTreeNode : Gtk.TreeNode
 	{
 		public readonly Entity Entity;
 		

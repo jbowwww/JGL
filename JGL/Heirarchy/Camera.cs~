@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+
 using OpenTK.Graphics.OpenGL;
+
+using JGL.Graphics;
 using JGL.Geometry;
 using JGL.Debugging;
 
@@ -33,7 +36,10 @@ namespace JGL.Heirarchy
 		/// <remarks>IRenderable implementation</remarks>
 		public void Render(RenderArgs renderArgs)
 		{
-			JGL.Configuration.Init(renderArgs);
+			Stack<Entity> entityStack = renderArgs.Entities;
+			if (entityStack.Count > 0)
+				throw new InvalidOperationException("RenderArgs.Entities stack should be empty when calling Camera.Render");
+			entityStack.Push(renderArgs.Scene);
 
 			GL.Rotate(-Rotation.X, 1, 0, 0);
 			GL.Rotate(-Rotation.Y, 0, 1, 0);
@@ -41,14 +47,9 @@ namespace JGL.Heirarchy
 			GL.Translate(-Position);
 			
 			bool[] eFlags = new bool[4];
-			Stack<Entity> eStack = renderArgs.Entities;				// = new Stack<Entity>();
-//			foreach (Entity e in Entities)
-//				eStack.Push(e);
-			// commented this when changed line 3 above that says eStack = renderArgs.Entities (else would be adding this value to top of stack again)
-			//eStack.Push(renderArgs.Entity);
-			while (eStack.Count > 0)
+			while (entityStack.Count > 0)
 			{
-				Entity entity = eStack.Pop();
+				Entity entity = entityStack.Pop();
 				if (entity == null)									// check for null values in the stack; they are markers that indicate that an EntityContext's
 					GL.PopMatrix();						// child Entities have just finished rendering, so the context's position/rotation changes can be reversed
 				else
@@ -78,9 +79,9 @@ namespace JGL.Heirarchy
 					if (eFlags[1])								// (e is EntityContext)
 					{
 						if (eFlags[2] || eFlags[3])			// only need to worry about popping the GL matrix stack if something has been pushed on it (ie this EntityContext must be IPositionable or IRotatable)
-							eStack.Push(null);				// marks location in the stack where the GL modelview matrix should be popped (after rendering a EntityContext's child Entities which were pushed immediately before this marker)
+							entityStack.Push(null);				// marks location in the stack where the GL modelview matrix should be popped (after rendering a EntityContext's child Entities which were pushed immediately before this marker)
 						foreach (Entity _e in (entity as EntityContext))
-							eStack.Push(_e);				// Push this EntityContext's child Entities (if any) onto the stack, so they will be next to be rendered (while the modelview matrix has been set by the containg EntityContext)
+							entityStack.Push(_e);				// Push this EntityContext's child Entities (if any) onto the stack, so they will be next to be rendered (while the modelview matrix has been set by the containg EntityContext)
 					}
 					else if (eFlags[2] || eFlags[3])		// Entity is not an EntityContext (so can't have child Entities), but it is IPositionable and/or IRotatable so the modelview matrix has been pushed. Because no children, can pop it immediately
 							GL.PopMatrix();

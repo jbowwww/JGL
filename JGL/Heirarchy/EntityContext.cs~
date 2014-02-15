@@ -39,27 +39,12 @@ namespace JGL.Heirarchy
 		public static EntityContext Current = Root;
 		#endregion
 
-		#region Private members
-		/// <summary>
-		/// Constant: Maximum number of indexes that can be used for autonaming an <see cref="Entity"/>
-		/// </summary>
-		private const int _maxAutoNameIndexes = 0xffffff;
-
-		/// <summary>
-		/// Inner <see cref="System.Collections.Concurrent.ConcurrentDictionary`1[System.string, JGL.Heirarchy.Entity]"/> to store the <see cref="JGL.Heirarchy.Entity"/>s
-		/// references for this <see cref="JGL.Heirarchy.EntityDictionary"/> 
-		/// </summary>
-		private ConcurrentDictionary<string, Entity> _entities = new ConcurrentDictionary<string, Entity>();
-		#endregion
-
 		#region Properties and indexers
 		/// <summary>
 		/// Return a <see cref="System.Collections.Generic.ICollection[JGL.Heirarchy.Entity]"/>
 		/// representing the current direct child entities of this <see cref="JGL.Heirarchy.EntityContext"/>
 		/// </summary>
-		public ICollection<Entity> Entities {
-			get { return (this as ICollection<Entity>); }// _entities.Values; }
-		}
+		public EntityCollection Entities { get; private set; }
 
 		/// <summary>
 		/// Return a <see cref="System.Collections.Generic.ICollection[JGL.Heirarchy.Object]"/>
@@ -69,7 +54,7 @@ namespace JGL.Heirarchy
 		/// <remarks>
 		///	-	TODO: Test this. Might need to change to return <c>this.OfType`1[Object]()</c>
 		/// </remarks>
-		public ICollection<Object> Objects {
+		public IEnumerable<Object> Objects {
 //			get { return (this as ICollection<Object>); }// _entities.Values; }
 			get { return this.OfType<Object>(); }
 		}
@@ -79,10 +64,10 @@ namespace JGL.Heirarchy
 		/// </summary>
 		/// <returns><see cref="Entity"/>s of type <typeparamref name="TEntity"/></returns>
 		/// <typeparam name="TEntity">The type of <see cref="Entity"/>s to return</typeparam>
-		public ICollection<TEntity> OfType<TEntity>()
-		{
-			return (this as ICollection<Entity>).OfType<TEntity>().ToList();
-		}
+//		public ICollection<TEntity> OfType<TEntity>()
+//		{
+//			return (this as ICollection<Entity>).OfType<TEntity>().ToList();
+//		}
 
 		/// <summary>
 		/// Gets the descendant <see cref="JGL.Heirarchy.Entity"/>s of this <see cref="JGL.Heirarchy.EntityContext"/>
@@ -97,27 +82,29 @@ namespace JGL.Heirarchy
 		public IEnumerable<Entity> Descendants {
 			get
 			{
+				List<Entity> descendants = new List<Entity>();
 				foreach (Entity e in this)
 				{
-					yield return e;
-					if (e is EntityContext)
-						foreach (Entity de in (e as EntityContext).Descendants)
-							yield return de;
+					descendants.Add(e);
+					if (e.IsContext)
+						descendants.AddRange((e as EntityContext).Descendants);
 				}
+				return descendants;
 			}
 		}
+//					yield return e;
+//					if (e.IsContext)
+//						yield return (e as EntityContext).Descendants;
+//					if (e is EntityContext)
+//						foreach (Entity de in (e as EntityContext).Descendants)
+//							yield return de;
 
 		/// <summary>
 		/// Get the <see cref="JGL.Heirarchy.Entity"/> with the specified <paramref name="entityName"/>
 		/// </summary>
 		/// <param name="entityName">Name of entity to get</param>
 		public Entity this[string entityName] {
-			get
-			{
-				return Get(entityName);
-//				Debug.Assert (!entityName.Contains ('.'));		// ensure it is only an entity name, not a relative ID
-//				return _entities[entityName];
-			}
+			get { return Entities.Get(entityName); }
 		}
 		
 		/// <summary>
@@ -125,7 +112,24 @@ namespace JGL.Heirarchy
 		/// </summary>
 		/// <param name="entityIndex">Index of the <see cref="JGL.Heirarchy.Entity"/> to get</param>
 		public Entity this [int entityIndex] {
-			get { return _entities.Values.ElementAt (entityIndex); }
+			get { return Entities[entityIndex]; }
+		}
+
+		/// <summary>
+		/// Gets the number of <see cref="JGL.Heirarchy.Entity"/>s in this <see cref="JGL.Heirarchy.EntityContext"/>
+		/// </summary>
+		/// <remarks>ICollection[Entity] implementation</remarks>
+		public int Count {
+			get { return Entities.Count; }
+		}
+
+		/// <summary>
+		/// Gets a value indicating whether this <see cref="JGL.Heirarchy.EntityContext"/> instance is read only.
+		/// </summary>
+		/// <returns><c>False</c></returns>
+		/// <remarks>ICollection[Entity] implementation</remarks>
+		public bool IsReadOnly {
+			get { return Entities.IsReadOnly; }
 		}
 		#endregion
 
@@ -168,167 +172,95 @@ namespace JGL.Heirarchy
 		/// Constructs a new <see cref="JGL.Heirarchy.EntityContext"/> with zero initial child entities
 		/// </summary>
 		/// <param name="entities">Optional parameter array of child <see cref="JGL.Heirarchy.Entity"/> instances</param>
-		public EntityContext (params Entity[] entities)
-			: base(null)
+		public EntityContext(params Entity[] entities) : base(null)
 		{
+			Entities = new EntityCollection(this);
 			Add (entities);
 		}
 
 		/// <summary>
-		/// Gets a <see cref="System.Collections.Generic.ICollection<Entity>"/> representing the child
-		/// <see cref="JGL.Heirarchy.Entity"/>s contained in this <see cref="JGL.Heirarchy.EntityContext"/>
-		/// </summary/// <summary>
 		/// Constructs a new <see cref="JGL.Heirarchy.EntityContext"/> with zero initial child entities
 		/// </summary>
 		/// <param name="name">Name for the new <see cref="JGL.Heirarchy.EntityContext"/></param>
 		/// <param name="entities">Optional parameter array of child <see cref="JGL.Heirarchy.Entity"/> instances</param>
-		public EntityContext (string name, params Entity[] entities)
-			: base (name)
+		public EntityContext (string name, params Entity[] entities) : base (name)
 		{
+			Entities = new EntityCollection(this);
 			Add(entities);
 		}
 		#endregion
 
 		#region Methods
 		/// <summary>
-		/// Called by <see cref="Entity.Name"/>.set when an <see cref="Entity"/> changes its name,
-		/// to ensure consistency in the <see cref="EntityContext"/>
-		/// </summary>
-		/// <returns><c>True</c> if updated successfully, otherwise, <c>false</c></returns>
-		/// <param name='entity'>The <see cref="Entity"/> to update name for, with its current name still set</param>
-		/// <param name='newName'>The new <see cref="Entity.Name"/></param>
-		/// <remarks>
-		/// </remarks>
-		internal void UpdateName(Entity entity, string newName)
-		{
-			if (!_entities.TryAdd(newName, entity))
-				throw new Exception(string.Format("EntityContext.UpdateName(entity = \"{0}\", newName =\"{1}\"): Failed to add entity using its new name to context \"{3}\" (after determining that the new name did not already exist)", entity.Id, newName, Id));
-			Entity o;
-			if (!_entities.TryRemove(entity.Name, out o))
-				throw new Exception(string.Format("EntityContext.UpdateName(entity = \"{0}\", newName =\"{1}\"): Failed to remove entity's previous name from context \"{3}\" (after determining that the new name did not already exist, and adding the entity using its new name)", entity.Id, newName, Id));
-			if (entity != o)
-				throw new Exception(string.Format("EntityContext.UpdateName(entity = \"{0}\", newName =\"{1}\"): Removed an entity using the old entity name from context \"{3}\" , and it is not the same instance that was passed to this method", entity.Id, newName, Id));
-		}
-
-		/// <summary>
-		/// Adds <paramref name="entities"/> as child <see cref="JGL.Heirarchy.Entity"/>s in this <see cref="JGL.Heirarchy.EntityContext"/>
-		/// </summary>
-		/// <summary>
-		/// Get the <see cref="JGL.Heirarchy.Entity"/> using an ID relative to this <see cref="JGL.Heirarchy.EntityContext"/>
-		/// </summary>
-		/// <param name='relativeId'>An Id string relative to this <see cref="JGL.Heirarchy.EntityContext"/></param>
-		/// <returns>The <see cref="JGL.Heirarchy.Entity"/> specified by the relative ID</returns>
-		public Entity Get(string relativeId)
-		{
-			Debug.Assert(!string.IsNullOrEmpty(relativeId));
-			Entity e = null;
-			foreach (string partId in relativeId.Split ('.'))
-				e = e == null ? _entities[partId] : (e as EntityContext)._entities[partId];
-			return e;
-		}
-		#endregion
-
-		#region Collection implementation (ICollection members and overloaded members of same name(s))
-		/// <summary>
 		/// Test if the given <see cref="JGL.Heirarchy.Entity"/> exists in this <see cref="JGL.Heirarchy.EntityContext"/>
 		/// </summary>
-		/// <param name='e'>The <see cref="JGL.Heirarchy.Entity"/> to check for existence of</param>
+		/// <param name="e">The <see cref="JGL.Heirarchy.Entity"/> to check for existence of</param>
 		/// <returns><c>True</c> if found, otherwise <c>false</c></returns>
-		public bool Contains (Entity e)
+		/// <remarks>ICollection implementation</remarks>
+		public bool Contains(Entity e)
 		{
-			return _entities.ContainsKey(e.Name);
+			return Entities.Contains(e.Name);
 		}
 
 		/// <summary>
 		/// Test if the given <see cref="JGL.Heirarchy.Entity"/> exists in this <see cref="JGL.Heirarchy.EntityContext"/>
 		/// </summary>
-		/// <param name='eName'>The entity name to check for existence of</param>
+		/// <param name="entityName">The entity name to check for existence of</param>
 		/// <returns><c>True</c> if found, otherwise <c>false</c></returns>
-		/// <remarks>
-		/// 	- NOT a member of ICollection[Entity]
-		/// 	- Checks collection for an <see cref="Entity"/> based on its name
-		/// </remarks>
-		public bool Contains (string eName)
+		public bool Contains(string entityName)
 		{
-			return _entities.ContainsKey (eName);
+			return Entities.Contains(entityName);
 		}
 
 		/// <summary>
 		/// Add an <see cref="JGL.Heirarchy.Entity"/> to this <see cref="JGL.Heirarchy.EntityContext"/>
 		/// </summary>
-		/// <param name='e'>The <see cref="JGL.Heirarchy.Entity"/> to add</param>
-		/// <exception cref='InvalidOperationException'>An <see cref="JGL.Heirarchy.Entity"/> already exists with the same name as <paramref name="e"/></exception>
+		/// <param name="e">The <see cref="JGL.Heirarchy.Entity"/> to add</param>
+		/// <remarks>ICollection implementation</remarks>
 		public void Add(Entity e)
 		{
-			Debug.Assert(e.Parent == null);		// Should not exist in a parent entity context already
-
-			if (e.IsAutoNamed)								// Entity needs autonaming
-			{
-				// TODO: Trace log (verbose) entity of type "" being autonamed to ""
-				
-				string baseName = e.Name;
-				for (int i = 1; i < _maxAutoNameIndexes; i++)
-				{
-					e.Name = string.Format("{0} #{1:x3}", baseName, i);
-					if (!_entities.ContainsKey(e.Name))
-						break;
-				}
-			}
-
-			if (!_entities.TryAdd(e.Name, e))		// Try to add the entity to this context (concurrent dictionary)
-				throw new InvalidOperationException(string.Format(
-					"EntityContext.Add(entity = \"{0}\"): Unable to add the entity to the context \"{1}\" ({2})", e.Name, Id, _entities.ContainsKey(e.Name) ?
-					"Context already contains an entity with that name" : "Context does NOT contain an entity with that name"));
-
-			// TODO: Trace log (info) entity added to context
-
-			if (!(this is EntityRootContext))		// If top level entities (e.g. Scene) are being stored in an EntityRootContext,
-				e.Parent = this;									// it is NOT set as their parent so ID etc properties do not include the root context
-
-			EntityEventArgs args = new EntityEventArgs();
-			if (EntityAdded != null)
-				EntityAdded(e, args);
+			Entities.Add(e);
 		}
 
 		/// <summary>
 		/// Add one or more <see cref="JGL.Heirarchy.Entity"/> instances to this <see cref="JGL.Heirarchy.EntityContext"/>
 		/// </summary>
-		/// <param name='entities'><see cref="JGL.Heirarchy.Entity"/> instance(s) to add</param>
-		/// <remarks>
-		/// 	- NOT a member of ICollection[Entity]
-		/// 	- Adds multiple <see cref="Entity"/>s to this <see cref="EntityContext"/>
-		/// </remarks>
+		/// <param name="entities"><see cref="JGL.Heirarchy.Entity"/> instance(s) to add</param>
 		public void Add(params Entity[] entities)
 		{
-			if (entities != null && entities.GetType ().IsArray)
+			if (entities != null)	// && entities.GetType().IsArray)
 				foreach (Entity child in entities)
-					Add (child);
+					Entities.Add(child);
 		}
-		
+
 		/// <summary>
-		/// Clear all <see cref="JGL.Heirarchy.Entity"/>s from this <see cref="JGL.Heirarchy.EntityContext"/>
+		/// Attempt to remove the given <see cref="JGL.Heirarchy.Entity"/> from this <see cref="JGL.Heirarchy.EntityContext"/>
 		/// </summary>
-		public void Clear()
+		/// <param name="e">The <see cref="JGL.Heirarchy.Entity"/> to attempt to remove</param>
+		/// <returns><c>true</c> if found and removed, otherwise, <c>false</c></returns>
+		/// <remarks>ICollection[Entity] implementation</remarks>
+		public bool Remove(Entity e)
 		{
-			foreach (Entity e in _entities.Values)
-				if (e != null && e.Parent != null)
-					e.Parent = null;
-			_entities.Clear();
+			return Entities.Remove(e);
 		}
 		
 		/// <summary>
 		/// Attempt to remove the given <see cref="JGL.Heirarchy.Entity"/> from this <see cref="JGL.Heirarchy.EntityContext"/>
 		/// </summary>
-		/// <param name='item'>The <see cref="JGL.Heirarchy.Entity"/> to attempt to remove</param>
-		/// <returns><c>True</c> if found and removed, otherwise, <c>false</c></returns>
-		public bool Remove (Entity e)
+		/// <param name="entityName">The name of the <see cref="JGL.Heirarchy.Entity"/> to attempt to remove</param>
+		/// <returns><c>true</c> if found and removed, otherwise, <c>false</c></returns>
+		public bool Remove(string entityName)
 		{
-			Entity o;
-			bool r = _entities.TryRemove (e.Name, out o);
-			Debug.Assert (!r || r && Entity.ReferenceEquals (e, o));
-			if (r)
-				e.Parent = null;
-			return r;
+			return Entities.Remove(entityName);
+		}
+
+		/// <summary>
+		/// Clear all <see cref="JGL.Heirarchy.Entity"/>s from this <see cref="JGL.Heirarchy.EntityContext"/>
+		/// </summary>
+		/// <remarks>ICollection[Entity] implementation</remarks>
+		public void Clear()
+		{
+			Entities.Clear();
 		}
 		
 		/// <summary>
@@ -337,26 +269,12 @@ namespace JGL.Heirarchy
 		/// </summary>
 		/// <param name="array">The array to copy the <see cref="JGL.Heirarchy.Entity"/>s to</param>
 		/// <param name="arrayIndex">The base index into the array to start copying to</param>
-		public void CopyTo (Entity[] array, int arrayIndex)
+		/// <remarks>ICollection[Entity] implementation</remarks>
+		public void CopyTo(Entity[] array, int arrayIndex)
 		{
-			_entities.Values.CopyTo (array, arrayIndex);
+			Entities.CopyTo(array, arrayIndex);
 		}
 
-		/// <summary>
-		/// Gets the number of <see cref="JGL.Heirarchy.Entity"/>s in this <see cref="JGL.Heirarchy.EntityContext"/> 
-		/// </summary>
-		public int Count {
-			get { return _entities.Count; }
-		}
-
-		/// <summary>
-		/// Gets a value indicating whether this <see cref="JGL.Heirarchy.EntityContext"/> instance is read only.
-		/// </summary>
-		/// <returns><c>False</c></returns>
-		public bool IsReadOnly {
-			get { return false; }
-		}
-		
 		/// <summary>
 		/// Gets a generic <see cref="JGL.Heirarchy.Entity"/> enumerator.
 		/// </summary>
@@ -364,7 +282,7 @@ namespace JGL.Heirarchy
 		/// <remarks>IEnumerable[Entity] implementation</remarks>
 		public IEnumerator<Entity> GetEnumerator ()
 		{
-			return _entities.Values.GetEnumerator ();
+			return Entities.GetEnumerator ();
 		}
 		
 		/// <summary>
@@ -374,7 +292,7 @@ namespace JGL.Heirarchy
 		/// <remarks>IEnumerable implementation</remarks>
 		IEnumerator IEnumerable.GetEnumerator ()
 		{
-			return GetEnumerator () as IEnumerator;
+			return GetEnumerator ();
 		}
 		#endregion
 	}

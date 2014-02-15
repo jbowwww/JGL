@@ -1,19 +1,23 @@
 using System;
+using System.Linq;
 using System.Runtime;
 using System.Reflection;
-using JGL.Resource;
-using JGL.Heirarchy;
-using JGL.Heirarchy.Library;
+
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+
+using JGL.Heirarchy;
+using JGL.Heirarchy.Resources;
+using JGL.Heirarchy.Library;
+using JGL.Heirarchy.Behaviours;
 
 namespace Dynamic
 {
 	[Serializable]
 	public class Scene1 : Scene
 	{
-		public Scene1() : base((string)null)
+		public Scene1() : base("Scene1")
 		{
 			Init();
 		}
@@ -37,17 +41,22 @@ namespace Dynamic
 					Position = new Vector3d(-2, 1, 0.5),
 					Material = new Material("White")
 					{
-						TextureAmbient = new Texture("test1.png")
+						TextureAmbient = Resource.Get<Texture>("test1.png")				//new Texture("test1.png")
 					},
 					TwoSided = true
 				},
 				new Quad(7.8, 7.2)
 				{
 					Position = new Vector3d(+1.2, -0.042, -0.55),
-					Material = new Material("tex2") { TextureAmbient = new Texture("tex2.png") },
+					Material = new Material("tex2") { TextureAmbient = Resource.Get<Texture>("tex2.png") },				//new Texture("tex2.png") },
 					TwoSided = true
 				});
 			DefaultCamera.Position = new Vector3d(0.5, 0.75, 8);
+
+			Gravity gravity = new Gravity(this);
+			foreach (JGL.Heirarchy.Object o in this.Entities.OfType<JGL.Heirarchy.Object>())
+				gravity.Entities.Add(o);
+			Behaviours.Add(gravity);
 		}
 	}
 }

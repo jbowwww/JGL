@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using System.Data.Linq;
 using System.IO;
 using System.Text;
+
+using OpenTK.Graphics.OpenGL;
+
+using JGL.Graphics;
 using JGL.Geometry;
 using JGL.Heirarchy.Resources;
 using JGL.Debugging;
-using OpenTK.Graphics.OpenGL;
 
 namespace JGL.Heirarchy
 {
@@ -22,6 +25,7 @@ namespace JGL.Heirarchy
 		/// </summary>
 		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncXmlFileTraceListener.GetOrCreate("JGL"));
 
+		#region Geometry fields
 		/// <summary>
 		/// Vertex (and possibly normal, texture coordinates, and materials) data for the <see cref="Mesh">.
 		/// This can be shared with other <see cref="Mesh">es.
@@ -58,6 +62,7 @@ namespace JGL.Heirarchy
 		/// Indicate if mesh faces should be drawn one or two sided
 		/// </summary>
 		public bool TwoSided = false;
+		#endregion
 
 		#region Constructor overloads
 		/// <summary>
@@ -66,11 +71,7 @@ namespace JGL.Heirarchy
 		/// <param name='name'>
 		/// Name.
 		/// </param>
-		public Mesh(string name = null)
-			: base(name)
-		{
-
-		}
+		public Mesh(string name = null) : base(name) { }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="JGL.Heirarchy.Mesh"/> class.
@@ -78,8 +79,7 @@ namespace JGL.Heirarchy
 		/// <param name='vertexData'>
 		/// VertexData.
 		/// </param>
-		public Mesh(string name, VertexData vertexData, IList<TriangleFace> triangles = null)
-			: base(name)
+		public Mesh(string name, VertexData vertexData, IList<TriangleFace> triangles = null) : base(name)
 		{
 			VertexData = vertexData;
 			Triangles = triangles != null ? triangles : new List<TriangleFace>();
@@ -97,8 +97,7 @@ namespace JGL.Heirarchy
 		/// <param name='triangles'>
 		/// Triangles.
 		/// </param>
-		public Mesh(string name, VertexData vertexData, IEnumerable<TriangleFace> triangles)
-			: base(name)
+		public Mesh(string name, VertexData vertexData, IEnumerable<TriangleFace> triangles) : base(name)
 		{
 			VertexData = vertexData;
 			Triangles = new List<TriangleFace>(triangles);
@@ -107,12 +106,8 @@ namespace JGL.Heirarchy
 		/// <summary>
 		/// Initializes a new instance of the <see cref="JGL.Heirarchy.Mesh"/> class from an .OBJ (lightwave) file
 		/// </summary>
-		/// <param name='filename'>
-		/// Filename.
-		/// </param>
-		/// <param name='dummy'>
-		/// Dummy.
-		/// </param>
+		/// <param name="filename">Filename</param>
+		/// <param name="dummy">Dummy</param>
 		public Mesh(string filename, bool dummy)
 		{
 			Mesh[] meshes;
@@ -184,7 +179,7 @@ namespace JGL.Heirarchy
 					GL.End();
 				}
 
-				args.TriangleCount += (uint)Triangles.Count;		// Update triangle count
+				args.FrameTriangleCount += (uint)Triangles.Count;		// Update triangle count
 			}
 		}
 

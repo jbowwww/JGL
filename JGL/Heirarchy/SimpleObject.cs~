@@ -1,6 +1,8 @@
 using System;
 using System.Xml;
 using System.Xml.Serialization;
+
+using JGL.Graphics;
 using JGL.Debugging;
 
 namespace JGL.Heirarchy

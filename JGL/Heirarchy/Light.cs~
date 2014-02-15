@@ -1,7 +1,10 @@
 using System;
+
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+
+using JGL.Graphics;
 using JGL.Debugging;
 
 namespace JGL.Heirarchy
@@ -11,7 +14,7 @@ namespace JGL.Heirarchy
 		/// <summary>
 		/// Tracing
 		/// </summary>
-		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncFileTraceListener.GetOrCreate("JGL"));
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncXmlFileTraceListener.GetOrCreate("JGL"));
 
 		/// <summary>
 		/// Enable/disable the light

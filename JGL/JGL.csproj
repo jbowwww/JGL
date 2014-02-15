@@ -80,13 +80,11 @@
     <Compile Include="Heirarchy\Library\Quad.cs" />
     <Compile Include="Heirarchy\Library\Triangle.cs" />
     <Compile Include="Heirarchy\Library\Grid.cs" />
-    <Compile Include="Heirarchy\RenderArgs.cs" />
     <Compile Include="Geometry\TriangleFace.cs" />
     <Compile Include="Extensions\Uri.cs" />
     <Compile Include="Geometry\VertexData.cs" />
     <Compile Include="Heirarchy\EntityRootContext.cs" />
     <Compile Include="Heirarchy\EntityContext.cs" />
-    <Compile Include="Engine.cs" />
     <Compile Include="Extensions\Object.cs" />
     <Compile Include="Debugging\LogMessage.cs" />
     <Compile Include="Debugging\AsyncTextFileTraceListener.cs" />
@@ -95,8 +93,19 @@
     <Compile Include="Heirarchy\Resources\Resource.cs" />
     <Compile Include="Heirarchy\Resources\Texture.cs" />
     <Compile Include="IO\Filesystem.cs" />
-    <Compile Include="Heirarchy\UpdateArgs.cs" />
-    <Compile Include="Heirarchy\TimedEventArgs.cs" />
+    <Compile Include="UI\SceneWindow.cs" />
+    <Compile Include="Heirarchy\EntityCollection.cs" />
+    <Compile Include="EngineOptions.cs" />
+    <Compile Include="Engine.cs" />
+    <Compile Include="ConcurrencyException.cs" />
+    <Compile Include="Heirarchy\HeirarchyException.cs" />
+    <Compile Include="Heirarchy\Resources\Resource_static.cs" />
+    <Compile Include="Heirarchy\RenderArgs.cs" />
+    <Compile Include="Heirarchy\Behaviours\BatchBehaviour.cs" />
+    <Compile Include="Heirarchy\Behaviours\Behaviour.cs" />
+    <Compile Include="Heirarchy\INewtonian.cs" />
+    <Compile Include="Heirarchy\Behaviours\NewtonianMovement.cs" />
+    <Compile Include="Heirarchy\Behaviours\Gravity.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -107,6 +116,8 @@
     <Folder Include="Debugging\" />
     <Folder Include="Heirarchy\Library\" />
     <Folder Include="IO\" />
+    <Folder Include="UI\" />
+    <Folder Include="Heirarchy\Behaviours\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

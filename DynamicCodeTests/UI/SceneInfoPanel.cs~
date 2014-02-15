@@ -1,19 +1,12 @@
 using System;
 using Gtk;
+using JGL.Graphics;
 using JGL.Heirarchy;
 
 namespace Dynamic.UI
 {
 	public class SceneInfoPanel : VBox
 	{
-		internal class UpdateEventArgs : EventArgs
-		{
-			public Scene Scene;
-			public Camera Camera;
-			public RenderArgs RenderArgs;
-			public float FrameRate;
-		}
-
 		/// <summary>
 		/// The lbl position.
 		/// </summary>
@@ -36,15 +29,30 @@ namespace Dynamic.UI
 			ShowAll();
 		}
 
-		public void Update(object sender, EventArgs args)		// Scene scene, Camera camera)
+		public void Update(object sender, EventArgs eArgs)		// Scene scene, Camera camera)
 		{
-			UpdateEventArgs uArgs = (UpdateEventArgs)args;
-			lblPosition.Text = uArgs.Camera.Position.ToString();
-			lblRotation.Text = uArgs.Camera.Rotation.ToString();
-			lblChildren.Text = uArgs.Scene.Count.ToString();
-
-			lblRender.Text = string.Format("Frame Rate: {0}\nLast Frame: {1} triangles", uArgs.FrameRate, uArgs.RenderArgs.TriangleCount);
+			RenderArgs renderArgs = (RenderArgs)eArgs;
+			lblPosition.Text = renderArgs.Camera.Position.ToString();
+			lblRotation.Text = renderArgs.Camera.Rotation.ToString();
+			lblChildren.Text = renderArgs.Scene.Count.ToString();
+			lblRender.Text = string.Format(
+				"Frame Rate: {0}\nLast Frame: {1} triangles\nAverage Frame: {2} triangles\nTriangle Rate: {3} triangles/second",
+				renderArgs.FramesPerSecond, renderArgs.FrameTriangleCount, renderArgs.TrianglesPerFrame, renderArgs.TrianglesPerSecond);
 		}
 	}
 }
 
+//		public void Update(object sender, RenderArgs renderArgs)// UpdateArgs updateArgs)		// Scene scene, Camera camera)
+//		{
+//			lblPosition.Text = renderArgs.OwnerScene.DefaultCamera.Position.ToString();
+//			lblRotation.Text = renderArgs.OwnerScene.DefaultCamera.Rotation.ToString();
+//			lblChildren.Text = renderArgs.OwnerScene.Count.ToString();
+//			lblRender.Text = string.Format("Frame Rate: {0}\nLast Frame: {1} triangles", renderArgs.FrameRate, renderArgs.TriangleCount);
+//		}
+
+//			lblPosition.Text = updateArgs.OwnerScene.DefaultCameraFrame: {1} triangles", updateArgs.FrameRate, uArgs.RenderArgs.TriangleCount);
+//.Position.ToString();
+//			lblRotation.Text = updateArgs.OwnerScene.DefaultCamera.Rotation.ToString();
+//			lblChildren.Text = updateArgs.OwnerScene.Count.ToString();
+//
+//			lblRender.Text = string.Format("Frame Rate: {0}\nLast

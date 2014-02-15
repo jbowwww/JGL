@@ -6,9 +6,8 @@ namespace Dynamic
 {
 	public class Origin : SimpleObject
 	{
-		public Origin()
-			: base("Origin", (renderArgs) =>
-				{
+		public Origin() : base("Origin", (renderArgs) =>
+		{
 //					GL.Disable(EnableCap.Texture2D);
 		GL.Disable(EnableCap.Lighting);
 					//GL.Disable(EnableCap.DepthTest);
@@ -38,9 +37,7 @@ namespace Dynamic
 //					GL.Enable(EnableCap.DepthTest);
 			GL.Enable(EnableCap.Lighting);
 //			GL.Enable(EnableCap.Texture2D);
-				})
-		{
-		}
+		}) { }
 	}
 }
 

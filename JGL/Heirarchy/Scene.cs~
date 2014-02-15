@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
-using JGL.Debugging;
+
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-//using Glade;
+
+using JGL.Graphics;
+using JGL.Heirarchy.Behaviours;
+using JGL.Debugging;
 
 namespace JGL.Heirarchy
 {
@@ -14,15 +17,17 @@ namespace JGL.Heirarchy
 	/// Represents a scene graph, i.e. the top level <see cref="JGL.Heirarchy.Context"/> containing
 	/// a heirarchy of <see cref="JGL.Heirarchy.Entity"/>s
 	/// </summary>
-	public class Scene : EntityContext, IRenderable
+	public class Scene : EntityContext
 	{
 		/// <summary>
 		/// Tracing
 		/// </summary>
-		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncFileTraceListener.GetOrCreate("JGL"));
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncXmlFileTraceListener.GetOrCreate("JGL"));
 
-		public readonly Camera DefaultCamera = new Camera("DefaultCamera");
-		
+		public Camera DefaultCamera = new Camera("DefaultCamera");
+
+		public readonly IList<Behaviour> Behaviours = new List<Behaviour>();
+
 		/// <summary>
 		/// Construct a new <see cref="JGL.Heirarchy.Scene"/>
 		/// </summary>
@@ -38,7 +43,7 @@ namespace JGL.Heirarchy
 		/// </summary>
 		/// <param name='children'>Zero or more child entities to add to this <see cref="JGL.Heirarchy.Context"/></param>
 		public Scene (params Entity[] children)
-			: base("Scene", children)
+			: base(children)
 		{		
 		}
 		
@@ -50,19 +55,13 @@ namespace JGL.Heirarchy
 		public Scene (string name, params Entity[] children)
 			: base(name, children)
 		{
-			
+
 		}
 
-		/// <summary>
-		/// Renders the scene by recursing through the heirarchy, inspecting each <see cref="JGL.Heirarchy.Entity"/>
-		/// to see which interfaces it implements and performing the appropriate operations.
-		/// </summary>
-		/// <param name='renderArgs'>Render context.</param>
-		/// <remarks>IRenderable implementation</remarks>
-		public void Render(RenderArgs renderArgs)
+		public void ProcessBehaviours(RenderArgs renderArgs)
 		{
-			GL.LoadIdentity();
-			DefaultCamera.Render(renderArgs);
+			foreach (Behaviour b in Behaviours)
+				b.Process(renderArgs);
 		}
 	}
 }

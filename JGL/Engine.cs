@@ -1,30 +1,20 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Concurrent;
 
 namespace JGL
 {
-	/// <summary>
-	/// Engine.
-	/// </summary>
 	public static class Engine
 	{
 		/// <summary>
-		/// The resource search paths, indexed by type
+		/// Options specified by an <see cref="EngineOptions"/> instance
 		/// </summary>
-		public static ConcurrentDictionary<Type, string[]> ResourceSearchPaths { get; private set; }
+		public static EngineOptions Options { get; private set; }
 
 		/// <summary>
 		/// Init this instance.
 		/// </summary>
 		public static void Init()
 		{
-			ResourceSearchPaths = new ConcurrentDictionary<Type, string[]>(new KeyValuePair<Type, string[]>[]
-			{
-				new KeyValuePair<Type, string[]>(typeof(Heirarchy.Resources.Texture), new string[] { "../../../Data/Textures/" })
-				// TODO: More as necessary
-			});
+			Options = new EngineOptions();
 		}
 
 		/// <summary>

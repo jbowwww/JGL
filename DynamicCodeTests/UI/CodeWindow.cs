@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 using System.Threading;
 using System.Diagnostics;
 using Gtk;
+using JGL.Graphics;
 using JGL.Heirarchy;
 using JGL.Debugging;
 using Mono.CSharp;
@@ -90,9 +91,9 @@ namespace Dynamic.UI
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DynamicCodeTests.CodeWindow"/> class.
 		/// </summary>
-		public CodeWindow(params string[] files)
+		public CodeWindow(string projectFile = null, string[] sourceFiles = null)
 		{
-			Trace.Log(TraceEventType.Information, "CodeWindow.c'tor(params string[] files = string[{0}])", files.Length);
+			//Trace.Log(TraceEventType.Information, "CodeWindow.c'tor(params string[] files = string[{0}])", files.Length);
 
 			CodeWindows.TryAdd(this, this);															// store this CodeWindow instance
 			
@@ -119,9 +120,14 @@ namespace Dynamic.UI
 						EntityContext.Current = entity as EntityContext;
 				}
 			};
+
 			PopulateHeirarchy();																					// Populate the NodeView with the Entity heirarchy
-			GtkWindow.ShowAll();																						// Show window
-			OpenSourceFiles(files);																							// Open initial files (if any)
+			GtkWindow.ShowAll();																				// Show window
+
+			if (projectFile != null)
+				OpenProject(projectFile);
+			if (sourceFiles != null)
+				OpenSourceFiles(sourceFiles);																							// Open initial files (if any)
 		}
 				
 		/// <summary>
@@ -201,7 +207,7 @@ namespace Dynamic.UI
 		public void OpenProject(string filename)
 		{
 			Trace.Log(TraceEventType.Information, "OpenProject(filename={0})", filename);
-			if (filename.Substring(filename.Length - 12).ToLower() != ".project.xml")
+			if (filename == null || filename.Length < 13 || filename.Substring(filename.Length - 12).ToLower() != ".project.xml")
 				// TODO: Don't want to throw back to JGLApp.Unhandled exception (i think?) Want to log/display warning?
 				throw new ArgumentOutOfRangeException("filename", filename, "Invalid project file extension (must be a .project.xml file)");
 			Project = Project.Load(filename);
@@ -448,9 +454,12 @@ namespace Dynamic.UI
 							{
 								try
 								{
-									sw = new SceneWindow(800, 600, null, newScene, "bullshit");
-									sw.InfoPanel = sip;
-									sw.Run();
+									sw = new SceneWindow(800, 600, null, "bullshit") { Scene = newScene };
+									sw.UpdateHandler += (object swSender, RenderArgs renderArgs) =>
+									{
+										Gtk.Application.Invoke(sw, renderArgs, sip.Update);	// RenderArgs = ra }
+									};
+									sw.Run(1, 30);
 								}
 								catch (Exception ex)
 								{

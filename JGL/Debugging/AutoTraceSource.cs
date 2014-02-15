@@ -202,9 +202,14 @@ namespace JGL.Debugging
 				if (_messageQueue == null)
 					_messageQueue = new ConcurrentQueue<LogMessage>();
 				if (Trace == null)
-					Trace = new AutoTraceSource(Assembly.GetAssembly(typeof(AutoTraceSource)).GetName().Name,
+				{
+					TraceListener consoleListener = new ConsoleTraceListener();
+					consoleListener.Filter = new EventTypeFilter(SourceLevels.Information);
+					TraceListener newListener = AsyncXmlFileTraceListener.GetOrCreate("JGL");
+					newListener.Filter = new EventTypeFilter(SourceLevels.All);
+					Trace = new AutoTraceSource(Assembly.GetAssembly(typeof(AutoTraceSource)).GetName().Name, consoleListener, newListener);
 					// TODO: Config class, or file, or something, for trace listener configs & deafults
-					                            new ConsoleTraceListener(), AsyncXmlFileTraceListener.GetOrCreate("JGL"));
+				}
 				if (TraceThread == null)
 				{
 					TraceThread = new Thread(RunTrace);
@@ -224,24 +229,24 @@ namespace JGL.Debugging
 				traceSource = new AutoTraceSource(name, traceListeners);
 
 			// if auto add console listener, ensure one exists in traceListeners, or add a new one
-//			if (autoAddConsoleListener)
-//			{
-//				foreach (TraceListener traceListener in traceSource.Listeners)
-//				{
-//					if (traceListener.GetType().IsTypeOf(typeof(ConsoleTraceListener)))
-//					{
-//						autoAddConsoleListener = false;
-//						break;
-//					}
-//				}
-//				if (autoAddConsoleListener)
-//				{
-//					traceSource.Listeners.Add(new ConsoleTraceListener());
-////					traceListeners = new TraceListener[traceListeners.Length + 1];
-////					Array.Resize<TraceListener>(ref traceListeners, traceListeners.Length + 1);
-////					traceListeners[traceListeners.Length - 1] = new ConsoleTraceListener();
-//				}
-//			}
+			if (autoAddConsoleListener)
+			{
+				foreach (TraceListener traceListener in traceSource.Listeners)
+				{
+					if (traceListener.GetType().IsTypeOf(typeof(ConsoleTraceListener)))
+					{
+						autoAddConsoleListener = false;
+						break;
+					}
+				}
+				if (autoAddConsoleListener)
+				{
+					traceSource.Listeners.Add(new ConsoleTraceListener());
+//					traceListeners = new TraceListener[traceListeners.Length + 1];
+//					Array.Resize<TraceListener>(ref traceListeners, traceListeners.Length + 1);
+//					traceListeners[traceListeners.Length - 1] = new ConsoleTraceListener();
+				}
+			}
 
 			return traceSource;
 		}
@@ -355,7 +360,14 @@ namespace JGL.Debugging
 			string message, indent = string.Empty;
 			for (Exception _ex = ex; _ex != null; _ex = _ex.InnerException)
 			{
-				sb.AppendFormat("{0}{1}: {2}\n{0}Stacktrace:\n{0}    {3}\n", indent, _ex.GetType().Name, _ex.Message, _ex.StackTrace.Replace("\n", "\n    " + indent));
+				sb.AppendFormat("{0}{1}: {2}\n", indent, _ex.GetType().Name, _ex.Message);
+				if (ex.Data.Count > 0)
+				{
+					sb.AppendFormat("{0}Data:\n");
+					foreach (DictionaryEntry exData in ex.Data)
+						sb.AppendFormat("{0}    {1}={2}\n", indent, exData.Key.ToString(), exData.Value.ToString());
+				}
+				sb.AppendFormat("{0}Stacktrace:\n{0}    {1}\n", indent, _ex.StackTrace.Replace("\n", "\n    " + indent));
 				if (_ex.InnerException != null)
 					sb.AppendFormat("{0}InnerException:\n    ", indent);
 				indent += "    ";
