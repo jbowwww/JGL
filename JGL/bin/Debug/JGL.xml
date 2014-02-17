@@ -1336,22 +1336,6 @@
             </summary>
             <param name="entities">Optional parameter array of child <see cref="T:JGL.Heirarchy.Entity" /> instances</param>
         </member>
-        <member name="T:JGL.Heirarchy.EntityContext.EntityEventArgs">
-            <summary>
-            Entity event arguments.
-            </summary>
-        </member>
-        <member name="F:JGL.Heirarchy.EntityContext.EntityEventArgs.Cancel">
-            <summary>
-            The <see cref="T:JGL.Heirarchy.EntityContext.EntityEventHandler" /> can set this to <c>true</c> to cause the
-            <see cref="!:EntityContext.EntityEvent" /> to be cancelled.
-            </summary>
-        </member>
-        <member name="T:JGL.Heirarchy.EntityContext.EntityEventHandler">
-            <summary>
-                <see cref="!:EntityEvent" /> handler delegate type
-            </summary>
-        </member>
         <member name="F:JGL.Heirarchy.EntityContext.Trace">
             <summary>
             Tracing
@@ -1370,18 +1354,6 @@
             <summary>
             Return a <see cref="!:System.Collections.Generic.ICollection" />
             representing the current direct child entities of this <see cref="T:JGL.Heirarchy.EntityContext" /></summary>
-        </member>
-        <member name="E:JGL.Heirarchy.EntityContext.EntityAdded">
-            <summary>
-            Occurs when an <see cref="T:JGL.Heirarchy.Entity" /> is added to this <see cref="T:JGL.Heirarchy.EntityContext" /></summary>
-        </member>
-        <member name="E:JGL.Heirarchy.EntityContext.EntityRemoved">
-            <summary>
-            Occurs when an <see cref="T:JGL.Heirarchy.Entity" /> is removed from this <see cref="T:JGL.Heirarchy.EntityContext" /></summary>
-        </member>
-        <member name="E:JGL.Heirarchy.EntityContext.EntityRenamed">
-            <summary>
-            Occurs when an <see cref="T:JGL.Heirarchy.Entity" /> is renamed in this <see cref="T:JGL.Heirarchy.EntityContext" /></summary>
         </member>
         <member name="P:JGL.Heirarchy.EntityContext.Item(System.String)">
             <summary>
@@ -1461,7 +1433,7 @@
             <param name="e">The <see cref="T:JGL.Heirarchy.Entity" /> to add</param>
             <remarks>ICollection implementation</remarks>
         </member>
-        <member name="M:JGL.Heirarchy.EntityContext.Add(JGL.Heirarchy.Entity[])">
+        <member name="M:JGL.Heirarchy.EntityContext.AddRange(JGL.Heirarchy.Entity[])">
             <summary>
             Add one or more <see cref="T:JGL.Heirarchy.Entity" /> instances to this <see cref="T:JGL.Heirarchy.EntityContext" /></summary>
             <param name="entities">
@@ -1966,10 +1938,37 @@
             <summary>
             A collection of <see cref="T:JGL.Heirarchy.Entity" />s contained by an <see cref="T:JGL.Heirarchy.EntityContext" /></summary>
         </member>
+        <member name="T:JGL.Heirarchy.EntityCollection`1.EntityEventHandler">
+            <summary>
+                <see cref="!:EntityEvent" /> handler delegate type
+            </summary>
+        </member>
+        <member name="T:JGL.Heirarchy.EntityCollection`1.EntityEventArgs">
+            <summary>
+            Entity event arguments.
+            </summary>
+        </member>
+        <member name="T:JGL.Heirarchy.EntityCollection`1.EntityRenamingEventArgs">
+            <summary>
+            Renamed Entity event arguments.
+            </summary>
+        </member>
         <member name="F:JGL.Heirarchy.EntityCollection`1._innerDictionary">
             <summary>
             The _inner dictionary.
             </summary>
+        </member>
+        <member name="E:JGL.Heirarchy.EntityCollection`1.Added">
+            <summary>
+            Occurs when an <see cref="T:JGL.Heirarchy.Entity" /> is added to this <see cref="T:JGL.Heirarchy.EntityContext" /></summary>
+        </member>
+        <member name="E:JGL.Heirarchy.EntityCollection`1.Removed">
+            <summary>
+            Occurs when an <see cref="T:JGL.Heirarchy.Entity" /> is removed from this <see cref="T:JGL.Heirarchy.EntityContext" /></summary>
+        </member>
+        <member name="E:JGL.Heirarchy.EntityCollection`1.Renaming">
+            <summary>
+            Occurs when an <see cref="T:JGL.Heirarchy.Entity" /> is renamed in this <see cref="T:JGL.Heirarchy.EntityContext" /></summary>
         </member>
         <member name="P:JGL.Heirarchy.EntityCollection`1.Item(System.String)">
             <summary>
@@ -2036,11 +2035,11 @@
             Thrown when an <see cref="T:JGL.Heirarchy.Entity" /> with the same name already exists
             </exception>
             <exception cref="T:JGL.ConcurrencyException">
-            Thrown when <paramref name="e" /> is found but failed to be added to the inner dictionary
+            Thrown when <paramref name="entity" /> is found but failed to be added to the inner dictionary
             </exception>
             <remarks>ICollection[Entity] implementation</remarks>
         </member>
-        <member name="M:JGL.Heirarchy.EntityCollection`1.Add(JGL.Heirarchy.Entity[])">
+        <member name="M:JGL.Heirarchy.EntityCollection`1.AddRange(`0[])">
             <summary>
             Add the specified <see cref="T:JGL.Heirarchy.Entity" /> instances
             </summary>
@@ -2154,31 +2153,38 @@
             separately in some kind of processor/controller class. Maybe both
             </remarks>
         </member>
-        <member name="M:JGL.Heirarchy.Behaviours.Behaviour`1.#ctor(JGL.Heirarchy.Scene)">
+        <member name="M:JGL.Heirarchy.Behaviours.Behaviour`1.#ctor">
             <summary>
-            Initializes a new instance of the <see cref="T:JGL.Heirarchy.Behaviours.Behaviour" /> class.
+            Initializes a new instance of the <see cref="!:JGL.Heirarchy.Behaviours.Behaviour`1" /> class.
             </summary>
-            <param name="scene">The <see cref="T:JGL.Heirarchy.Scene" /> that this <see cref="T:JGL.Heirarchy.Behaviours.Behaviour" /> will be performing in</param>
         </member>
         <member name="F:JGL.Heirarchy.Behaviours.Behaviour`1.Entities">
             <summary>
-            The <see cref="T:JGL.Heirarchy.Entity" />s this behaviour is currently applied to
+            The <see cref="T:JGL.Heirarchy.Entity" />(s) this <see cref="T:JGL.Heirarchy.Behaviours.Behaviour" /> is currently applied to
             </summary>
         </member>
-        <member name="P:JGL.Heirarchy.Behaviours.Behaviour`1.Scene">
+        <member name="P:JGL.Heirarchy.Behaviours.Behaviour`1.TargetProcessRate">
             <summary>
-            The <see cref="T:JGL.Heirarchy.Scene" /> that this <see cref="T:JGL.Heirarchy.Behaviours.Behaviour" /> will be performing in
+            The target process time period, the ideal maximum amount of time between calls to <see cref="!:Behaviour`1.Process" />
+            Defaults to zero, which means it gets called every frame
             </summary>
         </member>
-        <member name="M:JGL.Heirarchy.Behaviours.Behaviour`1.Process(JGL.Graphics.RenderArgs,`0)">
+        <member name="P:JGL.Heirarchy.Behaviours.Behaviour`1.TargetPeriod">
+            <summary>
+            Get the target period, in milliseconds, calculated from <see cref="P:JGL.Heirarchy.Behaviours.Behaviour{}.TargetProcessRate" /></summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Behaviours.Behaviour`1.ApplyTo(EntityEventArgs)">
+            <summary>
+            Apply this <see cref="!:JGL.Heirarchy.Behaviours.Behaviour`1" /> to <paramref name="entity" /></summary>
+            <param name="args">The <see cref="T:JGL.Heirarchy.EntityCollection`1.EntityEventArgs[[JGL.Heirarchy.Entity, JGL, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]" />  describing the event</param>
+        </member>
+        <member name="M:JGL.Heirarchy.Behaviours.Behaviour`1.Process">
+            <summary>
+            Called by the <see cref="T:JGL.Heirarchy.Scene" /> to process each <see cref="T:JGL.Heirarchy.Entity" />'s <see cref="T:JGL.Heirarchy.Behaviours.Behaviour" /></summary>
+        </member>
+        <member name="M:JGL.Heirarchy.Behaviours.Behaviour`1.Process(`0)">
             <summary>
             Perform the implemented behaviour by process the supplied <paramref name="entity" /></summary>
-            <param name="renderArgs">
-            Supplied primarily for <see cref="P:JGL.Graphics.RenderArgs.LastDuration" />, commonly used so that
-            behaviours are temporally consistent regardless of frame rate. Other members may be useful - see how it goes
-            (if not, maybe just supply the time lapsed since last processing? - think about it, see how it goes)
-            	- It looks wrong, frankly, think of a better way
-            </param>
             <param name="entity">The <see cref="T:JGL.Heirarchy.Entity" /> to process behaviour for</param>
             <remarks>
             This class does not store an Entity reference, as one behaviour instance can be applied to many entities if need be.
@@ -2192,7 +2198,7 @@
             Newtonian movement.
             </summary>
         </member>
-        <member name="M:JGL.Heirarchy.Behaviours.NewtonianMovement.Process(JGL.Graphics.RenderArgs,JGL.Heirarchy.Object)">
+        <member name="M:JGL.Heirarchy.Behaviours.NewtonianMovement.Process(JGL.Heirarchy.Object)">
             <summary>
             Perform the implemented behaviour by process the supplied <paramref name="entity" /></summary>
             <param name="entity">The <see cref="T:JGL.Heirarchy.Entity" /> to process behaviour for</param>
@@ -2215,16 +2221,7 @@
             can operate on one or many <see cref="T:JGL.Heirarchy.Entity" />s
             </summary>
         </member>
-        <member name="P:JGL.Heirarchy.Behaviours.IBehaviour.Scene">
-            <summary>
-            The <see cref="T:JGL.Heirarchy.Scene" /> that this <see cref="T:JGL.Heirarchy.Behaviours.IBehaviour" /> will be performing in
-            </summary>
-            <remarks>
-            Actually not sure this interface and abstract class need a Scene reference??? It could always get it from the entity
-            it's working on if it does need it??
-            </remarks>
-        </member>
-        <member name="M:JGL.Heirarchy.Behaviours.IBehaviour.Process(JGL.Graphics.RenderArgs)">
+        <member name="M:JGL.Heirarchy.Behaviours.IBehaviour.Process">
             <summary>
             Perform the implemented behaviour by process the supplied <paramref name="entity" /></summary>
             <remarks>See <see cref="T:JGL.Heirarchy.Behaviours.Behaviour" /></remarks>
@@ -2329,5 +2326,63 @@
             Reset the triangle count, record the timespan since the last mark time and mark it again
             </summary>s
             <remarks>This should get called before every rendering</remarks></member>
+        <member name="T:JGL.Heirarchy.Behaviours.ParticleGenerator">
+            <summary>
+            Particle generator.
+            </summary>
+            <remarks>
+            !! TODO : This is your next task. When it's done it'll have all the same functionality that your C++ engine did. Wippee
+            </remarks>
+        </member>
+        <member name="M:JGL.Heirarchy.Behaviours.ParticleGenerator.Process(JGL.Heirarchy.Object)">
+            <summary>
+            Process the specified renderArgs and entity.
+            </summary>
+            <param name="entity">
+            Entity.
+            </param>
+            <remarks>JGL.Heirarchy.Behaviours.Behaviour[Object] abstract member implementation</remarks>
+        </member>
+        <member name="T:JGL.Timer">
+            <summary>
+            Base class for event arguments <see cref="!:UpdateArgs" /> and <see cref="!:RenderArgs" /> that
+            provides ability to capture timing information between recurring events
+            Also maintains <see cref="!:Entities" /> stack which stores the state of the heirarchy traversal,
+            the top of this stack is the current entity being operated on, and is referred to as <see cref="!:CurrentEntity" /></summary>
+            <remarks>
+            	-	TODO: This base class should define <see cref="!:RenderArgs.Graphics" /> and <see cref="!:UpdateArgs.Graphics" />
+            		because it is common to both classes. But does that then mean this class is misnamed, or it's intended is not as I thought?
+            </remarks>
+        </member>
+        <member name="M:JGL.Timer.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:JGL.Timer" /> class.
+            </summary>
+            <param name="start">If set to <c>true</c> (default), <see cref="M:JGL.Timer.Update" /> is called</param>
+        </member>
+        <member name="P:JGL.Timer.MarkTime">
+            <summary>
+            A marked time, usually when the event last occurred. To update this call <see cref="!:Mark" />.
+            </summary>
+        </member>
+        <member name="P:JGL.Timer.IsInitialised">
+            <summary>
+            Gets a value indicating whether this instance is initialised.
+            </summary>
+        </member>
+        <member name="P:JGL.Timer.TimeElapsed">
+            <summary>
+            Gets the time elapsed since <see cref="P:JGL.Timer.MarkTime" /></summary>
+        </member>
+        <member name="P:JGL.Timer.LastElapsed">
+            <summary>
+            The <see cref="T:System.TimeSpan" /> between the two most recent consecutive events (ie when <see cref="!:Mark" /> is called(
+            </summary>
+        </member>
+        <member name="M:JGL.Timer.Update">
+            <summary>
+            Stores <see cref="P:JGL.Timer.TimeElapsed" /> in <see cref="!:JGTL.Timer.LastElapsed" />, and updates
+            <see cref="P:JGL.Timer.MarkTime" /> to <c>DateTime.Now</c></summary>
+        </member>
     </members>
 </doc>

@@ -1,14 +1,6 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="JGL/Heirarchy/Behaviours/Gravity.cs">
-    <Files>
-      <File FileName="DynamicCodeTests/DynamicCode/Heirarchy/Scene1.cs" Line="18" Column="27" />
-      <File FileName="JGL/Heirarchy/Behaviours/Gravity.cs" Line="33" Column="4" />
-      <File FileName="JGL/Heirarchy/Scene.cs" Line="63" Column="21" />
-      <File FileName="JGL/Heirarchy/Behaviours/IBehaviour.cs" Line="7" Column="20" />
-      <File FileName="JGL/Heirarchy/Behaviours/Behaviour.cs" Line="37" Column="10" />
-      <File FileName="JGL/Heirarchy/Behaviours/NewtonianMovement.cs" Line="14" Column="4" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
@@ -16,17 +8,19 @@
             <Option id="ShowAllFiles" value="True" />
           </Node>
           <Node name="DynamicCodeTests" expanded="True">
+            <Node name="References" expanded="True" />
             <Node name="DynamicCode" expanded="True">
               <Node name="Heirarchy" expanded="True" />
             </Node>
+            <Node name="UI" expanded="True" />
           </Node>
           <Node name="JGL" expanded="True">
             <Node name="Heirarchy" expanded="True">
-              <Node name="Behaviours" expanded="True">
-                <Node name="Gravity.cs" selected="True" />
-              </Node>
+              <Option id="ShowAllFiles" value="False" />
+              <Node name="Behaviours" expanded="True" />
+              <Node name="Library" expanded="True" />
+              <Node name="RenderableObjectProxy.cs" selected="True" />
             </Node>
-            <Node name="UI" expanded="True" />
           </Node>
         </State>
       </Pad>

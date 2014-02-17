@@ -107,6 +107,8 @@
     <Compile Include="Graphics\Configuration.cs" />
     <Compile Include="Graphics\RenderArgs.cs" />
     <Compile Include="Heirarchy\Behaviours\ParticleGenerator.cs" />
+    <Compile Include="Heirarchy\RenderableObjectProxy.cs" />
+    <Compile Include="Timer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -132,6 +134,5 @@
   <ItemGroup>
     <None Include="XML comment clipboard.txt.cs" />
     <None Include="Features.txt" />
-    <None Include="Heirarchy\Behaviours\BatchBehaviour.cs" />
   </ItemGroup>
 </Project>

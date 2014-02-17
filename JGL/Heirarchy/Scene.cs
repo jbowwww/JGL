@@ -61,7 +61,7 @@ namespace JGL.Heirarchy
 		public void ProcessBehaviours(RenderArgs renderArgs)
 		{
 			foreach (IBehaviour b in Behaviours)
-				b.Process(renderArgs);
+				b.Process();
 		}
 	}
 }

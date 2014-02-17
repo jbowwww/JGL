@@ -97,40 +97,6 @@ namespace JGL.Heirarchy
 		}
 		#endregion
 
-		#region Events
-		/// <summary>
-		/// Entity event arguments.
-		/// </summary>
-		public class EntityEventArgs : EventArgs
-		{
-			/// <summary>
-			/// The <see cref="EntityContext.EntityEventHandler"/> can set this to <c>true</c> to cause the
-			/// <see cref="EntityContext.EntityEvent"/> to be cancelled.
-			/// </summary>
-			public bool Cancel = false;
-		}
-
-		/// <summary>
-		/// <see cref="EntityEvent"/> handler delegate type
-		/// </summary>
-		public delegate void EntityEventHandler(Entity entity, EntityEventArgs args);
-
-		/// <summary>
-		/// Occurs when an <see cref="Entity"/> is added to this <see cref="EntityContext"/>
-		/// </summary>
-		public event EntityEventHandler EntityAdded;
-
-		/// <summary>
-		/// Occurs when an <see cref="Entity"/> is removed from this <see cref="EntityContext"/>
-		/// </summary>
-		public event EntityEventHandler EntityRemoved;
-
-		/// <summary>
-		/// Occurs when an <see cref="Entity"/> is renamed in this <see cref="EntityContext"/>
-		/// </summary>
-		public event EntityEventHandler EntityRenamed;
-		#endregion
-
 		#region Constructors
 		/// <summary>
 		/// Constructs a new <see cref="JGL.Heirarchy.EntityContext"/> with zero initial child entities
@@ -140,7 +106,7 @@ namespace JGL.Heirarchy
 		{
 			Entities = new EntityCollection();
 			if (entities != null)
-				Add (entities);
+				AddRange(entities);
 		}
 
 		/// <summary>
@@ -219,7 +185,7 @@ namespace JGL.Heirarchy
 		/// Add one or more <see cref="JGL.Heirarchy.Entity"/> instances to this <see cref="JGL.Heirarchy.EntityContext"/>
 		/// </summary>
 		/// <param name="entities"><see cref="JGL.Heirarchy.Entity"/> instance(s) to add</param>
-		public void Add(params Entity[] entities)
+		public void AddRange(params Entity[] entities)
 		{
 //			if (entities != null)	// && entities.GetType().IsArray)
 				foreach (Entity child in entities)

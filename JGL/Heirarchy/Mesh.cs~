@@ -122,7 +122,7 @@ namespace JGL.Heirarchy
 				this.Triangles = meshes[0].Triangles;
 			}
 			else
-				Add(meshes);
+				AddRange(meshes);
 		}
 		#endregion
 

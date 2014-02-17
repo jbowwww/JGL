@@ -8,7 +8,7 @@ using JGL.Debugging;
 namespace JGL.Heirarchy
 {
 	[Serializable]
-	public class SimpleObject : Object, IPositionable, IRotatable, IRenderable
+	public class SimpleObject : Object, IRenderable
 	{
 		/// <summary>
 		/// Tracing
