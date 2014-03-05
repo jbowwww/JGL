@@ -21,7 +21,7 @@
     <WarningLevel>4</WarningLevel>
     <CustomCommands>
       <CustomCommands>
-        <Command type="BeforeExecute" command="cp -f ${SolutionDir}/DynamicCodeTests/UI/CodeWindow.glade ${TargetDir}/CodeWindow.glade" workingdir="" pauseExternalConsole="true" />
+        <Command type="BeforeExecute" command="cp -f ${SolutionDir}/DynamicCodeTests/UI/CodeWindow.glade ${TargetDir}/CodeWindow.glade" workingdir="" pauseExternalConsole="True" />
       </CustomCommands>
     </CustomCommands>
     <Externalconsole>true</Externalconsole>
@@ -36,7 +36,7 @@
     <ConsolePause>false</ConsolePause>
     <CustomCommands>
       <CustomCommands>
-        <Command type="BeforeExecute" command="cp -f ${SolutionDir}/DynamicCodeTests/UI/CodeWindow.glade ${TargetDir}/" externalConsole="true" pauseExternalConsole="true" />
+        <Command type="BeforeExecute" command="cp -f ${SolutionDir}/DynamicCodeTests/UI/CodeWindow.glade ${TargetDir}/" externalConsole="True" pauseExternalConsole="True" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -45,26 +45,27 @@
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="Mono.CSharp" />
-    <Reference Include="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Private>False</Private>
-    </Reference>
     <Reference Include="OpenTK">
       <HintPath>..\..\Resources\CS\OpenTK 1.0\Binaries\OpenTK\Release\OpenTK.dll</HintPath>
     </Reference>
-    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Private>False</Private>
-      <Package>glib-sharp-2.0</Package>
-    </Reference>
-    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
       <Private>False</Private>
     </Reference>
     <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
       <Private>False</Private>
     </Reference>
+    <Reference Include="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Compiler.cs" />
     <Compile Include="JGLApp.cs" />
     <Compile Include="UI\EntityTreeNode.cs" />
     <Compile Include="UI\DynamicCodePage.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="UI\SceneTypeDialog.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="UI\ProjectDialog.cs" />
+    <Compile Include="Compiler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -95,9 +97,9 @@
     <Folder Include="DynamicCode\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\JGL\JGL.csproj">
+    <ProjectReference Include="..\JGL\00_JGL.csproj">
       <Project>{1A4EC1C4-498A-42C7-ABC6-D4B9D889B8A9}</Project>
-      <Name>JGL</Name>
+      <Name>00_JGL</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

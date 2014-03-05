@@ -7,9 +7,10 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
+using JGL.Graphics;
 using JGL.Heirarchy;
 using JGL.Heirarchy.Resources;
-using JGL.Heirarchy.Library;
+using JGL.Heirarchy.MeshLibrary;
 using JGL.Heirarchy.Behaviours;
 
 namespace Dynamic
@@ -57,7 +58,7 @@ namespace Dynamic
 
 			ParticleGenerator pg = new ParticleGenerator()
 			{
-				Particle = new Triangle(0.75, 1)
+				Particle = new Triangle(01.5, 00.42)
 				{
 					TwoSided = true,
 					Material  = new Material("blue") { Ambient = Color4.Aqua, Diffuse = Color4.Aquamarine }

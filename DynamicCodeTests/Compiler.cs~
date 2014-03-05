@@ -21,8 +21,31 @@ namespace Dynamic
 		/// Tracing
 		/// </summary>
 		public readonly static AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncTextFileTraceListener.GetOrCreate("JGLApp"));
-		
-		private static  bool initEvaluator = false;
+
+
+		public Project Project { get; protected set; }
+
+		public CompilerSettings Settings { get; protected set; }
+
+		public CompilerContext Context { get; protected set; }
+
+		public Evaluator CSEvaluator { get; protected set; }
+
+		public CompilerResults Results { get; protected set; }
+
+		public StringBuilder CompilerOutput { get; protected set; }
+
+		public Compiler(Project project)
+		{
+			Project = project;
+			Settings = new CompilerSettings()
+			{
+				OutputFile = "DynamicCodeTests-Scene.dll"				
+			};
+//			Settings.AssemblyReferences.Remove("system.dll");
+
+
+		}
 
 		/// <summary>
 		/// Executes the code.
@@ -32,28 +55,15 @@ namespace Dynamic
 		/// <exception cref="InvalidProgramException">
 		/// Is thrown when a program contains invalid CIL instructions or metadata.
 		/// </exception>
-		public static string ExecuteCode(string code, Project project)
+		public string ExecuteCode(string code, Project project)
 		{
-			Trace.Log(TraceEventType.Information, "ExecuteCode(source=\"(...)\", project=\"{0}\")", project.Name);
-
-			if (!initEvaluator)
-			{
-				initEvaluator = true;
-				string usings = Evaluator.GetUsing();
-
-				Evaluator.Init(new string[] { });
-				usings = Evaluator.GetUsing();
-
-				Evaluator.LoadAssembly("DynamicCodeTests-Scene.dll");
-				foreach (string referencePath in project.ReferencePaths)
-				{
-					string filename = System.IO.Path.GetFileName(referencePath).ToLower();
-					if (filename != "system.dll")	// && filename != "opentk.dll" && filename != "jgl.dll")
-						Evaluator.LoadAssembly(referencePath);
-				}
-			}
-			Evaluator.Run(project.CodeUsings);
-
+			Trace.Log(TraceEventType.Information, "source=\"(...)\", project.Name=\"{0}\"", project.Name);
+			Project.CodeUsings = CSEvaluator.GetUsing();
+			Settings.AssemblyReferences = new System.Collections.Generic.List<string>(Project.ReferencePaths);
+			CompilerOutput = new StringBuilder();
+			Context = new CompilerContext(Settings, new StreamReportPrinter(new StringWriter(CompilerOutput)));
+			CSEvaluator = new Evaluator(Context);
+			CSEvaluator.Run(project.CodeUsings);
 			string r = string.Empty;
 			try
 			{
@@ -61,7 +71,7 @@ namespace Dynamic
 				string source = prefix + code;
 				if (code.Contains(";"))
 				{
-					if (!Evaluator.Run(source))
+					if (!CSEvaluator.Run(source))
 						throw new InvalidProgramException(string.Format("Evaluator.Run() == false (source = \"{0}\")", source.Replace("\n", " ")));
 				}
 				else
@@ -70,9 +80,9 @@ namespace Dynamic
 					bool result_set;
 					string input;
 					code += ";";
-					if (!Evaluator.Run(prefix))
+					if (!CSEvaluator.Run(prefix))
 						throw new InvalidProgramException(string.Format("Evaluator.Run() == false (prefix = \"{0}\")", prefix.Replace("\n", " ")));
-					input = Evaluator.Evaluate(code, out result, out result_set);
+					input = CSEvaluator.Evaluate(code, out result, out result_set);
 					if (input != null)
 						throw new InvalidProgramException(string.Format("Evaluator.Evaluate() != null (code = \"{0}\") = \"{1}\"", code.Replace("\n", " "), input.Replace("\n", " ")));
 					if (result_set)
@@ -91,13 +101,11 @@ namespace Dynamic
 		/// </summary>
 		/// <returns>A <see cref="System.CodeDom.Compiler.CompilerResults"/></returns>
 		/// <param name="source">Source code string(s)</param>
-		public static CompilerResults CompileCode(string[] source, string[] referencePaths)
+		public CompilerResults CompileCode(string[] source, string[] referencePaths)
 		{
 			Trace.Log(TraceEventType.Information, "CompileCode(source=string[{0}], referencePaths=string[{1}])", source.Length, referencePaths.Length);
 
-			CompilerResults _cr;
 			CSharpCodeProvider provider = new CSharpCodeProvider();
-
 			Trace.Log(TraceEventType.Verbose, "CodeProvider: {0}", provider.GetType().Name);
 			
 			// Build the parameters for source compilation.
@@ -109,21 +117,21 @@ namespace Dynamic
 			Trace.Log(TraceEventType.Verbose, "Compiler Parameters = {{ {0} }}", ParamsToString(cp));
 
 			// Invoke compilation.
-			_cr = provider.CompileAssemblyFromSource(cp, source);
+			Results = provider.CompileAssemblyFromSource(cp, source);
 
-			if (_cr.Errors.Count > 0)
+			if (Results.Errors.Count > 0)
 			{
 				// Display compilation errors.
-				string errorSummary = string.Format("Compilation errors: {0}", _cr.Errors.Count.ToString());
+				string errorSummary = string.Format("Compilation errors: {0}", Results.Errors.Count.ToString());
 				Trace.Log(TraceEventType.Information, errorSummary);
-				foreach (CompilerError ce in _cr.Errors)
+				foreach (CompilerError ce in Results.Errors)
 					Trace.Log(TraceEventType.Error, ce.ToString());
 			}
 			else
 			{
-				Trace.Log(TraceEventType.Information, "Source built {0}successfully.", cp.GenerateExecutable ? string.Concat("into ", _cr.PathToAssembly, " ") : "");
+				Trace.Log(TraceEventType.Information, "Source built {0}successfully.", cp.GenerateExecutable ? string.Concat("into ", Results.PathToAssembly, " ") : "");
 			}
-			return _cr;
+			return Results;
 		}
 
 		/// <summary>

@@ -19,10 +19,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <GenerateDocumentation>true</GenerateDocumentation>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp -f ${TargetFile} ${SolutionDir}/DynamicCodeTests/bin/Debug/JGL.dll" pauseExternalConsole="true" />
+        <Command type="AfterBuild" command="cp -f ${TargetFile} ${SolutionDir}/DynamicCodeTests/bin/Debug/JGL.dll" pauseExternalConsole="True" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -35,7 +34,7 @@
     <ConsolePause>false</ConsolePause>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp -f ${TargetFile} ${SolutionDir}/DynamicCodeTests/bin/Release/JGL.dll" externalConsole="true" pauseExternalConsole="true" />
+        <Command type="AfterBuild" command="cp -f ${TargetFile} ${SolutionDir}/DynamicCodeTests/bin/Release/JGL.dll" externalConsole="True" pauseExternalConsole="True" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -62,7 +61,6 @@
     <Compile Include="Heirarchy\Camera.cs" />
     <Compile Include="Heirarchy\IPositionable.cs" />
     <Compile Include="Heirarchy\IRotatable.cs" />
-    <Compile Include="Geometry\Color.cs" />
     <Compile Include="Heirarchy\SimpleObject.cs" />
     <Compile Include="Heirarchy\Light.cs" />
     <Compile Include="Debugging\Debug.cs" />
@@ -72,12 +70,6 @@
     <Compile Include="Geometry\Vector3d.cs" />
     <Compile Include="Geometry\Normal.cs" />
     <Compile Include="Geometry\Vertex.cs" />
-    <Compile Include="Heirarchy\Library\Box.cs" />
-    <Compile Include="Heirarchy\MaterialLibrary.cs" />
-    <Compile Include="Heirarchy\Material.cs" />
-    <Compile Include="Heirarchy\Library\Quad.cs" />
-    <Compile Include="Heirarchy\Library\Triangle.cs" />
-    <Compile Include="Heirarchy\Library\Grid.cs" />
     <Compile Include="Geometry\TriangleFace.cs" />
     <Compile Include="Extensions\Uri.cs" />
     <Compile Include="Geometry\VertexData.cs" />
@@ -87,16 +79,12 @@
     <Compile Include="Debugging\LogMessage.cs" />
     <Compile Include="Debugging\AsyncTextFileTraceListener.cs" />
     <Compile Include="Debugging\AsyncXmlFileTraceListener.cs" />
-    <Compile Include="Heirarchy\TexturiseMethod.cs" />
     <Compile Include="Heirarchy\Resources\Resource.cs" />
     <Compile Include="Heirarchy\Resources\Texture.cs" />
     <Compile Include="IO\Filesystem.cs" />
     <Compile Include="UI\SceneWindow.cs" />
-    <Compile Include="Heirarchy\EntityCollection.cs" />
     <Compile Include="EngineOptions.cs" />
     <Compile Include="Engine.cs" />
-    <Compile Include="ConcurrencyException.cs" />
-    <Compile Include="Heirarchy\HeirarchyException.cs" />
     <Compile Include="Heirarchy\Resources\Resource_static.cs" />
     <Compile Include="Heirarchy\Behaviours\Behaviour.cs" />
     <Compile Include="Heirarchy\INewtonian.cs" />
@@ -109,6 +97,17 @@
     <Compile Include="Heirarchy\Behaviours\ParticleGenerator.cs" />
     <Compile Include="Heirarchy\RenderableObjectProxy.cs" />
     <Compile Include="Timer.cs" />
+    <Compile Include="Graphics\Material.cs" />
+    <Compile Include="Graphics\MaterialLibrary.cs" />
+    <Compile Include="Heirarchy\MeshLibrary\Box.cs" />
+    <Compile Include="Heirarchy\MeshLibrary\Quad.cs" />
+    <Compile Include="Heirarchy\MeshLibrary\Triangle.cs" />
+    <Compile Include="Heirarchy\MeshLibrary\Grid.cs" />
+    <Compile Include="Exceptions\ConcurrencyException.cs" />
+    <Compile Include="Heirarchy\EntityCollection.cs" />
+    <Compile Include="Exceptions\HeirarchyException.cs" />
+    <Compile Include="Debugging\TraceEventType_Ext.cs" />
+    <Compile Include="Debugging\MyConsoleTraceListener.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -116,11 +115,12 @@
     <Folder Include="Heirarchy\" />
     <Folder Include="Geometry\" />
     <Folder Include="Debugging\" />
-    <Folder Include="Heirarchy\Library\" />
     <Folder Include="IO\" />
     <Folder Include="UI\" />
     <Folder Include="Heirarchy\Behaviours\" />
     <Folder Include="Graphics\" />
+    <Folder Include="Heirarchy\MeshLibrary\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -134,5 +134,6 @@
   <ItemGroup>
     <None Include="XML comment clipboard.txt.cs" />
     <None Include="Features.txt" />
+    <None Include="Heirarchy\MeshLibrary\TexturiseMethod.cs" />
   </ItemGroup>
 </Project>

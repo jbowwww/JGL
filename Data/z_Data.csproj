@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6B5C16FF-3269-42D2-9078-097B78CA43FC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Data</RootNamespace>
+    <AssemblyName>Data</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>.</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>.</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data.mdproj">
+      <Link>Data\Data.mdproj</Link>
+    </None>
+    <None Include="Data.pidb">
+      <Link>Data\Data.pidb</Link>
+    </None>
+    <None Include="Design\Diagram2.dia">
+      <Link>Data\Design\Diagram2.dia</Link>
+    </None>
+    <None Include="Design\Grid-vertex-to-triangle-faces-ideas.xcf">
+      <Link>Data\Design\Grid-vertex-to-triangle-faces-ideas.xcf</Link>
+    </None>
+    <None Include="Design\JGL.xmi">
+      <Link>Data\Design\JGL.xmi</Link>
+    </None>
+    <None Include="Design\JGL.zargo">
+      <Link>Data\Design\JGL.zargo</Link>
+    </None>
+    <None Include="Models\sceneextruded.mtl">
+      <Link>Data\Models\sceneextruded.mtl</Link>
+    </None>
+    <None Include="Models\sceneextruded.obj">
+      <Link>Data\Models\sceneextruded.obj</Link>
+    </None>
+    <None Include="Models\sceneextruded2.mtl">
+      <Link>Data\Models\sceneextruded2.mtl</Link>
+    </None>
+    <None Include="Models\sceneextruded2.obj">
+      <Link>Data\Models\sceneextruded2.obj</Link>
+    </None>
+    <None Include="Models\simplescene.mtl">
+      <Link>Data\Models\simplescene.mtl</Link>
+    </None>
+    <None Include="Models\simplescene.obj">
+      <Link>Data\Models\simplescene.obj</Link>
+    </None>
+    <None Include="Models\testscene.blend">
+      <Link>Data\Models\testscene.blend</Link>
+    </None>
+    <None Include="Models\tree %281%29.obj">
+      <Link>Data\Models\tree %281%29.obj</Link>
+    </None>
+    <None Include="Models\tree.mtl">
+      <Link>Data\Models\tree.mtl</Link>
+    </None>
+    <None Include="Models\tree.obj">
+      <Link>Data\Models\tree.obj</Link>
+    </None>
+    <None Include="Projects\New Project.project.xml">
+      <Link>Data\Projects\New Project.project.xml</Link>
+    </None>
+    <None Include="Projects\New Project.project.xml~">
+      <Link>Data\Projects\New Project.project.xml~</Link>
+    </None>
+    <None Include="Projects\Scene1.project.xml">
+      <Link>Data\Projects\Scene1.project.xml</Link>
+    </None>
+    <None Include="Textures\test1.jpg">
+      <Link>Data\Textures\test1.jpg</Link>
+    </None>
+    <None Include="Textures\test1.png">
+      <Link>Data\Textures\test1.png</Link>
+    </None>
+    <None Include="Textures\test1.xcf">
+      <Link>Data\Textures\test1.xcf</Link>
+    </None>
+    <None Include="Textures\tex2.png">
+      <Link>Data\Textures\tex2.png</Link>
+    </None>
+    <None Include="XML\out_scene.xml">
+      <Link>Data\XML\out_scene.xml</Link>
+    </None>
+    <None Include="z_Data.csproj">
+      <Link>Data\z_Data.csproj</Link>
+    </None>
+  </ItemGroup>
+</Project>

@@ -67,6 +67,11 @@ namespace Dynamic
 		public List<string> CodeHistory = new List<string>();
 
 		/// <summary>
+		/// The compile output.
+		/// </summary>
+		public string CompileOutput;
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="Dynamic.Project"/> class.
 		/// Default constructor used by serialization
 		/// </summary>

@@ -113,16 +113,19 @@ namespace JGL.Debugging
 			get
 			{
 				StringBuilder sb = new StringBuilder(256);
+				if (OutputOptions.HasFlag(TraceOptions.ProcessId))
+					sb.Append(string.Concat("P:", EventCache.ProcessId.ToString().PadRight(6), " "));
 				if (OutputOptions.HasFlag(TraceOptions.DateTime))
-					sb.Append(EventCache.DateTime.ToString("yy-MM-dd HH:mm:ss.ffffff "));
+					sb.Append(EventCache.DateTime.ToString("HH:mm:ss.ffffff "));		// yy-MM-dd HH:mm:ss.ffffff
 				if (OutputOptions.HasFlag(TraceOptions.Timestamp))
 					sb.Append(string.Concat(EventCache.Timestamp.ToString(), " "));
-				if (OutputOptions.HasFlag(TraceOptions.ProcessId))
-					sb.Append(string.Concat("P:", EventCache.ProcessId.ToString(), " "));
+				sb.Append(string.Concat(
+					Source.Name.PadRight(7), " ", Id.ToString("d4").PadRight(5), " "));
 				if (OutputOptions.HasFlag(TraceOptions.ThreadId))
-					sb.Append(string.Concat("T:", EventCache.ThreadId, " "));
-				sb.Append(string.Concat(Source.Name, " ", Frame.GetMethod().ReflectedType.Name, ".",
-					Frame.GetMethod().Name, " ", Id.ToString("d3"), " ", EventType.ToString(), " "));
+					sb.Append(string.Concat("T:", EventCache.ThreadId.PadRight(6), " "));
+				sb.Append(string.Concat(
+					Frame.GetMethod().ReflectedType.Name, ".",
+					Frame.GetMethod().Name, " ", EventType.ToString(), " "));
 				if (Format == null)
 				{
 					if (Data != null)
@@ -139,8 +142,7 @@ namespace JGL.Debugging
 					sb.Append("\nOperation stack:");
 					foreach (object stackEntry in EventCache.LogicalOperationStack)
 						sb.Append(string.Concat("\n", stackEntry));
-				}
-//				sb.Append("\n");
+     				}
 				return sb.ToString();
 			}
 		}

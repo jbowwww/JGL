@@ -1,20 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicCodeTests", "DynamicCodeTests\DynamicCodeTests.csproj", "{8F163935-50FF-4F0A-A9CF-C5B44774B240}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02_DynamicCodeTests", "DynamicCodeTests\02_DynamicCodeTests.csproj", "{8F163935-50FF-4F0A-A9CF-C5B44774B240}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JGL", "JGL\JGL.csproj", "{1A4EC1C4-498A-42C7-ABC6-D4B9D889B8A9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "00_JGL", "JGL\00_JGL.csproj", "{1A4EC1C4-498A-42C7-ABC6-D4B9D889B8A9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerializationTests", "SerializationTests\SerializationTests.csproj", "{EAF6280D-DBAE-450B-95E1-30EFFCA02D21}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtilityPrograms", "..\UtilityPrograms\UtilityPrograms.csproj", "{7FB80FA6-E2CE-419C-8E2A-D788E8E92F77}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{69166F42-EFE7-4A8D-9596-870273BCF64E}"
-	ProjectSection(SolutionItems) = preProject
-		commit.sh = commit.sh
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmallConsoleTests", "SmallConsoleTests\SmallConsoleTests.csproj", "{B75803A2-E3E6-4984-9A3D-8EA78ABAE224}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "z_Data", "Data\z_Data.csproj", "{6B5C16FF-3269-42D2-9078-097B78CA43FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,8 +24,10 @@ Global
 		{1A4EC1C4-498A-42C7-ABC6-D4B9D889B8A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A4EC1C4-498A-42C7-ABC6-D4B9D889B8A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A4EC1C4-498A-42C7-ABC6-D4B9D889B8A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B5C16FF-3269-42D2-9078-097B78CA43FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B5C16FF-3269-42D2-9078-097B78CA43FC}.Default|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B5C16FF-3269-42D2-9078-097B78CA43FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FB80FA6-E2CE-419C-8E2A-D788E8E92F77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7FB80FA6-E2CE-419C-8E2A-D788E8E92F77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FB80FA6-E2CE-419C-8E2A-D788E8E92F77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FB80FA6-E2CE-419C-8E2A-D788E8E92F77}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8F163935-50FF-4F0A-A9CF-C5B44774B240}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -36,7 +35,6 @@ Global
 		{8F163935-50FF-4F0A-A9CF-C5B44774B240}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F163935-50FF-4F0A-A9CF-C5B44774B240}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B75803A2-E3E6-4984-9A3D-8EA78ABAE224}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B75803A2-E3E6-4984-9A3D-8EA78ABAE224}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B75803A2-E3E6-4984-9A3D-8EA78ABAE224}.Default|Any CPU.ActiveCfg = Debug|Any CPU
 		{B75803A2-E3E6-4984-9A3D-8EA78ABAE224}.Default|Any CPU.Build.0 = Debug|Any CPU
 		{B75803A2-E3E6-4984-9A3D-8EA78ABAE224}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -44,10 +42,8 @@ Global
 		{EAF6280D-DBAE-450B-95E1-30EFFCA02D21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EAF6280D-DBAE-450B-95E1-30EFFCA02D21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = DynamicCodeTests\DynamicCodeTests.csproj
+		StartupItem = DynamicCodeTests\02_DynamicCodeTests.csproj
 		Policies = $0
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = Hierarchical
@@ -64,9 +60,6 @@ Global
 		$3.EventAddBraceStyle = NextLine
 		$3.EventRemoveBraceStyle = NextLine
 		$3.StatementBraceStyle = NextLine
-		$3.PlaceElseOnNewLine = True
-		$3.PlaceCatchOnNewLine = True
-		$3.PlaceFinallyOnNewLine = True
 		$3.BeforeMethodDeclarationParentheses = False
 		$3.BeforeMethodCallParentheses = False
 		$3.BeforeConstructorDeclarationParentheses = False
@@ -80,9 +73,8 @@ Global
 		$3.scope = text/x-csharp
 		$0.TextStylePolicy = $4
 		$4.FileWidth = 128
-		$4.TabWidth = 4
-		$4.RemoveTrailingWhitespace = True
-		$4.inheritsSet = Mono
+		$4.TabsToSpaces = False
+		$4.inheritsSet = VisualStudio
 		$4.inheritsScope = text/plain
 		$4.scope = text/plain
 		$0.TextStylePolicy = $5
@@ -91,9 +83,8 @@ Global
 		$5.scope = text/x-log
 		$0.TextStylePolicy = $6
 		$6.FileWidth = 128
-		$6.TabWidth = 4
-		$6.RemoveTrailingWhitespace = True
-		$6.inheritsSet = Mono
+		$6.TabsToSpaces = False
+		$6.inheritsSet = VisualStudio
 		$6.inheritsScope = text/plain
 		$6.scope = application/glade+xml
 		$0.XmlFormattingPolicy = $7
@@ -102,9 +93,8 @@ Global
 		$7.scope = application/glade+xml
 		$0.TextStylePolicy = $8
 		$8.FileWidth = 128
-		$8.TabWidth = 4
-		$8.RemoveTrailingWhitespace = True
-		$8.inheritsSet = Mono
+		$8.TabsToSpaces = False
+		$8.inheritsSet = VisualStudio
 		$8.inheritsScope = text/plain
 		$8.scope = application/xml
 		$0.XmlFormattingPolicy = $9
@@ -114,6 +104,136 @@ Global
 		$0.StandardHeader = $10
 		$10.Text = 
 		$10.IncludeInNewFiles = True
+		$0.TextStylePolicy = $11
+		$11.inheritsSet = null
+		$11.scope = application/config+xml
+		$0.XmlFormattingPolicy = $12
+		$12.inheritsSet = null
+		$12.scope = application/config+xml
+		$0.NameConventionPolicy = $13
+		$13.Rules = $14
+		$14.NamingRule = $15
+		$15.Name = Namespaces
+		$15.AffectedEntity = Namespace
+		$15.VisibilityMask = VisibilityMask
+		$15.NamingStyle = PascalCase
+		$15.IncludeInstanceMembers = True
+		$15.IncludeStaticEntities = True
+		$14.NamingRule = $16
+		$16.Name = Types
+		$16.AffectedEntity = Class, Struct, Enum, Delegate
+		$16.VisibilityMask = Public
+		$16.NamingStyle = PascalCase
+		$16.IncludeInstanceMembers = True
+		$16.IncludeStaticEntities = True
+		$14.NamingRule = $17
+		$17.Name = Interfaces
+		$17.RequiredPrefixes = $18
+		$18.String = I
+		$17.AffectedEntity = Interface
+		$17.VisibilityMask = Public
+		$17.NamingStyle = PascalCase
+		$17.IncludeInstanceMembers = True
+		$17.IncludeStaticEntities = True
+		$14.NamingRule = $19
+		$19.Name = Attributes
+		$19.RequiredSuffixes = $20
+		$20.String = Attribute
+		$19.AffectedEntity = CustomAttributes
+		$19.VisibilityMask = Public
+		$19.NamingStyle = PascalCase
+		$19.IncludeInstanceMembers = True
+		$19.IncludeStaticEntities = True
+		$14.NamingRule = $21
+		$21.Name = Event Arguments
+		$21.RequiredSuffixes = $22
+		$22.String = EventArgs
+		$21.AffectedEntity = CustomEventArgs
+		$21.VisibilityMask = Public
+		$21.NamingStyle = PascalCase
+		$21.IncludeInstanceMembers = True
+		$21.IncludeStaticEntities = True
+		$14.NamingRule = $23
+		$23.Name = Exceptions
+		$23.RequiredSuffixes = $24
+		$24.String = Exception
+		$23.AffectedEntity = CustomExceptions
+		$23.VisibilityMask = VisibilityMask
+		$23.NamingStyle = PascalCase
+		$23.IncludeInstanceMembers = True
+		$23.IncludeStaticEntities = True
+		$14.NamingRule = $25
+		$25.Name = Methods
+		$25.AffectedEntity = Methods
+		$25.VisibilityMask = Protected, Public
+		$25.NamingStyle = PascalCase
+		$25.IncludeInstanceMembers = True
+		$25.IncludeStaticEntities = True
+		$14.NamingRule = $26
+		$26.Name = Static Readonly Fields
+		$26.AffectedEntity = ReadonlyField
+		$26.VisibilityMask = Protected, Public
+		$26.NamingStyle = PascalCase
+		$26.IncludeInstanceMembers = False
+		$26.IncludeStaticEntities = True
+		$14.NamingRule = $27
+		$27.Name = Fields
+		$27.AffectedEntity = Field
+		$27.VisibilityMask = Protected, Public
+		$27.NamingStyle = PascalCase
+		$27.IncludeInstanceMembers = True
+		$27.IncludeStaticEntities = True
+		$14.NamingRule = $28
+		$28.Name = ReadOnly Fields
+		$28.AffectedEntity = ReadonlyField
+		$28.VisibilityMask = Protected, Public
+		$28.NamingStyle = PascalCase
+		$28.IncludeInstanceMembers = True
+		$28.IncludeStaticEntities = False
+		$14.NamingRule = $29
+		$29.Name = Constant Fields
+		$29.AffectedEntity = ConstantField
+		$29.VisibilityMask = Protected, Public
+		$29.NamingStyle = PascalCase
+		$29.IncludeInstanceMembers = True
+		$29.IncludeStaticEntities = True
+		$14.NamingRule = $30
+		$30.Name = Properties
+		$30.AffectedEntity = Property
+		$30.VisibilityMask = Protected, Public
+		$30.NamingStyle = PascalCase
+		$30.IncludeInstanceMembers = True
+		$30.IncludeStaticEntities = True
+		$14.NamingRule = $31
+		$31.Name = Events
+		$31.AffectedEntity = Event
+		$31.VisibilityMask = Protected, Public
+		$31.NamingStyle = PascalCase
+		$31.IncludeInstanceMembers = True
+		$31.IncludeStaticEntities = True
+		$14.NamingRule = $32
+		$32.Name = Enum Members
+		$32.AffectedEntity = EnumMember
+		$32.VisibilityMask = VisibilityMask
+		$32.NamingStyle = PascalCase
+		$32.IncludeInstanceMembers = True
+		$32.IncludeStaticEntities = True
+		$14.NamingRule = $33
+		$33.Name = Parameters
+		$33.AffectedEntity = Parameter
+		$33.VisibilityMask = VisibilityMask
+		$33.NamingStyle = CamelCase
+		$33.IncludeInstanceMembers = True
+		$33.IncludeStaticEntities = True
+		$14.NamingRule = $34
+		$34.Name = Type Parameters
+		$34.RequiredPrefixes = $35
+		$35.String = T
+		$34.AffectedEntity = TypeParameter
+		$34.VisibilityMask = VisibilityMask
+		$34.NamingStyle = PascalCase
+		$34.IncludeInstanceMembers = True
+		$34.IncludeStaticEntities = True
 		outputpath = bin
 	EndGlobalSection
 EndGlobal

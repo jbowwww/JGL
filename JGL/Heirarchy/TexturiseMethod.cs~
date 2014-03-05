@@ -1,6 +1,6 @@
 using System;
 
-namespace JGL.Heirarchy
+namespace JGL.Heirarchy.Library
 {
 	/// <summary>
 	/// An abstract representation of a "Texturise" method. Generates texture coordinates and

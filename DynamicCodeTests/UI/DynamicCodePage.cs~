@@ -17,7 +17,7 @@ namespace Dynamic.UI
 		/// <summary>
 		/// The trace.
 		/// </summary>
-		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncFileTraceListener.GetOrCreate("JGLApp"));
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncTextFileTraceListener.GetOrCreate("JGLApp"));
 
 		private List<string> codeHistory = new List<string>();
 
@@ -64,15 +64,19 @@ namespace Dynamic.UI
 		StringBuilder sbError = new StringBuilder();
 		StringBuilder sbEval = new StringBuilder();
 
+		public readonly Compiler DynamicCompiler;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DynamicCodeTests.DynamicCodePage"/> class.
 		/// </summary>
 		public DynamicCodePage(Project project, CodeWindow codeWindow)
 		{
-			Trace.Log(TraceEventType.Information, "Init(project=\"{0}\", codeWindow=\"{1}\")", project.ToString(), codeWindow.ToString());
+			Trace.Log(TraceEventType.Information, "project=\"{0}\", codeWindow=\"{1}\"", project.ToString(), codeWindow.ToString());
 
 			Project = project;
 			CodeWindow = codeWindow;
+
+			DynamicCompiler = new Compiler(project);
 
 			lockOutput.AcquireWriterLock(0);
 
@@ -131,7 +135,7 @@ namespace Dynamic.UI
 		/// <param name="partialWord">Partial word to show completions for</param>
 		public void ShowCompletions()
 		{
-			Trace.Log(TraceEventType.Information, "ShowCompletions");
+			Trace.Log(TraceEventType.Information);
 //			string partialWord = "test";
 //			string prefix;
 //			string[] completions = Evaluator.GetCompletions(partialWord, out prefix);
@@ -152,7 +156,7 @@ namespace Dynamic.UI
 		/// </remarks>
 		public void ExecuteCode()
 		{
-			Trace.Log(TraceEventType.Information, "ExecuteCode");
+			Trace.Log(TraceEventType.Information);
 			TextWriter consoleOutput = null, consoleError = null;
 			try
 			{
@@ -165,7 +169,7 @@ namespace Dynamic.UI
 
 					sbOut.Clear();
 					StringWriter sw = new StringWriter(sbOut);
-					Evaluator.MessageOutput = sw;
+//					Evaluator.MessageOutput = sw;
 					consoleOutput = Console.Out;
 					Console.SetOut(sw);
 					consoleError = Console.Error;
@@ -175,7 +179,7 @@ namespace Dynamic.UI
 					tvOutput.Buffer.InsertAtCursor("> " + code.Replace("\n", "\n> ") + "\n");
 					TextMark tm = tvOutput.Buffer.CreateMark(string.Format("mark-code{0}-start", mark), tvOutput.Buffer.EndIter, true);
 
-					tvOutput.Buffer.InsertAtCursor(Compiler.ExecuteCode(code, Project));
+					tvOutput.Buffer.InsertAtCursor(DynamicCompiler.ExecuteCode(code, Project));
 
 					TextMark tm2 = tvOutput.Buffer.CreateMark(string.Format("mark-code{0}-end)", mark), tvOutput.Buffer.EndIter, true);
 					TextTag tt = new TextTag(string.Format("code{0}", mark));
@@ -184,7 +188,7 @@ namespace Dynamic.UI
 					tvOutput.Buffer.ApplyTag(tt, tvOutput.Buffer.GetIterAtMark(tm), tvOutput.Buffer.GetIterAtMark(tm2));
 					Console.Out.Flush();
 					Console.Error.Flush();
-					Evaluator.MessageOutput.Flush();
+//					Evaluator.MessageOutput.Flush();
 					if (sbOut.Length > 0)
 					{
 						string output = sbOut.ToString(); // + "\n";

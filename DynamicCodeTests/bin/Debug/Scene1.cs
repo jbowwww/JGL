@@ -7,9 +7,10 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
+using JGL.Graphics;
 using JGL.Heirarchy;
 using JGL.Heirarchy.Resources;
-using JGL.Heirarchy.Library;
+using JGL.Heirarchy.MeshLibrary;
 using JGL.Heirarchy.Behaviours;
 
 namespace Dynamic
@@ -31,7 +32,7 @@ namespace Dynamic
 		public void Init()
 		{
 			JGL.Heirarchy.Object box = null;
-			Add(
+			AddRange(
 				new Origin(),
 				new Tree1() { Position = new Vector3d(3, 0, -13), Rotation = new Vector3d(0.15, 68, 0) },
 				new Tree1() { Position = new Vector3d(-2, -0.12, -10), Rotation = new Vector3d(-0.2, -30, 0) },
@@ -75,3 +76,4 @@ namespace Dynamic
 //			foreach (JGL.Heirarchy.Object o in this.Entities.OfType<JGL.Heirarchy.Object>())
 //				gravity.Entities.Add(o);
 //			Behaviours.Add(gravity);
+y);

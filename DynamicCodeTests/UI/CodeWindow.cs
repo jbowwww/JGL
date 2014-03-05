@@ -88,12 +88,14 @@ namespace Dynamic.UI
 		/// </summary>
 		public Project Project { get; private set; }
 
+		public Compiler Compiler { get; private set; }
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DynamicCodeTests.CodeWindow"/> class.
 		/// </summary>
 		public CodeWindow(string projectFile = null, string[] sourceFiles = null)
 		{
-			//Trace.Log(TraceEventType.Information, "CodeWindow.c'tor(params string[] files = string[{0}])", files.Length);
+			Trace.Log(TraceEventType.Information, "projectFile={0}, sourceFiles={1}", projectFile == null ? "(null)" : projectFile.ToString(), sourceFiles.ToString());
 
 			CodeWindows.TryAdd(this, this);															// store this CodeWindow instance
 			
@@ -136,7 +138,7 @@ namespace Dynamic.UI
 		/// </summary>
 		public void PopulateHeirarchy()
 		{
-			Trace.Log(TraceEventType.Verbose, "PopulateHeirarchy()");
+			Trace.Log(TraceEventType.Information);
 			entProjectName.Text = Project.Name;
 			storeHeirarchy.Clear();
 			if (EntityContext.Root != null)
@@ -153,7 +155,7 @@ namespace Dynamic.UI
 		/// <param name='tnParent'><see cref="Gtk.TreeNode"/> that is to hold the child tree nodes representing the subheirarchy of <paramref name="ec"/></param>
 		private void PopulateHeirarchy(Entity entity, TreeNode tnParent = null)
 		{
-			Trace.Log(TraceEventType.Verbose, "PopulateHeirarchy(entity.Id=\"{0}\", tnParent=\"{1}\")", entity.Id, tnParent == null ? "(null)" : tnParent.ToString());
+			Trace.Log(TraceEventType.Verbose, "entity.Id=\"{0}\", tnParent=\"{1}\"", entity.Id, tnParent == null ? "(null)" : tnParent.ToString());
 			TreeNode tnNew = new EntityTreeNode(entity);
 			if (tnParent == null)
 				storeHeirarchy.AddNode(tnNew);
@@ -170,7 +172,7 @@ namespace Dynamic.UI
 		/// <param name='filenames'>Array of filename strings giving paths to files to open</param>
 		public void OpenSourceFiles(params string[] filenames)
 		{
-			Trace.Log(TraceEventType.Information, "OpenSourceFiles(params string[] filenames = string[{0}])", filenames.Length);
+			Trace.Log(TraceEventType.Information, "filenames={0}", filenames.ToString());
 			int setPage = nbCode.NPages;
 			int newPages = 0;
 			foreach (string filename in filenames)
@@ -206,11 +208,12 @@ namespace Dynamic.UI
 		/// <param name="filename">The project file path. Its extension should be ".project.xml"</param>
 		public void OpenProject(string filename)
 		{
-			Trace.Log(TraceEventType.Information, "OpenProject(filename={0})", filename);
+			Trace.Log(TraceEventType.Information, "filename={0}", filename);
 			if (filename == null || filename.Length < 13 || filename.Substring(filename.Length - 12).ToLower() != ".project.xml")
 				// TODO: Don't want to throw back to JGLApp.Unhandled exception (i think?) Want to log/display warning?
 				throw new ArgumentOutOfRangeException("filename", filename, "Invalid project file extension (must be a .project.xml file)");
 			Project = Project.Load(filename);
+			Compiler = new Compiler(Project);
 			PopulateHeirarchy();
 			OpenSourceFiles(Project.SourcePaths.ToArray());
 		}
@@ -220,7 +223,7 @@ namespace Dynamic.UI
 		/// </summary>
 		protected void SaveProject()
 		{
-			Trace.Log(TraceEventType.Information, "SaveProject()");
+			Trace.Log(TraceEventType.Information, "Name={0}", Project.Name);
 			if (Project == null)
 				throw new InvalidOperationException("Project == null");
 			Project.Save();
@@ -233,6 +236,7 @@ namespace Dynamic.UI
 		/// <typeparam name="TPage">The 1st type parameter</typeparam>
 		protected Widget[] GetPagesOfType<TPage>()
 		{
+			Trace.Log(TraceEventType.Verbose, "TPage=typeof({0})", typeof(TPage).FullName);
 			List<Widget> pages = new List<Widget>();
 			Widget nbPage;
 			for (int i = 0; i < nbCode.NPages && ((nbPage = nbCode.GetNthPage(i)) != null); i++)
@@ -248,6 +252,7 @@ namespace Dynamic.UI
 		/// <returns><c>true</c> as long as the user's response is yes or no. Otherwise (response is cancel), <c>false</c>.</returns>
 		protected virtual bool ConfirmExit()
 		{
+			Trace.Log(TraceEventType.Verbose);
 			foreach (StaticCodePage cp in GetPagesOfType<StaticCodePage>())
 			{
 				if (cp.Unsaved)
@@ -276,6 +281,7 @@ namespace Dynamic.UI
 		/// </summary>
 		public void OnWidgetDeleteEvent(object sender, DeleteEventArgs e)
 		{
+			Trace.Log(TraceEventType.Verbose, "sender={0}, e={1}", sender.ToString(), e.ToString());
 			if (ConfirmExit())
 			{
 				SaveProject();
@@ -299,8 +305,7 @@ namespace Dynamic.UI
 		/// </summary>
 		protected void OnFileNew(object sender, EventArgs e)
 		{
-			Trace.Log(TraceEventType.Verbose, "OnFileNew()");
-
+			Trace.Log(TraceEventType.Verbose, "sender={0}, e={1}", sender.ToString(), e.ToString());
 			StaticCodePage cp = new StaticCodePage();
 			nbCode.AppendPage(cp, cp.TabLabel);
 			nbCode.ShowAll();
@@ -311,7 +316,7 @@ namespace Dynamic.UI
 		/// </summary>
 		protected void OnFileOpen(object sender, EventArgs e)
 		{
-			Trace.Log(TraceEventType.Verbose, "OnFileOpen");
+			Trace.Log(TraceEventType.Verbose, "sender={0}, e={1}", sender.ToString(), e.ToString());
 			FileChooserDialog fDlg = new FileChooserDialog("Open File", null, FileChooserAction.Open, "Cancel", ResponseType.Cancel, "Open", ResponseType.Accept);
 			fDlg.SelectMultiple = true;
 			if (fDlg.Run() == (int)ResponseType.Accept)
@@ -336,7 +341,7 @@ namespace Dynamic.UI
 		/// </summary>
 		protected void OnFileSave(object sender, EventArgs e)
 		{
-			Trace.Log(TraceEventType.Verbose, "OnFileSave");
+			Trace.Log(TraceEventType.Verbose, "sender={0}, e={1}", sender.ToString(), e.ToString());
 			if (nbCode.NPages > 0)
 			{
 				StaticCodePage cp = (StaticCodePage)nbCode.GetNthPage(nbCode.Page);
@@ -358,7 +363,7 @@ namespace Dynamic.UI
 		/// </summary>
 		protected void OnFileSaveAs(object sender, EventArgs e)
 		{
-			Trace.Log(TraceEventType.Verbose, "OnFileSaveAs");
+			Trace.Log(TraceEventType.Verbose, "sender={0}, e={1}", sender.ToString(), e.ToString());
 			if (nbCode.NPages > 0)
 			{
 				StaticCodePage cp = (StaticCodePage)nbCode.GetNthPage(nbCode.Page);
@@ -379,30 +384,52 @@ namespace Dynamic.UI
 		/// <summary>
 		/// Raises the execute event.
 		/// </summary>
-		protected void OnExecute(object sender, EventArgs e)
+		protected void OnProjectCompile(object sender, EventArgs e)
 		{
-			Trace.Log(TraceEventType.Information, "OnExecute");
-			if (SceneWindowThread != null)
+			Trace.Log(TraceEventType.Verbose, "sender={0}, e={1}", sender.ToString(), e.ToString());
+			Gtk.Widget nbPage = null;
+			List<string> sources = new List<string>();
+			foreach (StaticCodePage cp in GetPagesOfType<StaticCodePage>())
+				sources.Add(cp.Source);
+
+			// Compile code
+			Compiler.CompileCode(sources.ToArray(), Project.ReferencePaths.ToArray());
+
+			// Compile errors
+			if (Compiler.Results.Errors.Count > 0)
 			{
-				Trace.Log(TraceEventType.Warning, "SceneWindowThread already started for this CodeWindow");
+
+				StringBuilder sb = new StringBuilder();
+				sb.AppendFormat("{0} errors while compiling {1} sources:\n", Compiler.Results.Errors.Count, sources.Count);
+				foreach (System.CodeDom.Compiler.CompilerError error in Compiler.Results.Errors)
+					sb.AppendFormat("{0} {1} @ {2}:{3},{4}: {5}\n", error.IsWarning ? "Warning" : "Error",
+						 error.ErrorNumber, error.FileName, error.Line, error.Column, error.ErrorText);
 			}
-			else
+		}
+
+		/// <summary>
+		/// Raises the execute event.
+		/// </summary>
+		protected void OnProjectExecute(object sender, EventArgs e)
+		{
+			Trace.Log(TraceEventType.Verbose, "sender={0}, e={1}", sender.ToString(), e.ToString());
+			if (SceneWindowThread == null)
 			{
 				Gtk.Widget nbPage = null;
 				List<string> sources = new List<string>();
 				foreach (StaticCodePage cp in GetPagesOfType<StaticCodePage>())
 					sources.Add(cp.Source);
-	
+
 				// Compile code
-				System.CodeDom.Compiler.CompilerResults cr = Compiler.CompileCode(sources.ToArray(), Project.ReferencePaths.ToArray());
+				Compiler.CompileCode(sources.ToArray(), Project.ReferencePaths.ToArray());
 	
 				// Compile errors
-				if (cr.Errors.Count > 0)
+				if (Compiler.Results.Errors.Count > 0)
 				{
 	
 					StringBuilder sb = new StringBuilder();
-					sb.AppendFormat("{0} errors while compiling {1} sources:\n", cr.Errors.Count, sources.Count);
-					foreach (System.CodeDom.Compiler.CompilerError error in cr.Errors)
+					sb.AppendFormat("{0} errors while compiling {1} sources:\n", Compiler.Results.Errors.Count, sources.Count);
+					foreach (System.CodeDom.Compiler.CompilerError error in Compiler.Results.Errors)
 						sb.AppendFormat("{0} {1} @ {2}:{3},{4}: {5}\n", error.IsWarning ? "Warning" : "Error", error.ErrorNumber, error.FileName, error.Line, error.Column, error.ErrorText);
 //					MessageDialog mDlg = new MessageDialog(null, DialogFlags.Modal, MessageType.Error, ButtonsType.Ok, sb.ToString());
 //					mDlg.Response += delegate(object o, ResponseArgs args) {
@@ -416,7 +443,7 @@ namespace Dynamic.UI
 				else
 				{
 					// Find scene types in compiled assembly
-					Type[] assemblyTypes = cr.CompiledAssembly.GetTypes();
+					Type[] assemblyTypes = Compiler.Results.CompiledAssembly.GetTypes();
 					List<Type> sceneTypes = new List<Type>();
 					foreach (Type t in assemblyTypes)
 						if (t.IsSubclassOf(typeof(Scene)))
@@ -426,7 +453,7 @@ namespace Dynamic.UI
 					if (sceneTypes.Count == 0)
 					{
 						MessageDialog mDlg = new MessageDialog(null, DialogFlags.Modal | DialogFlags.DestroyWithParent,
-							MessageType.Error, ButtonsType.Ok, "Assembly \"{0}\" does not contain any Scene types", cr.CompiledAssembly.FullName);
+							MessageType.Error, ButtonsType.Ok, "Assembly \"{0}\" does not contain any Scene types", Compiler.Results.CompiledAssembly.FullName);
 						mDlg.Show();
 					}
 	
@@ -495,9 +522,9 @@ namespace Dynamic.UI
 		/// </summary>
 		protected void OnFinishExecute(object sender, EventArgs args)
 		{
-			Trace.Log(TraceEventType.Information, "OnFinishExecute");
+			Trace.Log(TraceEventType.Verbose, "sender={0}, args={1}", sender.ToString(), args.ToString());
 			FinishExecuteArgs _args = args as FinishExecuteArgs;
-			Trace.Log(TraceEventType.Information, "Ended SceneWindowThread for scene \"{0}\"", _args.Scene.Id);
+			Trace.Log(TraceEventType.Verbose, "Ended SceneWindowThread for scene \"{0}\"", _args.Scene.Id);
 			nbCode.RemovePage(page);
 			nbCode.RemovePage(page);
 			EntityContext.Root.Remove(_args.Scene);
@@ -510,7 +537,7 @@ namespace Dynamic.UI
 		/// </summary>
 		protected void OnRefresh(object sender, EventArgs args)
 		{
-			Trace.Log(TraceEventType.Verbose, "OnRefresh");
+			Trace.Log(TraceEventType.Verbose, "sender={0}, args={1}", sender.ToString(), args.ToString());
 			PopulateHeirarchy();
 		}
 
@@ -519,13 +546,12 @@ namespace Dynamic.UI
 		/// </summary>
 		protected void OnProjectPreferences(object sender, EventArgs args)
 		{
-			Trace.Log(TraceEventType.Information, "OnProjectPreferences");
-
+			Trace.Log(TraceEventType.Verbose, "sender={0}, args={1}", sender.ToString(), args.ToString());
 			ProjectDialog ppDlg = new ProjectDialog(GtkWindow as Gtk.Window, Project);
-
 			int r = ppDlg.GtkDialog.Run();
 			if (r == (int)ResponseType.Ok)
 			{
+				Compiler = new Compiler(Project);
 				SaveProject();
 				PopulateHeirarchy();
 			}

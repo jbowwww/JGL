@@ -44,6 +44,8 @@ namespace JGL.Debugging
 		/// </summary>
 		private static ConcurrentQueue<LogMessage> _messageQueue;
 
+		private static MyConsoleTraceListener _consoleListener = new MyConsoleTraceListener();
+
 		/// <summary>
 		/// The open listeners.
 		/// </summary>
@@ -87,9 +89,9 @@ namespace JGL.Debugging
 		private static void RunTrace()
 		{
 			TraceThreadRunning = true;
-			Thread.CurrentThread.Name = "AutoTraceSource.RunTrace";
+			Thread.CurrentThread.Name = "Trace";
 
-			Trace.Log(System.Diagnostics.TraceEventType.Verbose, "RunTrace started");
+			Trace.Log(System.Diagnostics.TraceEventType.Verbose, "Started tracing");
 
 			// Loop while not flagged to stop background logging or while there are still messages or streams to close queued
 			while (!_stopThread || _messageQueue.Count > 0)		// || CloseQueue.Count > 0)
@@ -167,7 +169,10 @@ namespace JGL.Debugging
 		/// </remarks>
 		public static AutoTraceSource GetOrCreate(params TraceListener[] traceListeners)
 		{
-			return GetOrCreate(Assembly.GetCallingAssembly().GetName().Name, true, traceListeners);
+			Assembly assembly = Assembly.GetCallingAssembly();
+			AssemblyTitleAttribute[] assemblyTitleAttr = (AssemblyTitleAttribute[])assembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), true);
+			return GetOrCreate(assemblyTitleAttr == null || assemblyTitleAttr.Length == 0
+				? assembly.GetName().Name : assemblyTitleAttr[0].Title, true, traceListeners);
 		}
 
 		/// <summary>
@@ -203,11 +208,11 @@ namespace JGL.Debugging
 					_messageQueue = new ConcurrentQueue<LogMessage>();
 				if (Trace == null)
 				{
-					TraceListener consoleListener = new ConsoleTraceListener();
-					consoleListener.Filter = new EventTypeFilter(SourceLevels.Information);
+//					TraceListener consoleListener = new MyConsoleTraceListener();
+//					consoleListener.Filter = new EventTypeFilter(SourceLevels.Information);
 					TraceListener newListener = AsyncXmlFileTraceListener.GetOrCreate("JGL");
 					newListener.Filter = new EventTypeFilter(SourceLevels.All);
-					Trace = new AutoTraceSource(Assembly.GetAssembly(typeof(AutoTraceSource)).GetName().Name, consoleListener, newListener);
+					Trace = new AutoTraceSource(Assembly.GetAssembly(typeof(AutoTraceSource)).GetName().Name, _consoleListener, newListener);
 					// TODO: Config class, or file, or something, for trace listener configs & deafults
 				}
 				if (TraceThread == null)
@@ -229,24 +234,8 @@ namespace JGL.Debugging
 				traceSource = new AutoTraceSource(name, traceListeners);
 
 			// if auto add console listener, ensure one exists in traceListeners, or add a new one
-			if (autoAddConsoleListener)
-			{
-				foreach (TraceListener traceListener in traceSource.Listeners)
-				{
-					if (traceListener.GetType().IsTypeOf(typeof(ConsoleTraceListener)))
-					{
-						autoAddConsoleListener = false;
-						break;
-					}
-				}
-				if (autoAddConsoleListener)
-				{
-					traceSource.Listeners.Add(new ConsoleTraceListener());
-//					traceListeners = new TraceListener[traceListeners.Length + 1];
-//					Array.Resize<TraceListener>(ref traceListeners, traceListeners.Length + 1);
-//					traceListeners[traceListeners.Length - 1] = new ConsoleTraceListener();
-				}
-			}
+			if (autoAddConsoleListener && !traceSource.Listeners.Contains(_consoleListener))
+				traceSource.Listeners.Add(_consoleListener);
 
 			return traceSource;
 		}

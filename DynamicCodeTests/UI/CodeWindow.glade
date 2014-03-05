@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <glade-interface>
-  <!-- interface-requires gnome 0.0 -->
-  <!-- interface-requires gnome 0.0 -->
   <!-- interface-requires gtk+ 2.24 -->
+  <!-- interface-requires gnome 0.0 -->
+  <!-- interface-requires gnome 0.0 -->
   <!-- interface-naming-policy project-wide -->
   <widget class="GtkWindow" id="CodeWindow">
     <property name="visible">True</property>
@@ -11,7 +11,7 @@
     <property name="window_position">center</property>
     <property name="default_width">780</property>
     <property name="default_height">696</property>
-    <signal name="delete_event" handler="OnWidgetDeleteEvent"/>
+    <signal name="delete_event" handler="OnWidgetDeleteEvent" swapped="no"/>
     <child>
       <widget class="GtkVBox" id="vbox2">
         <property name="visible">True</property>
@@ -42,7 +42,7 @@
                         <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <signal name="activate" handler="OnFileNew"/>
+                        <signal name="activate" handler="OnFileNew" swapped="no"/>
                       </widget>
                     </child>
                     <child>
@@ -54,7 +54,7 @@
                         <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <signal name="activate" handler="OnFileOpen"/>
+                        <signal name="activate" handler="OnFileOpen" swapped="no"/>
                       </widget>
                     </child>
                     <child>
@@ -66,7 +66,7 @@
                         <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <signal name="activate" handler="OnFileSave"/>
+                        <signal name="activate" handler="OnFileSave" swapped="no"/>
                       </widget>
                     </child>
                     <child>
@@ -78,7 +78,7 @@
                         <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <signal name="activate" handler="OnFileSaveAs"/>
+                        <signal name="activate" handler="OnFileSaveAs" swapped="no"/>
                       </widget>
                     </child>
                     <child>
@@ -194,7 +194,7 @@
                         <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <signal name="activate" handler="OnRefresh"/>
+                        <signal name="activate" handler="OnRefresh" swapped="no"/>
                       </widget>
                     </child>
                   </widget>
@@ -214,6 +214,23 @@
                     <property name="can_focus">False</property>
                     <property name="ubuntu_local">True</property>
                     <child>
+                      <widget class="GtkImageMenuItem" id="miProjectCompile">
+                        <property name="label" translatable="yes">Compile</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="tooltip" translatable="yes">Compile</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="use_stock">False</property>
+                        <child internal-child="image">
+                          <widget class="GtkImage" id="image2">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="stock">gtk-convert</property>
+                          </widget>
+                        </child>
+                      </widget>
+                    </child>
+                    <child>
                       <widget class="GtkImageMenuItem" id="miProjectExecute">
                         <property name="label">gtk-execute</property>
                         <property name="visible">True</property>
@@ -221,7 +238,7 @@
                         <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <signal name="activate" handler="OnExecute"/>
+                        <signal name="activate" handler="OnProjectExecute" swapped="no"/>
                       </widget>
                     </child>
                     <child>
@@ -239,7 +256,7 @@
                         <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">False</property>
-                        <signal name="activate" handler="OnProjectPreferences"/>
+                        <signal name="activate" handler="OnProjectPreferences" swapped="no"/>
                         <child internal-child="image">
                           <widget class="GtkImage" id="image1">
                             <property name="visible">True</property>
@@ -335,7 +352,7 @@
                 <property name="label" translatable="yes">New</property>
                 <property name="use_underline">True</property>
                 <property name="icon_name">document-new</property>
-                <signal name="clicked" handler="OnFileNew"/>
+                <signal name="clicked" handler="OnFileNew" swapped="no"/>
               </widget>
               <packing>
                 <property name="expand">False</property>
@@ -350,7 +367,7 @@
                 <property name="label" translatable="yes">Open</property>
                 <property name="use_underline">True</property>
                 <property name="icon_name">document-open</property>
-                <signal name="clicked" handler="OnFileOpen"/>
+                <signal name="clicked" handler="OnFileOpen" swapped="no"/>
               </widget>
               <packing>
                 <property name="expand">False</property>
@@ -365,7 +382,7 @@
                 <property name="label" translatable="yes">Save</property>
                 <property name="use_underline">True</property>
                 <property name="icon_name">document-save</property>
-                <signal name="clicked" handler="OnFileSave"/>
+                <signal name="clicked" handler="OnFileSave" swapped="no"/>
               </widget>
               <packing>
                 <property name="expand">False</property>
@@ -380,7 +397,7 @@
                 <property name="label" translatable="yes">Save As</property>
                 <property name="use_underline">True</property>
                 <property name="icon_name">document-save-as</property>
-                <signal name="clicked" handler="OnFileSaveAs"/>
+                <signal name="clicked" handler="OnFileSaveAs" swapped="no"/>
               </widget>
               <packing>
                 <property name="expand">False</property>
@@ -399,6 +416,22 @@
               </packing>
             </child>
             <child>
+              <widget class="GtkToolButton" id="btnCompile">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="tooltip" translatable="yes">Compile</property>
+                <property name="use_action_appearance">False</property>
+                <property name="label" translatable="yes">Compile</property>
+                <property name="use_underline">True</property>
+                <property name="stock_id">gtk-convert</property>
+                <signal name="clicked" handler="OnProjectCompile" swapped="no"/>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
               <widget class="GtkToolButton" id="btnExecute">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
@@ -406,7 +439,7 @@
                 <property name="label" translatable="yes">Execute</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-execute</property>
-                <signal name="clicked" handler="OnExecute"/>
+                <signal name="clicked" handler="OnProjectExecute" swapped="no"/>
               </widget>
               <packing>
                 <property name="expand">False</property>
@@ -432,7 +465,7 @@
                 <property name="label" translatable="yes">Refresh</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-refresh</property>
-                <signal name="clicked" handler="OnRefresh"/>
+                <signal name="clicked" handler="OnRefresh" swapped="no"/>
               </widget>
               <packing>
                 <property name="expand">False</property>
@@ -637,7 +670,7 @@
                         <property name="receives_default">True</property>
                         <property name="use_action_appearance">False</property>
                         <property name="use_stock">True</property>
-                        <signal name="clicked" handler="AddReference"/>
+                        <signal name="clicked" handler="AddReference" swapped="no"/>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
@@ -653,7 +686,7 @@
                         <property name="receives_default">True</property>
                         <property name="use_action_appearance">False</property>
                         <property name="use_stock">True</property>
-                        <signal name="clicked" handler="RemoveReference"/>
+                        <signal name="clicked" handler="RemoveReference" swapped="no"/>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
@@ -758,7 +791,7 @@
                 <property name="receives_default">True</property>
                 <property name="use_action_appearance">False</property>
                 <property name="use_stock">True</property>
-                <signal name="clicked" handler="OkButtonClicked"/>
+                <signal name="clicked" handler="OkButtonClicked" swapped="no"/>
               </widget>
               <packing>
                 <property name="expand">False</property>
@@ -775,7 +808,7 @@
                 <property name="receives_default">True</property>
                 <property name="use_action_appearance">False</property>
                 <property name="use_stock">True</property>
-                <signal name="clicked" handler="CancelButtonClicked"/>
+                <signal name="clicked" handler="CancelButtonClicked" swapped="no"/>
               </widget>
               <packing>
                 <property name="expand">False</property>

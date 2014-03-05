@@ -19,7 +19,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Externalconsole>true</Externalconsole>
-    <GenerateDocumentation>true</GenerateDocumentation>
+    <DocumentationFile>bin\Debug\SerializationTests.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -41,9 +41,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\JGL\JGL.csproj">
+    <ProjectReference Include="..\JGL\00_JGL.csproj">
       <Project>{1A4EC1C4-498A-42C7-ABC6-D4B9D889B8A9}</Project>
-      <Name>JGL</Name>
+      <Name>00_JGL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

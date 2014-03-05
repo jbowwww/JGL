@@ -12,7 +12,7 @@ namespace Dynamic
 	/// </summary>
 	public class Project
 	{
-		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncFileTraceListener.GetOrCreate("JGLApp"));
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncTextFileTraceListener.GetOrCreate("JGLApp"));
 
 		/// <summary>
 		/// Reference path tree node class
@@ -65,6 +65,11 @@ namespace Dynamic
 		/// The code history.
 		/// </summary>
 		public List<string> CodeHistory = new List<string>();
+
+		/// <summary>
+		/// The compile output.
+		/// </summary>
+		public string CompileOutput;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Dynamic.Project"/> class.

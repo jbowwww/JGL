@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using JGL.Geometry;
+
+using JGL.Graphics;
 using JGL.Heirarchy;
 using JGL.Debugging;
 

@@ -126,6 +126,27 @@ namespace JGL.Heirarchy
 		}
 		#endregion
 
+	/// <summary>
+	/// An abstract representation of a "Texturise" method. Generates texture coordinates and
+	/// applies them to a specific type of mesh.
+	/// </summary>
+	/// <typeparam name="TMesh">A <see cref="Mesh"/>-derived type that this texturise method operates on</typeparam>
+	/// <remarks>
+	/// Currently only used by classes in the <see cref="JGL.Heirarchy.MeshLibrary"/> namespace
+	/// (e.g. <see cref="Box"/>, <see cref="Quad"/>)
+	/// TODO: I can't make up my mind whether to keep it inside this mesh class, or make it it's own, and/or whether to put it in the
+	/// mesh library namespace as that's where its currently being used. BUT, maybe eventually I might want to use a texturisemethod
+	/// on a generic mesh, say to skin a model?? I dunno doesnt matter right now
+	/// </remarks>
+	public abstract class TexturiseMethod<TMesh> where TMesh : Mesh
+	{
+		/// <summary>
+		/// Texturise the specified mesh.
+		/// </summary>
+		/// <param name="mesh">A <see cref="Mesh"/>-derived instance to be texturised</param>
+		public abstract void Texturise(TMesh mesh);
+	}
+
 		/// <summary>
 		/// Texturise the specified texturiseMethod.
 		/// </summary>
@@ -177,7 +198,7 @@ namespace JGL.Heirarchy
 					if (Material.HasTexture)			// TODO: (Eventually) Add additional check for a wireframe/disabled texture option state
 						RenderFacesTextured();		// Textured
 					else
-						RenderFaces();						// Non-textured
+						RenderFaces();						// Non-textureMeshd
 					GL.End();
 				}
 
