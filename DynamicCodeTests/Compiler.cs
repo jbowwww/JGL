@@ -22,19 +22,46 @@ namespace Dynamic
 		/// </summary>
 		public readonly static AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncTextFileTraceListener.GetOrCreate("JGLApp"));
 
-
+		/// <summary>
+		/// Gets or sets the project.
+		/// </summary>
+		/// <value>The project.</value>
 		public Project Project { get; protected set; }
 
+		/// <summary>
+		/// Gets or sets the settings.
+		/// </summary>
+		/// <value>The settings.</value>
 		public CompilerSettings Settings { get; protected set; }
 
+		/// <summary>
+		/// Gets or sets the context.
+		/// </summary>
+		/// <value>The context.</value>
 		public CompilerContext Context { get; protected set; }
 
+		/// <summary>
+		/// Gets or sets the CS evaluator.
+		/// </summary>
+		/// <value>The CS evaluator.</value>
 		public Evaluator CSEvaluator { get; protected set; }
 
+		/// <summary>
+		/// Gets or sets the results.
+		/// </summary>
+		/// <value>The results.</value>
 		public CompilerResults Results { get; protected set; }
 
+		/// <summary>
+		/// Gets or sets the compiler output.
+		/// </summary>
+		/// <value>The compiler output.</value>
 		public StringBuilder CompilerOutput { get; protected set; }
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Dynamic.Compiler"/> class.
+		/// </summary>
+		/// <param name="project">Project.</param>
 		public Compiler(Project project)
 		{
 			Project = project;
@@ -43,8 +70,7 @@ namespace Dynamic
 				OutputFile = "DynamicCodeTests-Scene.dll"				
 			};
 //			Settings.AssemblyReferences.Remove("system.dll");
-
-
+			Trace.Log(TraceEventType.Information, "Project=\"{0}\"\nSettings:\n{1}", project.Name, Settings.ToString());
 		}
 
 		/// <summary>
@@ -55,9 +81,11 @@ namespace Dynamic
 		/// <exception cref="InvalidProgramException">
 		/// Is thrown when a program contains invalid CIL instructions or metadata.
 		/// </exception>
-		public string ExecuteCode(string code, Project project)
+		public string ExecuteCode(string source, Project project)
 		{
-			Trace.Log(TraceEventType.Information, "source=\"(...)\", project.Name=\"{0}\"", project.Name);
+			Trace.Log(TraceEventType.Information, "source=\"{0}\", project.Name=\"{0}\"",
+				source.Length < 48 ? source : string.Format("string({0})", source.Length),
+				project == null ? "(null)" : project.Name);
 			Project.CodeUsings = CSEvaluator.GetUsing();
 			Settings.AssemblyReferences = new System.Collections.Generic.List<string>(Project.ReferencePaths);
 			CompilerOutput = new StringBuilder();
@@ -68,29 +96,40 @@ namespace Dynamic
 			try
 			{
 				string prefix = "EntityContext RootContext = EntityContext.Root; EntityContext CurrentContext = EntityContext.Current; ICollection<Scene> _scenes = RootContext.OfType<Scene>(); Scene[] Scenes = new Scene[_scenes.Count]; _scenes.CopyTo(Scenes, 0);";
-				string source = prefix + code;
-				if (code.Contains(";"))
+				string code = prefix + source;
+				if (code.Contains(";") && !CSEvaluator.Run(code))
 				{
-					if (!CSEvaluator.Run(source))
-						throw new InvalidProgramException(string.Format("Evaluator.Run() == false (source = \"{0}\")", source.Replace("\n", " ")));
+					string error = string.Format("Evaluator.Run() == false (source = \"{0}\")", source.Length < 48 ? source : string.Format("string({0})", source.Length));
+					Trace.Log(TraceEventType.Error, error);
+					throw new InvalidProgramException(error);
 				}
 				else
 				{
 					object result;
 					bool result_set;
 					string input;
-					code += ";";
+					source += ";";
 					if (!CSEvaluator.Run(prefix))
-						throw new InvalidProgramException(string.Format("Evaluator.Run() == false (prefix = \"{0}\")", prefix.Replace("\n", " ")));
-					input = CSEvaluator.Evaluate(code, out result, out result_set);
+					{
+						string error = string.Format("Evaluator.Run() == false (prefix = \"{0}\")", prefix.Replace("\n", " "));
+						Trace.Log(TraceEventType.Error, error);
+						throw new InvalidProgramException(error);
+					}
+					input = CSEvaluator.Evaluate(source, out result, out result_set);
 					if (input != null)
-						throw new InvalidProgramException(string.Format("Evaluator.Evaluate() != null (code = \"{0}\") = \"{1}\"", code.Replace("\n", " "), input.Replace("\n", " ")));
+					{
+						string error = string.Format("Evaluator.Evaluate() != null (code = \"{0}\") = \"{1}\"", source.Replace("\n", " "), input.Replace("\n", " "));
+						Trace.Log(TraceEventType.Error, error);
+						throw new InvalidProgramException(error);
+					}
 					if (result_set)
 						r += result != null ? result.ToString() : "(null)";
 				}
 			}
 			catch (Exception ex)
 			{
+				string error = string.Format("Caught exception: " + ex.GetType().Name + ": " + ex.Message);
+				Trace.Log(TraceEventType.Error, error);
 				Console.Error.WriteLine((char)27 + "[31m" + ex.ToString());
 			}
 			return r.Length > 0 ? string.Concat(r, "\n") : string.Empty;
@@ -103,7 +142,7 @@ namespace Dynamic
 		/// <param name="source">Source code string(s)</param>
 		public CompilerResults CompileCode(string[] source, string[] referencePaths)
 		{
-			Trace.Log(TraceEventType.Information, "CompileCode(source=string[{0}], referencePaths=string[{1}])", source.Length, referencePaths.Length);
+			Trace.Log(TraceEventType.Information, "source=string({0}), referencePaths=string({1})", source.Length, referencePaths.Length);
 
 			CSharpCodeProvider provider = new CSharpCodeProvider();
 			Trace.Log(TraceEventType.Verbose, "CodeProvider: {0}", provider.GetType().Name);
@@ -125,11 +164,11 @@ namespace Dynamic
 				string errorSummary = string.Format("Compilation errors: {0}", Results.Errors.Count.ToString());
 				Trace.Log(TraceEventType.Information, errorSummary);
 				foreach (CompilerError ce in Results.Errors)
-					Trace.Log(TraceEventType.Error, ce.ToString());
+					Trace.Log(TraceEventType.Verbose, ce.ToString());
 			}
 			else
 			{
-				Trace.Log(TraceEventType.Information, "Source built {0}successfully.", cp.GenerateExecutable ? string.Concat("into ", Results.PathToAssembly, " ") : "");
+				Trace.Log(TraceEventType.Verbose, "Source built {0}successfully.", cp.GenerateExecutable ? string.Concat("into ", Results.PathToAssembly, " ") : "");
 			}
 			return Results;
 		}

@@ -26,9 +26,8 @@ namespace JGL.Debugging
 		internal AsyncXmlFileTraceListener(string name)
 			: base(name)
 		{
-			TraceOutputOptions = TraceOutputOptions |
+			TraceOutputOptions |= System.Diagnostics.TraceOptions.LogicalOperationStack;
 //				System.Diagnostics.TraceOptions.Callstack |
-				System.Diagnostics.TraceOptions.LogicalOperationStack;
 		}
 
 		/// <summary>

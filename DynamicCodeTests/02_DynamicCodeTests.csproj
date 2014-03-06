@@ -25,7 +25,7 @@
       </CustomCommands>
     </CustomCommands>
     <Externalconsole>true</Externalconsole>
-    <Commandlineparameters>--sync</Commandlineparameters>
+    <Commandlineparameters>--sync --keystart</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>

@@ -102,11 +102,13 @@ namespace JGL.Debugging
 				while (_messageQueue.TryDequeue(out message))
 				{
 					TraceSource ts = message.Source;
+					bool explicitOutputOptions = message.OutputOptions != TraceOptions.None;
 					lock ((ts.Listeners as ICollection).SyncRoot)
 					{
 						foreach (TraceListener listener in ts.Listeners)
 						{
-							message.OutputOptions = listener.TraceOutputOptions;
+							if (!explicitOutputOptions)
+								message.OutputOptions = listener.TraceOutputOptions;
 							if (listener.GetType().IsTypeOf(typeof(AsyncTraceListener)))
 							{
 								AsyncTraceListener asyncListener = listener as AsyncTraceListener;

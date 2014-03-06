@@ -502,9 +502,9 @@ namespace Dynamic.UI
 									}
 									Application.Invoke(this, new FinishExecuteArgs() { Scene = newScene, SceneWindow = sw, SceneWindowThread = SceneWindowThread }, OnFinishExecute);
 								}
-							}) { Name = "SceneWindowThread" };
+							}) { Name = "SceneWindow" };
 							SceneWindowThread.Start();
-							Trace.Log(TraceEventType.Information, "Started SceneWindowThread for scene \"{0}\" .. ", newScene.Id);
+							Trace.Log(TraceEventType.Information, "Started SceneWindow thread for scene \"{0}\" .. ", newScene.Id);
 						}
 						catch (Exception ex)
 						{
@@ -524,7 +524,7 @@ namespace Dynamic.UI
 		{
 			Trace.Log(TraceEventType.Verbose, "sender={0}, args={1}", sender.ToString(), args.ToString());
 			FinishExecuteArgs _args = args as FinishExecuteArgs;
-			Trace.Log(TraceEventType.Verbose, "Ended SceneWindowThread for scene \"{0}\"", _args.Scene.Id);
+			Trace.Log(TraceEventType.Verbose, "Ended SceneWindow thread for scene \"{0}\"", _args.Scene.Id);
 			nbCode.RemovePage(page);
 			nbCode.RemovePage(page);
 			EntityContext.Root.Remove(_args.Scene);

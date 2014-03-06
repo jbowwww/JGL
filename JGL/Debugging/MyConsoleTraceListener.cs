@@ -7,6 +7,7 @@ namespace JGL.Debugging
 	{
 		public MyConsoleTraceListener() : base("ConsoleListener")
 		{
+			TraceOutputOptions = TraceOptions.DateTime | TraceOptions.ThreadId;
 		}
 
 		internal override System.IO.Stream OpenStream()

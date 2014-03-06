@@ -8,6 +8,7 @@ using System.Diagnostics;
 using Gtk;
 using JGL;
 using JGL.Heirarchy;
+using JGL.Extensions;
 using JGL.Debugging;
 using Dynamic.UI;
 
@@ -21,7 +22,7 @@ namespace Dynamic
 		/// <summary>
 		/// <see cref="JGL.Debugging.AutoTraceSource"/> for <see cref="DynamicCodeTests.JGLApp"/>
 		/// </summary>
-		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncTextFileTraceListener.GetOrCreate("JGLApp"));
+		protected static AutoTraceSource Trace;
 
 		/// <summary>
 		/// Global static application reference
@@ -43,6 +44,9 @@ namespace Dynamic
 		/// </remarks>
 		public static void Main(string[] args)
 		{
+			if (args.Contains("--keystart"))
+				Console.ReadKey();
+			Trace = AutoTraceSource.GetOrCreate(AsyncTextFileTraceListener.GetOrCreate("JGLApp"));
 			Thread.CurrentThread.Name = "Main";
 			Trace.Log(TraceEventType.Information, "Started");
 			try
@@ -71,7 +75,7 @@ namespace Dynamic
 			}
 			finally
 			{
-				Trace.Log(TraceEventType.Verbose, "Finished, exiting ..");
+				Trace.Log(TraceEventType.Information, "Finished, exiting ..");
 				Engine.Quit();
 			}
 		}

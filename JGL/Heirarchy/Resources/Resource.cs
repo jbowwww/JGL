@@ -55,7 +55,7 @@ namespace JGL.Heirarchy.Resources
 		/// <param name="path">Resource Path</param>
 		private void Init(string name, string path)
 		{
-			Trace.Log(TraceEventType.Information, "Init(name=\"{0}\", path=\"{1}\")", name, path);
+			Trace.Log(TraceEventType.Information, "name=\"{0}\", path=\"{1}\"", name, path);
 
 			IsLoaded = false;
 			Path = path;

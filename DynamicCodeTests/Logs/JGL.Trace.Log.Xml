@@ -1,39 +1,66 @@
-<Verbose Id="1" Time="14-03-06 05:47:04.447567 " Process="14615" Thread="Trace" Source="JGL" Method="AutoTraceSource.RunTrace">
+<Verbose Id="1" Time="14-03-06 19:37:24.490269 " Process="13446" Thread="Trace" Source="JGL" Method="AutoTraceSource.RunTrace">
 	<Message>AutoTraceSource.RunTrace Started tracing</Message>
 </Verbose>
-<Information Id="2" Time="14-03-06 05:47:04.487364 " Process="14615" Thread="Trace" Source="JGL" Method="AsyncTextFileTraceListener.OpenStream">
-	<Message>AsyncTextFileTraceListener.OpenStream OpenStream (this.Name = "JGLApp", this.Path = "../../Logs/JGLApp.Trace.Log")</Message>
-</Information>
-<Information Id="3" Time="14-03-06 05:47:04.528454 " Process="14615" Thread="Trace" Source="JGL" Method="AsyncTextFileTraceListener.OpenStream">
+<Information Id="2" Time="14-03-06 19:37:24.517569 " Process="13446" Thread="Trace" Source="JGL" Method="AsyncTextFileTraceListener.OpenStream">
 	<Message>AsyncTextFileTraceListener.OpenStream OpenStream (this.Name = "JGL", this.Path = "../../Logs/JGL.Trace.Log.Xml")</Message>
 </Information>
-<Information Id="4" Time="14-03-06 05:47:43.969793 " Process="14615" Thread="Main" Source="JGL" Method="Resource.Init">
-	<Message>Resource.Init Init(name="test1.png", path="test1.png")</Message>
+<Information Id="3" Time="14-03-06 19:37:24.642136 " Process="13446" Thread="Trace" Source="JGL" Method="AsyncTextFileTraceListener.OpenStream">
+	<Message>AsyncTextFileTraceListener.OpenStream OpenStream (this.Name = "JGLApp", this.Path = "../../Logs/JGLApp.Trace.Log")</Message>
 </Information>
-<Information Id="5" Time="14-03-06 05:47:43.971813 " Process="14615" Thread="Main" Source="JGL" Method="Texture.Init">
+<Information Id="4" Time="14-03-06 19:37:44.100739 " Process="13446" Thread="Main" Source="JGL" Method="Resource.Get">
+	<Message>Resource.Get Resource "test1.png" not found, constructing (JGL.Heirarchy.Resources.Texture)</Message>
+</Information>
+<Information Id="5" Time="14-03-06 19:37:44.101812 " Process="13446" Thread="Main" Source="JGL" Method="Resource.Init">
+	<Message>Resource.Init name="test1.png", path="test1.png"</Message>
+</Information>
+<Information Id="6" Time="14-03-06 19:37:44.102861 " Process="13446" Thread="Main" Source="JGL" Method="Resource.StartLoadThread">
+	<Message>Resource.StartLoadThread Starting thread</Message>
+</Information>
+<Information Id="7" Time="14-03-06 19:37:44.104918 " Process="13446" Thread="Resource" Source="JGL" Method="Resource.LoadResources">
+	<Message>Resource.LoadResources Started</Message>
+</Information>
+<Information Id="8" Time="14-03-06 19:37:44.104615 " Process="13446" Thread="Main" Source="JGL" Method="Texture.Init">
 	<Message>Texture.Init Init(name="test1.png", path="test1.png")</Message>
 </Information>
-<Information Id="6" Time="14-03-06 05:47:43.974906 " Process="14615" Thread="Resource.LoadResources" Source="JGL" Method="Resource.LoadResources">
-	<Message>Resource.LoadResources LoadResources thread started</Message>
-</Information>
-<Verbose Id="7" Time="14-03-06 05:47:43.982144 " Process="14615" Thread="Main" Source="JGL" Method="Mesh.Texturise">
-	<Message>Mesh.Texturise Textured JGL.Heirarchy.MeshLibrary.Quad mesh "Quad #608f" using JGL.Heirarchy.MeshLibrary.Quad+SimpleTexturise, 4 texture coordinates</Message>
+<Verbose Id="9" Time="14-03-06 19:37:44.105827 " Process="13446" Thread="Main" Source="JGL" Method="Resource.Get">
+	<Message>Resource.Get Constructed resource "test1.png" (JGL.Heirarchy.Resources.Texture)</Message>
 </Verbose>
-<Information Id="8" Time="14-03-06 05:47:43.983008 " Process="14615" Thread="Main" Source="JGL" Method="Resource.Init">
-	<Message>Resource.Init Init(name="tex2.png", path="tex2.png")</Message>
+<Verbose Id="10" Time="14-03-06 19:37:44.110352 " Process="13446" Thread="Main" Source="JGL" Method="Mesh.Texturise">
+	<Message>Mesh.Texturise Textured JGL.Heirarchy.MeshLibrary.Quad mesh "Quad #cc7e" using JGL.Heirarchy.MeshLibrary.Quad+SimpleTexturise, 4 texture coordinates</Message>
+</Verbose>
+<Information Id="11" Time="14-03-06 19:37:44.111007 " Process="13446" Thread="Main" Source="JGL" Method="Resource.Get">
+	<Message>Resource.Get Resource "tex2.png" not found, constructing (JGL.Heirarchy.Resources.Texture)</Message>
 </Information>
-<Information Id="9" Time="14-03-06 05:47:43.983911 " Process="14615" Thread="Main" Source="JGL" Method="Texture.Init">
+<Information Id="12" Time="14-03-06 19:37:44.111520 " Process="13446" Thread="Main" Source="JGL" Method="Resource.Init">
+	<Message>Resource.Init name="tex2.png", path="tex2.png"</Message>
+</Information>
+<Information Id="13" Time="14-03-06 19:37:44.112423 " Process="13446" Thread="Main" Source="JGL" Method="Resource.StartLoadThread">
+	<Message>Resource.StartLoadThread Thread already started</Message>
+</Information>
+<Information Id="14" Time="14-03-06 19:37:44.113406 " Process="13446" Thread="Main" Source="JGL" Method="Texture.Init">
 	<Message>Texture.Init Init(name="tex2.png", path="tex2.png")</Message>
 </Information>
-<Information Id="10" Time="14-03-06 05:47:43.989072 " Process="14615" Thread="Resource.LoadResources" Source="JGL" Method="Texture.Load">
+<Verbose Id="15" Time="14-03-06 19:37:44.114362 " Process="13446" Thread="Main" Source="JGL" Method="Resource.Get">
+	<Message>Resource.Get Constructed resource "tex2.png" (JGL.Heirarchy.Resources.Texture)</Message>
+</Verbose>
+<Information Id="16" Time="14-03-06 19:37:44.123198 " Process="13446" Thread="Resource" Source="JGL" Method="Texture.Load">
 	<Message>Texture.Load Load (this.Name="test1.png", this.Path="test1.png") loaded 256x256 image, Format24bppRgb</Message>
 </Information>
-<Information Id="11" Time="14-03-06 05:47:44.003798 " Process="14615" Thread="Resource.LoadResources" Source="JGL" Method="Texture.Load">
+<Information Id="17" Time="14-03-06 19:37:44.148018 " Process="13446" Thread="Resource" Source="JGL" Method="Texture.Load">
 	<Message>Texture.Load Load (this.Name="tex2.png", this.Path="tex2.png") loaded 256x256 image, Format32bppArgb</Message>
 </Information>
-<Information Id="12" Time="14-03-06 05:47:45.157662 " Process="14615" Thread="SceneWindowThread" Source="JGL" Method="Texture.CreateGLTexture">
+<Information Id="18" Time="14-03-06 19:37:45.359966 " Process="13446" Thread="SceneWindow" Source="JGL" Method="Texture.CreateGLTexture">
 	<Message>Texture.CreateGLTexture CreateGLTexture(texture="test1.png") generated GL texture ID 1</Message>
 </Information>
-<Information Id="13" Time="14-03-06 05:47:45.173737 " Process="14615" Thread="SceneWindowThread" Source="JGL" Method="Texture.CreateGLTexture">
+<Information Id="19" Time="14-03-06 19:37:45.380437 " Process="13446" Thread="SceneWindow" Source="JGL" Method="Texture.CreateGLTexture">
 	<Message>Texture.CreateGLTexture CreateGLTexture(texture="tex2.png") generated GL texture ID 2</Message>
 </Information>
+<Information Id="20" Time="14-03-06 19:38:24.587505 " Process="13446" Thread="Main" Source="JGL" Method="Resource.StopLoadThread">
+	<Message>Resource.StopLoadThread Stopping thread</Message>
+</Information>
+<Information Id="21" Time="14-03-06 19:38:24.657938 " Process="13446" Thread="Resource" Source="JGL" Method="Resource.LoadResources">
+	<Message>Resource.LoadResources LoadResources thread stopped</Message>
+</Information>
+<Verbose Id="22" Time="14-03-06 19:38:24.659088 " Process="13446" Thread="Main" Source="JGL" Method="AutoTraceSource.StopTraceThread">
+	<Message>AutoTraceSource.StopTraceThread RunTrace thread stopping (3 open listeners will now be closed)</Message>
+</Verbose>

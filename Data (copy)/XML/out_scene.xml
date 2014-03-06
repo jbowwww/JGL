@@ -1,6 +1,0 @@
-﻿<Heirarchy:Scene xmlns:Heirarchy="JGL.Heirarchy">
-	<Name>Scene01</Name>
-	<Heirarchy:Sector>
-		<Name>sector01</Name>
-	</Heirarchy:Sector>
-</Heirarchy:Scene>

@@ -113,28 +113,25 @@ namespace JGL.Debugging
 			get
 			{
 				StringBuilder sb = new StringBuilder(256);
-				if (OutputOptions.HasFlag(TraceOptions.ProcessId))
-					sb.Append(string.Concat("P:", EventCache.ProcessId.ToString().PadRight(6), " "));
 				if (OutputOptions.HasFlag(TraceOptions.DateTime))
 					sb.Append(EventCache.DateTime.ToString("HH:mm:ss.ffffff "));		// yy-MM-dd HH:mm:ss.ffffff
 				if (OutputOptions.HasFlag(TraceOptions.Timestamp))
 					sb.Append(string.Concat(EventCache.Timestamp.ToString(), " "));
-				sb.Append(string.Concat(
-					Source.Name.PadRight(7), " ", Id.ToString("d4").PadRight(5), " "));
+				if (OutputOptions.HasFlag(TraceOptions.ProcessId))
+					sb.Append(string.Concat("P:", EventCache.ProcessId.ToString().PadRight(6), " "));
 				if (OutputOptions.HasFlag(TraceOptions.ThreadId))
-					sb.Append(string.Concat("T:", EventCache.ThreadId.PadRight(6), " "));
-				sb.Append(string.Concat(
-					Frame.GetMethod().ReflectedType.Name, ".",
-					Frame.GetMethod().Name, " ", EventType.ToString(), " "));
+					sb.Append(string.Concat("T:", EventCache.ThreadId.PadRight(7), " "));
+				sb.Append(string.Concat(Source.Name.PadRight(7), " ", Id.ToString("d4").PadRight(4), " ",
+					EventType.ToString(), " ", Frame.GetMethod().ReflectedType.Name, ".", Frame.GetMethod().Name, " "));
 				if (Format == null)
 				{
 					if (Data != null)
 						sb.Append(Data.ToString());
 				}
 				else if (Data == null)
-						sb.Append(Format);
-					else
-						sb.Append(string.Format(Format, (object[])Data));
+					sb.Append(Format);
+				else
+					sb.Append(string.Format(Format, (object[])Data));
 				if (OutputOptions.HasFlag(TraceOptions.Callstack))
 					sb.Append(string.Concat("\nCallstack:\n", EventCache.Callstack));
 				if (OutputOptions.HasFlag(TraceOptions.LogicalOperationStack) && EventCache.LogicalOperationStack.Count > 0)
@@ -207,6 +204,7 @@ namespace JGL.Debugging
 			Format = format;
 			Data = data;
 			Frame = new StackFrame(3, true);
+			OutputOptions = TraceOptions.None;
 		}
 
 		/// <summary>

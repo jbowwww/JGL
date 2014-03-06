@@ -77,7 +77,7 @@ namespace Dynamic
 		/// </summary>
 		protected Project()
 		{
-			Trace.Log(TraceEventType.Verbose, "Protected c'tor for deserialization");
+			Trace.Log(TraceEventType.Information, "Protected c'tor for deserialization");
 		}
 
 		/// <summary>
@@ -91,21 +91,13 @@ namespace Dynamic
 		/// </param>
 		public Project(string[] sourcePaths, string[] referencePaths)
 		{
-			Init(sourcePaths, referencePaths);
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="DynamicCodeTests.Preferences.Project"/> class.
-		/// </summary>
-		protected void Init(string[] sourcePaths, string[] referencePaths)
-		{
-			Trace.Log(TraceEventType.Verbose, "Init(sourcePaths={0}, referencePaths={1})",
-			          sourcePaths == null ? "(null)" : string.Concat("string[", sourcePaths.Length, "]"),
-			          referencePaths == null ? "(null)" : string.Concat("string[", referencePaths.Length, "]"));
+			Trace.Log(TraceEventType.Information, "sourcePaths={0}, referencePaths={1})",
+				sourcePaths == null ? "(null)" : sourcePaths.ToString(),										//			          sourcePaths == null ? "(null)" : string.Concat("string[", sourcePaths.Length, "]"),
+				referencePaths == null ? "(null)" : referencePaths.ToString());							//			          referencePaths == null ? "(null)" : string.Concat("string[", referencePaths.Length, "]"));
 
 			Name = "New Project";
-			SourcePaths = new List<string>(sourcePaths != null ? sourcePaths : new string[] {});
-			ReferencePaths = new List<string>(referencePaths != null ? referencePaths : DefaultReferencePaths);
+			SourcePaths = new List<string>(sourcePaths == null ? new string[] { } : sourcePaths);						//(sourcePaths != null ? sourcePaths : new string[] {});
+			ReferencePaths = new List<string>(referencePaths == null ? new string[] { } : referencePaths);			//(referencePaths != null ? referencePaths : DefaultReferencePaths);
 			CodeHistory = new List<string>();
 			CodeUsings = DefaultCodeUsings;
 		}
@@ -115,10 +107,11 @@ namespace Dynamic
 		/// </summary>
 		public void Save()
 		{
-			Trace.Log(TraceEventType.Information, "Save");
+			string filename = string.Format("../../../Data/Projects/{0}.project.xml", Name);
+			Trace.Log(TraceEventType.Information, "filename=\"{0}\"", filename);
 			XmlSerializer xs = new XmlSerializer(typeof(Project), new XmlAttributeOverrides(), new Type[] { },
 					new XmlRootAttribute(){ DataType="project", Namespace="jgl.dynamic" }, "jgl");
-			using (Stream s = File.Open(string.Format("../../../Data/Projects/{0}.project.xml", Name), FileMode.Create))
+			using (Stream s = File.Open(filename, FileMode.Create))
 				xs.Serialize(s, this);
 		}
 
@@ -127,7 +120,7 @@ namespace Dynamic
 		/// </summary>
 		public static Project Load(string filename)
 		{
-			Trace.Log(TraceEventType.Information, "Load(filename=\"{0}\")", filename);
+			Trace.Log(TraceEventType.Information, "filename=\"{0}\"", filename);
 			XmlSerializer xs = new XmlSerializer(typeof(Project), new XmlAttributeOverrides(), new Type[] { },
 					new XmlRootAttribute(){ DataType="project", Namespace="jgl.dynamic" }, "jgl");
 			using (Stream s = File.Open(filename, FileMode.Open))

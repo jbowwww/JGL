@@ -108,6 +108,7 @@
     <Compile Include="Exceptions\HeirarchyException.cs" />
     <Compile Include="Debugging\TraceEventType_Ext.cs" />
     <Compile Include="Debugging\MyConsoleTraceListener.cs" />
+    <Compile Include="Extensions\Array_Ext.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
