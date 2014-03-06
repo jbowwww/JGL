@@ -13,6 +13,8 @@ using JGL.Heirarchy;
 using JGL.Debugging;
 using Mono.CSharp;
 using Dynamic;
+using JGL;
+using Glade;
 
 namespace Dynamic.UI
 {
@@ -37,12 +39,6 @@ namespace Dynamic.UI
 		public readonly Window GtkWindow;
 
 		/// <summary>
-		/// The name of the ent project.
-		/// </summary>
-		[Glade.Widget]
-		protected Entry entProjectName;
-
-		/// <summary>
 		/// <see cref="Gtk.Notebook"/> containing C# source code(s)
 		/// </summary>
 		[Glade.Widget]
@@ -54,7 +50,14 @@ namespace Dynamic.UI
 		/// </summary>
 		[Glade.Widget]
 		protected Gtk.ScrolledWindow swHeirarchy;
-		
+
+		[Glade.Widget]
+//		protected Gtk.ProgressBar barCPU;
+		protected Gtk.Label lblCPU;
+
+		[Glade.Widget]
+		protected Gtk.Label lblThreadCount;
+
 		/// <summary>
 		/// A <see cref="Gtk.NodeView"/> displaying an <see cref="JGL.Heirarchy.Entity"/> heirarchy
 		/// </summary>
@@ -139,7 +142,6 @@ namespace Dynamic.UI
 		public void PopulateHeirarchy()
 		{
 			Trace.Log(TraceEventType.Information);
-			entProjectName.Text = Project.Name;
 			storeHeirarchy.Clear();
 			if (EntityContext.Root != null)
 			{
@@ -502,7 +504,24 @@ namespace Dynamic.UI
 									}
 									Application.Invoke(this, new FinishExecuteArgs() { Scene = newScene, SceneWindow = sw, SceneWindowThread = SceneWindowThread }, OnFinishExecute);
 								}
-							}) { Name = "SceneWindow" };
+								}) { Name = "SceneWindow" };
+//							Process.GetCurrentProcess();PerformanceCounter pc;pc.CounterType = 
+							GLib.Timeout.Add(1366, () =>
+								{
+//									barCPU.Fraction = Engine.CPUTime.NextValue();
+//									lblThreadCount.Text = "Threads:\n" + Engine.ThreadCount.RawValue;
+									if (Engine.CPUTime != null)
+									{
+										CounterSample sample = Engine.CPUTime.NextSample();
+//										barCPU.Fraction = ((float)sample.RawValue * 100f / (float)sample.TimeStamp);
+										                  ////(float)Engine.CPUTime..RawValue / 100f;
+										float cpu = ((float)sample.RawValue * 100f / (float)sample.TimeStamp);
+										lblCPU.Text = "CPU:\n" + cpu.ToString("0.1f");
+									}
+									if (Engine.ThreadCount != null)
+										lblThreadCount.Text = "Threads:\n" + Engine.ThreadCount.RawValue;
+									return true;
+								});
 							SceneWindowThread.Start();
 							Trace.Log(TraceEventType.Information, "Started SceneWindow thread for scene \"{0}\" .. ", newScene.Id);
 						}
