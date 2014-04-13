@@ -45,9 +45,6 @@
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="Mono.CSharp" />
-    <Reference Include="OpenTK">
-      <HintPath>..\..\Resources\CS\OpenTK 1.0\Binaries\OpenTK\Release\OpenTK.dll</HintPath>
-    </Reference>
     <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
       <Private>False</Private>
     </Reference>
@@ -62,6 +59,11 @@
     </Reference>
     <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
       <Private>False</Private>
+    </Reference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="OpenTK">
+      <HintPath>..\..\..\..\Resources\CS\OpenTK 1.0\Binaries\OpenTK\Release\OpenTK.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +102,10 @@
     <ProjectReference Include="..\JGL\00_JGL.csproj">
       <Project>{1A4EC1C4-498A-42C7-ABC6-D4B9D889B8A9}</Project>
       <Name>00_JGL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\JDBG\TraceService\01_TraceService.csproj">
+      <Project>{9A0DCB7E-EAE7-4D15-9707-E9EFAF76A070}</Project>
+      <Name>01_TraceService</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

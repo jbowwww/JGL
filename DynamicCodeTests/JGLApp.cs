@@ -11,6 +11,8 @@ using JGL.Heirarchy;
 using JGL.Extensions;
 using JGL.Debugging;
 using Dynamic.UI;
+using TraceService;
+using System.ServiceModel;
 
 namespace Dynamic
 {
@@ -22,7 +24,9 @@ namespace Dynamic
 		/// <summary>
 		/// <see cref="JGL.Debugging.AutoTraceSource"/> for <see cref="DynamicCodeTests.JGLApp"/>
 		/// </summary>
-		protected static AutoTraceSource Trace;
+//		protected static AutoTraceSource Trace;
+
+		public static readonly Source Trace = Source.GetOrCreate("JGLApp", true, new ConsoleListener());
 
 		/// <summary>
 		/// Global static application reference
@@ -44,14 +48,23 @@ namespace Dynamic
 		/// </remarks>
 		public static void Main(string[] args)
 		{
+			Thread.CurrentThread.Name = "Main";
 			if (args.Contains("--keystart"))
 				Console.ReadKey();
-			Trace = AutoTraceSource.GetOrCreate(AsyncTextFileTraceListener.GetOrCreate("JGLApp"));
-			Thread.CurrentThread.Name = "Main";
-			Trace.Log(TraceEventType.Information, "Started");
+//			Trace = AutoTraceSource.GetOrCreate(AsyncTextFileTraceListener.GetOrCreate("JGLApp"));
+
+			Process traceProcess = Process.Start("TraceService.exe");		//"../../../../JDBG/bin/Debug/TraceService.exe");
+			Thread.Sleep(1200);
+			TraceProxy traceProxy = new TraceProxy(new NetTcpBinding(), new EndpointAddress("net.tcp://localhost:7777/ITraceService/"));
+			TraceProxyListener traceProxyListener = new TraceProxyListener(traceProxy);
+			Trace.Listeners.Add(traceProxyListener);
+
 			try
 			{
-				GLib.ExceptionManager.UnhandledException += UnhandledException;
+//				Trace.Log(TraceEventType.Information, "Started");
+				Trace.Log(MessageLevel.Information, "Execution", "Started", args);
+
+			GLib.ExceptionManager.UnhandledException += UnhandledException;
 				Scenes = new ConcurrentBag<Scene>();
 				Application.Init("JGLApp", ref args);
 				string openProjectFile = null;
@@ -71,12 +84,22 @@ namespace Dynamic
 			}
 			catch (Exception ex)
 			{
-				Trace.Log(TraceEventType.Error, string.Format("{0}: {1}\n{2}", ex.GetType().Name, ex.Message, ex.StackTrace));
+				Trace.Log(MessageLevel.Error, "Execution", ex.GetType().FullName, ex);		//string.Format("{0}: {1}\n{2}", ex.GetType().Name, ex.Message, ex.StackTrace));
 			}
 			finally
 			{
-				Trace.Log(TraceEventType.Information, "Finished, exiting ..");
+				Trace.Log(MessageLevel.Information, "Execution", "Exiting..");
 				Engine.Quit();
+
+				Source.StopAll();
+				Source.WaitAll();
+
+				if (traceProxyListener != null)
+					traceProxyListener.Dispose();
+				if (traceProxy != null)
+					traceProxy.Dispose();
+				if (traceProcess != null)
+					traceProcess.Dispose();
 			}
 		}
 
@@ -85,8 +108,8 @@ namespace Dynamic
 		/// </summary>
 		protected static void UnhandledException(GLib.UnhandledExceptionArgs args)
 		{
-			Trace.Log(TraceEventType.Verbose, "IsTerminating={0}, ExitApplication={1})", args.IsTerminating, args.ExitApplication);
-			Trace.Log(TraceEventType.Error, args.ExceptionObject as Exception);
+			Trace.Log(MessageLevel.Verbose, "Execution", ((Exception)args.ExceptionObject).GetType().FullName, args.ExceptionObject, args.IsTerminating, args.ExitApplication);
+//			Trace.Log(MessageLevel.Error, args.ExceptionObject as Exception);			//IsTerminating={0}, ExitApplication={1})", args.IsTerminating, args.ExitApplication);
 		}
 		
 		/// <summary>
