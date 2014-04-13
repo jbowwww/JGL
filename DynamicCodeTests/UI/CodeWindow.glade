@@ -5,13 +5,11 @@
   <!-- interface-requires gnome 0.0 -->
   <!-- interface-naming-policy project-wide -->
   <widget class="GtkWindow" id="CodeWindow">
-    <property name="width_request">780</property>
-    <property name="height_request">696</property>
+    <property name="width_request">712</property>
+    <property name="height_request">740</property>
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">JGL Dynamic Code</property>
-    <property name="default_width">780</property>
-    <property name="default_height">696</property>
     <signal name="delete_event" handler="OnWidgetDeleteEvent" swapped="no"/>
     <child>
       <widget class="GtkVBox" id="vbox2">
@@ -506,7 +504,7 @@
           <widget class="GtkVPaned" id="vpaned1">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="position">352</property>
+            <property name="position">426</property>
             <property name="position_set">True</property>
             <child>
               <widget class="GtkNotebook" id="nbCode">
@@ -544,6 +542,136 @@
             <property name="fill">True</property>
             <property name="position">2</property>
           </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="GtkMenu" id="HeirarchyPopupMenu">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="ubuntu_local">True</property>
+    <child>
+      <widget class="GtkImageMenuItem" id="miAdd">
+        <property name="label" translatable="yes">_Add</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="tooltip" translatable="yes">Add new child entity</property>
+        <property name="use_action_appearance">False</property>
+        <property name="use_underline">True</property>
+        <property name="use_stock">False</property>
+        <property name="always_show_image">True</property>
+        <child internal-child="image">
+          <widget class="GtkImage" id="image4">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="stock">gtk-add</property>
+          </widget>
+        </child>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkSeparatorMenuItem" id="menuitem2">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="use_action_appearance">False</property>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkImageMenuItem" id="miCut">
+        <property name="label" translatable="yes">Cu_t</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="use_action_appearance">False</property>
+        <property name="use_underline">True</property>
+        <property name="use_stock">False</property>
+        <child internal-child="image">
+          <widget class="GtkImage" id="image5">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="stock">gtk-cut</property>
+          </widget>
+        </child>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkImageMenuItem" id="miCopy">
+        <property name="label" translatable="yes">_Copy</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="use_action_appearance">False</property>
+        <property name="use_underline">True</property>
+        <property name="use_stock">False</property>
+        <child internal-child="image">
+          <widget class="GtkImage" id="image6">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="stock">gtk-copy</property>
+          </widget>
+        </child>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkImageMenuItem" id="miPaste">
+        <property name="label" translatable="yes">_Paste</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="use_action_appearance">False</property>
+        <property name="use_underline">True</property>
+        <property name="use_stock">False</property>
+        <child internal-child="image">
+          <widget class="GtkImage" id="image7">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="stock">gtk-paste</property>
+          </widget>
+        </child>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkSeparatorMenuItem" id="menuitem1">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="use_action_appearance">False</property>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkImageMenuItem" id="miDelete">
+        <property name="label" translatable="yes">_Delete</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="use_action_appearance">False</property>
+        <property name="use_underline">True</property>
+        <property name="use_stock">False</property>
+        <child internal-child="image">
+          <widget class="GtkImage" id="image8">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="stock">gtk-delete</property>
+          </widget>
+        </child>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkSeparatorMenuItem" id="menuitem4">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="use_action_appearance">False</property>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkImageMenuItem" id="miProperties">
+        <property name="label" translatable="yes">P_roperties</property>
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="use_action_appearance">False</property>
+        <property name="use_underline">True</property>
+        <property name="use_stock">False</property>
+        <child internal-child="image">
+          <widget class="GtkImage" id="image3">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="stock">gtk-properties</property>
+          </widget>
         </child>
       </widget>
     </child>
