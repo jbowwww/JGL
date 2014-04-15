@@ -2,12 +2,12 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="JGL/Heirarchy/Mesh.cs">
     <Files>
-      <File FileName="JGL/Geometry/VertexData.cs" Line="14" Column="21" />
-      <File FileName="JGL/Geometry/Vertex.cs" Line="6" Column="18" />
+      <File FileName="JGL/Geometry/VertexData.cs" Line="1" Column="1" />
+      <File FileName="JGL/Geometry/Vertex.cs" Line="1" Column="1" />
       <File FileName="JGL/Geometry/TriangleFace.cs" Line="1" Column="1" />
-      <File FileName="JGL/Heirarchy/Object.cs" Line="14" Column="2" />
-      <File FileName="JGL/Heirarchy/MeshLibrary/Box.cs" Line="12" Column="23" />
-      <File FileName="JGL/Heirarchy/Mesh.cs" Line="44" Column="1" />
+      <File FileName="JGL/Heirarchy/Object.cs" Line="1" Column="1" />
+      <File FileName="JGL/Heirarchy/MeshLibrary/Box.cs" Line="1" Column="1" />
+      <File FileName="JGL/Heirarchy/Mesh.cs" Line="27" Column="3" />
       <File FileName="JGL/Heirarchy/Scene.cs" Line="1" Column="1" />
       <File FileName="JGL/Heirarchy/Camera.cs" Line="1" Column="1" />
       <File FileName="JGL/Heirarchy/SimpleObject.cs" Line="1" Column="1" />
@@ -17,4 +17,18 @@
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.CustomExecutionModes>
+    <Data Name="Default (Custom) - J1" Id="6185239f-de27-46c4-9d23-76fe2cbf906c" ModeId="Default">
+      <CommandData>
+        <Item Key="MonoDevelop.Ide.Execution.CustomArgsCustomizer">
+          <Value WorkingDirectory="/home/jk/Code/Projects/NET/JGL/JGL/bin/Debug" ctype="CustomArgsExecutionModeData">
+            <EnvironmentVariables />
+          </Value>
+        </Item>
+        <Item Key="MonoDevelop.Ide.Execution.MonoExecutionCustomizer">
+          <Value DebugMode="True" DebugCasts="True" GdbInfo="True" TraceExpressions="all" TraceListener="Console.Out:JGL" XExceptions="True" XDebug="True" ctype="MonoExecutionParameters" />
+        </Item>
+      </CommandData>
+    </Data>
+  </MonoDevelop.Ide.CustomExecutionModes>
 </Properties>
