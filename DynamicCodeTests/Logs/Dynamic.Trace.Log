@@ -1,15 +1,193 @@
-08:13:20.680325 P:18849  T:Main    Dynamic 0001 Information JGLApp.Main Started
-08:13:20.753836 P:18849  T:Main    Dynamic 0002 Information CodeWindow..ctor projectFile=(null), sourceFiles=System.String[]
-08:13:20.951440 P:18849  T:Main    Dynamic 0003 Information Project..ctor sourcePaths=(null), referencePaths=(null))
-08:13:21.167838 P:18849  T:Main    Dynamic 0004 Information CodeWindow.PopulateHeirarchy System.Object[]
-08:13:21.174704 P:18849  T:Main    Dynamic 0005 Information CodeWindow.OpenSourceFiles filenames=System.String[]
-08:13:34.178841 P:18849  T:Main    Dynamic 0006 Verbose CodeWindow.OnFileOpen sender=Gtk.ToolButton, e=System.EventArgs
-08:13:36.271843 P:18849  T:Main    Dynamic 0007 Information CodeWindow.OpenProject filename=/home/jk/Code/Projects/NET/JGL/Data/Projects/Scene1_02.project.xml
-08:13:36.273365 P:18849  T:Main    Dynamic 0008 Information Project.Load filename="/home/jk/Code/Projects/NET/JGL/Data/Projects/Scene1_02.project.xml"
-08:13:36.320700 P:18849  T:Main    Dynamic 0009 Information Project..ctor Protected c'tor for deserialization
-08:13:36.337130 P:18849  T:Main    Dynamic 0010 Information Compiler..ctor Project="Scene1_02"
+17:11:54.251757 P:6459   T:Main    Dynamic 0001 Information JGLApp.Main Started
+17:11:54.306341 P:6459   T:Main    Dynamic 0002 Information CodeWindow..ctor projectFile=(null), sourceFiles=System.String[]
+17:11:54.484056 P:6459   T:Main    Dynamic 0003 Information Project..ctor sourcePaths=(null), referencePaths=(null))
+17:11:54.642294 P:6459   T:Main    Dynamic 0004 Information CodeWindow.PopulateHeirarchy System.Object[]
+17:11:54.648647 P:6459   T:Main    Dynamic 0005 Information CodeWindow.OpenSourceFiles filenames=System.String[]
+17:11:58.525750 P:6459   T:Main    Dynamic 0006 Verbose CodeWindow.OnFileOpen sender=Gtk.ToolButton, e=System.EventArgs
+17:12:01.827832 P:6459   T:Main    Dynamic 0007 Information CodeWindow.OpenProject filename=/home/jk/Code/Projects/NET/JGL/Data/Projects/Scene1_02.project.xml
+17:12:01.828648 P:6459   T:Main    Dynamic 0008 Information Project.Load filename="/home/jk/Code/Projects/NET/JGL/Data/Projects/Scene1_02.project.xml"
+17:12:01.872174 P:6459   T:Main    Dynamic 0009 Information Project..ctor Protected c'tor for deserialization
+17:12:01.890600 P:6459   T:Main    Dynamic 0010 Information Compiler..ctor Project="Scene1_02"
 Settings:
 Mono.CSharp.CompilerSettings
-08:13:36.337635 P:18849  T:Main    Dynamic 0011 Information CodeWindow.PopulateHeirarchy System.Object[]
-08:13:36.338024 P:18849  T:Main    Dynamic 0012 Information CodeWindow.OpenSourceFiles filenames=System.String[]
-08:14:09.259955 P:18849  T:Main    Dynamic 0013 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+17:12:01.891100 P:6459   T:Main    Dynamic 0011 Information CodeWindow.PopulateHeirarchy System.Object[]
+17:12:01.891482 P:6459   T:Main    Dynamic 0012 Information CodeWindow.OpenSourceFiles filenames=System.String[]
+17:12:01.892411 P:6459   T:Main    Dynamic 0013 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+17:12:01.895974 P:6459   T:Main    Dynamic 0014 Information StaticCodePage.Init Init(filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/EmptyMain.cs")
+17:12:01.905285 P:6459   T:Main    Dynamic 0015 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+17:12:01.907057 P:6459   T:Main    Dynamic 0016 Information StaticCodePage.Init Init(filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Origin.cs")
+17:12:01.909709 P:6459   T:Main    Dynamic 0017 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+17:12:01.910450 P:6459   T:Main    Dynamic 0018 Information StaticCodePage.Init Init(filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Scene1.cs")
+17:12:01.913761 P:6459   T:Main    Dynamic 0019 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+17:12:01.914513 P:6459   T:Main    Dynamic 0020 Information StaticCodePage.Init Init(filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Tree1.cs")
+17:12:01.916975 P:6459   T:Main    Dynamic 0021 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+17:12:01.917745 P:6459   T:Main    Dynamic 0022 Information StaticCodePage.Init Init(filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/WhiteLight.cs")
+17:12:01.920683 P:6459   T:Main    Dynamic 0023 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+17:12:01.922007 P:6459   T:Main    Dynamic 0024 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+17:12:01.922763 P:6459   T:Main    Dynamic 0025 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+17:12:01.923419 P:6459   T:Main    Dynamic 0026 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+17:12:01.924038 P:6459   T:Main    Dynamic 0027 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+17:12:01.925247 P:6459   T:Main    Dynamic 0028 Information CodeWindow.OpenSourceFiles filenames=System.String[]
+17:15:00.361124 P:6459   T:Main    Dynamic 0029 Verbose StaticCodePage.TextBufferChanged TextBufferChanged
+17:15:00.364059 P:6459   T:Main    Dynamic 0030 Verbose StaticCodePage.TextBufferChanged TextBufferChanged
+17:15:00.536387 P:6459   T:Main    Dynamic 0031 Verbose StaticCodePage.TextBufferChanged TextBufferChanged
+17:15:00.648527 P:6459   T:Main    Dynamic 0032 Verbose StaticCodePage.TextBufferChanged TextBufferChanged
+17:15:04.977486 P:6459   T:Main    Dynamic 0033 Verbose CodeWindow.OnFileSave sender=Gtk.ToolButton, e=System.EventArgs
+17:15:04.979816 P:6459   T:Main    Dynamic 0034 Information StaticCodePage.Save Save(stream="System.IO.FileStream")
+17:15:10.242024 P:6459   T:Main    Dynamic 0035 Verbose CodeWindow.OnProjectCompile sender=Gtk.ToolButton, e=System.EventArgs
+17:15:10.242747 P:6459   T:Main    Dynamic 0036 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+17:15:10.245644 P:6459   T:Main    Dynamic 0037 Information Compiler.CompileCode source=string(5), referencePaths=string(2)
+17:15:10.259537 P:6459   T:Main    Dynamic 0038 Verbose Compiler.CompileCode CodeProvider: CSharpCodeProvider
+17:15:10.264024 P:6459   T:Main    Dynamic 0039 Verbose Compiler.CompileCode Compiler Parameters = { Generate Executable: True, Generate In Memory: False, Output Assembly: DynamicCodeTests-Scene.dll, Include Debug Info: False, Warnings As Errors: False, Warning Level: -1, Compiler Options: , Main Class: , User Token: 0, Win32 Resource: , Embedded Resources: , Linked Resources: , Referenced Assemblies: /home/jk/Code/Projects/NET/JGL/JGL/bin/Debug/JGL.dll /home/jk/Code/Resources/CS/OpenTK 1.0/Binaries/OpenTK/Release/OpenTK.dll, Temp Files: 
+} }
+17:15:11.185151 P:6459   T:Main    Dynamic 0040 Verbose Compiler.CompileCode Source built into DynamicCodeTests-Scene.dll successfully.
+17:15:50.850095 P:6459   T:Main    Dynamic 0041 Verbose CodeWindow.OnProjectExecute sender=Gtk.ToolButton, e=System.EventArgs
+17:15:50.850520 P:6459   T:Main    Dynamic 0042 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+17:15:50.851174 P:6459   T:Main    Dynamic 0043 Information Compiler.CompileCode source=string(5), referencePaths=string(2)
+17:15:50.851546 P:6459   T:Main    Dynamic 0044 Verbose Compiler.CompileCode CodeProvider: CSharpCodeProvider
+17:15:50.851914 P:6459   T:Main    Dynamic 0045 Verbose Compiler.CompileCode Compiler Parameters = { Generate Executable: True, Generate In Memory: False, Output Assembly: DynamicCodeTests-Scene.dll, Include Debug Info: False, Warnings As Errors: False, Warning Level: -1, Compiler Options: , Main Class: , User Token: 0, Win32 Resource: , Embedded Resources: , Linked Resources: , Referenced Assemblies: /home/jk/Code/Projects/NET/JGL/JGL/bin/Debug/JGL.dll /home/jk/Code/Resources/CS/OpenTK 1.0/Binaries/OpenTK/Release/OpenTK.dll, Temp Files: 
+} }
+17:15:51.733734 P:6459   T:Main    Dynamic 0046 Verbose Compiler.CompileCode Source built into DynamicCodeTests-Scene.dll successfully.
+17:15:52.429664 P:6459   T:Main    Dynamic 0047 Information DynamicCodePage..ctor project="Dynamic.Project", codeWindow="Dynamic.UI.CodeWindow"
+17:15:52.430112 P:6459   T:Main    Dynamic 0048 Information Compiler..ctor Project="Scene1_02"
+Settings:
+Mono.CSharp.CompilerSettings
+17:15:52.453053 P:6459   T:Main    Dynamic 0049 Information CodeWindow.OnProjectExecute Started SceneWindow thread for scene "Scene1" .. 
+17:15:52.677159 P:6459   T:Main    Dynamic 0050 Information CodeWindow.PopulateHeirarchy System.Object[]
+17:15:52.682396 P:6459   T:Main    Dynamic 0051 Verbose CodeWindow.PopulateHeirarchy entity.Id="test1.png", tnParent="(null)"
+17:15:52.687250 P:6459   T:Main    Dynamic 0052 Verbose CodeWindow.PopulateHeirarchy entity.Id="tex2.png", tnParent="(null)"
+17:15:52.692021 P:6459   T:Main    Dynamic 0053 Verbose CodeWindow.PopulateHeirarchy entity.Id="Scene1", tnParent="(null)"
+17:15:52.693157 P:6459   T:Main    Dynamic 0054 Verbose CodeWindow.PopulateHeirarchy entity.Id="Quad #0c07", tnParent="Dynamic.UI.EntityTreeNode"
+17:15:52.695408 P:6459   T:Main    Dynamic 0055 Verbose CodeWindow.PopulateHeirarchy entity.Id="Box #e4fc", tnParent="Dynamic.UI.EntityTreeNode"
+17:15:52.696084 P:6459   T:Main    Dynamic 0056 Verbose CodeWindow.PopulateHeirarchy entity.Id="Tree1 #e434", tnParent="Dynamic.UI.EntityTreeNode"
+17:15:52.696740 P:6459   T:Main    Dynamic 0057 Verbose CodeWindow.PopulateHeirarchy entity.Id="tree", tnParent="Dynamic.UI.EntityTreeNode"
+17:15:52.697464 P:6459   T:Main    Dynamic 0058 Verbose CodeWindow.PopulateHeirarchy entity.Id="twig", tnParent="Dynamic.UI.EntityTreeNode"
+17:15:52.698134 P:6459   T:Main    Dynamic 0059 Verbose CodeWindow.PopulateHeirarchy entity.Id="Origin", tnParent="Dynamic.UI.EntityTreeNode"
+17:15:52.698815 P:6459   T:Main    Dynamic 0060 Verbose CodeWindow.PopulateHeirarchy entity.Id="WhiteLight #e498", tnParent="Dynamic.UI.EntityTreeNode"
+17:15:52.699534 P:6459   T:Main    Dynamic 0061 Verbose CodeWindow.PopulateHeirarchy entity.Id="WhiteLight #e4ca", tnParent="Dynamic.UI.EntityTreeNode"
+17:15:52.700214 P:6459   T:Main    Dynamic 0062 Verbose CodeWindow.PopulateHeirarchy entity.Id="Tree1 #e45c", tnParent="Dynamic.UI.EntityTreeNode"
+17:15:52.700895 P:6459   T:Main    Dynamic 0063 Verbose CodeWindow.PopulateHeirarchy entity.Id="tree", tnParent="Dynamic.UI.EntityTreeNode"
+17:15:52.701599 P:6459   T:Main    Dynamic 0064 Verbose CodeWindow.PopulateHeirarchy entity.Id="twig", tnParent="Dynamic.UI.EntityTreeNode"
+17:15:52.702282 P:6459   T:Main    Dynamic 0065 Verbose CodeWindow.PopulateHeirarchy entity.Id="Tree1 #e394", tnParent="Dynamic.UI.EntityTreeNode"
+17:15:52.702978 P:6459   T:Main    Dynamic 0066 Verbose CodeWindow.PopulateHeirarchy entity.Id="tree", tnParent="Dynamic.UI.EntityTreeNode"
+17:15:52.704366 P:6459   T:Main    Dynamic 0067 Verbose CodeWindow.PopulateHeirarchy entity.Id="twig", tnParent="Dynamic.UI.EntityTreeNode"
+17:20:37.459528 P:6459   T:Main    Dynamic 0068 Verbose CodeWindow.OnFinishExecute sender=Dynamic.UI.CodeWindow, args=Dynamic.UI.CodeWindow+FinishExecuteArgs
+17:20:37.459804 P:6459   T:Main    Dynamic 0069 Verbose CodeWindow.OnFinishExecute Ended SceneWindow thread for scene "Scene1"
+17:20:37.462889 P:6459   T:Main    Dynamic 0070 Information CodeWindow.SaveProject Name=Scene1_02
+17:20:37.463676 P:6459   T:Main    Dynamic 0071 Information Project.Save filename="../../../Data/Projects/Scene1_02.project.xml"
+17:21:09.752780 P:6459   T:Main    Dynamic 0072 Verbose CodeWindow.OnProjectExecute sender=Gtk.ToolButton, e=System.EventArgs
+17:21:09.754644 P:6459   T:Main    Dynamic 0073 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+17:21:09.755798 P:6459   T:Main    Dynamic 0074 Information Compiler.CompileCode source=string(5), referencePaths=string(2)
+17:21:09.756475 P:6459   T:Main    Dynamic 0075 Verbose Compiler.CompileCode CodeProvider: CSharpCodeProvider
+17:21:09.757186 P:6459   T:Main    Dynamic 0076 Verbose Compiler.CompileCode Compiler Parameters = { Generate Executable: True, Generate In Memory: False, Output Assembly: DynamicCodeTests-Scene.dll, Include Debug Info: False, Warnings As Errors: False, Warning Level: -1, Compiler Options: , Main Class: , User Token: 0, Win32 Resource: , Embedded Resources: , Linked Resources: , Referenced Assemblies: /home/jk/Code/Projects/NET/JGL/JGL/bin/Debug/JGL.dll /home/jk/Code/Resources/CS/OpenTK 1.0/Binaries/OpenTK/Release/OpenTK.dll, Temp Files: 
+} }
+17:21:10.641583 P:6459   T:Main    Dynamic 0077 Verbose Compiler.CompileCode Source built into DynamicCodeTests-Scene.dll successfully.
+17:21:11.199235 P:6459   T:Main    Dynamic 0078 Information DynamicCodePage..ctor project="Dynamic.Project", codeWindow="Dynamic.UI.CodeWindow"
+17:21:11.199619 P:6459   T:Main    Dynamic 0079 Information Compiler..ctor Project="Scene1_02"
+Settings:
+Mono.CSharp.CompilerSettings
+17:21:11.204406 P:6459   T:Main    Dynamic 0080 Information CodeWindow.OnProjectExecute Started SceneWindow thread for scene "Scene1" .. 
+17:21:11.205391 P:6459   T:Main    Dynamic 0081 Information CodeWindow.PopulateHeirarchy System.Object[]
+17:21:11.206527 P:6459   T:Main    Dynamic 0082 Verbose CodeWindow.PopulateHeirarchy entity.Id="test1.png", tnParent="(null)"
+17:21:11.207033 P:6459   T:Main    Dynamic 0083 Verbose CodeWindow.PopulateHeirarchy entity.Id="tex2.png", tnParent="(null)"
+17:21:11.208012 P:6459   T:Main    Dynamic 0084 Verbose CodeWindow.PopulateHeirarchy entity.Id="Scene1", tnParent="(null)"
+17:21:11.209253 P:6459   T:Main    Dynamic 0085 Verbose CodeWindow.PopulateHeirarchy entity.Id="WhiteLight #45dc", tnParent="Dynamic.UI.EntityTreeNode"
+17:21:11.210595 P:6459   T:Main    Dynamic 0086 Verbose CodeWindow.PopulateHeirarchy entity.Id="Tree1 #458c", tnParent="Dynamic.UI.EntityTreeNode"
+17:21:11.211306 P:6459   T:Main    Dynamic 0087 Verbose CodeWindow.PopulateHeirarchy entity.Id="tree", tnParent="Dynamic.UI.EntityTreeNode"
+17:21:11.211927 P:6459   T:Main    Dynamic 0088 Verbose CodeWindow.PopulateHeirarchy entity.Id="twig", tnParent="Dynamic.UI.EntityTreeNode"
+17:21:11.212565 P:6459   T:Main    Dynamic 0089 Verbose CodeWindow.PopulateHeirarchy entity.Id="Origin", tnParent="Dynamic.UI.EntityTreeNode"
+17:21:11.213223 P:6459   T:Main    Dynamic 0090 Verbose CodeWindow.PopulateHeirarchy entity.Id="WhiteLight #4604", tnParent="Dynamic.UI.EntityTreeNode"
+17:21:11.214013 P:6459   T:Main    Dynamic 0091 Verbose CodeWindow.PopulateHeirarchy entity.Id="Box #462c", tnParent="Dynamic.UI.EntityTreeNode"
+17:21:11.214758 P:6459   T:Main    Dynamic 0092 Verbose CodeWindow.PopulateHeirarchy entity.Id="Tree1 #45b4", tnParent="Dynamic.UI.EntityTreeNode"
+17:21:11.215477 P:6459   T:Main    Dynamic 0093 Verbose CodeWindow.PopulateHeirarchy entity.Id="tree", tnParent="Dynamic.UI.EntityTreeNode"
+17:21:11.216251 P:6459   T:Main    Dynamic 0094 Verbose CodeWindow.PopulateHeirarchy entity.Id="twig", tnParent="Dynamic.UI.EntityTreeNode"
+17:21:11.217180 P:6459   T:Main    Dynamic 0095 Verbose CodeWindow.PopulateHeirarchy entity.Id="Tree1 #4546", tnParent="Dynamic.UI.EntityTreeNode"
+17:21:11.218350 P:6459   T:Main    Dynamic 0096 Verbose CodeWindow.PopulateHeirarchy entity.Id="tree", tnParent="Dynamic.UI.EntityTreeNode"
+17:21:11.219371 P:6459   T:Main    Dynamic 0097 Verbose CodeWindow.PopulateHeirarchy entity.Id="twig", tnParent="Dynamic.UI.EntityTreeNode"
+17:21:11.220325 P:6459   T:Main    Dynamic 0098 Verbose CodeWindow.PopulateHeirarchy entity.Id="Quad #1ada", tnParent="Dynamic.UI.EntityTreeNode"
+17:21:55.627722 P:6459   T:Main    Dynamic 0099 Verbose CodeWindow.OnFinishExecute sender=Dynamic.UI.CodeWindow, args=Dynamic.UI.CodeWindow+FinishExecuteArgs
+17:21:55.627980 P:6459   T:Main    Dynamic 0100 Verbose CodeWindow.OnFinishExecute Ended SceneWindow thread for scene "Scene1"
+17:21:55.629021 P:6459   T:Main    Dynamic 0101 Information CodeWindow.SaveProject Name=Scene1_02
+17:21:55.629287 P:6459   T:Main    Dynamic 0102 Information Project.Save filename="../../../Data/Projects/Scene1_02.project.xml"
+17:22:17.720454 P:6459   T:Main    Dynamic 0103 Verbose CodeWindow.OnProjectExecute sender=Gtk.ToolButton, e=System.EventArgs
+17:22:17.721447 P:6459   T:Main    Dynamic 0104 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+17:22:17.722061 P:6459   T:Main    Dynamic 0105 Information Compiler.CompileCode source=string(5), referencePaths=string(2)
+17:22:17.722429 P:6459   T:Main    Dynamic 0106 Verbose Compiler.CompileCode CodeProvider: CSharpCodeProvider
+17:22:17.722793 P:6459   T:Main    Dynamic 0107 Verbose Compiler.CompileCode Compiler Parameters = { Generate Executable: True, Generate In Memory: False, Output Assembly: DynamicCodeTests-Scene.dll, Include Debug Info: False, Warnings As Errors: False, Warning Level: -1, Compiler Options: , Main Class: , User Token: 0, Win32 Resource: , Embedded Resources: , Linked Resources: , Referenced Assemblies: /home/jk/Code/Projects/NET/JGL/JGL/bin/Debug/JGL.dll /home/jk/Code/Resources/CS/OpenTK 1.0/Binaries/OpenTK/Release/OpenTK.dll, Temp Files: 
+} }
+17:22:18.604628 P:6459   T:Main    Dynamic 0108 Verbose Compiler.CompileCode Source built into DynamicCodeTests-Scene.dll successfully.
+17:22:19.173644 P:6459   T:Main    Dynamic 0109 Information DynamicCodePage..ctor project="Dynamic.Project", codeWindow="Dynamic.UI.CodeWindow"
+17:22:19.174042 P:6459   T:Main    Dynamic 0110 Information Compiler..ctor Project="Scene1_02"
+Settings:
+Mono.CSharp.CompilerSettings
+17:22:19.178563 P:6459   T:Main    Dynamic 0111 Information CodeWindow.OnProjectExecute Started SceneWindow thread for scene "Scene1" .. 
+17:22:19.179765 P:6459   T:Main    Dynamic 0112 Information CodeWindow.PopulateHeirarchy System.Object[]
+17:22:19.180455 P:6459   T:Main    Dynamic 0113 Verbose CodeWindow.PopulateHeirarchy entity.Id="test1.png", tnParent="(null)"
+17:22:19.181477 P:6459   T:Main    Dynamic 0114 Verbose CodeWindow.PopulateHeirarchy entity.Id="tex2.png", tnParent="(null)"
+17:22:19.183343 P:6459   T:Main    Dynamic 0115 Verbose CodeWindow.PopulateHeirarchy entity.Id="Scene1", tnParent="(null)"
+17:22:19.184806 P:6459   T:Main    Dynamic 0116 Verbose CodeWindow.PopulateHeirarchy entity.Id="Tree1 #8039", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:19.186244 P:6459   T:Main    Dynamic 0117 Verbose CodeWindow.PopulateHeirarchy entity.Id="tree", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:19.187168 P:6459   T:Main    Dynamic 0118 Verbose CodeWindow.PopulateHeirarchy entity.Id="twig", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:19.187937 P:6459   T:Main    Dynamic 0119 Verbose CodeWindow.PopulateHeirarchy entity.Id="Quad #519e", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:19.188764 P:6459   T:Main    Dynamic 0120 Verbose CodeWindow.PopulateHeirarchy entity.Id="Origin", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:19.189795 P:6459   T:Main    Dynamic 0121 Verbose CodeWindow.PopulateHeirarchy entity.Id="WhiteLight #8089", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:19.190522 P:6459   T:Main    Dynamic 0122 Verbose CodeWindow.PopulateHeirarchy entity.Id="Tree1 #8061", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:19.191144 P:6459   T:Main    Dynamic 0123 Verbose CodeWindow.PopulateHeirarchy entity.Id="tree", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:19.192039 P:6459   T:Main    Dynamic 0124 Verbose CodeWindow.PopulateHeirarchy entity.Id="twig", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:19.192863 P:6459   T:Main    Dynamic 0125 Verbose CodeWindow.PopulateHeirarchy entity.Id="Tree1 #7fc1", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:19.193551 P:6459   T:Main    Dynamic 0126 Verbose CodeWindow.PopulateHeirarchy entity.Id="tree", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:19.194211 P:6459   T:Main    Dynamic 0127 Verbose CodeWindow.PopulateHeirarchy entity.Id="twig", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:19.194920 P:6459   T:Main    Dynamic 0128 Verbose CodeWindow.PopulateHeirarchy entity.Id="Box #80d9", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:19.195656 P:6459   T:Main    Dynamic 0129 Verbose CodeWindow.PopulateHeirarchy entity.Id="WhiteLight #80b1", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:22.643168 P:6459   T:Main    Dynamic 0130 Verbose CodeWindow.OnFinishExecute sender=Dynamic.UI.CodeWindow, args=Dynamic.UI.CodeWindow+FinishExecuteArgs
+17:22:22.643429 P:6459   T:Main    Dynamic 0131 Verbose CodeWindow.OnFinishExecute Ended SceneWindow thread for scene "Scene1"
+17:22:22.644414 P:6459   T:Main    Dynamic 0132 Information CodeWindow.SaveProject Name=Scene1_02
+17:22:22.644677 P:6459   T:Main    Dynamic 0133 Information Project.Save filename="../../../Data/Projects/Scene1_02.project.xml"
+17:22:31.534633 P:6459   T:Main    Dynamic 0134 Verbose CodeWindow.OnProjectCompile sender=Gtk.ToolButton, e=System.EventArgs
+17:22:31.535057 P:6459   T:Main    Dynamic 0135 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+17:22:31.535721 P:6459   T:Main    Dynamic 0136 Information Compiler.CompileCode source=string(5), referencePaths=string(2)
+17:22:31.536211 P:6459   T:Main    Dynamic 0137 Verbose Compiler.CompileCode CodeProvider: CSharpCodeProvider
+17:22:31.536702 P:6459   T:Main    Dynamic 0138 Verbose Compiler.CompileCode Compiler Parameters = { Generate Executable: True, Generate In Memory: False, Output Assembly: DynamicCodeTests-Scene.dll, Include Debug Info: False, Warnings As Errors: False, Warning Level: -1, Compiler Options: , Main Class: , User Token: 0, Win32 Resource: , Embedded Resources: , Linked Resources: , Referenced Assemblies: /home/jk/Code/Projects/NET/JGL/JGL/bin/Debug/JGL.dll /home/jk/Code/Resources/CS/OpenTK 1.0/Binaries/OpenTK/Release/OpenTK.dll, Temp Files: 
+} }
+17:22:32.429783 P:6459   T:Main    Dynamic 0139 Verbose Compiler.CompileCode Source built into DynamicCodeTests-Scene.dll successfully.
+17:22:34.040875 P:6459   T:Main    Dynamic 0140 Verbose CodeWindow.OnProjectExecute sender=Gtk.ToolButton, e=System.EventArgs
+17:22:34.048359 P:6459   T:Main    Dynamic 0141 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+17:22:34.049649 P:6459   T:Main    Dynamic 0142 Information Compiler.CompileCode source=string(5), referencePaths=string(2)
+17:22:34.050082 P:6459   T:Main    Dynamic 0143 Verbose Compiler.CompileCode CodeProvider: CSharpCodeProvider
+17:22:34.050448 P:6459   T:Main    Dynamic 0144 Verbose Compiler.CompileCode Compiler Parameters = { Generate Executable: True, Generate In Memory: False, Output Assembly: DynamicCodeTests-Scene.dll, Include Debug Info: False, Warnings As Errors: False, Warning Level: -1, Compiler Options: , Main Class: , User Token: 0, Win32 Resource: , Embedded Resources: , Linked Resources: , Referenced Assemblies: /home/jk/Code/Projects/NET/JGL/JGL/bin/Debug/JGL.dll /home/jk/Code/Resources/CS/OpenTK 1.0/Binaries/OpenTK/Release/OpenTK.dll, Temp Files: 
+} }
+17:22:34.927890 P:6459   T:Main    Dynamic 0145 Verbose Compiler.CompileCode Source built into DynamicCodeTests-Scene.dll successfully.
+17:22:35.486510 P:6459   T:Main    Dynamic 0146 Information DynamicCodePage..ctor project="Dynamic.Project", codeWindow="Dynamic.UI.CodeWindow"
+17:22:35.486942 P:6459   T:Main    Dynamic 0147 Information Compiler..ctor Project="Scene1_02"
+Settings:
+Mono.CSharp.CompilerSettings
+17:22:35.492110 P:6459   T:Main    Dynamic 0148 Information CodeWindow.OnProjectExecute Started SceneWindow thread for scene "Scene1" .. 
+17:22:35.492549 P:6459   T:Main    Dynamic 0149 Information CodeWindow.PopulateHeirarchy System.Object[]
+17:22:35.497692 P:6459   T:Main    Dynamic 0150 Verbose CodeWindow.PopulateHeirarchy entity.Id="test1.png", tnParent="(null)"
+17:22:35.498286 P:6459   T:Main    Dynamic 0151 Verbose CodeWindow.PopulateHeirarchy entity.Id="tex2.png", tnParent="(null)"
+17:22:35.499669 P:6459   T:Main    Dynamic 0152 Verbose CodeWindow.PopulateHeirarchy entity.Id="Scene1", tnParent="(null)"
+17:22:35.501064 P:6459   T:Main    Dynamic 0153 Verbose CodeWindow.PopulateHeirarchy entity.Id="Box #ae7e", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:35.502659 P:6459   T:Main    Dynamic 0154 Verbose CodeWindow.PopulateHeirarchy entity.Id="Tree1 #ade8", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:35.503531 P:6459   T:Main    Dynamic 0155 Verbose CodeWindow.PopulateHeirarchy entity.Id="tree", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:35.504223 P:6459   T:Main    Dynamic 0156 Verbose CodeWindow.PopulateHeirarchy entity.Id="twig", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:35.504930 P:6459   T:Main    Dynamic 0157 Verbose CodeWindow.PopulateHeirarchy entity.Id="Origin", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:35.505556 P:6459   T:Main    Dynamic 0158 Verbose CodeWindow.PopulateHeirarchy entity.Id="Quad #8246", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:35.506178 P:6459   T:Main    Dynamic 0159 Verbose CodeWindow.PopulateHeirarchy entity.Id="WhiteLight #ae60", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:35.506887 P:6459   T:Main    Dynamic 0160 Verbose CodeWindow.PopulateHeirarchy entity.Id="WhiteLight #ae38", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:35.507704 P:6459   T:Main    Dynamic 0161 Verbose CodeWindow.PopulateHeirarchy entity.Id="Tree1 #ae10", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:35.508500 P:6459   T:Main    Dynamic 0162 Verbose CodeWindow.PopulateHeirarchy entity.Id="tree", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:35.509320 P:6459   T:Main    Dynamic 0163 Verbose CodeWindow.PopulateHeirarchy entity.Id="twig", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:35.510109 P:6459   T:Main    Dynamic 0164 Verbose CodeWindow.PopulateHeirarchy entity.Id="Tree1 #ad84", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:35.510747 P:6459   T:Main    Dynamic 0165 Verbose CodeWindow.PopulateHeirarchy entity.Id="tree", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:35.511285 P:6459   T:Main    Dynamic 0166 Verbose CodeWindow.PopulateHeirarchy entity.Id="twig", tnParent="Dynamic.UI.EntityTreeNode"
+17:22:37.337811 P:6459   T:Main    Dynamic 0167 Verbose CodeWindow.OnFinishExecute sender=Dynamic.UI.CodeWindow, args=Dynamic.UI.CodeWindow+FinishExecuteArgs
+17:22:37.338200 P:6459   T:Main    Dynamic 0168 Verbose CodeWindow.OnFinishExecute Ended SceneWindow thread for scene "Scene1"
+17:22:37.339669 P:6459   T:Main    Dynamic 0169 Information CodeWindow.SaveProject Name=Scene1_02
+17:22:37.340047 P:6459   T:Main    Dynamic 0170 Information Project.Save filename="../../../Data/Projects/Scene1_02.project.xml"
+17:22:38.927240 P:6459   T:Main    Dynamic 0171 Verbose CodeWindow.OnWidgetDeleteEvent sender=Gtk.Window, e=Gtk.DeleteEventArgs
+17:22:38.928636 P:6459   T:Main    Dynamic 0172 Verbose CodeWindow.ConfirmExit System.Object[]
+17:22:38.929376 P:6459   T:Main    Dynamic 0173 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+17:22:38.929866 P:6459   T:Main    Dynamic 0174 Information CodeWindow.SaveProject Name=Scene1_02
+17:22:38.930308 P:6459   T:Main    Dynamic 0175 Information Project.Save filename="../../../Data/Projects/Scene1_02.project.xml"
+17:22:38.933095 P:6459   T:Main    Dynamic 0176 Information CodeWindow.OnWidgetDeleteEvent CodeWindow.OnWidgetDeleteEvent()
+17:22:39.018466 P:6459   T:Main    Dynamic 0177 Information JGLApp.Main Finished, exiting ..
