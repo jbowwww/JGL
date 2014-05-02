@@ -17,7 +17,7 @@ namespace Dynamic.UI
 		/// <summary>
 		/// The trace.
 		/// </summary>
-		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncTextFileTraceListener.GetOrCreate("JGLApp"));
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncTextFileTraceListener.GetOrCreate("App"));
 
 		private List<string> codeHistory = new List<string>();
 
@@ -41,11 +41,6 @@ namespace Dynamic.UI
 		TextView tvInput;
 
 		/// <summary>
-		/// Event handlers set this to true on key press event for control key, returns to false on key release event
-		/// </summary>
-		bool tvInputCtrlKeyPressed = false;
-
-		/// <summary>
 		/// The tv input previous text.
 		/// </summary>
 		private string tvInputPreviousText = string.Empty;
@@ -61,8 +56,8 @@ namespace Dynamic.UI
 		private ReaderWriterLock lockOutput = new ReaderWriterLock();
 
 		StringBuilder sbOut = new StringBuilder();
-		StringBuilder sbError = new StringBuilder();
-		StringBuilder sbEval = new StringBuilder();
+//		StringBuilder sbError = new StringBuilder();
+//		StringBuilder sbEval = new StringBuilder();
 
 		public readonly Compiler DynamicCompiler;
 
@@ -71,7 +66,7 @@ namespace Dynamic.UI
 		/// </summary>
 		public DynamicCodePage(Project project, CodeWindow codeWindow)
 		{
-			Trace.Log(TraceEventType.Information, "project=\"{0}\", codeWindow=\"{1}\"", project.ToString(), codeWindow.ToString());
+			Trace.Log(TraceEventType.Information, "project=\"{0}\" codeWindow=\"{1}\"", project.ToString(), codeWindow.ToString());
 
 			Project = project;
 			CodeWindow = codeWindow;
@@ -79,8 +74,6 @@ namespace Dynamic.UI
 			DynamicCompiler = new Compiler(project);
 
 			lockOutput.AcquireWriterLock(0);
-
-			int mark = 0;
 
 			ScrolledWindow w = new ScrolledWindow();
 			tvInput = new TextView();
@@ -222,7 +215,6 @@ namespace Dynamic.UI
 										break;
 									default:
 										throw new InvalidDataException(string.Format("Invalid color code on output string split \"{0}\"", splitOutput));
-										break;
 								}
 							}
 							else
@@ -244,7 +236,7 @@ namespace Dynamic.UI
 			}
 			catch (Exception ex)
 			{
-				Trace.Log(TraceEventType.Error, string.Format("{0}: {1}\n{2}", ex.GetType().Name, ex.Message, ex.StackTrace));
+				Trace.Log(TraceEventType.Error, "{0}: {1}\n{2}", ex.GetType().Name, ex.Message, ex.StackTrace);
 			}
 			finally
 			{
@@ -259,7 +251,7 @@ namespace Dynamic.UI
 		/// </summary>
 		public void CodeHistoryUp()
 		{
-			Trace.Log(TraceEventType.Information, "CodeHistoryUp");
+			Trace.Log(TraceEventType.Information);
 			codeHistoryIndex = codeHistoryIndex <= 0 ? codeHistory.Count - 1 : codeHistoryIndex - 1;
 			tvInput.Buffer.Text = codeHistory[codeHistoryIndex];
 		}
@@ -269,7 +261,7 @@ namespace Dynamic.UI
 		/// </summary>
 		public void CodeHistoryDown()
 		{
-			Trace.Log(TraceEventType.Information, "CodeHistoryDown");
+			Trace.Log(TraceEventType.Information);
 			codeHistoryIndex = codeHistoryIndex >= codeHistory.Count - 1 ? 0 : codeHistoryIndex + 1;
 			tvInput.Buffer.Text = codeHistory[codeHistoryIndex];
 		}

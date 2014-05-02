@@ -26,7 +26,7 @@ namespace Dynamic.UI
 		/// <summary>
 		/// The trace.
 		/// </summary>
-		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate();//AsyncTextFileTraceListener.GetOrCreate("JGLApp"));
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate();//AsyncTextFileTraceListener.GetOrCreate("App"));
 
 		/// <summary>
 		/// A <see cref="ConcurrentBag"/> of all <see cref="DynamicCodeTests.CodeWindow"/> instances
@@ -112,7 +112,8 @@ namespace Dynamic.UI
 		/// </summary>
 		public CodeWindow(string projectFile = null, string[] sourceFiles = null)
 		{
-			Trace.Log(TraceEventType.Information, "projectFile={0}, sourceFiles={1}", projectFile == null ? "(null)" : projectFile.ToString(), sourceFiles.ToString());
+			Trace.Log(TraceEventType.Information, "projectFile={0}, sourceFiles=string[{1}]",
+				projectFile == null ? "(null)" : projectFile.ToString(), sourceFiles == null ? "(null)" : sourceFiles.Length.ToString());
 
 			CodeWindows.TryAdd(this, this);															// store this CodeWindow instance
 			
@@ -158,7 +159,7 @@ namespace Dynamic.UI
 		/// </summary>
 		public void PopulateHeirarchy()
 		{
-			Trace.Log(TraceEventType.Information);
+			Trace.Log(TraceEventType.Verbose);
 			storeHeirarchy.Clear();
 			if (EntityContext.Root != null)
 			{
@@ -174,7 +175,7 @@ namespace Dynamic.UI
 		/// <param name='tnParent'><see cref="Gtk.TreeNode"/> that is to hold the child tree nodes representing the subheirarchy of <paramref name="ec"/></param>
 		private void PopulateHeirarchy(Entity entity, TreeNode tnParent = null)
 		{
-			Trace.Log(TraceEventType.Verbose, "entity.Id=\"{0}\", tnParent=\"{1}\"", entity.Id, tnParent == null ? "(null)" : tnParent.ToString());
+//			Trace.Log(TraceEventType.Verbose, "entity.Id=\"{0}\", tnParent=\"{1}\"", entity.Id, tnParent == null ? "(null)" : tnParent.ToString());
 			TreeNode tnNew = new EntityTreeNode(entity);
 			if (tnParent == null)
 				storeHeirarchy.AddNode(tnNew);
@@ -191,7 +192,7 @@ namespace Dynamic.UI
 		/// <param name='filenames'>Array of filename strings giving paths to files to open</param>
 		public void OpenSourceFiles(params string[] filenames)
 		{
-			Trace.Log(TraceEventType.Information, "filenames={0}", filenames.ToString());
+			Trace.Log(TraceEventType.Information, "filenames=string[{0}]", filenames == null ? "(null)" : filenames.Length.ToString());
 			int setPage = nbCode.NPages;
 			int newPages = 0;
 			foreach (string filename in filenames)
@@ -234,8 +235,9 @@ namespace Dynamic.UI
 				}
 				catch (Exception ex)
 				{
-					MessageDialog mDlg = new MessageDialog(null, DialogFlags.Modal | DialogFlags.DestroyWithParent, MessageType.Warning,
-						ButtonsType.Close, "{0}: {1}: Could not open file \"{2}\"", ex.GetType().Name, ex.Message, filename);
+					string msg = string.Format("{0}: {1}: Could not open file \"{2}\"", ex.GetType().Name, ex.Message, filename);
+					Trace.Log(TraceEventType.Error, msg);
+					MessageDialog mDlg = new MessageDialog(null, DialogFlags.Modal | DialogFlags.DestroyWithParent, MessageType.Warning, ButtonsType.Close, msg);
 					mDlg.Run();
 				}
 				finally
@@ -276,7 +278,7 @@ namespace Dynamic.UI
 		/// </summary>
 		protected void SaveProject()
 		{
-			Trace.Log(TraceEventType.Information, "Name={0}", Project.Name);
+			Trace.Log(TraceEventType.Verbose);
 			if (Project == null)
 				throw new InvalidOperationException("Project == null");
 			Project.Save();
@@ -450,7 +452,6 @@ namespace Dynamic.UI
 		protected void OnProjectCompile(object sender, EventArgs e)
 		{
 			Trace.Log(TraceEventType.Verbose, "sender={0}, e={1}", sender.ToString(), e.ToString());
-			Gtk.Widget nbPage = null;
 			List<string> sources = new List<string>();
 			foreach (StaticCodePage cp in GetPagesOfType<StaticCodePage>())
 				sources.Add(cp.Source);
@@ -478,7 +479,6 @@ namespace Dynamic.UI
 			Trace.Log(TraceEventType.Verbose, "sender={0}, e={1}", sender.ToString(), e.ToString());
 			if (SceneWindowThread == null)
 			{
-				Gtk.Widget nbPage = null;
 				List<string> sources = new List<string>();
 				foreach (StaticCodePage cp in GetPagesOfType<StaticCodePage>())
 					sources.Add(cp.Source);

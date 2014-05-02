@@ -12,7 +12,7 @@ namespace Dynamic
 	/// </summary>
 	public class Project
 	{
-		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncTextFileTraceListener.GetOrCreate("JGLApp"));
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncTextFileTraceListener.GetOrCreate("App"));
 
 		/// <summary>
 		/// Reference path tree node class
@@ -77,7 +77,7 @@ namespace Dynamic
 		/// </summary>
 		protected Project()
 		{
-			Trace.Log(TraceEventType.Information, "Protected c'tor for deserialization");
+			Trace.Log(TraceEventType.Verbose, "Protected c'tor for deserialization");
 		}
 
 		/// <summary>

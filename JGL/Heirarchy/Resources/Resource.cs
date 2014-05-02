@@ -13,11 +13,6 @@ namespace JGL.Heirarchy.Resources
 	public abstract partial class Resource : Entity
 	{
 		/// <summary>
-		/// Tracing
-		/// </summary>
-//		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncXmlFileTraceListener.GetOrCreate("JGL"));
-
-		/// <summary>
 		/// Gets a value indicating whether this resource is loaded.
 		/// </summary>
 		public bool IsLoaded { get; private set; }
@@ -32,7 +27,6 @@ namespace JGL.Heirarchy.Resources
 		/// </summary>
 		/// <param name="uri"><see cref="System.Uri"/> of the stored resource</param>
 		protected Resource(string path)
-//			: base(path)
 		{
 			Init(path, path);
 		}
@@ -43,7 +37,6 @@ namespace JGL.Heirarchy.Resources
 		/// <param name="name">Resource name (no requirement to be unique)</param>
 		/// <param name="path">Path to the stored resource</param>
 		protected Resource(string name, string path)
-//			: base(name)
 		{
 			Init(name, path);
 		}
@@ -55,15 +48,11 @@ namespace JGL.Heirarchy.Resources
 		/// <param name="path">Resource Path</param>
 		private void Init(string name, string path)
 		{
-			Trace.Log(TraceEventType.Information, "name=\"{0}\", path=\"{1}\"", name, path);
-
 			IsLoaded = false;
 			Path = path;
 			Name = name;
-
+			Trace.Log(TraceEventType.Information, "Name=\"{0}\" Path=\"{1}\"", Name, Path);
 			StartLoadThread();
-
-//			EntityContext.Root.Add(this);				// Add all resources as child entities of EntityContext.RootContext
 			_loadQueue.Enqueue(this);
 		}
 

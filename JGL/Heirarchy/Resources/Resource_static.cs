@@ -7,16 +7,12 @@ using System.Diagnostics;
 
 using JGL.IO;
 using JGL.Debugging;
+using System.Collections.Generic;
 
 namespace JGL.Heirarchy.Resources
 {
 	public partial class Resource
 	{
-		/// <summary>
-		/// The sync root.
-		/// </summary>
-		private static object SyncRoot = new object();
-
 		/// <summary>
 		/// Constant load thread sleep time.
 		/// </summary>
@@ -40,9 +36,9 @@ namespace JGL.Heirarchy.Resources
 		/// <summary>
 		/// Executed on the dedicated <see cref="Resource"/> loading thread, <see cref="Resource.LoadThread"/>
 		/// </summary>
-		public static void LoadResources()
+		public static void RunLoadThread()
 		{
-			Trace.Log(TraceEventType.Information, "Started");
+			Trace.Log(TraceEventType.Information, "Thread started");
 			Resource r;
 			while (!_stopLoadThread || !_loadQueue.IsEmpty)
 			{
@@ -62,7 +58,7 @@ namespace JGL.Heirarchy.Resources
 				if (!_stopLoadThread && _loadQueue.IsEmpty)
 					Thread.Sleep(LoadThreadSleepTime);
 			}
-			Trace.Log(TraceEventType.Information, "LoadResources thread stopped");
+			Trace.Log(TraceEventType.Information, "Thread exiting");
 		}
 
 		/// <summary>
@@ -75,7 +71,7 @@ namespace JGL.Heirarchy.Resources
 			else 			//if (LoadThread == null)
 			{
 				Trace.Log(TraceEventType.Information, "Starting thread");
-				LoadThread = new Thread(LoadResources);
+				LoadThread = new Thread(RunLoadThread);
 				LoadThread.Name = "Resource";
 				LoadThread.Start();
 			}
@@ -102,18 +98,17 @@ namespace JGL.Heirarchy.Resources
 		/// </summary>
 		/// <param name="name">The <see cref="Entity.Name"/> of the <see cref="Resource"/> to get</param>
 		/// <returns>The <see cref="Resource"/> with name <paramref name="name"/>, if it exists, contained in <see cref="EntityContext.RootContext"/></returns>
-		public static Resource Get(string name)
-		{
-			if (!EntityContext.Root.Contains(name))
-			{
-				string error = string.Format("Resource \"{0}\" not found", name);
-				Trace.Log(TraceEventType.Error, error);
-				throw new ArgumentException(error);
-			}
-			Resource res = (Resource)EntityContext.Root[name];
-			Trace.Log(TraceEventType.Verbose, "Retrieve resource \"{0}\" ({1})", name, res.GetType().FullName);
-			return res as Resource;
-		}
+//		public static Resource Get(string name)
+//		{
+//			if (!EntityContext.Root.Contains(name))
+//			{
+//				Trace.Log(TraceEventType.Error, "Resource \"{0}\" not found", name);
+//				throw new KeyNotFoundException(name);
+//			}
+//			Resource res = (Resource)EntityContext.Root[name];
+//			Trace.Log(TraceEventType.Verbose, name, res.GetType().FullName);
+//			return res;
+//		}
 
 		/// <summary>
 		/// Get the specified <see cref="Resource"/> of type <typeparamref name="TResource"/>, if it already exists,
@@ -123,29 +118,22 @@ namespace JGL.Heirarchy.Resources
 		/// <param name="name">The <see cref="Entity.Name"/> of the <see cref="Resource"/> to get</param>
 		/// <typeparam name="TResource">Type of <see cref="Resource"/> to get or create</typeparam>
 		/// <returns>The <see cref="Resource"/> with name <paramref name="name"/>, if it exists, contained in <see cref="EntityContext.RootContext"/></returns>
-		public static TResource Get<TResource>(string name)
-			where TResource : Resource
+		public static TResource Get<TResource>(string name) where TResource : Resource
 		{
 			Type TRes = typeof(TResource);
 			Resource res;
 			if (!EntityContext.Root.Contains(name))
 			{
-				string msg = string.Format("Resource \"{0}\" not found, constructing ({1})", name, TRes.FullName);
-				Trace.Log(TraceEventType.Information, msg);
+				Trace.Log(TraceEventType.Information, "Constructing new {0} resource \"{1}\"", TRes.FullName, name);
 				ConstructorInfo ci = TRes.GetConstructor(new Type[] { typeof(string) });
 				if (ci == null)
-				{
-					string error = string.Format("Could not get constructor for resource type {0}", TRes.FullName);
-					Trace.Log(TraceEventType.Error, error);
 					throw new TypeInitializationException(TRes.FullName, new MissingMethodException(TRes.FullName, "c'tor(string)"));
-				}
-				res = ci.Invoke(new object[] { name }) as TResource;
+				res = (Resource)ci.Invoke(new object[] { name });
 				EntityContext.Root.Add(res);
-				Trace.Log(TraceEventType.Verbose, "Constructed resource \"{0}\" ({1})", name, TRes.FullName);
 				return (TResource)res;
 			}
 			res = (Resource)EntityContext.Root[name];
-			Trace.Log(TraceEventType.Verbose, "Retrieve resource \"{0}\" ({1})", name, TRes.FullName);
+			Trace.Log(TraceEventType.Verbose, "Retrieved existing {0} resource \"{1}\"", TRes.FullName, name);
 			return (TResource)res;
 		}
 	}

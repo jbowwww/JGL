@@ -104,7 +104,7 @@ namespace JGL.Debugging
 			get
 			{
 				return string.Concat(Frame.GetMethod().ReflectedType.Name, ".", Frame.GetMethod().Name, " ",
-					Format == null ? (string)Data : Data == null ? Format : string.Format(Format, (object[])Data));
+					Format == null ? Data == null ? string.Empty : Data.ToString() : Data == null ? Format : string.Format(Format, (object[])Data));
 			}
 		}
 

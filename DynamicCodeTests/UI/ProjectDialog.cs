@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Xml.Serialization;
 using Glade;
 using Gtk;
-using System.Xml.Serialization;
+using JGL.Debugging;
 using Dynamic;
 
 namespace Dynamic.UI
@@ -13,6 +15,11 @@ namespace Dynamic.UI
 	/// </summary>
 	public class ProjectDialog : Gtk.Dialog
 	{
+		/// <summary>
+		/// The trace.
+		/// </summary>
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncTextFileTraceListener.GetOrCreate("App"));
+
 		/// <summary>
 		/// The project preferences to edit
 		/// </summary>
@@ -67,6 +74,7 @@ namespace Dynamic.UI
 		/// </summary>
 		public ProjectDialog(Window parent, Project project)
 		{
+			Trace.Log(TraceEventType.Information, "parent=\"{0}\" project=\"{1}\"", parent, project);
 			Project = project;
 
 			XML gxml = new XML("CodeWindow.glade", "ProjectDialog", null);
@@ -88,9 +96,9 @@ namespace Dynamic.UI
 		/// </summary>
 		protected bool Validate()
 		{
+			Trace.Log(TraceEventType.Verbose);
 			foreach (string usingLine in Project.CodeUsings.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
 			{
-				bool error = false;
 				string ul = usingLine.Trim();
 				if (ul.StartsWith("using ") && ul.Length > 6)
 				{
@@ -120,6 +128,7 @@ namespace Dynamic.UI
 		/// <param name='save'>Whether this call should update dialog's control's from <see cref="Preferences"/>, or save the values to <see cref="Preferences"/></param>
 		public void Update(bool save = false)
 		{
+			Trace.Log(TraceEventType.Verbose);
 			if (save)
 			{
 				Project.Name = entName.Text;
@@ -140,6 +149,7 @@ namespace Dynamic.UI
 		/// </summary>
 		public void RefreshReferencePathsNodeView()
 		{
+			Trace.Log(TraceEventType.Verbose);
 			// Clear and repoulate the nodeview
 			storeReferencePaths.Clear();
 			foreach (string refPath in updatedReferencePaths)
@@ -161,6 +171,7 @@ namespace Dynamic.UI
 		/// </exception>
 		protected void AddReference(object sender, EventArgs args)
 		{
+			Trace.Log(TraceEventType.Verbose);
 			FileChooserDialog fDlg = new FileChooserDialog("Select Assembly", GtkDialog as Window, FileChooserAction.Open, "Cancel", ResponseType.Cancel, "Open", ResponseType.Accept);
 			fDlg.Modal = true;
 			fDlg.DestroyWithParent = true;
@@ -171,6 +182,7 @@ namespace Dynamic.UI
 				string path = fDlg.Filename;
 				if (!File.Exists(path))
 					throw new FileNotFoundException("Could not open assembly to add to project preferences", path);
+				Trace.Log(TraceEventType.Verbose, "Adding new reference \"{0}\"", path);
 				if (!updatedReferencePaths.Contains(path))
 					updatedReferencePaths.Add(path);
 				RefreshReferencePathsNodeView();
@@ -189,15 +201,23 @@ namespace Dynamic.UI
 		/// </param>
 		protected void RemoveReference(object sender, EventArgs args)
 		{
-			TreeIter ti;
 			if (nvReferencePaths.NodeSelection.SelectedNodes.Length > 0)
 			{
 				foreach (ITreeNode tn in nvReferencePaths.NodeSelection.SelectedNodes)
-					updatedReferencePaths.Remove((tn as Project.ReferencePathTreeNode).Path);
+				{
+					string path = (tn as Project.ReferencePathTreeNode).Path;
+					Trace.Log(TraceEventType.Verbose, "Removing reference \"{0}\"", path);
+					updatedReferencePaths.Remove(path);
+				}
 				RefreshReferencePathsNodeView();
 			}
 		}
 
+		/// <summary>
+		/// Oks the button clicked.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="args">Arguments.</param>
 		protected void OkButtonClicked(object sender, EventArgs args)
 		{
 			if (Validate())
@@ -208,6 +228,12 @@ namespace Dynamic.UI
 			}
 		}
 
+		/// <summary>
+		/// Determines whether this instance cancel button clicked the specified sender args.
+		/// </summary>
+		/// <returns><c>true</c> if this instance cancel button clicked the specified sender args; otherwise, <c>false</c>.</returns>
+		/// <param name="sender">Sender.</param>
+		/// <param name="args">Arguments.</param>
 		protected void CancelButtonClicked(object sender, EventArgs args)
 		{
 			GtkDialog.Respond(ResponseType.Cancel);

@@ -79,7 +79,7 @@ namespace JGL.Debugging
 		/// 					- This approach may or may not work - depends on semantics of Stream's Async methods
 		/// 					  Definitely worth looking into, the Async approach is probably the best of these above alternatives to try first (?)
 		/// </remarks>
-		private static void RunTrace()
+		private static void RunTraceThread()
 		{
 			TraceThreadRunning = true;
 			Thread.CurrentThread.Name = "Trace";
@@ -209,7 +209,7 @@ namespace JGL.Debugging
 					Trace = new AutoTraceSource(Assembly.GetAssembly(typeof(AutoTraceSource)).GetName().Name, DefaultListeners.ToArray());
 				if (TraceThread == null)
 				{
-					TraceThread = new Thread(RunTrace);
+					TraceThread = new Thread(RunTraceThread);
 					TraceThread.Start();
 				}
 			}

@@ -47,6 +47,8 @@ namespace JGL
 		/// </summary>
 		public static void Init()
 		{
+			Trace.Log(TraceEventType.Information);
+
 			Options = new EngineOptions();
 			RunningProcess = Process.GetCurrentProcess();
 			InitCounters();
@@ -61,15 +63,18 @@ namespace JGL
 		/// </summary>
 		public static void Quit()
 		{
+			Trace.Log(TraceEventType.Information);
 			JGL.Heirarchy.Resources.Resource.StopLoadThread();
 			JGL.Debugging.AutoTraceSource.StopTraceThread();
 		}
-		#endregion
 
-		#region Private Methods
+		/// <summary>
+		/// Inits the counters.
+		/// </summary>
 		private static void InitCounters()
 		{
-			List<PerformanceCounter> perfCounters = new List<PerformanceCounter>();
+			Trace.Log(TraceEventType.Information);
+//			List<PerformanceCounter> perfCounters = new List<PerformanceCounter>();
 			PerformanceCounterCategory[] processCategories = PerformanceCounterCategory.GetCategories();
 			foreach (PerformanceCounterCategory category in processCategories)
 			{

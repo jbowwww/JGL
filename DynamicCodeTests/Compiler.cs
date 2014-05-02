@@ -20,7 +20,7 @@ namespace Dynamic
 		/// <summary>
 		/// Tracing
 		/// </summary>
-		public readonly static AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncTextFileTraceListener.GetOrCreate("JGLApp"));
+		public readonly static AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncTextFileTraceListener.GetOrCreate("App"));
 
 		/// <summary>
 		/// Gets or sets the project.

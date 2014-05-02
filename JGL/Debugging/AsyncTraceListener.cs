@@ -54,11 +54,6 @@ namespace JGL.Debugging
 		private const int ThreadWaitTime = 141;
 
 		/// <summary>
-		/// Indicates that this <see cref="AsyncTraceListener"/> should be stopped
-		/// </summary>
-		private bool _stop = false;
-
-		/// <summary>
 		/// The stream that this <see cref="AsyncTraceListener"/> writes to
 		/// </summary>
 		protected Stream Stream = null;

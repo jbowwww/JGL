@@ -20,7 +20,7 @@ namespace Dynamic.UI
 		/// <summary>
 		/// The trace.
 		/// </summary>
-		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncTextFileTraceListener.GetOrCreate("JGLApp"));
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncTextFileTraceListener.GetOrCreate("App"));
 
 		private TextView _tv;
 
@@ -77,7 +77,6 @@ namespace Dynamic.UI
 		/// </summary>
 		private void TextBufferChanged(object sender, EventArgs e)
 		{
-			Trace.Log(TraceEventType.Verbose, "TextBufferChanged");
 			if (!Unsaved)
 				Unsaved = true;
 		}
@@ -112,7 +111,7 @@ namespace Dynamic.UI
 		/// <param name="filename">File name</param>
 		private void Init(string filename = "New File")
 		{
-			Trace.Log(TraceEventType.Information, "Init(filename=\"{0}\")", filename);
+			Trace.Log(TraceEventType.Information, "filename=\"{0}\"", filename);
 			_tv = new TextView();
 			ScrolledWindow sw = new ScrolledWindow();
 			sw.Add(_tv);
@@ -126,6 +125,7 @@ namespace Dynamic.UI
 		/// </summary>
 		public void Save()
 		{
+//			Trace.Log(TraceEventType.Verbose, "FileName=\"{0}\"", FileName);
 			using (Stream s = File.Open(FileName, FileMode.Create))
 				Save(s);
 		}
@@ -136,7 +136,7 @@ namespace Dynamic.UI
 		/// <param name="stream">The stream to write to</param>
 		public void Save(Stream stream)
 		{
-			Trace.Log(TraceEventType.Information, "Save(stream=\"{0}\")", stream.ToString());
+			Trace.Log(TraceEventType.Verbose, "Stream=\"{0}\"", stream.ToString());
 			byte[] buf = Encoding.ASCII.GetBytes(Source);
 			stream.Write(buf, 0, buf.Length);
 			Unsaved = false;

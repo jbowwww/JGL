@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using JGL.Debugging;
+using System.Diagnostics;
 
 namespace JGL.IO
 {
@@ -39,11 +40,13 @@ namespace JGL.IO
 				baseDir.Trim(ValidPathSeparators);
 				string tryPath = string.Concat(baseDir, DefaultPathSeparator, path);
 				string tryDir = Path.GetDirectoryName(tryPath);
-				string tryName = Path.GetFileName(tryPath);
 				if (Directory.Exists(tryDir))
 				{
 					if (File.Exists(tryPath))
+					{
+						Trace.Log(TraceEventType.Verbose, "Path=\"{0}\" ActualPath=\"{1}\"", path, tryPath);
 						return File.Open(tryPath, mode);
+					}
 				}
 				else
 					Trace.Log(System.Diagnostics.TraceEventType.Warning, "Directory \"{0}\" does not exist", tryDir);
