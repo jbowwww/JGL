@@ -11,6 +11,12 @@
     <string>/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Tree1.cs</string>
     <string>/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/WhiteLight.cs</string>
     <string>/home/jk/Code/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Scene1.cs</string>
+    <string>/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/EmptyMain.cs</string>
+    <string>/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Origin.cs</string>
+    <string>/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Scene1.cs</string>
+    <string>/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Scene1 (copy)-preAddingNewParticleGeneratorToTest.cs</string>
+    <string>/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Tree1.cs</string>
+    <string>/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/WhiteLight.cs</string>
   </SourcePaths>
   <CodeUsings>using System;
 using System.Collections;

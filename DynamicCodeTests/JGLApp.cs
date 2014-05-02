@@ -22,7 +22,7 @@ namespace Dynamic
 		/// <summary>
 		/// <see cref="JGL.Debugging.AutoTraceSource"/> for <see cref="DynamicCodeTests.JGLApp"/>
 		/// </summary>
-		protected static AutoTraceSource Trace;
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncTextFileTraceListener.GetOrCreate("Dynamic"));
 
 		/// <summary>
 		/// Global static application reference
@@ -44,11 +44,12 @@ namespace Dynamic
 		/// </remarks>
 		public static void Main(string[] args)
 		{
+			Thread.CurrentThread.Name = "Main";
 			if (args.Contains("--keystart"))
 				Console.ReadKey();
-			Trace = AutoTraceSource.GetOrCreate(AsyncTextFileTraceListener.GetOrCreate("JGLApp"));
-			Thread.CurrentThread.Name = "Main";
+
 			Trace.Log(TraceEventType.Information, "Started");
+
 			try
 			{
 				GLib.ExceptionManager.UnhandledException += UnhandledException;

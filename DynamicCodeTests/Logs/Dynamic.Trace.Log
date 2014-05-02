@@ -1,2 +1,15 @@
-13-07-10 10:19:12.726151 P:9045 T: JGL.Debugging.AutoTraceSource 001 Information c'tor(name="Compiler", traceListeners = TraceListener[] { ConsoleTraceListener (Name=""), AsyncFileTraceListener (Name="Dynamic") })
-13-07-10 10:19:12.729008 P:9045 T: JGL.Debugging.AutoTraceSource 002 Verbose CodeProvider: CSharpCodeProvider
+08:13:20.680325 P:18849  T:Main    Dynamic 0001 Information JGLApp.Main Started
+08:13:20.753836 P:18849  T:Main    Dynamic 0002 Information CodeWindow..ctor projectFile=(null), sourceFiles=System.String[]
+08:13:20.951440 P:18849  T:Main    Dynamic 0003 Information Project..ctor sourcePaths=(null), referencePaths=(null))
+08:13:21.167838 P:18849  T:Main    Dynamic 0004 Information CodeWindow.PopulateHeirarchy System.Object[]
+08:13:21.174704 P:18849  T:Main    Dynamic 0005 Information CodeWindow.OpenSourceFiles filenames=System.String[]
+08:13:34.178841 P:18849  T:Main    Dynamic 0006 Verbose CodeWindow.OnFileOpen sender=Gtk.ToolButton, e=System.EventArgs
+08:13:36.271843 P:18849  T:Main    Dynamic 0007 Information CodeWindow.OpenProject filename=/home/jk/Code/Projects/NET/JGL/Data/Projects/Scene1_02.project.xml
+08:13:36.273365 P:18849  T:Main    Dynamic 0008 Information Project.Load filename="/home/jk/Code/Projects/NET/JGL/Data/Projects/Scene1_02.project.xml"
+08:13:36.320700 P:18849  T:Main    Dynamic 0009 Information Project..ctor Protected c'tor for deserialization
+08:13:36.337130 P:18849  T:Main    Dynamic 0010 Information Compiler..ctor Project="Scene1_02"
+Settings:
+Mono.CSharp.CompilerSettings
+08:13:36.337635 P:18849  T:Main    Dynamic 0011 Information CodeWindow.PopulateHeirarchy System.Object[]
+08:13:36.338024 P:18849  T:Main    Dynamic 0012 Information CodeWindow.OpenSourceFiles filenames=System.String[]
+08:14:09.259955 P:18849  T:Main    Dynamic 0013 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)

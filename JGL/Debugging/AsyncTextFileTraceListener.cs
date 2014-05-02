@@ -12,7 +12,7 @@ namespace JGL.Debugging
 		/// <summary>
 		/// Tracing
 		/// </summary>
-		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncXmlFileTraceListener.GetOrCreate("JGL"));
+//		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncXmlFileTraceListener.GetOrCreate("JGL"));
 
 		/// <summary>
 		/// Gets (if exists) or creates a <see cref="AsyncFileTraceListener"/> with the specified <paramref name="name"/>

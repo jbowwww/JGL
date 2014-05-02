@@ -16,7 +16,7 @@ namespace JGL.Heirarchy
 		/// <summary>
 		/// Tracing
 		/// </summary>
-		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncXmlFileTraceListener.GetOrCreate("JGL"));
+//		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncXmlFileTraceListener.GetOrCreate("JGL"));
 
 		/// <summary>
 		/// Initializes a new <see cref="JGL.Heirarchy.Sector"/> instance, optionally containing supplied

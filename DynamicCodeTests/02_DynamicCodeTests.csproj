@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="Mono.CSharp" />
     <Reference Include="OpenTK">
-      <HintPath>..\..\Resources\CS\OpenTK 1.0\Binaries\OpenTK\Release\OpenTK.dll</HintPath>
+      <HintPath>..\..\..\..\Resources\CS\OpenTK 1.0\Binaries\OpenTK\Release\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
       <Private>False</Private>
@@ -92,6 +92,7 @@
     <None Include="Logs\Dynamic.Trace.Log" />
     <None Include="Logs\Dynamic_JGLApp.Trace.Log" />
     <None Include="Logs\JGL.Trace.Log" />
+    <None Include="Logs\140502-0526-OutputFirstBuggyImplementationOfRecentFilesAndProjects.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DynamicCode\" />

@@ -2,6 +2,7 @@ using System;
 using System.Text;
 using System.Xml;
 using JGL.Extensions;
+using System.Diagnostics;
 
 namespace JGL.Debugging
 {
@@ -11,9 +12,9 @@ namespace JGL.Debugging
 	public class AsyncXmlFileTraceListener
 		: AsyncTextFileTraceListener
 	{
-		private static AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncXmlFileTraceListener.GetOrCreate("JGL"));
+//		private static AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncXmlFileTraceListener.GetOrCreate("JGL"));
 
-		public static AsyncTraceListener GetOrCreate(string name)
+		public static new AsyncTraceListener GetOrCreate(string name)
 		{
 			return AsyncTraceListener.GetOrCreate(name, typeof(AsyncXmlFileTraceListener));
 		}
@@ -23,11 +24,9 @@ namespace JGL.Debugging
 		/// <summary>
 		/// Initializes a new instance of the <see cref="JGL.Debugging.AsyncXmlFileTraceListener"/> class.
 		/// </summary>
-		internal AsyncXmlFileTraceListener(string name)
-			: base(name)
+		internal AsyncXmlFileTraceListener(string name) : base(name)
 		{
 			TraceOutputOptions |= System.Diagnostics.TraceOptions.LogicalOperationStack;
-//				System.Diagnostics.TraceOptions.Callstack |
 		}
 
 		/// <summary>

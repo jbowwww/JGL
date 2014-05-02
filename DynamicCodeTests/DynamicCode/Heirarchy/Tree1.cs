@@ -7,7 +7,7 @@ namespace Dynamic
 {
 	public class Tree1 : Mesh
 	{
-		public Tree1() : base("/home/jk/Code/JGL/Data/Models/tree.obj", false)
+		public Tree1() : base("/home/jk/Code/Projects/CS/JGL/Data/Models/tree.obj", false)
 		{
 		}
 	}

@@ -1,38 +1,35 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="JGL/Engine.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="DynamicCodeTests/UI/CodeWindow.cs">
     <Files>
-      <File FileName="DynamicCodeTests/JGLApp.cs" Line="69" Column="12" />
-      <File FileName="JGL/Extensions/Array_Ext.cs" Line="1" Column="1" />
-      <File FileName="JGL/Heirarchy/Resources/Resource.cs" Line="1" Column="1" />
-      <File FileName="JGL/Heirarchy/Resources/Resource_static.cs" Line="1" Column="1" />
-      <File FileName="DynamicCodeTests/UI/CodeWindow.cs" Line="513" Column="55" />
-      <File FileName="JGL/Engine.cs" Line="65" Column="1" />
+      <File FileName="DynamicCodeTests/JGLApp.cs" Line="100" Column="16" />
+      <File FileName="DynamicCodeTests/UI/CodeWindow.cs" Line="207" Column="68" />
+      <File FileName="DynamicCodeTests/Project.cs" Line="121" Column="3" />
+      <File FileName="DynamicCodeTests/Logs/140502-0526-OutputFirstBuggyImplementationOfRecentFilesAndProjects.txt" Line="180" Column="1" />
+      <File FileName="DynamicCodeTests/UI/StaticCodePage.cs" Line="101" Column="11" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="00_JGL" expanded="True">
-            <Node name="Engine.cs" selected="True" />
+            <Node name="References" expanded="True" />
           </Node>
           <Node name="02_DynamicCodeTests" expanded="True">
-            <Node name="UI" expanded="True" />
+            <Node name="References" selected="True" />
           </Node>
-          <Node name="z_Data" expanded="True" />
+          <Node name="z_Data" expanded="True">
+            <Node name="Data" expanded="True" />
+          </Node>
         </State>
       </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State>
-          <Value>this.TraceOutputOptions</Value>
-          <Value>Engine</Value>
-        </State>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/home/jk/Code/JGL/DynamicCodeTests/UI/CodeWindow.cs" line="508" column="1" />
-      <Breakpoint file="/home/jk/Code/JGL/JGL/Engine.cs" line="65" column="1" />
+      <Breakpoint file="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/UI/CodeWindow.cs" line="207" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

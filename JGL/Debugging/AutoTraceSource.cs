@@ -20,7 +20,7 @@ namespace JGL.Debugging
 		/// <summary>
 		/// Tracing <see cref="AutoTraceSource"/>
 		/// </summary>
-		private static AutoTraceSource Trace;
+		protected static AutoTraceSource Trace;// = AutoTraceSource.GetOrCreate(AsyncXmlFileTraceListener.GetOrCreate("JGL"));
 
 		/// <summary>
 		/// Constant trace thread sleep time.
@@ -44,17 +44,10 @@ namespace JGL.Debugging
 		/// </summary>
 		private static ConcurrentQueue<LogMessage> _messageQueue;
 
-		private static MyConsoleTraceListener _consoleListener = new MyConsoleTraceListener();
-
 		/// <summary>
 		/// The open listeners.
 		/// </summary>
-		private static readonly List<AsyncTraceListener> openListeners = new List<AsyncTraceListener>();
-
-		/// <summary>
-		/// The close queue.
-		/// </summary>
-//		public static readonly ConcurrentQueue<AsyncTraceListener> CloseQueue = new ConcurrentQueue<AsyncTraceListener>();
+		private static readonly List<AsyncTraceListener> _openListeners = new List<AsyncTraceListener>();
 
 		/// <summary>
 		/// The trace thread.
@@ -112,9 +105,9 @@ namespace JGL.Debugging
 							if (listener.GetType().IsTypeOf(typeof(AsyncTraceListener)))
 							{
 								AsyncTraceListener asyncListener = listener as AsyncTraceListener;
-								if (!openListeners.Contains(asyncListener))
+								if (!_openListeners.Contains(asyncListener))
 								{
-									openListeners.Add(asyncListener);
+									_openListeners.Add(asyncListener);
 									asyncListener.EnsureOpen();
 								}
 								asyncListener.TraceData(message.EventCache, ts.Name, message.EventType, message.Id, message);
@@ -134,12 +127,17 @@ namespace JGL.Debugging
 			TraceThreadRunning = false;
 
 			// Thread exiting, close any open streams
-			foreach (AsyncTraceListener listener in openListeners)
+			foreach (AsyncTraceListener listener in _openListeners)
 				listener.Close();
 
 			TraceThread = null;
 		}
 		#endregion
+
+		/// <summary>
+		/// The default listeners.
+		/// </summary>
+		public static readonly List<TraceListener> DefaultListeners = new List<TraceListener>(new TraceListener[] { new MyConsoleTraceListener() });
 
 		/// <summary>
 		/// Indicates if <see cref="TraceThread"/> is still looping
@@ -152,7 +150,7 @@ namespace JGL.Debugging
 		public static void StopTraceThread()
 		{
 			if (Trace != null)
-				Trace.Log(TraceEventType.Verbose, "RunTrace thread stopping ({0} open listeners will now be closed)", openListeners.Count);
+				Trace.Log(TraceEventType.Verbose, "RunTrace thread stopping ({0} open listeners will now be closed)", _openListeners.Count);
 			_stopThread = true;
 			if (TraceThread != null)
 				TraceThread.Join(new TimeSpan(0, 0, 8));
@@ -173,8 +171,7 @@ namespace JGL.Debugging
 		{
 			Assembly assembly = Assembly.GetCallingAssembly();
 			AssemblyTitleAttribute[] assemblyTitleAttr = (AssemblyTitleAttribute[])assembly.GetCustomAttributes(typeof(AssemblyTitleAttribute), true);
-			return GetOrCreate(assemblyTitleAttr == null || assemblyTitleAttr.Length == 0
-				? assembly.GetName().Name : assemblyTitleAttr[0].Title, true, traceListeners);
+			return GetOrCreate(assemblyTitleAttr == null || assemblyTitleAttr.Length == 0 ? assembly.GetName().Name : assemblyTitleAttr[0].Title, true, traceListeners);
 		}
 
 		/// <summary>
@@ -195,7 +192,7 @@ namespace JGL.Debugging
 		/// <param name="name">Name for the <see cref="AutoTraceSource"/> to get or create</param>
 		/// <param name="autoAddConsoleListener">Whether to add a new <see cref="ConsoleTraceListener"/> to the <see cref="AutoTraceSource"/> if creating a new instance</param>
 		/// <param name="traceListeners"><see cref="TraceListener"/>s that should be in <see cref="AutoTraceSource.Listeners"/></param>
-		public static AutoTraceSource GetOrCreate(string name, bool autoAddConsoleListener, params TraceListener[] traceListeners)
+		public static AutoTraceSource GetOrCreate(string name, bool autoAddDefaultListeners, params TraceListener[] traceListeners)
 		{
 			// value to be returned
 			AutoTraceSource traceSource;
@@ -208,15 +205,8 @@ namespace JGL.Debugging
 					_namedSources = new ConcurrentDictionary<string, AutoTraceSource>();
 				if (_messageQueue == null)
 					_messageQueue = new ConcurrentQueue<LogMessage>();
-				if (Trace == null)
-				{
-//					TraceListener consoleListener = new MyConsoleTraceListener();
-//					consoleListener.Filter = new EventTypeFilter(SourceLevels.Information);
-					TraceListener newListener = AsyncXmlFileTraceListener.GetOrCreate("JGL");
-					newListener.Filter = new EventTypeFilter(SourceLevels.All);
-					Trace = new AutoTraceSource(Assembly.GetAssembly(typeof(AutoTraceSource)).GetName().Name, _consoleListener, newListener);
-					// TODO: Config class, or file, or something, for trace listener configs & deafults
-				}
+				if (Trace == null)				// TODO: Config class, or file, or something, for trace listener configs & deafults
+					Trace = new AutoTraceSource(Assembly.GetAssembly(typeof(AutoTraceSource)).GetName().Name, DefaultListeners.ToArray());
 				if (TraceThread == null)
 				{
 					TraceThread = new Thread(RunTrace);
@@ -236,8 +226,10 @@ namespace JGL.Debugging
 				traceSource = new AutoTraceSource(name, traceListeners);
 
 			// if auto add console listener, ensure one exists in traceListeners, or add a new one
-			if (autoAddConsoleListener && !traceSource.Listeners.Contains(_consoleListener))
-				traceSource.Listeners.Add(_consoleListener);
+			if (autoAddDefaultListeners)
+				foreach (TraceListener traceListener in DefaultListeners)
+					if (!traceSource.Listeners.Contains(traceListener))
+						traceSource.Listeners.Add(traceListener);
 
 			return traceSource;
 		}

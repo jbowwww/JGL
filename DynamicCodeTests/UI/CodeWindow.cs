@@ -26,7 +26,7 @@ namespace Dynamic.UI
 		/// <summary>
 		/// The trace.
 		/// </summary>
-		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncTextFileTraceListener.GetOrCreate("JGLApp"));
+		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate();//AsyncTextFileTraceListener.GetOrCreate("JGLApp"));
 
 		/// <summary>
 		/// A <see cref="ConcurrentBag"/> of all <see cref="DynamicCodeTests.CodeWindow"/> instances
@@ -37,6 +37,18 @@ namespace Dynamic.UI
 		/// Get the <see cref="Gtk.Window"/> corresponding to this instance. Gets set during construction
 		/// </summary>
 		public readonly Window GtkWindow;
+
+		/// <summary>
+		/// The mi file recent files.
+		/// </summary>
+		[Glade.Widget]
+		protected MenuItem miFileRecentFiles;
+
+		/// <summary>
+		/// The mi file recent files.
+		/// </summary>
+		[Glade.Widget]
+		protected MenuItem miFileRecentProjects;
 
 		/// <summary>
 		/// <see cref="Gtk.Notebook"/> containing C# source code(s)
@@ -91,6 +103,8 @@ namespace Dynamic.UI
 		/// </summary>
 		public Project Project { get; private set; }
 
+		protected List<string> ProjectNames = new List<string>();
+
 		public Compiler Compiler { get; private set; }
 
 		/// <summary>
@@ -105,6 +119,9 @@ namespace Dynamic.UI
 			Glade.XML gxml = new Glade.XML(/*"/home/jk/Code/JGL/DynamicCodeTests/UI/*/ "CodeWindow.glade", "CodeWindow", null);
 			gxml.Autoconnect(this);																				// load & autoconnect glade UI for a CodeWindow
 			GtkWindow = nbCode.Toplevel as Window;
+
+			miFileRecentFiles.Submenu = new Menu();
+			miFileRecentProjects.Submenu = new Menu();
 
 			Project = new Project(null, null);
 
@@ -184,14 +201,36 @@ namespace Dynamic.UI
 					throw new ArgumentOutOfRangeException("filename", filename, "Invalid source file extension (must be a .cs file)");
 				try
 				{
-					using (FileStream fs = File.OpenRead(filename))
+//					if (Project.SourcePaths.Contains(filename))
+//					{
+					bool con = true;
+					foreach (StaticCodePage cp in GetPagesOfType<StaticCodePage>())
+						if (con && cp.FileName.CompareTo(filename) == 0)
+							{
+								nbCode.Page = nbCode.PageNum(cp);
+							nbCode.ShowAll();
+							con = false;
+							break;
+							}
+//					}
+//					else
+//					{
+					if (!con)
 					{
-						StaticCodePage cp = new StaticCodePage(fs);
-						nbCode.AppendPage(cp, cp.TabLabel);
-						newPages++;
-						if (!Project.SourcePaths.Contains(filename))
-							Project.SourcePaths.Add(filename);
+						Project.SourcePaths.Add(filename);
+						using (FileStream fs = File.OpenRead(filename))
+						{
+							StaticCodePage cp = new StaticCodePage(fs);
+							nbCode.AppendPage(cp, cp.TabLabel);
+							newPages++;
+							Menu mnuRecentFiles = ((Menu)miFileRecentFiles.Submenu);
+							ImageMenuItem miRecent = new ImageMenuItem(filename);
+							miRecent.Activated += (sender, e) => OpenSourceFiles(filename);
+							mnuRecentFiles.Append(miRecent);
+						mnuRecentFiles.ShowAll();
+						}
 					}
+//					}
 				}
 				catch (Exception ex)
 				{
@@ -199,9 +238,12 @@ namespace Dynamic.UI
 						ButtonsType.Close, "{0}: {1}: Could not open file \"{2}\"", ex.GetType().Name, ex.Message, filename);
 					mDlg.Run();
 				}
+				finally
+				{
+//					nbCode.Page = setPage + newPages - 1;
+					nbCode.ShowAll();
+				}
 			}
-			nbCode.Page = setPage + newPages - 1;
-			nbCode.ShowAll();
 		}
 
 		/// <summary>
@@ -215,6 +257,15 @@ namespace Dynamic.UI
 				// TODO: Don't want to throw back to JGLApp.Unhandled exception (i think?) Want to log/display warning?
 				throw new ArgumentOutOfRangeException("filename", filename, "Invalid project file extension (must be a .project.xml file)");
 			Project = Project.Load(filename);
+			if (!ProjectNames.Contains(filename))
+			{
+				ProjectNames.Add(filename);
+				Menu mnuProjects = ((Menu)miFileRecentProjects.Submenu);
+				ImageMenuItem miProject = new ImageMenuItem(filename);
+				miProject.Activated += (sender, e) => OpenProject(filename);
+				mnuProjects.Append(miProject);
+				mnuProjects.ShowAll();
+			}
 			Compiler = new Compiler(Project);
 			PopulateHeirarchy();
 			OpenSourceFiles(Project.SourcePaths.ToArray());
@@ -382,7 +433,17 @@ namespace Dynamic.UI
 				fDlg.Destroy();
 			}
 		}
-		
+
+		/// <summary>
+		/// Raises the file save all event.
+		/// </summary>
+		/// <param name="sender">Sender.</param>
+		/// <param name="e">E.</param>
+		protected void OnFileSaveAll	(object sender, EventArgs e)
+		{
+			throw new NotImplementedException();
+		}
+
 		/// <summary>
 		/// Raises the execute event.
 		/// </summary>

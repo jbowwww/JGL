@@ -18,7 +18,7 @@ namespace JGL.Heirarchy
 //		
 //		public new OpenTK.Vector3d Rotation { get { return - base.Rotation; } set { base.Rotation = value; } }
 
-		public static AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncXmlFileTraceListener.GetOrCreate("JGL"));
+//		public static AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncXmlFileTraceListener.GetOrCreate("JGL"));
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="JGL.Heirarchy.Camera"/> class.
