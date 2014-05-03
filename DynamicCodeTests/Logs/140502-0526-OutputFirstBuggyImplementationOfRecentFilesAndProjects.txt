@@ -1,0 +1,180 @@
+05:25:07.774647 T:Trace   JGL     0001 Verbose AutoTraceSource.RunTrace Started tracing
+05:25:07.823454 T:Trace   JGL     0002 Information AsyncTextFileTraceListener.OpenStream OpenStream (this.Name = "JGL", this.Path = "../../Logs/JGL.Trace.Log.Xml")
+
+05:25:08.260772 T:Main    Dynamic 0001 Information JGLApp.Main Started
+05:25:08.279976 T:Trace   JGL     0003 Information AsyncTextFileTraceListener.OpenStream OpenStream (this.Name = "Dynamic", this.Path = "../../Logs/Dynamic.Trace.Log")
+
+(DynamicCodeTests:11702): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:11702): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:11702): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:11702): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:11702): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:11702): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:11702): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:11702): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:11702): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:11702): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:11702): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:11702): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:11702): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:11702): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:11702): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:11702): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:11702): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:11702): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:11702): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+05:25:08.309883 T:Main    Dynamic 0002 Information CodeWindow..ctor projectFile=(null), sourceFiles=System.String[]
+05:25:08.478384 T:Main    Dynamic 0003 Information Project..ctor sourcePaths=(null), referencePaths=(null))
+05:25:08.504042 T:Trace   JGL     0004 Information AsyncTextFileTraceListener.OpenStream OpenStream (this.Name = "JGLApp", this.Path = "../../Logs/JGLApp.Trace.Log")
+05:25:08.684563 T:Main    Dynamic 0004 Information CodeWindow.PopulateHeirarchy System.Object[]
+05:25:08.692796 T:Main    Dynamic 0005 Information CodeWindow.OpenSourceFiles filenames=System.String[]
+05:25:10.520121 T:Main    Dynamic 0006 Verbose CodeWindow.OnFileOpen sender=Gtk.ToolButton, e=System.EventArgs
+05:25:13.183246 T:Main    Dynamic 0007 Information CodeWindow.OpenProject filename=/home/jk/Code/Projects/NET/JGL/Data/Projects/Scene1_02.project.xml
+05:25:13.184831 T:Main    Dynamic 0008 Information Project.Load filename="/home/jk/Code/Projects/NET/JGL/Data/Projects/Scene1_02.project.xml"
+05:25:13.228344 T:Main    Dynamic 0009 Information Project..ctor Protected c'tor for deserialization
+05:25:13.244043 T:Main    Dynamic 0010 Information Compiler..ctor Project="Scene1_02"
+Settings:
+Mono.CSharp.CompilerSettings
+05:25:13.244543 T:Main    Dynamic 0011 Information CodeWindow.PopulateHeirarchy System.Object[]
+05:25:13.244926 T:Main    Dynamic 0012 Information CodeWindow.OpenSourceFiles filenames=System.String[]
+05:25:13.246075 T:Main    Dynamic 0013 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+05:25:13.250503 T:Main    Dynamic 0014 Information StaticCodePage.Init Init(filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/EmptyMain.cs")
+05:25:13.262220 T:Main    Dynamic 0015 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+05:25:13.263805 T:Main    Dynamic 0016 Information StaticCodePage.Init Init(filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Origin.cs")
+05:25:13.266948 T:Main    Dynamic 0017 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+05:25:13.267685 T:Main    Dynamic 0018 Information StaticCodePage.Init Init(filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Scene1.cs")
+05:25:13.270333 T:Main    Dynamic 0019 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+05:25:13.271069 T:Main    Dynamic 0020 Information StaticCodePage.Init Init(filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Tree1.cs")
+05:25:13.273828 T:Main    Dynamic 0021 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+05:25:13.274729 T:Main    Dynamic 0022 Information StaticCodePage.Init Init(filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/WhiteLight.cs")
+05:25:13.277877 T:Main    Dynamic 0023 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+05:25:13.279507 T:Main    Dynamic 0024 Information StaticCodePage.Init Init(filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/EmptyMain.cs")
+05:25:13.282718 T:Main    Dynamic 0025 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+05:25:13.283724 T:Main    Dynamic 0026 Information StaticCodePage.Init Init(filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Origin.cs")
+05:25:13.286987 T:Main    Dynamic 0027 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+05:25:13.288055 T:Main    Dynamic 0028 Information StaticCodePage.Init Init(filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Scene1.cs")
+05:25:13.291046 T:Main    Dynamic 0029 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+05:25:13.292006 T:Main    Dynamic 0030 Information StaticCodePage.Init Init(filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Tree1.cs")
+05:25:13.294632 T:Main    Dynamic 0031 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+05:25:13.295677 T:Main    Dynamic 0032 Information StaticCodePage.Init Init(filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/WhiteLight.cs")
+05:25:13.301317 T:Main    Dynamic 0033 Information CodeWindow.OpenSourceFiles filenames=System.String[]
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+05:25:27.559483 T:Main    Dynamic 0034 Information CodeWindow.OpenSourceFiles filenames=System.String[]
+05:25:27.560392 T:Main    Dynamic 0035 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+05:25:27.563353 T:Main    Dynamic 0036 Information StaticCodePage.Init Init(filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Origin.cs")
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+05:25:35.453329 T:Main    Dynamic 0037 Information CodeWindow.OpenSourceFiles filenames=System.String[]
+05:25:35.454162 T:Main    Dynamic 0038 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+05:25:35.459409 T:Main    Dynamic 0039 Information StaticCodePage.Init Init(filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/EmptyMain.cs")
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+05:25:39.598914 T:Main    Dynamic 0040 Information CodeWindow.OpenSourceFiles filenames=System.String[]
+05:25:39.599757 T:Main    Dynamic 0041 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+05:25:39.602530 T:Main    Dynamic 0042 Information StaticCodePage.Init Init(filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Tree1.cs")
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+05:25:43.878544 T:Main    Dynamic 0043 Information CodeWindow.OpenSourceFiles filenames=System.String[]
+05:25:43.879483 T:Main    Dynamic 0044 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+05:25:43.883413 T:Main    Dynamic 0045 Information StaticCodePage.Init Init(filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Tree1.cs")
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+(DynamicCodeTests:11702): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x16cd4c0'
+
+

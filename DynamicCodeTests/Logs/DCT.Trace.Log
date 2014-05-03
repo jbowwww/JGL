@@ -1,0 +1,63 @@
+04:32:51.953897 P:9422   T:Main    Dynamic 0001 Information JGLApp.Main Started
+04:32:52.135192 P:9422   T:Main    Dynamic 0002 Information CodeWindow..ctor projectFile=(null), sourceFiles=System.String[]
+04:32:52.454170 P:9422   T:Main    Dynamic 0003 Information Project..ctor sourcePaths=(null), referencePaths=(null))
+04:32:52.526608 P:9422   T:Main    Dynamic 0004 Information CodeWindow.PopulateHeirarchy System.Object[]
+04:32:52.532969 P:9422   T:Main    Dynamic 0005 Information CodeWindow.OpenSourceFiles filenames=System.String[]
+04:33:16.280287 P:9422   T:Main    Dynamic 0006 Verbose CodeWindow.OnFileOpen sender=Gtk.ToolButton, e=System.EventArgs
+04:33:27.457429 P:9422   T:Main    Dynamic 0007 Information CodeWindow.OpenProject filename=/home/jk/Code/Projects/NET/JGL/Data/Projects/Scene1_02.project.xml
+04:33:27.458250 P:9422   T:Main    Dynamic 0008 Information Project.Load filename="/home/jk/Code/Projects/NET/JGL/Data/Projects/Scene1_02.project.xml"
+04:33:27.527030 P:9422   T:Main    Dynamic 0009 Information Project..ctor Protected c'tor for deserialization
+04:33:27.555083 P:9422   T:Main    Dynamic 0010 Information Compiler..ctor Project="Scene1_02"
+Settings:
+Mono.CSharp.CompilerSettings
+04:33:27.555600 P:9422   T:Main    Dynamic 0011 Information CodeWindow.PopulateHeirarchy System.Object[]
+04:33:27.555981 P:9422   T:Main    Dynamic 0012 Information CodeWindow.OpenSourceFiles filenames=System.String[]
+04:33:27.558951 P:9422   T:Main    Dynamic 0013 Information StaticCodePage.Init Init(filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/EmptyMain.cs")
+04:33:27.589078 P:9422   T:Main    Dynamic 0014 Information StaticCodePage.Init Init(filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Origin.cs")
+04:33:27.592477 P:9422   T:Main    Dynamic 0015 Information StaticCodePage.Init Init(filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Scene1.cs")
+04:33:27.598656 P:9422   T:Main    Dynamic 0016 Information StaticCodePage.Init Init(filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Tree1.cs")
+04:33:27.612339 P:9422   T:Main    Dynamic 0017 Information StaticCodePage.Init Init(filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/WhiteLight.cs")
+04:33:27.616254 P:9422   T:Main    Dynamic 0018 Information CodeWindow.OpenSourceFiles filenames=System.String[]
+04:33:46.256734 P:9422   T:Main    Dynamic 0019 Verbose CodeWindow.OnProjectCompile sender=Gtk.ToolButton, e=System.EventArgs
+04:33:46.257581 P:9422   T:Main    Dynamic 0020 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+04:33:46.262087 P:9422   T:Main    Dynamic 0021 Information Compiler.CompileCode source=string(5), referencePaths=string(2)
+04:33:46.274836 P:9422   T:Main    Dynamic 0022 Verbose Compiler.CompileCode CodeProvider: CSharpCodeProvider
+04:33:46.278608 P:9422   T:Main    Dynamic 0023 Verbose Compiler.CompileCode Compiler Parameters = { Generate Executable: True, Generate In Memory: False, Output Assembly: DynamicCodeTests-Scene.dll, Include Debug Info: False, Warnings As Errors: False, Warning Level: -1, Compiler Options: , Main Class: , User Token: 0, Win32 Resource: , Embedded Resources: , Linked Resources: , Referenced Assemblies: /home/jk/Code/Projects/NET/JGL/JGL/bin/Debug/JGL.dll /home/jk/Code/Resources/CS/OpenTK 1.0/Binaries/OpenTK/Release/OpenTK.dll, Temp Files: 
+} }
+04:33:47.317712 P:9422   T:Main    Dynamic 0024 Verbose Compiler.CompileCode Source built into DynamicCodeTests-Scene.dll successfully.
+04:33:49.355367 P:9422   T:Main    Dynamic 0025 Verbose CodeWindow.OnProjectExecute sender=Gtk.ToolButton, e=System.EventArgs
+04:33:49.356163 P:9422   T:Main    Dynamic 0026 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+04:33:49.357750 P:9422   T:Main    Dynamic 0027 Information Compiler.CompileCode source=string(5), referencePaths=string(2)
+04:33:49.358607 P:9422   T:Main    Dynamic 0028 Verbose Compiler.CompileCode CodeProvider: CSharpCodeProvider
+04:33:49.359362 P:9422   T:Main    Dynamic 0029 Verbose Compiler.CompileCode Compiler Parameters = { Generate Executable: True, Generate In Memory: False, Output Assembly: DynamicCodeTests-Scene.dll, Include Debug Info: False, Warnings As Errors: False, Warning Level: -1, Compiler Options: , Main Class: , User Token: 0, Win32 Resource: , Embedded Resources: , Linked Resources: , Referenced Assemblies: /home/jk/Code/Projects/NET/JGL/JGL/bin/Debug/JGL.dll /home/jk/Code/Resources/CS/OpenTK 1.0/Binaries/OpenTK/Release/OpenTK.dll, Temp Files: 
+} }
+04:33:50.269614 P:9422   T:Main    Dynamic 0030 Verbose Compiler.CompileCode Source built into DynamicCodeTests-Scene.dll successfully.
+04:33:50.278963 P:9422   T:Main    Dynamic 0031 Error CodeWindow.OnProjectExecute TargetInvocationException: Exception has been thrown by the target of an invocation.
+Stacktrace:
+      at System.Reflection.MonoCMethod.InternalInvoke (System.Object obj, System.Object[] parameters) [0x00013] in /build/buildd/mono-3-3.2.4/mcs/class/corlib/System.Reflection/MonoMethod.cs:543 
+      at System.Reflection.MonoCMethod.DoInvoke (System.Object obj, BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x000a5] in /build/buildd/mono-3-3.2.4/mcs/class/corlib/System.Reflection/MonoMethod.cs:528 
+      at System.Reflection.MonoCMethod.Invoke (BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x00000] in /build/buildd/mono-3-3.2.4/mcs/class/corlib/System.Reflection/MonoMethod.cs:556 
+      at System.Reflection.ConstructorInfo.Invoke (System.Object[] parameters) [0x00000] in /build/buildd/mono-3-3.2.4/mcs/class/corlib/System.Reflection/ConstructorInfo.cs:62 
+      at Dynamic.UI.CodeWindow.OnProjectExecute (System.Object sender, System.EventArgs e) [0x002be] in /home/jk/Code/Projects/NET/JGL/DynamicCodeTests/UI/CodeWindow.cs:473 
+InnerException:
+        DirectoryNotFoundException: Could not find a part of the path "/home/jk/Code/Projects/CS/JGL/Data/Models/tree.obj".
+    Stacktrace:
+          at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, Boolean anonymous, FileOptions options) [0x001c6] in /build/buildd/mono-3-3.2.4/mcs/class/corlib/System.IO/FileStream.cs:266 
+          at System.IO.FileStream..ctor (System.String path, FileMode mode, FileAccess access, FileShare share) [0x00000] in /build/buildd/mono-3-3.2.4/mcs/class/corlib/System.IO/FileStream.cs:132 
+          at (wrapper remoting-invoke-with-check) System.IO.FileStream:.ctor (string,System.IO.FileMode,System.IO.FileAccess,System.IO.FileShare)
+          at System.IO.File.Open (System.String path, FileMode mode) [0x00000] in /build/buildd/mono-3-3.2.4/mcs/class/corlib/System.IO/File.cs:325 
+          at JGL.Heirarchy.Mesh..ctor (System.String filename, Boolean dummy) [0x0000c] in /home/jk/Code/Projects/NET/JGL/JGL/Heirarchy/Mesh.cs:116 
+          at Dynamic.Tree1..ctor () [0x00000] in <filename unknown>:0 
+          at Dynamic.Scene1.Init () [0x00000] in <filename unknown>:0 
+          at Dynamic.Scene1..ctor () [0x00000] in <filename unknown>:0 
+          at (wrapper managed-to-native) System.Reflection.MonoCMethod:InternalInvoke (System.Reflection.MonoCMethod,object,object[],System.Exception&)
+          at System.Reflection.MonoCMethod.InternalInvoke (System.Object obj, System.Object[] parameters) [0x00002] in /build/buildd/mono-3-3.2.4/mcs/class/corlib/System.Reflection/MonoMethod.cs:537 
+
+04:33:50.279440 P:9422   T:Main    Dynamic 0032 Information CodeWindow.PopulateHeirarchy System.Object[]
+04:33:55.341345 P:9422   T:Main    Dynamic 0033 Verbose CodeWindow.OnWidgetDeleteEvent sender=Gtk.Window, e=Gtk.DeleteEventArgs
+04:33:55.343666 P:9422   T:Main    Dynamic 0034 Verbose CodeWindow.ConfirmExit System.Object[]
+04:33:55.344373 P:9422   T:Main    Dynamic 0035 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+04:33:55.345500 P:9422   T:Main    Dynamic 0036 Information CodeWindow.SaveProject Name=Scene1_02
+04:33:55.347139 P:9422   T:Main    Dynamic 0037 Information Project.Save filename="../../../Data/Projects/Scene1_02.project.xml"
+04:33:55.370514 P:9422   T:Main    Dynamic 0038 Information CodeWindow.OnWidgetDeleteEvent CodeWindow.OnWidgetDeleteEvent()
+04:33:55.459813 P:9422   T:Main    Dynamic 0039 Information JGLApp.Main Finished, exiting ..

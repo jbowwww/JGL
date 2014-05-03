@@ -215,7 +215,7 @@ namespace Dynamic.UI
 //					}
 //					else
 //					{
-					if (!con)
+					if (con)
 					{
 						Project.SourcePaths.Add(filename);
 						using (FileStream fs = File.OpenRead(filename))
