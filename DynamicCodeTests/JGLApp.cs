@@ -34,26 +34,6 @@ namespace Dynamic
 		/// </summary>
 		public static ConcurrentBag<Scene> Scenes;
 
-		#region Private helper methods
-		/// <summary>
-		/// Gets the arguments open files.
-		/// </summary>
-		/// <returns>The arguments open files.</returns>
-		/// <param name="args">Arguments.</param>
-		private static List<string> GetArgsOpenFiles(string[] args)
-		{
-			List<string> openFiles = new List<string>(new string[] { null });
-			foreach (string arg in args)
-			{
-				if (arg.StartsWith("--project=", StringComparison.InvariantCultureIgnoreCase))
-					openFiles[0] = arg.Substring(10);
-				else if (arg.StartsWith("--source=", StringComparison.InvariantCultureIgnoreCase))
-					openFiles.Add(arg.Substring(9));
-			}
-			return openFiles;		//.ToArray();
-		}
-		#endregion
-
 		/// <summary>
 		/// The entry point of the program, where the program control starts and ends.
 		/// </summary>
@@ -74,11 +54,21 @@ namespace Dynamic
 			try
 			{
 				GLib.ExceptionManager.UnhandledException += UnhandledException;
-				Application.Init("JGLApp", ref args);
-				Engine.Init();
 				Scenes = new ConcurrentBag<Scene>();
-				List<string> openFiles = GetArgsOpenFiles(args);
-				JGLApp.TheApp = new JGLApp(openFiles[0], openFiles.Length == 1 ? new string[] { } : openFiles.GetRange(1, openFiles.Count - 1));
+				Application.Init("JGLApp", ref args);
+				string openProjectFile = null;
+				string[] openSourceFiles;
+				List<string> openSourceFilesList = new List<string>();
+				foreach (string arg in args)
+				{
+					if (arg.StartsWith("--project=", StringComparison.InvariantCultureIgnoreCase))
+						openProjectFile = arg.Substring(10);
+					else if (arg.StartsWith("--source=", StringComparison.InvariantCultureIgnoreCase))
+						openSourceFilesList.Add(arg.Substring(9));
+				}
+				openSourceFiles = openSourceFilesList.ToArray();
+				JGLApp.TheApp = new JGLApp(openProjectFile, openSourceFiles);			// Set global static application variables
+				Engine.Init();
 				Application.Run();
 			}
 			catch (Exception ex)

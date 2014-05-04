@@ -51,7 +51,7 @@ namespace JGL.Debugging
 		/// Time (in milliseconds) for <see cref="AsyncTraceListener.RunThread"/> to sleep for,
 		/// after writing all <see cref="LogMessage"/>s in queue
 		/// </summary>
-//		private const int ThreadWaitTime = 141;
+		private const int ThreadWaitTime = 141;
 
 		/// <summary>
 		/// The stream that this <see cref="AsyncTraceListener"/> writes to
@@ -185,10 +185,7 @@ namespace JGL.Debugging
 		{
 			throw new InvalidOperationException(string.Format("AsyncTraceListener(\"{0}\").Write(message=\"{1}\"): Should not be inside this method, TraceData override should avoid that!?!", Name, message));
 		}
-		public override void Write(object o, string category)
-		{
-			base.Write(o, category);
-		}
+
 		/// <summary>
 		/// Write the specified message.
 		/// </summary>

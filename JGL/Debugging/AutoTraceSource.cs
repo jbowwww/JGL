@@ -102,30 +102,19 @@ namespace JGL.Debugging
 						{
 							if (!explicitOutputOptions)
 								message.OutputOptions = listener.TraceOutputOptions;
-
-//							if (listener.GetType().IsTypeOf(typeof(AsyncTraceListener)))
-//							{
-//								AsyncTraceListener asyncListener = listener as AsyncTraceListener;
-//								if (!_openListeners.Contains(asyncListener))
-//								{
-//									_openListeners.Add(asyncListener);
-//									asyncListener.EnsureOpen();
-//								}
-//								asyncListener.TraceData(message.EventCache, ts.Name, message.EventType, message.Id, message);
-//								asyncListener.Flush();
-//							}
-//							else
-//								listener.TraceData(message.EventCache, ts.Name, message.EventType, message.Id, message.Message);// message.MessageAsText);
-
-							if (message.IsEvent)
+							if (listener.GetType().IsTypeOf(typeof(AsyncTraceListener)))
 							{
-								if (!message.HasData)
-									listener.TraceEvent(message.EventCache, ts.Name, message.EventType, message.Id, message.Format);
-								else
-									listener.TraceEvent(message.EventCache, ts.Name, message.EventType, message.Id, message.Format, message.Data);
+								AsyncTraceListener asyncListener = listener as AsyncTraceListener;
+								if (!_openListeners.Contains(asyncListener))
+								{
+									_openListeners.Add(asyncListener);
+									asyncListener.EnsureOpen();
+								}
+								asyncListener.TraceData(message.EventCache, ts.Name, message.EventType, message.Id, message);
+								asyncListener.Flush();
 							}
 							else
-								listener.TraceData(message.EventCache, ts.Name, message.EventType, message.Id, message.Data);
+								listener.TraceData(message.EventCache, ts.Name, message.EventType, message.Id, message.Message);// message.MessageAsText);
 						}
 					}
 				}
