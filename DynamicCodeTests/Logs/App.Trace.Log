@@ -1,57 +1,12 @@
-18:46:06.791835 P:10693  T:Main    Dynamic 0001 Information JGLApp.Main Started
-18:46:06.882558 P:10693  T:Main    Dynamic 0002 Information CodeWindow..ctor projectFile=(null), sourceFiles=string[0]
-18:46:07.020172 P:10693  T:Main    Dynamic 0003 Information Project..ctor sourcePaths=(null), referencePaths=(null))
-18:46:07.188164 P:10693  T:Main    Dynamic 0004 Verbose CodeWindow.PopulateHeirarchy System.Object[]
-18:46:07.194713 P:10693  T:Main    Dynamic 0005 Information CodeWindow.OpenSourceFiles filenames=string[0]
-18:46:07.966815 P:10693  T:Main    Dynamic 0006 Verbose CodeWindow.OnFileOpen sender=Gtk.ToolButton, e=System.EventArgs
-18:46:11.232849 P:10693  T:Main    Dynamic 0007 Information CodeWindow.OpenProject filename=/home/jk/Code/Projects/NET/JGL/Data/Projects/Scene1_02.project.xml
-18:46:11.234104 P:10693  T:Main    Dynamic 0008 Information Project.Load filename="/home/jk/Code/Projects/NET/JGL/Data/Projects/Scene1_02.project.xml"
-18:46:11.279050 P:10693  T:Main    Dynamic 0009 Verbose Project..ctor Protected c'tor for deserialization
-18:46:11.294370 P:10693  T:Main    Dynamic 0010 Information Compiler..ctor Project="Scene1_02"
-Settings:
-Mono.CSharp.CompilerSettings
-18:46:11.294912 P:10693  T:Main    Dynamic 0011 Verbose CodeWindow.PopulateHeirarchy System.Object[]
-18:46:11.295306 P:10693  T:Main    Dynamic 0012 Information CodeWindow.OpenSourceFiles filenames=string[15]
-18:46:11.296240 P:10693  T:Main    Dynamic 0013 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
-18:46:11.299860 P:10693  T:Main    Dynamic 0014 Information StaticCodePage.Init filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/EmptyMain.cs"
-18:46:11.309934 P:10693  T:Main    Dynamic 0015 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
-18:46:11.311689 P:10693  T:Main    Dynamic 0016 Information StaticCodePage.Init filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Origin.cs"
-18:46:11.314563 P:10693  T:Main    Dynamic 0017 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
-18:46:11.315320 P:10693  T:Main    Dynamic 0018 Information StaticCodePage.Init filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Scene1.cs"
-18:46:11.317947 P:10693  T:Main    Dynamic 0019 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
-18:46:11.318696 P:10693  T:Main    Dynamic 0020 Information StaticCodePage.Init filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Tree1.cs"
-18:46:11.321466 P:10693  T:Main    Dynamic 0021 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
-18:46:11.322429 P:10693  T:Main    Dynamic 0022 Information StaticCodePage.Init filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/WhiteLight.cs"
-18:46:11.327087 P:10693  T:Main    Dynamic 0023 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
-18:46:11.328173 P:10693  T:Main    Dynamic 0024 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
-18:46:11.328849 P:10693  T:Main    Dynamic 0025 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
-18:46:11.329544 P:10693  T:Main    Dynamic 0026 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
-18:46:11.330162 P:10693  T:Main    Dynamic 0027 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
-18:46:11.330909 P:10693  T:Main    Dynamic 0028 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
-18:46:11.331551 P:10693  T:Main    Dynamic 0029 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
-18:46:11.332170 P:10693  T:Main    Dynamic 0030 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
-18:46:11.332791 P:10693  T:Main    Dynamic 0031 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
-18:46:11.333449 P:10693  T:Main    Dynamic 0032 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
-18:46:11.334632 P:10693  T:Main    Dynamic 0033 Information CodeWindow.OpenSourceFiles filenames=string[0]
-18:46:23.563263 P:10693  T:Main    Dynamic 0034 Verbose CodeWindow.OnFileSave sender=Gtk.ToolButton, e=System.EventArgs
-18:46:23.565653 P:10693  T:Main    Dynamic 0035 Verbose StaticCodePage.Save Stream="System.IO.FileStream"
-18:46:24.523922 P:10693  T:Main    Dynamic 0036 Verbose CodeWindow.OnProjectCompile sender=Gtk.ToolButton, e=System.EventArgs
-18:46:24.524656 P:10693  T:Main    Dynamic 0037 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
-18:46:24.527757 P:10693  T:Main    Dynamic 0038 Information Compiler.CompileCode source=string(5), referencePaths=string(2)
-18:46:24.528896 P:10693  T:Main    Dynamic 0039 Verbose Compiler.CompileCode CodeProvider: CSharpCodeProvider
-18:46:24.533083 P:10693  T:Main    Dynamic 0040 Verbose Compiler.CompileCode Compiler Parameters = { Generate Executable: True, Generate In Memory: False, Output Assembly: DynamicCodeTests-Scene.dll, Include Debug Info: False, Warnings As Errors: False, Warning Level: -1, Compiler Options: , Main Class: , User Token: 0, Win32 Resource: , Embedded Resources: , Linked Resources: , Referenced Assemblies: /home/jk/Code/Projects/NET/JGL/JGL/bin/Debug/JGL.dll /home/jk/Code/Resources/CS/OpenTK 1.0/Binaries/OpenTK/Release/OpenTK.dll, Temp Files: 
-} }
-18:46:25.405957 P:10693  T:Main    Dynamic 0041 Verbose Compiler.CompileCode Source built into DynamicCodeTests-Scene.dll successfully.
-18:46:26.645967 P:10693  T:Main    Dynamic 0042 Verbose CodeWindow.OnProjectExecute sender=Gtk.ToolButton, e=System.EventArgs
-18:46:26.646735 P:10693  T:Main    Dynamic 0043 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
-18:46:26.647996 P:10693  T:Main    Dynamic 0044 Information Compiler.CompileCode source=string(5), referencePaths=string(2)
-18:46:26.648717 P:10693  T:Main    Dynamic 0045 Verbose Compiler.CompileCode CodeProvider: CSharpCodeProvider
-18:46:26.649476 P:10693  T:Main    Dynamic 0046 Verbose Compiler.CompileCode Compiler Parameters = { Generate Executable: True, Generate In Memory: False, Output Assembly: DynamicCodeTests-Scene.dll, Include Debug Info: False, Warnings As Errors: False, Warning Level: -1, Compiler Options: , Main Class: , User Token: 0, Win32 Resource: , Embedded Resources: , Linked Resources: , Referenced Assemblies: /home/jk/Code/Projects/NET/JGL/JGL/bin/Debug/JGL.dll /home/jk/Code/Resources/CS/OpenTK 1.0/Binaries/OpenTK/Release/OpenTK.dll, Temp Files: 
-} }
-18:46:27.496648 P:10693  T:Main    Dynamic 0047 Verbose Compiler.CompileCode Source built into DynamicCodeTests-Scene.dll successfully.
-18:46:28.073843 P:10693  T:Main    Dynamic 0048 Information DynamicCodePage..ctor project="Dynamic.Project" codeWindow="Dynamic.UI.CodeWindow"
-18:46:28.074280 P:10693  T:Main    Dynamic 0049 Information Compiler..ctor Project="Scene1_02"
-Settings:
-Mono.CSharp.CompilerSettings
-18:46:28.085155 P:10693  T:Main    Dynamic 0050 Information CodeWindow.OnProjectExecute Started SceneWindow thread for scene "Scene1" .. 
-18:46:28.085632 P:10693  T:Main    Dynamic 0051 Verbose CodeWindow.PopulateHeirarchy System.Object[]
+10:23:48.018927 P:21035  T:Main    Dynamic 0001 Information JGLApp.Main Started
+10:23:48.140101 P:21035  T:Main    Dynamic 0002 Information CodeWindow..ctor projectFile=(null), sourceFiles=string[0]
+10:23:48.392645 P:21035  T:Main    Dynamic 0003 Information Project..ctor sourcePaths=(null), referencePaths=(null))
+10:23:48.548895 P:21035  T:Main    Dynamic 0004 Verbose CodeWindow.PopulateHeirarchy System.Object[]
+10:23:48.555028 P:21035  T:Main    Dynamic 0005 Information CodeWindow.OpenSourceFiles filenames=string[0]
+10:23:51.410923 P:21035  T:Main    Dynamic 0006 Verbose CodeWindow.OnWidgetDeleteEvent sender=Gtk.Window, e=Gtk.DeleteEventArgs
+10:23:51.412257 P:21035  T:Main    Dynamic 0007 Verbose CodeWindow.ConfirmExit System.Object[]
+10:23:51.413568 P:21035  T:Main    Dynamic 0008 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+10:23:51.414402 P:21035  T:Main    Dynamic 0009 Verbose CodeWindow.SaveProject System.Object[]
+10:23:51.415411 P:21035  T:Main    Dynamic 0010 Information Project.Save filename="../../../Data/Projects/New Project.project.xml"
+10:23:51.478828 P:21035  T:Main    Dynamic 0011 Information CodeWindow.OnWidgetDeleteEvent CodeWindow.OnWidgetDeleteEvent()
+10:23:51.489467 P:21035  T:Main    Dynamic 0012 Information JGLApp.Main Finished, exiting ..
