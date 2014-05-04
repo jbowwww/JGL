@@ -15,27 +15,8 @@ namespace JGL.Debugging
 	/// </summary>
 	internal class LogMessage
 	{
-		/// <summary>
-		/// Ensures that <paramref name="message"/> is of type <see cref="LogMessage"/>.
-		/// </summary>
-		/// <remarks>
-		///	-	Used internally for <see cref="TraceListener"/>s that override <see cref="TraceListener.TraceData"/>
-		/// </remarks>
-		/// <param name="message">Instance to check type of</param>
-		/// <exception cref="ArgumentNullException">
-		/// Is thrown when an argument passed to a method is invalid because it is <see langword="null" /> .
-		/// </exception>
-		/// <exception cref="ArgumentException">
-		/// Is thrown when an argument passed to a method is invalid.
-		/// </exception>
-//		public static void EnsureType(object message)
-//		{
-//			if (message == null)
-//				throw new ArgumentNullException("data");
-//			if (message.GetType().IsTypeOf(typeof(LogMessage)))
-//				throw new ArgumentException("Not of type LogMessage", "data");
-//		}
-
+		#region Fields & Properties
+		#region Message data
 		/// <summary>Event cache</summary>
 		public System.Diagnostics.TraceEventCache EventCache;
 
@@ -93,7 +74,32 @@ namespace JGL.Debugging
 
 		/// <summary>Data to go with the </summary>
 		public object Data;
+		#endregion
 
+		#region Characteristic properties
+		/// <summary>
+		/// Gets a value indicating whether this instance is an "event" or just data (ie whether <see cref="LogMessage.Format"/> contains a string)
+		/// </summary>
+		public bool IsEvent {
+			get { return !string.IsNullOrEmpty(Format); }
+		}
+
+		/// <summary>
+		/// Gets a value indicating whether this instance is purely data (ie <see cref="LogMessage.Format"/> is null or empty)
+		/// </summary>
+		public bool IsPureData {
+			get { return string.IsNullOrEmpty(Format); }
+		}
+
+		/// <summary>
+		/// Gets a value indicating whether this instance has data.
+		/// </summary>
+		public bool HasData {
+			get { return Data != null; }
+		}
+		#endregion
+
+		#region Formatting / serialization (not currently sure why both of these properties need to exist)
 		/// <summary>Message text</summary>
 		/// <remarks>
 		///	-	If <code><see cref="Format"/> == null</code>, returns <code><see cref="Data"/>.ToString()></code>
@@ -143,7 +149,10 @@ namespace JGL.Debugging
 				return sb.ToString();
 			}
 		}
+		#endregion
+		#endregion
 
+		#region Construction
 		/// <summary>
 		/// Initializes a new instance of the <see cref="JGL.Debugging.AsyncTraceListener.LogMessage"/> class.
 		/// </summary>
@@ -206,6 +215,7 @@ namespace JGL.Debugging
 			Frame = new StackFrame(3, true);
 			OutputOptions = TraceOptions.None;
 		}
+		#endregion
 
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents the current <see cref="JGL.Debugging.LogMessage"/>.

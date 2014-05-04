@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Diagnostics;
+using System.Runtime.Serialization;
 
 namespace JGL.Debugging
 {
@@ -9,11 +10,6 @@ namespace JGL.Debugging
 	/// </summary>
 	public class AsyncTextFileTraceListener : AsyncTraceListener
 	{
-		/// <summary>
-		/// Tracing
-		/// </summary>
-//		public static readonly AutoTraceSource Trace = AutoTraceSource.GetOrCreate(AsyncXmlFileTraceListener.GetOrCreate("JGL"));
-
 		/// <summary>
 		/// Gets (if exists) or creates a <see cref="AsyncFileTraceListener"/> with the specified <paramref name="name"/>
 		/// </summary>
@@ -50,8 +46,7 @@ namespace JGL.Debugging
 		/// Initializes a new instance of the <see cref="JGL.Debugging.AsyncTextFileTraceListener"/> class.
 		/// </summary>
 		/// <param name="name">Name of the new trace listener</param>
-		internal AsyncTextFileTraceListener(string name)
-			: base(name)
+		internal AsyncTextFileTraceListener(string name) : base(name)
 		{
 		}
 
@@ -82,13 +77,13 @@ namespace JGL.Debugging
 		/// <param name="eventType">Event type</param>
 		/// <param name="id">Identifier</param>
 		/// <param name="data">Data</param>
-		public override void TraceData(TraceEventCache eventCache, string source, TraceEventType eventType, int id, object data)
-		{
-//			LogMessage.EnsureType(data);
-			LogMessage msg = (LogMessage)data;
-			byte[] buf = FormatMessage(string.Concat(msg.MessageAsText, "\n"));
-			Stream.Write(buf, 0, buf.Length);													// Write message buffer
-			Stream.Flush();
-		}
+//		public override void TraceData(TraceEventCache eventCache, string source, TraceEventType eventType, int id, object data)
+//		{
+////			LogMessage.EnsureType(data);
+//			LogMessage msg = (LogMessage)data;
+//			byte[] buf = FormatMessage(string.Concat(msg.MessageAsText, "\n"));
+//			Stream.Write(buf, 0, buf.Length);													// Write message buffer
+//			Stream.Flush();
+//		}
 	}
 }
