@@ -20,12 +20,16 @@ namespace JGL.Debugging
 		/// <summary>
 		/// Tracing <see cref="AutoTraceSource"/>
 		/// </summary>
-		protected static AutoTraceSource Trace;// = AutoTraceSource.GetOrCreate(AsyncXmlFileTraceListener.GetOrCreate("JGL"));
+		protected static AutoTraceSource Trace;
 
 		/// <summary>
 		/// Constant trace thread sleep time.
 		/// </summary>
-		public const int TraceThreadSleepTime = 111;
+		public const int TraceThreadSleepTime = 141;
+//		 {
+//			get;
+//			protected set;
+//		}
 
 		#region Static Members
 		#region Private Static Members
@@ -194,6 +198,9 @@ namespace JGL.Debugging
 		/// <param name="traceListeners"><see cref="TraceListener"/>s that should be in <see cref="AutoTraceSource.Listeners"/></param>
 		public static AutoTraceSource GetOrCreate(string name, bool autoAddDefaultListeners, params TraceListener[] traceListeners)
 		{
+			if (string.IsNullOrEmpty(name))
+				throw new ArgumentNullException("name", name == null ? "null" : "empty");
+
 			// value to be returned
 			AutoTraceSource traceSource;
 
@@ -206,7 +213,7 @@ namespace JGL.Debugging
 				if (_messageQueue == null)
 					_messageQueue = new ConcurrentQueue<LogMessage>();
 				if (Trace == null)				// TODO: Config class, or file, or something, for trace listener configs & deafults
-					Trace = new AutoTraceSource(Assembly.GetAssembly(typeof(AutoTraceSource)).GetName().Name, DefaultListeners.ToArray());
+					Trace = new AutoTraceSource(Assembly.GetAssembly(typeof(AutoTraceSource)).GetName().Name);		//, DefaultListeners.ToArray());
 				if (TraceThread == null)
 				{
 					TraceThread = new Thread(RunTraceThread);

@@ -8,30 +8,33 @@ namespace JGL.Configuration
 	/// </summary>
 	public class JGLConfigurationSection : ConfigurationSection
 	{
-		public JGLConfigurationSection()
-		{
+		/// <summary>
+		/// Gets the debug config section
+		/// </summary>
+		[ConfigurationProperty("debug", IsRequired = false)]
+		public DebuggingConfiguration Debug {
+			get { return (DebuggingConfiguration)this["Debug"]; }
+			set { this["Debug"] = value; }
 		}
 
-		[ConfigurationProperty(Name = "Debug", IsRequired = false)]
-		public DebuggingConfigurationElement Debug {
-			get;
-			private set;
+		/// <summary>
+		/// Gets the scene window profiles config section
+		/// </summary>
+		[ConfigurationCollection(typeof(SceneWindowConfiguration))]
+		[ConfigurationProperty("sceneWindowProfiles")]
+		public SceneWindowConfigurationCollection SceneWindowProfiles {
+			get { return (SceneWindowConfigurationCollection)this["SceneWindowProfiles"]; }
+			set { this["SceneWindowProfiles"] = value; }
 		}
 
-		public SceneWindowConfigurationSection SceneWindowDefault {
-			get;
-			private set;
+		/// <summary>
+		/// Gets the scene window default config section
+		/// </summary>
+		public SceneWindowConfiguration DefaultSceneWindowProfile {
+			get { return (SceneWindowConfiguration)this["DefaultSceneWindowProfile"]; }
+			set { this["DefaultSceneWindowProfile"] = value; }
 		}
 
-		[ConfigurationCollection(
-			ItemType = typeof(SceneWindowConfigurationSection),
-			AddItemName = "add",
-			ClearItemsName = "clear",
-			RemoveItemName = "remove")]
-		public ConfigurationSectionCollection SceneWindowProfiles {
-			get;
-			private set;
-		}
 	}
 }
 

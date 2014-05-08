@@ -47,6 +47,7 @@
     <Reference Include="OpenTK">
       <HintPath>..\..\..\..\Resources\CS\OpenTK 1.0\Binaries\OpenTK\Release\OpenTK.dll</HintPath>
     </Reference>
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
@@ -109,6 +110,16 @@
     <Compile Include="Debugging\TraceEventType_Ext.cs" />
     <Compile Include="Debugging\MyConsoleTraceListener.cs" />
     <Compile Include="Extensions\Array_Ext.cs" />
+    <Compile Include="Configuration\JGLConfigurationSection.cs" />
+    <Compile Include="Configuration\SceneWindowConfigurationCollection.cs" />
+    <Compile Include="Configuration\GraphicsConfiguration.cs" />
+    <Compile Include="Configuration\SceneWindowConfiguration.cs" />
+    <Compile Include="Configuration\GLConfiguration.cs" />
+    <Compile Include="Configuration\TraceListenerConfiguration.cs" />
+    <Compile Include="Configuration\DebuggingConfiguration.cs" />
+    <Compile Include="Configuration\TraceListenerConfigurationCollection.cs" />
+    <Compile Include="Configuration\TraceSourceConfiguration.cs" />
+    <Compile Include="Configuration\TraceSourceConfigurationCollection.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -136,5 +147,12 @@
     <None Include="XML comment clipboard.txt.cs" />
     <None Include="Features.txt" />
     <None Include="Heirarchy\MeshLibrary\TexturiseMethod.cs" />
+    <None Include="Configuration\EmptyClass.cs" />
+    <None Include="ExampleAppConfigForJGL.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="JGL.dll.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

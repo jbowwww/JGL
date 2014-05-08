@@ -1,24 +1,15 @@
-<Verbose Id="1" Time="14-05-04 10:23:48.016948 " Process="21035" Thread="Trace" Source="JGL" Method="AutoTraceSource.RunTraceThread">
+<Verbose Id="1" Time="14-05-09 00:48:59.655508 " Process="24069" Thread="Trace" Source="JGL" Method="AutoTraceSource.RunTraceThread">
 	<Message>AutoTraceSource.RunTraceThread Started tracing</Message>
 </Verbose>
-<Information Id="2" Time="14-05-04 10:23:48.098265 " Process="21035" Thread="Trace" Source="JGL" Method="AsyncTextFileTraceListener.OpenStream">
+<Information Id="2" Time="14-05-09 00:48:59.681622 " Process="24069" Thread="Trace" Source="JGL" Method="AsyncTextFileTraceListener.OpenStream">
 	<Message>AsyncTextFileTraceListener.OpenStream OpenStream (this.Name = "JGL", this.Path = "../../Logs/JGL.Trace.Log.Xml")</Message>
 </Information>
-<Information Id="3" Time="14-05-04 10:23:48.112374 " Process="21035" Thread="Trace" Source="JGL" Method="AsyncTextFileTraceListener.OpenStream">
+<Information Id="3" Time="14-05-09 00:48:59.709359 " Process="24069" Thread="Trace" Source="JGL" Method="AsyncTextFileTraceListener.OpenStream">
 	<Message>AsyncTextFileTraceListener.OpenStream OpenStream (this.Name = "App", this.Path = "../../Logs/App.Trace.Log")</Message>
 </Information>
-<Information Id="4" Time="14-05-04 10:23:48.555807 " Process="21035" Thread="Main" Source="JGL" Method="Engine.Init">
+<Information Id="4" Time="14-05-09 00:49:00.131740 " Process="24069" Thread="Main" Source="JGL" Method="Engine.Init">
 	<Message>Engine.Init System.Object[]</Message>
 </Information>
-<Information Id="5" Time="14-05-04 10:23:48.561475 " Process="21035" Thread="Main" Source="JGL" Method="Engine.InitCounters">
+<Information Id="5" Time="14-05-09 00:49:00.138246 " Process="24069" Thread="Main" Source="JGL" Method="Engine.InitCounters">
 	<Message>Engine.InitCounters System.Object[]</Message>
 </Information>
-<Information Id="6" Time="14-05-04 10:23:51.489931 " Process="21035" Thread="Main" Source="JGL" Method="Engine.Quit">
-	<Message>Engine.Quit System.Object[]</Message>
-</Information>
-<Information Id="7" Time="14-05-04 10:23:51.490475 " Process="21035" Thread="Main" Source="JGL" Method="Resource.StopLoadThread">
-	<Message>Resource.StopLoadThread Thread not running</Message>
-</Information>
-<Verbose Id="8" Time="14-05-04 10:23:51.490896 " Process="21035" Thread="Main" Source="JGL" Method="AutoTraceSource.StopTraceThread">
-	<Message>AutoTraceSource.StopTraceThread RunTrace thread stopping (3 open listeners will now be closed)</Message>
-</Verbose>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Text;
 using System.IO;
+using System.Configuration;
 using System.Threading;
 using System.Diagnostics;
 using Gtk;
@@ -11,6 +12,7 @@ using JGL.Heirarchy;
 using JGL.Extensions;
 using JGL.Debugging;
 using Dynamic.UI;
+using JGL.Configuration;
 
 namespace Dynamic
 {
@@ -47,6 +49,15 @@ namespace Dynamic
 			Thread.CurrentThread.Name = "Main";
 			if (args.Contains("--keystart"))
 				Console.ReadKey();
+
+//			JGLConfigurationSection config = new JGLConfigurationSection();
+//			config.SectionInformation.SetRawXml(File.ReadAllText("JGL.dll.config"));
+//				//new ConfigurationFileMap("JGL.dll.config");
+////						 = /*typeof(AutoTraceSource)*/ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None).EvaluationContext.HostingContext
+////			JGLConfigurationSection jglConfig = (JGLConfigurationSection)config.SectionInformation.GetSection("JGL");
+////			config.SectionInformation.RevertToParent();
+//			Console.WriteLine("\n{0}\n", config.SectionInformation.ConfigSource);
+//			Console.ReadLine();
 
 			Trace = AutoTraceSource.GetOrCreate(AsyncTextFileTraceListener.GetOrCreate("App"));
 			Trace.Log(TraceEventType.Information, "Started");

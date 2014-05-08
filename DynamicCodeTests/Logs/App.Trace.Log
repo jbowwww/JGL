@@ -1,12 +1,27 @@
-10:23:48.018927 P:21035  T:Main    Dynamic 0001 Information JGLApp.Main Started
-10:23:48.140101 P:21035  T:Main    Dynamic 0002 Information CodeWindow..ctor projectFile=(null), sourceFiles=string[0]
-10:23:48.392645 P:21035  T:Main    Dynamic 0003 Information Project..ctor sourcePaths=(null), referencePaths=(null))
-10:23:48.548895 P:21035  T:Main    Dynamic 0004 Verbose CodeWindow.PopulateHeirarchy System.Object[]
-10:23:48.555028 P:21035  T:Main    Dynamic 0005 Information CodeWindow.OpenSourceFiles filenames=string[0]
-10:23:51.410923 P:21035  T:Main    Dynamic 0006 Verbose CodeWindow.OnWidgetDeleteEvent sender=Gtk.Window, e=Gtk.DeleteEventArgs
-10:23:51.412257 P:21035  T:Main    Dynamic 0007 Verbose CodeWindow.ConfirmExit System.Object[]
-10:23:51.413568 P:21035  T:Main    Dynamic 0008 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
-10:23:51.414402 P:21035  T:Main    Dynamic 0009 Verbose CodeWindow.SaveProject System.Object[]
-10:23:51.415411 P:21035  T:Main    Dynamic 0010 Information Project.Save filename="../../../Data/Projects/New Project.project.xml"
-10:23:51.478828 P:21035  T:Main    Dynamic 0011 Information CodeWindow.OnWidgetDeleteEvent CodeWindow.OnWidgetDeleteEvent()
-10:23:51.489467 P:21035  T:Main    Dynamic 0012 Information JGLApp.Main Finished, exiting ..
+00:48:59.656524 P:24069  T:Main    Dynamic 0001 Information JGLApp.Main Started
+00:48:59.724675 P:24069  T:Main    Dynamic 0002 Information CodeWindow..ctor projectFile=(null), sourceFiles=string[0]
+00:48:59.901088 P:24069  T:Main    Dynamic 0003 Information Project..ctor sourcePaths=(null), referencePaths=(null))
+00:49:00.125484 P:24069  T:Main    Dynamic 0004 Verbose CodeWindow.PopulateHeirarchy System.Object[]
+00:49:00.130847 P:24069  T:Main    Dynamic 0005 Information CodeWindow.OpenSourceFiles filenames=string[0]
+00:49:07.463168 P:24069  T:Main    Dynamic 0006 Verbose CodeWindow.OnFileNew sender=Gtk.ToolButton, e=System.EventArgs
+00:49:07.477503 P:24069  T:Main    Dynamic 0007 Information StaticCodePage.Init filename="New File"
+00:49:16.863349 P:24069  T:Main    Dynamic 0008 Verbose CodeWindow.OnProjectExecute sender=Gtk.ToolButton, e=System.EventArgs
+00:49:16.864152 P:24069  T:Main    Dynamic 0009 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+00:49:16.896712 P:24069  T:Main    Dynamic 0010 Verbose JGLApp.UnhandledException IsTerminating=False, ExitApplication=False)
+00:49:16.900413 P:24069  T:Main    Dynamic 0011 Error JGLApp.UnhandledException TargetInvocationException: Exception has been thrown by the target of an invocation.
+Stacktrace:
+      at System.Reflection.MonoMethod.Invoke (System.Object obj, BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x00069] in /build/buildd/mono-3-3.2.4/mcs/class/corlib/System.Reflection/MonoMethod.cs:238 
+      at System.Reflection.MethodBase.Invoke (System.Object obj, System.Object[] parameters) [0x00000] in /build/buildd/mono-3-3.2.4/mcs/class/corlib/System.Reflection/MethodBase.cs:114 
+      at System.Delegate.DynamicInvokeImpl (System.Object[] args) [0x000d5] in /build/buildd/mono-3-3.2.4/mcs/class/corlib/System/Delegate.cs:424 
+      at System.MulticastDelegate.DynamicInvokeImpl (System.Object[] args) [0x00018] in /build/buildd/mono-3-3.2.4/mcs/class/corlib/System/MulticastDelegate.cs:72 
+      at System.Delegate.DynamicInvoke (System.Object[] args) [0x00000] in /build/buildd/mono-3-3.2.4/mcs/class/corlib/System/Delegate.cs:398 
+      at GLib.Signal.ClosureInvokedCB (System.Object o, GLib.ClosureInvokedArgs args) [0x00000] in <filename unknown>:0 
+      at GLib.SignalClosure.Invoke (GLib.ClosureInvokedArgs args) [0x00000] in <filename unknown>:0 
+      at GLib.SignalClosure.MarshalCallback (IntPtr raw_closure, IntPtr return_val, UInt32 n_param_vals, IntPtr param_values, IntPtr invocation_hint, IntPtr marshal_data) [0x00000] in <filename unknown>:0 
+InnerException:
+        NullReferenceException: Object reference not set to an instance of an object
+    Stacktrace:
+          at Dynamic.UI.CodeWindow.OnProjectExecute (System.Object sender, System.EventArgs e) [0x00089] in /home/jk/Code/Projects/NET/JGL/DynamicCodeTests/UI/CodeWindow.cs:487 
+          at (wrapper managed-to-native) System.Reflection.MonoMethod:InternalInvoke (System.Reflection.MonoMethod,object,object[],System.Exception&)
+          at System.Reflection.MonoMethod.Invoke (System.Object obj, BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x00054] in /build/buildd/mono-3-3.2.4/mcs/class/corlib/System.Reflection/MonoMethod.cs:230 
+
