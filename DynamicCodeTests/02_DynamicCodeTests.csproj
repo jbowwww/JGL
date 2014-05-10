@@ -77,6 +77,7 @@
     <Compile Include="Project.cs" />
     <Compile Include="UI\ProjectDialog.cs" />
     <Compile Include="Compiler.cs" />
+    <Compile Include="Configuration\CodeWindowConfiguration.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -94,9 +95,12 @@
     <None Include="Logs\Dynamic_JGLApp.Trace.Log" />
     <None Include="Logs\JGL.Trace.Log" />
     <None Include="Logs\140502-0526-OutputFirstBuggyImplementationOfRecentFilesAndProjects.txt" />
+    <None Include="Logs\140510-2000-BeenRunningAllNightParticleGenCrashedEventually.txt" />
+    <None Include="Logs\140511-0121-RecentFilesProjectsMenuWorkingVerySimple.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DynamicCode\" />
+    <Folder Include="Configuration\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JGL\00_JGL.csproj">

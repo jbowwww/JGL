@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Text;
 using System.IO;
 using System.Xml;
@@ -15,6 +16,9 @@ using Mono.CSharp;
 using Dynamic;
 using JGL;
 using Glade;
+using System.Configuration;
+using Dynamic.Configuration;
+using System.Linq.Expressions;
 
 namespace Dynamic.UI
 {
@@ -32,12 +36,23 @@ namespace Dynamic.UI
 		/// A <see cref="ConcurrentBag"/> of all <see cref="DynamicCodeTests.CodeWindow"/> instances
 		/// </summary>
 		public static ConcurrentDictionary<CodeWindow, CodeWindow> CodeWindows = new ConcurrentDictionary<CodeWindow, CodeWindow>();
-		
+
+		/// <summary>
+		/// Gets the config.
+		/// </summary>
+		public System.Configuration.Configuration Config { get; private set; }
+
+		/// <summary>
+		/// Gets the code window config.
+		/// </summary>
+		public CodeWindowConfiguration codeWindowConfig { get; private set; }
+
 		/// <summary>
 		/// Get the <see cref="Gtk.Window"/> corresponding to this instance. Gets set during construction
 		/// </summary>
 		public readonly Window GtkWindow;
 
+		#region Widgets
 		/// <summary>
 		/// The mi file recent files.
 		/// </summary>
@@ -64,7 +79,6 @@ namespace Dynamic.UI
 		protected Gtk.ScrolledWindow swHeirarchy;
 
 		[Glade.Widget]
-//		protected Gtk.ProgressBar barCPU;
 		protected Gtk.Label lblCPU;
 
 		[Glade.Widget]
@@ -74,7 +88,8 @@ namespace Dynamic.UI
 		/// A <see cref="Gtk.NodeView"/> displaying an <see cref="JGL.Heirarchy.Entity"/> heirarchy
 		/// </summary>
 		protected NodeView nvHeirarchy;
-		
+		#endregion
+
 		/// <summary>
 		/// The <see cref="Gtk.NodeStore"/> to back <see cref="DynamicCodeApplication.nvWindow"/>
 		/// </summary>
@@ -103,8 +118,19 @@ namespace Dynamic.UI
 		/// </summary>
 		public Project Project { get; private set; }
 
-		protected List<string> ProjectNames = new List<string>();
+		/// <summary>
+		/// Recent project names.
+		/// </summary>
+		protected List<string> RecentProjectPaths = new List<string>();
 
+		/// <summary>
+		/// Recent file names.
+		/// </summary>
+		protected List<string> RecentFilePaths = new List<string>();
+
+		/// <summary>
+		/// Compiler for dynamic code
+		/// </summary>
 		public Compiler Compiler { get; private set; }
 
 		/// <summary>
@@ -116,13 +142,23 @@ namespace Dynamic.UI
 				projectFile == null ? "(null)" : projectFile.ToString(), sourceFiles == null ? "(null)" : sourceFiles.Length.ToString());
 
 			CodeWindows.TryAdd(this, this);															// store this CodeWindow instance
-			
+
+			Config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+			if (Config.Sections["codeWindow"] != null)
+				codeWindowConfig = (CodeWindowConfiguration)Config.Sections["codeWindow"];
+			else
+				Config.Sections.Add("codeWindow", codeWindowConfig = new CodeWindowConfiguration());
+
 			Glade.XML gxml = new Glade.XML(/*"/home/jk/Code/JGL/DynamicCodeTests/UI/*/ "CodeWindow.glade", "CodeWindow", null);
 			gxml.Autoconnect(this);																				// load & autoconnect glade UI for a CodeWindow
 			GtkWindow = nbCode.Toplevel as Window;
 
 			miFileRecentFiles.Submenu = new Menu();
 			miFileRecentProjects.Submenu = new Menu();
+			foreach (NameValueConfigurationElement element in codeWindowConfig.RecentFilePaths)
+				AddRecentFile(element.Value, element.Name);
+			foreach (NameValueConfigurationElement element in codeWindowConfig.RecentProjectPaths)
+				AddRecentProject(element.Value, element.Name);
 
 			Project = new Project(null, null);
 
@@ -185,12 +221,51 @@ namespace Dynamic.UI
 				foreach (Entity e in (entity as EntityContext).Entities)
 					PopulateHeirarchy(e, tnNew);
 		}
-		
+
+		/// <summary>
+		/// Adds the recent project.
+		/// </summary>
+		/// <param name="filename">Filename.</param>
+		private void AddRecentProject(string path, string name = null)
+		{
+			if (string.IsNullOrWhiteSpace(name))
+				name = Path.GetFileName(path);
+			if (!RecentProjectPaths.Contains(path))
+			{
+				RecentProjectPaths.Add(path);
+				Menu mnuProjects = ((Menu)miFileRecentProjects.Submenu);
+				ImageMenuItem miProject = new ImageMenuItem(name);
+				miProject.Activated += (sender, e) => OpenProject(path);
+				mnuProjects.Append(miProject);
+				mnuProjects.ShowAll();
+			}
+		}
+
+		/// <summary>
+		/// Adds the recent file.
+		/// </summary>
+		/// <returns>The recent file.</returns>
+		/// <param name="filename">Filename.</param>
+		private void AddRecentFile(string path, string name = null)
+		{
+			if (string.IsNullOrWhiteSpace(name))
+				name = Path.GetFileName(path);
+			if (!RecentFilePaths.Contains(path))
+			{
+				RecentFilePaths.Add(path);
+				Menu mnuRecentFiles = ((Menu)miFileRecentFiles.Submenu);
+				ImageMenuItem miRecent = new ImageMenuItem(name);
+				miRecent.Activated += (sender, e) => OpenSourceFiles(path);
+				mnuRecentFiles.Append(miRecent);
+				mnuRecentFiles.ShowAll();
+			}
+		}
+
 		/// <summary>
 		/// Opens the given file(s)
 		/// </summary>
 		/// <param name='filenames'>Array of filename strings giving paths to files to open</param>
-		public void OpenSourceFiles(params string[] filenames)
+		public int OpenSourceFiles(params string[] filenames)
 		{
 			Trace.Log(TraceEventType.Information, "filenames=string[{0}]", filenames == null ? "(null)" : filenames.Length.ToString());
 			int setPage = nbCode.NPages;
@@ -198,40 +273,35 @@ namespace Dynamic.UI
 			foreach (string filename in filenames)
 			{
 				if (Path.GetExtension(filename) != ".cs")
-					// TODO: Don't want to throw back to JGLApp.Unhandled exception (i think?) Want to log/display warning?
-					throw new ArgumentOutOfRangeException("filename", filename, "Invalid source file extension (must be a .cs file)");
+					Trace.Log(TraceEventType.Warning, "\"{0}\" has an invalid source file extension (must be a .cs file)", filename);
 				try
 				{
-//					if (Project.SourcePaths.Contains(filename))
-//					{
-					bool con = true;
-					foreach (StaticCodePage cp in GetPagesOfType<StaticCodePage>())
-						if (con && cp.FileName.CompareTo(filename) == 0)
-							{
-								nbCode.Page = nbCode.PageNum(cp);
-							nbCode.ShowAll();
-							con = false;
-							break;
-							}
-//					}
-//					else
-//					{
-					if (con)
+					StaticCodePage scp = (StaticCodePage)GetPagesOfType<StaticCodePage>().FirstOrDefault(
+						(cp) => ((StaticCodePage)cp).FileName.CompareTo(filename) == 0);
+					if (scp != null)
 					{
-						Project.SourcePaths.Add(filename);
+						nbCode.Page = nbCode.PageNum(scp);
+						nbCode.ShowAll();
+						if (!Project.SourcePaths.Contains(filename))
+						{
+							Trace.Log(TraceEventType.Warning, "Project.SourcePaths does not contain file \"{0}\", although it is already open - Adding now", filename);
+							Project.SourcePaths.Add(filename);
+						}					
+					}
+					else
+					{
 						using (FileStream fs = File.OpenRead(filename))
 						{
 							StaticCodePage cp = new StaticCodePage(fs);
 							nbCode.AppendPage(cp, cp.TabLabel);
 							newPages++;
-							Menu mnuRecentFiles = ((Menu)miFileRecentFiles.Submenu);
-							ImageMenuItem miRecent = new ImageMenuItem(filename);
-							miRecent.Activated += (sender, e) => OpenSourceFiles(filename);
-							mnuRecentFiles.Append(miRecent);
-						mnuRecentFiles.ShowAll();
+							AddRecentFile(filename);
+							if (Project.SourcePaths.Contains(filename))
+								Trace.Log(TraceEventType.Warning, "Project.SourcePaths already contains file \"{0}\", although it was not open", filename);
+							else
+								Project.SourcePaths.Add(filename);
 						}
 					}
-//					}
 				}
 				catch (Exception ex)
 				{
@@ -246,6 +316,7 @@ namespace Dynamic.UI
 					nbCode.ShowAll();
 				}
 			}
+			return newPages;
 		}
 
 		/// <summary>
@@ -259,15 +330,7 @@ namespace Dynamic.UI
 				// TODO: Don't want to throw back to JGLApp.Unhandled exception (i think?) Want to log/display warning?
 				throw new ArgumentOutOfRangeException("filename", filename, "Invalid project file extension (must be a .project.xml file)");
 			Project = Project.Load(filename);
-			if (!ProjectNames.Contains(filename))
-			{
-				ProjectNames.Add(filename);
-				Menu mnuProjects = ((Menu)miFileRecentProjects.Submenu);
-				ImageMenuItem miProject = new ImageMenuItem(filename);
-				miProject.Activated += (sender, e) => OpenProject(filename);
-				mnuProjects.Append(miProject);
-				mnuProjects.ShowAll();
-			}
+			AddRecentProject(filename);
 			Compiler = new Compiler(Project);
 			PopulateHeirarchy();
 			OpenSourceFiles(Project.SourcePaths.ToArray());
@@ -347,11 +410,18 @@ namespace Dynamic.UI
 					SceneWindowThread.Join(new TimeSpan(0, 0, 8));
 				}
 
+				codeWindowConfig.RecentProjectPaths.Clear();
+				foreach (string projectPath in RecentProjectPaths)
+					codeWindowConfig.RecentProjectPaths.Add(new NameValueConfigurationElement(Path.GetFileName(projectPath), projectPath));
+				codeWindowConfig.RecentFilePaths.Clear();
+				foreach (string filePath in RecentFilePaths)
+					codeWindowConfig.RecentFilePaths.Add(new NameValueConfigurationElement(Path.GetFileName(filePath), filePath));
+
+				Config.Save(ConfigurationSaveMode.Full);
+				
 				CodeWindows.TryRemove(this, out cw);
 				if (CodeWindows.Count == 0)
 					Gtk.Application.Quit();
-
-				Trace.Log(TraceEventType.Information, "CodeWindow.OnWidgetDeleteEvent()");
 			}
 		}
 		
@@ -404,10 +474,16 @@ namespace Dynamic.UI
 					OnFileSaveAs(sender, e);
 				else
 				{
-					string labelText = cp.TabLabel.Text;
-					using (FileStream fs = File.OpenWrite(labelText.Substring(0, labelText.Length - 2)))
+//					string labelText = cp.TabLabel.Text;
+//					using (FileStream fs = File.OpenWrite(labelText.Substring(0, labelText.Length - 2)))
+					using (FileStream fs = File.OpenWrite(cp.FileName))
 					{
 						cp.Save(fs);
+					}
+					if (!Project.SourcePaths.Contains(cp.FileName))
+					{
+						Trace.Log(TraceEventType.Warning, "Project.SourcePaths does not already contain \"{0}\", adding now", cp.FileName);
+						Project.SourcePaths.Add(cp.FileName);
 					}
 				}
 			}
@@ -426,13 +502,21 @@ namespace Dynamic.UI
 				fDlg.SetFilename(cp.FileName);
 				if (fDlg.Run() == (int)ResponseType.Accept)
 				{
+					string oldFilename = cp.FileName;
 					using (FileStream fs = File.OpenWrite(fDlg.Filename))
 					{
+						cp.FileName = fDlg.Filename;
 						cp.Save(fs);
 					}
-					nbCode.ShowAll();
+					if (!string.IsNullOrWhiteSpace(oldFilename) && Project.SourcePaths.Contains(oldFilename))
+						Project.SourcePaths.Remove(oldFilename);
+					if (Project.SourcePaths.Contains(cp.FileName))
+						Trace.Log(TraceEventType.Warning, "Project.SourcePaths already contains file \"{0}\", no need to add");
+					else
+						Project.SourcePaths.Add(cp.FileName);
 				}
 				fDlg.Destroy();
+				nbCode.ShowAll();
 			}
 		}
 

@@ -13,6 +13,7 @@ using JGL.Extensions;
 using JGL.Debugging;
 using Dynamic.UI;
 using JGL.Configuration;
+using Gdk;
 
 namespace Dynamic
 {
@@ -34,7 +35,7 @@ namespace Dynamic
 		/// <summary>
 		/// <see cref="System.Collections.ConcurrentBag"/> of all <see cref="JGL.Heirarchy.Scene"/> instances created by app
 		/// </summary>
-		public static ConcurrentBag<Scene> Scenes;
+		public static ConcurrentBag<Scene> Scenes = new ConcurrentBag<Scene>();
 
 		/// <summary>
 		/// The entry point of the program, where the program control starts and ends.
@@ -44,11 +45,22 @@ namespace Dynamic
 		/// Sets up trace listeners, <see cref="DynamicCodeApplication.Scenes"/> bag, and allocates a new
 		/// <see cref="DynamicCodeApplication"/> instance which in turn creates a <see cref="DynamicCodeApplication.CodeWindow"/>
 		/// </remarks>
-		public static void Main(string[] args)
+		public static void Main(string[] argv)
 		{
+//			Console.WindowLeft = 0;
+//			Console.WindowTop = 0;
+//			Console.WindowHeight = Console.LargestWindowHeight;
+//			Console.WindowWidth = Console.LargestWindowWidth;
+			Console.Title = "JGLApp Console";
 			Thread.CurrentThread.Name = "Main";
-			if (args.Contains("--keystart"))
+			if (argv.Contains("--keystart"))
 				Console.ReadKey();
+
+//			Gdk.Window window = (Gdk.Window)Gdk.Window.GetObject(Process.GetCurrentProcess().MainWindowHandle);
+//			window.Maximize();
+
+//			Console.SetWindowPosition(0, 0);
+//			Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
 
 //			JGLConfigurationSection config = new JGLConfigurationSection();
 //			config.SectionInformation.SetRawXml(File.ReadAllText("JGL.dll.config"));
@@ -65,12 +77,25 @@ namespace Dynamic
 			try
 			{
 				GLib.ExceptionManager.UnhandledException += UnhandledException;
-				Scenes = new ConcurrentBag<Scene>();
-				Application.Init("JGLApp", ref args);
+				Gtk.Init.Check(ref argv);
+				Gtk.Application.Init("JGLApp", ref argv);
+
+//				foreach (Gdk.Window window in DisplayManager.Get().DefaultDisplay.DefaultScreen.ToplevelWindows)
+//				{
+//					Trace.Log(TraceEventType.Information, "Gtk.Window:\n {0}", window);//.GetType().FullName);
+//				}
+
+//				foreach (Gdk.Window window in DisplayManager	)	//; Gdk.Window.Toplevels)
+//				{d
+//					window.Maximize();
+//					Trace.Log(TraceEventType.Information, "Gtk.Window: {0}", window.GetType().FullName);
+//					window.Title = "JGLApp";
+//				}
+
 				string openProjectFile = null;
 				string[] openSourceFiles;
 				List<string> openSourceFilesList = new List<string>();
-				foreach (string arg in args)
+				foreach (string arg in argv)
 				{
 					if (arg.StartsWith("--project=", StringComparison.InvariantCultureIgnoreCase))
 						openProjectFile = arg.Substring(10);
@@ -78,9 +103,11 @@ namespace Dynamic
 						openSourceFilesList.Add(arg.Substring(9));
 				}
 				openSourceFiles = openSourceFilesList.ToArray();
+
 				JGLApp.TheApp = new JGLApp(openProjectFile, openSourceFiles);			// Set global static application variables
-				Engine.Init();
-				Application.Run();
+				JGL.Engine.Init();
+
+				Gtk.Application.Run();
 			}
 			catch (Exception ex)
 			{

@@ -25,9 +25,26 @@ namespace Dynamic
 		}
 
 		/// <summary>
+		/// The Project XmlSerializer
+		/// </summary>
+		private static XmlSerializer _projectXmlSerializer =
+			#region new XmlSerializer() {}
+			new XmlSerializer(
+				typeof(Project),
+				new XmlAttributeOverrides(),
+				new Type[] { },
+				new XmlRootAttribute()
+				{
+					DataType="project",
+					Namespace="jgl.dynamic"
+				},
+				"jgl");
+			#endregion
+
+		/// <summary>
 		/// The default reference paths.
 		/// </summary>
-		public static string[] DefaultReferencePaths =
+		private static string[] _defaultReferencePaths =
 			#region new string[] { [Default reference paths] }
 			new string[] {
 				"System.dll", "JGL.dll",
@@ -36,10 +53,20 @@ namespace Dynamic
 			#endregion
 
 		/// <summary>
+		/// Constant default code usings.
+		/// </summary>
+		public const string DefaultCodeUsings = "using System;\nusing System.Collections;\nusing System.Collections.Generic;\nusing System.Collections.Concurrent;\nusing OpenTK;\nusing JGL;\nusing JGL.Heirarchy;\nusing Dynamic;";
+
+		/// <summary>
 		/// Project name
 		/// </summary>
 		[XmlAttribute]
 		public string Name;
+
+		/// <summary>
+		/// Path to project file. Null until explicitly set
+		/// </summary>
+		public string Path { get; set; }
 
 		/// <summary>
 		/// Referenced assembly paths
@@ -50,11 +77,6 @@ namespace Dynamic
 		/// The source paths.
 		/// </summary>
 		public List<string> SourcePaths = new List<string>();
-
-		/// <summary>
-		/// Constant default code usings.
-		/// </summary>
-		public const string DefaultCodeUsings = "using System;\nusing System.Collections;\nusing System.Collections.Generic;\nusing System.Collections.Concurrent;\nusing OpenTK;\nusing JGL;\nusing JGL.Heirarchy;\nusing Dynamic;";
 
 		/// <summary>
 		/// The code usings.
@@ -77,7 +99,7 @@ namespace Dynamic
 		/// </summary>
 		protected Project()
 		{
-			Trace.Log(TraceEventType.Verbose, "Protected c'tor for deserialization");
+			Trace.Log(TraceEventType.Information, "Protected c'tor for deserialization");
 		}
 
 		/// <summary>
@@ -107,24 +129,25 @@ namespace Dynamic
 		/// </summary>
 		public void Save()
 		{
-			string filename = string.Format("../../../Data/Projects/{0}.project.xml", Name);
-			Trace.Log(TraceEventType.Information, "filename=\"{0}\"", filename);
-			XmlSerializer xs = new XmlSerializer(typeof(Project), new XmlAttributeOverrides(), new Type[] { },
-					new XmlRootAttribute(){ DataType="project", Namespace="jgl.dynamic" }, "jgl");
-			using (Stream s = File.Open(filename, FileMode.Create))
-				xs.Serialize(s, this);
+			string path = !string.IsNullOrWhiteSpace(Path) ? Path : string.Format("{0}.project.xml", Name);
+			Trace.Log(TraceEventType.Information, "Path=\"{0}\"{1}", path, string.IsNullOrWhiteSpace(Path) ? "default based on project name" : "");
+			using (Stream s = File.Open(path, FileMode.Create))
+				_projectXmlSerializer.Serialize(s, this);
 		}
 
 		/// <summary>
 		/// Save this instance.
 		/// </summary>
-		public static Project Load(string filename)
+		public static Project Load(string path)
 		{
-			Trace.Log(TraceEventType.Information, "filename=\"{0}\"", filename);
-			XmlSerializer xs = new XmlSerializer(typeof(Project), new XmlAttributeOverrides(), new Type[] { },
-					new XmlRootAttribute(){ DataType="project", Namespace="jgl.dynamic" }, "jgl");
-			using (Stream s = File.Open(filename, FileMode.Open))
-				return xs.Deserialize(s) as Project;
+			Trace.Log(TraceEventType.Information, "Path=\"{0}\"", path);
+			using (Stream s = File.Open(path, FileMode.Open))
+			{
+				Project project = (Project)_projectXmlSerializer.Deserialize(s);
+				project.Path = path;
+				return project;
+			}
+			return null;
 		}
 	}
 }

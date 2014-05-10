@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Runtime.Hosting;
 using System.Runtime.Remoting;
 using System.Reflection;
+using JGL.Configuration;
 
 namespace JGL
 {
@@ -25,6 +26,8 @@ namespace JGL
 //		public static Configuration Config { get; private set; }
 
 //		public static DebuggingConfigurationSection DebugggingConfiguration { get; private set; }
+
+		public static DebuggingConfiguration Debug { get; private set; }
 
 		public static EngineOptions Options { get; private set; }
 
@@ -52,6 +55,12 @@ namespace JGL
 			Options = new EngineOptions();
 			RunningProcess = Process.GetCurrentProcess();
 			InitCounters();
+
+//			Configuration;
+//			Debug = (DebuggingConfiguration)ConfigurationManager.GetSection("JGL.Debugging");
+//			;
+//			return;
+
 //			Config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 //			DebugggingConfiguration = Config.GetSection("JGL.Debugging");
 			

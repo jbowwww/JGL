@@ -108,5 +108,8 @@
     <None Include="z_Data.csproj">
       <Link>Data\z_Data.csproj</Link>
     </None>
+    <None Include="Projects\Scene1_02.project.xml">
+      <Link>Data\Projects\Scene1_02.project.xml</Link>
+    </None>
   </ItemGroup>
 </Project>

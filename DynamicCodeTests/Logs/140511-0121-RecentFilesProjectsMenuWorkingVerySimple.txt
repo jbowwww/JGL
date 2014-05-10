@@ -1,0 +1,134 @@
+
+02:16:55.659657 T:Main    Dynamic 0001 Information JGLApp.Main Started
+02:16:55.661536 T:Trace   JGL     0001 Verbose AutoTraceSource.RunTraceThread Started tracing
+02:16:55.681307 T:Trace   JGL     0002 Information AsyncTextFileTraceListener.OpenStream OpenStream (this.Name = "App", this.Path = "../../Logs/App.Trace.Log")
+02:16:55.725965 T:Trace   JGL     0003 Information AsyncTextFileTraceListener.OpenStream OpenStream (this.Name = "JGL", this.Path = "../../Logs/JGL.Trace.Log.Xml")
+
+(DynamicCodeTests:4004): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:4004): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:4004): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:4004): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:4004): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:4004): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:4004): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:4004): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:4004): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:4004): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:4004): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:4004): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:4004): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:4004): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:4004): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:4004): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:4004): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:4004): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+
+(DynamicCodeTests:4004): libglade-WARNING **: unknown attribute `swapped' for <signal>.
+02:16:55.821283 T:Main    Dynamic 0002 Information CodeWindow..ctor projectFile=(null), sourceFiles=string[0]
+02:16:56.055163 T:Main    Dynamic 0003 Information Project..ctor sourcePaths=(null), referencePaths=(null))
+02:16:56.210198 T:Main    Dynamic 0004 Verbose CodeWindow.PopulateHeirarchy System.Object[]
+02:16:56.218037 T:Main    Dynamic 0005 Information CodeWindow.OpenSourceFiles filenames=string[0]
+02:16:56.219122 T:Main    JGL     0004 Information Engine.Init System.Object[]
+02:16:56.225552 T:Main    JGL     0005 Information Engine.InitCounters System.Object[]
+
+(DynamicCodeTests:4004): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x135e4c0'
+
+(DynamicCodeTests:4004): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x135e4c0'
+
+(DynamicCodeTests:4004): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x135e4c0'
+
+(DynamicCodeTests:4004): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x135e4c0'
+02:17:02.789097 T:Main    Dynamic 0006 Information CodeWindow.OpenSourceFiles filenames=string[1]
+02:17:02.790821 T:Main    Dynamic 0007 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+02:17:02.800209 T:Main    Dynamic 0008 Information StaticCodePage.Init filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Scene1.cs"
+
+(DynamicCodeTests:4004): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x135e540'
+
+(DynamicCodeTests:4004): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x135e540'
+
+(DynamicCodeTests:4004): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x135e540'
+
+(DynamicCodeTests:4004): GLib-GObject-WARNING **: /build/buildd/glib2.0-2.32.3/./gobject/gsignal.c:3393: signal name `selection_changed' is invalid for instance `0x135e540'
+02:17:10.622451 T:Main    Dynamic 0009 Information CodeWindow.OpenProject filename=/home/jk/Code/Projects/NET/JGL/Data/Projects/Scene1_02.project.xml
+02:17:10.623590 T:Main    Dynamic 0010 Information Project.Load Path="/home/jk/Code/Projects/NET/JGL/Data/Projects/Scene1_02.project.xml"
+02:17:10.635049 T:Main    Dynamic 0011 Information Project..ctor Protected c'tor for deserialization
+02:17:10.652030 T:Main    Dynamic 0012 Information Compiler..ctor Project="Scene1_02"
+Settings:
+Mono.CSharp.CompilerSettings
+02:17:10.652593 T:Main    Dynamic 0013 Verbose CodeWindow.PopulateHeirarchy System.Object[]
+02:17:10.652975 T:Main    Dynamic 0014 Information CodeWindow.OpenSourceFiles filenames=string[5]
+02:17:10.653336 T:Main    Dynamic 0015 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+02:17:10.654720 T:Main    Dynamic 0016 Information StaticCodePage.Init filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/EmptyMain.cs"
+02:17:10.657364 T:Main    Dynamic 0017 Warning CodeWindow.OpenSourceFiles Project.SourcePaths already contains file "/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/EmptyMain.cs", although it was not open
+02:17:10.657864 T:Main    Dynamic 0018 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+02:17:10.658807 T:Main    Dynamic 0019 Information StaticCodePage.Init filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Origin.cs"
+02:17:10.665166 T:Main    Dynamic 0020 Warning CodeWindow.OpenSourceFiles Project.SourcePaths already contains file "/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Origin.cs", although it was not open
+02:17:10.665769 T:Main    Dynamic 0021 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+02:17:10.667623 T:Main    Dynamic 0022 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+02:17:10.669035 T:Main    Dynamic 0023 Information StaticCodePage.Init filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Tree1.cs"
+02:17:10.709313 T:Main    Dynamic 0024 Warning CodeWindow.OpenSourceFiles Project.SourcePaths already contains file "/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/Tree1.cs", although it was not open
+02:17:10.710223 T:Main    Dynamic 0025 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+02:17:10.711705 T:Main    Dynamic 0026 Information StaticCodePage.Init filename="/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/WhiteLight.cs"
+02:17:10.715331 T:Main    Dynamic 0027 Warning CodeWindow.OpenSourceFiles Project.SourcePaths already contains file "/home/jk/Code/Projects/NET/JGL/DynamicCodeTests/DynamicCode/Heirarchy/WhiteLight.cs", although it was not open
+02:18:20.074164 T:Main    Dynamic 0028 Verbose CodeWindow.OnProjectExecute sender=Gtk.ToolButton, e=System.EventArgs
+02:18:20.075100 T:Main    Dynamic 0029 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+02:18:20.094178 T:Main    Dynamic 0030 Information Compiler.CompileCode source=string(5), referencePaths=string(2)
+02:18:20.109672 T:Main    Dynamic 0031 Verbose Compiler.CompileCode CodeProvider: CSharpCodeProvider
+02:18:20.118057 T:Main    Dynamic 0032 Verbose Compiler.CompileCode Compiler Parameters = { Generate Executable: True, Generate In Memory: False, Output Assembly: DynamicCodeTests-Scene.dll, Include Debug Info: False, Warnings As Errors: False, Warning Level: -1, Compiler Options: , Main Class: , User Token: 0, Win32 Resource: , Embedded Resources: , Linked Resources: , Referenced Assemblies: /home/jk/Code/Projects/NET/JGL/JGL/bin/Debug/JGL.dll /home/jk/Code/Resources/CS/OpenTK 1.0/Binaries/OpenTK/Release/OpenTK.dll, Temp Files: 
+} }
+02:18:21.318245 T:Main    Dynamic 0033 Verbose Compiler.CompileCode Source built into DynamicCodeTests-Scene.dll successfully.
+02:18:21.908430 T:Main    JGL     0006 Information Resource.Get Constructing new JGL.Heirarchy.Resources.Texture resource "test1.png"
+02:18:21.909549 T:Main    JGL     0007 Information Resource.Init Name="test1.png" Path="test1.png"
+02:18:21.910507 T:Main    JGL     0008 Information Resource.StartLoadThread Starting thread
+02:18:21.912695 T:Resource JGL     0009 Information Resource.RunLoadThread Thread started
+02:18:21.914614 T:Resource JGL     0010 Verbose Filesystem.Open Path="test1.png" ActualPath="../../../Data/Textures//test1.png"
+02:18:21.914011 T:Main    JGL     0011 Information Texture.Init Init(name="test1.png", path="test1.png")
+02:18:21.942246 T:Main    JGL     0012 Verbose Mesh.Texturise Textured JGL.Heirarchy.MeshLibrary.Quad mesh "Quad #a33d" using JGL.Heirarchy.MeshLibrary.Quad+SimpleTexturise, 4 texture coordinates
+02:18:21.942900 T:Main    JGL     0013 Information Resource.Get Constructing new JGL.Heirarchy.Resources.Texture resource "tex2.png"
+02:18:21.943444 T:Main    JGL     0014 Information Resource.Init Name="tex2.png" Path="tex2.png"
+02:18:21.944658 T:Main    JGL     0015 Information Resource.StartLoadThread Thread already started
+02:18:21.945552 T:Main    JGL     0016 Information Texture.Init Init(name="tex2.png", path="tex2.png")
+02:18:21.954436 T:Main    Dynamic 0034 Information DynamicCodePage..ctor project="Dynamic.Project" codeWindow="Dynamic.UI.CodeWindow"
+02:18:21.954863 T:Main    Dynamic 0035 Information Compiler..ctor Project="Scene1_02"
+Settings:
+Mono.CSharp.CompilerSettings
+02:18:22.103729 T:Main    Dynamic 0036 Information CodeWindow.OnProjectExecute Started SceneWindow thread for scene "Scene1" .. 
+02:18:22.104280 T:Main    Dynamic 0037 Verbose CodeWindow.PopulateHeirarchy System.Object[]
+02:18:22.195974 T:Resource JGL     0017 Information Texture.Load Load (this.Name="test1.png", this.Path="test1.png") loaded 256x256 image, Format24bppRgb
+02:18:22.197392 T:Resource JGL     0018 Verbose Filesystem.Open Path="tex2.png" ActualPath="../../../Data/Textures//tex2.png"
+02:18:22.217780 T:Resource JGL     0019 Information Texture.Load Load (this.Name="tex2.png", this.Path="tex2.png") loaded 256x256 image, Format32bppArgb
+02:18:23.647111 T:SceneWindow JGL     0020 Information Texture.CreateGLTexture CreateGLTexture(texture="tex2.png") generated GL texture ID 1
+02:18:23.717916 T:SceneWindow JGL     0021 Information Texture.CreateGLTexture CreateGLTexture(texture="test1.png") generated GL texture ID 2
+02:18:25.132360 T:Main    Dynamic 0038 Verbose CodeWindow.OnFinishExecute sender=Dynamic.UI.CodeWindow, args=Dynamic.UI.CodeWindow+FinishExecuteArgs
+02:18:25.132673 T:Main    Dynamic 0039 Verbose CodeWindow.OnFinishExecute Ended SceneWindow thread for scene "Scene1"
+02:18:25.136277 T:Main    Dynamic 0040 Verbose CodeWindow.SaveProject System.Object[]
+02:18:25.136886 T:Main    Dynamic 0041 Information Project.Save Path="/home/jk/Code/Projects/NET/JGL/Data/Projects/Scene1_02.project.xml"
+02:18:26.172233 T:Main    Dynamic 0042 Verbose CodeWindow.OnWidgetDeleteEvent sender=Gtk.Window, e=Gtk.DeleteEventArgs
+02:18:26.173276 T:Main    Dynamic 0043 Verbose CodeWindow.ConfirmExit System.Object[]
+02:18:26.173956 T:Main    Dynamic 0044 Verbose CodeWindow.GetPagesOfType TPage=typeof(Dynamic.UI.StaticCodePage)
+02:18:26.174654 T:Main    Dynamic 0045 Verbose CodeWindow.SaveProject System.Object[]
+02:18:26.175203 T:Main    Dynamic 0046 Information Project.Save Path="/home/jk/Code/Projects/NET/JGL/Data/Projects/Scene1_02.project.xml"
+02:18:26.270610 T:Main    Dynamic 0047 Information JGLApp.Main Finished, exiting ..
+02:18:26.270990 T:Main    JGL     0022 Information Engine.Quit System.Object[]
+02:18:26.271296 T:Main    JGL     0023 Information Resource.StopLoadThread Stopping thread
+02:18:26.324734 T:Resource JGL     0024 Information Resource.RunLoadThread Thread exiting
+02:18:26.326123 T:Main    JGL     0025 Verbose AutoTraceSource.StopTraceThread RunTrace thread stopping (3 open listeners will now be closed)
+
+Press any key to continue...

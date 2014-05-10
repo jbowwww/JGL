@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <glade-interface>
+  <!-- interface-requires gnome 0.0 -->
+  <!-- interface-requires gnome 0.0 -->
   <!-- interface-requires gtk+ 2.24 -->
-  <!-- interface-requires gnome 0.0 -->
-  <!-- interface-requires gnome 0.0 -->
   <!-- interface-naming-policy project-wide -->
   <widget class="GtkWindow" id="CodeWindow">
-    <property name="width_request">844</property>
-    <property name="height_request">740</property>
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">JGL Dynamic Code</property>
+    <property name="default_width">960</property>
+    <property name="default_height">828</property>
     <signal name="delete_event" handler="OnWidgetDeleteEvent" swapped="no"/>
     <child>
       <widget class="GtkVBox" id="vbox2">
@@ -718,8 +718,8 @@
     <property name="title" translatable="yes">Project Preferences</property>
     <property name="modal">True</property>
     <property name="window_position">center-on-parent</property>
-    <property name="default_width">400</property>
-    <property name="default_height">322</property>
+    <property name="default_width">586</property>
+    <property name="default_height">422</property>
     <property name="destroy_with_parent">True</property>
     <property name="type_hint">normal</property>
     <property name="transient_for">CodeWindow</property>

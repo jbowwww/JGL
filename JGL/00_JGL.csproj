@@ -22,6 +22,7 @@
     <CustomCommands>
       <CustomCommands>
         <Command type="AfterBuild" command="cp -f ${TargetFile} ${SolutionDir}/DynamicCodeTests/bin/Debug/JGL.dll" pauseExternalConsole="True" />
+        <Command type="AfterBuild" command="cp -f ${TargetFile}.config ${SolutionDir}/DynamicCodeTests/bin/Debug/JGL.dll.config" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>

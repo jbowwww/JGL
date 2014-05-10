@@ -65,7 +65,7 @@ namespace JGL.Heirarchy.Behaviours
 				double[] v = new double[3];
 				for (int i = 0; i < 3; i ++)
 					v[i] = (r.NextDouble() - 0.5) * 2;
-				Vector3d Velocity = InitialVelocityRange + new Vector3d(range.X * v[0], range.Y * v[1], range.Z * v[2]);
+			Vector3d Velocity = averageInitial + new Vector3d(range.X * v[0], range.Y * v[1], range.Z * v[2]);
 			return Velocity;// + new Random().NextDouble
 		}
 	}
